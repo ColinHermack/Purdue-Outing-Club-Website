@@ -14,9 +14,7 @@ import NextLink from "next/link";
 import clsx from "clsx";
 
 import { siteConfig } from "@/config/site";
-import {
-  Logo,
-} from "@/components/icons";
+import {Logo} from "@/components/icons";
 
 export const Navbar = () => {
   return (
@@ -25,7 +23,7 @@ export const Navbar = () => {
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
             <Logo />
-            <p className="font-bold">Purdue Outing Club</p>
+            <p className="font-bold text-white">Purdue Outing Club</p>
           </NextLink>
         </NavbarBrand>
         <ul className="hidden lg:flex gap-4 justify-start ml-2">
@@ -48,7 +46,7 @@ export const Navbar = () => {
       
       <NavbarContent className="hidden lg:flex justify-center items-center" justify="end">
         <NavbarItem>
-          <Button as={Link} className='bg-amber-400 text-amber-800 opacity-75' href="/join" variant="flat">
+          <Button as={Link} className='bg-amber-400 text-amber-800' href="/join" variant="flat">
             Join
           </Button>
         </NavbarItem>
@@ -59,24 +57,21 @@ export const Navbar = () => {
       </NavbarContent>
 
       <NavbarMenu>
-        <div className="mx-4 mt-2 flex flex-col gap-2">
+        <div className="mt-5 flex flex-col gap-2">
           {siteConfig.navMenuItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>
               <Link
-                color={
-                  index === 2
-                    ? "primary"
-                    : index === siteConfig.navMenuItems.length - 1
-                      ? "danger"
-                      : "foreground"
-                }
-                href="#"
+                className='text-white'
+                href={item.href}
                 size="lg"
               >
                 {item.label}
               </Link>
             </NavbarMenuItem>
           ))}
+          <NavbarMenuItem key='join'>
+            <Link className='text-amber-400' href='/join' size='lg'>Join</Link>
+          </NavbarMenuItem>
         </div>
       </NavbarMenu>
     </NextUINavbar>

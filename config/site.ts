@@ -1,69 +1,98 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  name: "Next.js + NextUI",
-  description: "Make beautiful websites regardless of your design experience.",
+  name: "Purdue Outing Club",
+  description: "The official website of the Purdue Outing Club",
   navItems: [
     {
       label: "Home",
       href: "/",
     },
     {
-      label: "Docs",
-      href: "/docs",
+      label: "Calendar",
+      href: "/calendar",
     },
     {
-      label: "Pricing",
-      href: "/pricing",
+      label: "Pleadership",
+      href: "/pleadership",
     },
     {
-      label: "Blog",
-      href: "/blog",
+      label: "Gear Closet",
+      href: "/gearcloset",
     },
     {
-      label: "About",
-      href: "/about",
+      label: "POCAR",
+      href: "/pocar",
     },
   ],
   navMenuItems: [
-    {
-      label: "Profile",
-      href: "/profile",
-    },
-    {
-      label: "Dashboard",
-      href: "/dashboard",
-    },
-    {
-      label: "Projects",
-      href: "/projects",
-    },
-    {
-      label: "Team",
-      href: "/team",
-    },
     {
       label: "Calendar",
       href: "/calendar",
     },
     {
-      label: "Settings",
-      href: "/settings",
+      label: "Pleadership",
+      href: "/pleadership",
     },
     {
-      label: "Help & Feedback",
-      href: "/help-feedback",
+      label: "Gear Closet",
+      href: "/gearcloset",
     },
     {
-      label: "Logout",
-      href: "/logout",
-    },
+      label: "POCAR",
+      href: "/pocar",
+    }
   ],
-  links: {
-    github: "https://github.com/nextui-org/nextui",
-    twitter: "https://twitter.com/getnextui",
-    docs: "https://nextui.org",
-    discord: "https://discord.gg/9b6yyZKmH4",
-    sponsor: "https://patreon.com/jrgarciadev",
-  },
+  footerItems: [
+    {
+      label: "Constitution",
+      href: "/constitution"
+    },
+    {
+      label: "Diversity and Inclusion",
+      href: "/diversity"
+    },
+    {
+      label: "Trip Leaders",
+      href: "/trip-leaders"
+    },
+    {
+      label: "Elections",
+      href: "/elections"
+    },
+    {
+      label: "Alumni",
+      href: "/alumni"
+    },
+    {
+      label: "Sponsorship",
+      href: "/sponsorship"
+    }
+  ],
+  links: [
+    {
+      label: 'instagram',
+      href: 'https://www.instagram.com/purdue.outing.club/'
+    },
+    {
+      label: 'youtube',
+      href: 'https://www.youtube.com/@TheOutingClub'
+    },
+    {
+      label: 'facebook',
+      href: 'https://www.facebook.com/groups/PurdueOutingClub/'
+    },
+    {
+      label: 'slack',
+      href: 'https://purdueouting.slack.com/'
+    },
+    {
+      label: 'linkedin',
+      href: 'https://www.linkedin.com/company/purdueoutingclub/about/'
+    },
+    {
+      'label': 'boilerlink',
+      'href': 'https://boilerlink.purdue.edu/organization/outingclub'
+    }
+  ],
 };

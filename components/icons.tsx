@@ -11,6 +11,18 @@ export const Logo = (): JSX.Element => {
         alt='The POC logo'
       />
     </div>
-    
+  )
+}
+
+export const LargeLogo = (): JSX.Element => {
+  return (
+    <div className='bg-amber-400 w-fit h-fit flex justify-center items-center rounded-full'>
+      <Image
+        src='/poc_logo.png'
+        width={250}
+        height={250}
+        alt='The POC logo'
+      />
+    </div>
   )
 }

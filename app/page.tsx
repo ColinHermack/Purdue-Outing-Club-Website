@@ -41,9 +41,11 @@ export default function Home() {
         height={200}
         className='mb-10 rounded-lg'
       />
-      <Divider />
+      <Button as={Link} className='bg-amber-400 text-amber-800 w-44 h-20 text-lg m-12 rounded-3xl' href="/join" variant="flat">
+            Join
+      </Button>
       <h2 className='text-4xl m-10 font-bold'>SPORTS</h2>
-      <Accordion selectionMode='multiple'>
+      <Accordion selectionMode='multiple' variant='shadow'>
         <AccordionItem key={1} aria-label='Backpacking' title='Backpacking'>
           Backpacking is an outdoor activity wherein a participant packs all of his or her gear into a backpack. This gear
           may include food, water, and shelter, or the means to obtain them, and often little else. Since each item must 
@@ -90,9 +92,8 @@ export default function Home() {
           winter backpacking.
         </AccordionItem>
       </Accordion>
-      <Divider className='m-10' />
-      <h2 className='text-4xl font-bold'>FAQ</h2>
-      <Accordion selectionMode='multiple'>
+      <h2 className='text-4xl font-bold m-10'>FAQ</h2>
+      <Accordion selectionMode='multiple' variant='shadow'>
         <AccordionItem key={1} aria-label='do-need-experience' title='Do I need experience?'>
           Nope! The Purdue Outing Club is geared towards beginners discovering the outdoor world and learning from 
           others along the way. 
@@ -107,12 +108,6 @@ export default function Home() {
           There are no meetings during the summer.
         </AccordionItem>
       </Accordion>
-      <Divider />
-      <h2 className='text-4xl m-10 font-bold'>JOIN HERE</h2>
-      <Button as={Link} className='bg-amber-400 text-amber-800 w-44 h-20 text-lg' href="/join" variant="flat">
-            Join
-      </Button>
-      <Divider className='mt-10' />
     </section>
   );
 }

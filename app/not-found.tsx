@@ -10,11 +10,11 @@ export default function NotFound() {
         width={400}
         alt='Obi-Wan Kenobi'
         src='/archives.png'
-        className='mt-10'
+        className='my-12'
       />
-      <p className='m-10'>Could not find requested resource</p>
-      <Button as={Link} className='bg-amber-400 text-amber-800' href="/" variant="flat">
-            Return Home
+      <p className='my-10'>Looks like you've lost track of the trail. </p>
+      <Button as={Link} className='bg-amber-400 text-amber-800 my-10' href="/" variant="flat">
+            Return To Base Camp
       </Button>
     </div>
   )

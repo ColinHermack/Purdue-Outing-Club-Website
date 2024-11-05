@@ -13,6 +13,8 @@ import { link as linkStyles } from "@nextui-org/theme";
 import NextLink from "next/link";
 import clsx from "clsx";
 
+import { ThemeSwitch } from './theme-switch';
+
 import { siteConfig } from "@/config/site";
 import {Logo} from "@/components/icons";
 
@@ -23,7 +25,7 @@ export const Navbar = () => {
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
             <Logo />
-            <p className="font-bold text-white">Purdue Outing Club</p>
+            <p className="font-bold">Purdue Outing Club</p>
           </NextLink>
         </NavbarBrand>
         <ul className="hidden lg:flex gap-4 justify-start ml-2">
@@ -45,6 +47,7 @@ export const Navbar = () => {
       </NavbarContent>
       
       <NavbarContent className="hidden lg:flex justify-center items-center" justify="end">
+        <ThemeSwitch />
         <NavbarItem>
           <Button as={Link} className='bg-amber-400 text-amber-800' href="/join" variant="flat">
             Join
@@ -53,6 +56,7 @@ export const Navbar = () => {
       </NavbarContent>
 
       <NavbarContent className="lg:hidden basis-1 pl-4" justify="end">
+        <ThemeSwitch className='mr-10'/>
         <NavbarMenuToggle />
       </NavbarContent>
 
@@ -61,7 +65,7 @@ export const Navbar = () => {
           {siteConfig.navMenuItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>
               <Link
-                className='text-white'
+                color={"foreground"}
                 href={item.href}
                 size="lg"
               >

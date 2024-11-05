@@ -5,12 +5,12 @@ export const siteConfig = {
   description: "The official website of the Purdue Outing Club",
   navItems: [
     {
-      label: "Home",
-      href: "/",
-    },
-    {
       label: "Calendar",
       href: "/calendar",
+    },
+    {
+      label: "News",
+      href: "/news"
     },
     {
       label: "Pleadership",
@@ -29,6 +29,10 @@ export const siteConfig = {
     {
       label: "Calendar",
       href: "/calendar",
+    },
+    {
+      label: "News",
+      href: "/news"
     },
     {
       label: "Pleadership",

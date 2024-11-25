@@ -1,4 +1,4 @@
-export default function CalendarLayout({
+export default function PleadershipLayout({
     children,
   }: {
     children: React.ReactNode;
@@ -10,4 +10,4 @@ export default function CalendarLayout({
         </div>
       </section>
     );
-  }
+  }  

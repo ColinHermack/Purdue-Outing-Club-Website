@@ -67,14 +67,14 @@ export const Navbar = () => {
               <Link
                 color={"foreground"}
                 href={item.href}
-                size="lg"
+                className='text-2xl font-semibold m-2'
               >
                 {item.label}
               </Link>
             </NavbarMenuItem>
           ))}
           <NavbarMenuItem key='join'>
-            <Link className='text-amber-400' href='/join' size='lg'>Join</Link>
+            <Link className='text-amber-400 font-semibold text-2xl m-2' href='/join'>Join</Link>
           </NavbarMenuItem>
         </div>
       </NavbarMenu>

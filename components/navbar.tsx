@@ -1,3 +1,5 @@
+'use client'
+
 import {
   Navbar as NextUINavbar,
   NavbarContent,
@@ -14,13 +16,20 @@ import NextLink from "next/link";
 import clsx from "clsx";
 
 import { ThemeSwitch } from './theme-switch';
+import {useState} from 'react';
 
 import { siteConfig } from "@/config/site";
 import {Logo} from "@/components/icons";
 
 export const Navbar = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   return (
-    <NextUINavbar position="sticky" className="flex p-2">
+    <NextUINavbar 
+      position="sticky" 
+      className="flex p-2"
+      isMenuOpen={isMenuOpen}
+      onMenuOpenChange={setIsMenuOpen}
+      >
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
@@ -68,6 +77,7 @@ export const Navbar = () => {
                 color={"foreground"}
                 href={item.href}
                 className='text-2xl font-semibold m-2'
+                onPress={() => setIsMenuOpen(!isMenuOpen)}
               >
                 {item.label}
               </Link>

@@ -1,3 +1,5 @@
+'use server'
+
 const { Pool, QueryResult } = require('pg');  //PostgreSQL
 
 const pool = new Pool({

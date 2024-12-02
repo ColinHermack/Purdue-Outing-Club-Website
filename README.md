@@ -1,6 +1,8 @@
 # Purdue Outing Club Website
 
-This is a full-stack web application used for the management of Purdue Outing Club trip and member data.
+This is a template for creating applications using Next.js 14 (app directory) and NextUI (v2).
+
+[Try it on CodeSandbox](https://githubbox.com/nextui-org/next-app-template)
 
 ## Technologies Used
 

@@ -5,7 +5,7 @@ import {Image} from "@nextui-org/image";
 export default function NotFound() {
   return (
     <div className='flex flex-col justify-top items-center'>
-      <div className="text-5xl text-amber-400 font-bold text-center">ERROR 404</div>
+      <h1 className='text-5xl text-amber-400 font-bold'>Error 404</h1>
       <Image
         width={400}
         alt='Obi-Wan Kenobi'

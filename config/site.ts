@@ -50,7 +50,7 @@ export const siteConfig = {
   footerItems: [
     {
       label: "Constitution",
-      href: "/constitution"
+      href: "/docs/poc_constitution.pdf"
     },
     {
       label: "Diversity and Inclusion",

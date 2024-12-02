@@ -1,7 +1,7 @@
 "use client"
 
 import { Image } from "@nextui-org/image";
-import { Divider } from "@nextui-org/divider";
+import { title } from "@/components/primitives";
 import { Accordion, AccordionItem } from "@nextui-org/accordion";
 import { Button } from "@nextui-org/button";
 import { Link } from "@nextui-org/link";

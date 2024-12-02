@@ -7,7 +7,7 @@ export default async function Pleadership() {
 
     return (
         <div className='flex flex-col justify-top items-center'>
-            <h1 className='text-5xl text-amber-400 font-bold'>Pleadership</h1>
+            <h1 className={title()}>Pleadership</h1>
             <p className='mt-4'>
                 It takes a lot of people to keep one of the largest clubs on campus running! Click on anyone's picture
                 below to contact them.

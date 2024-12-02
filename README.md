@@ -35,3 +35,19 @@ npm install
 ```bash
 npm run dev
 ```
+
+## Contributors
+
+* Colin Hermack (Webmaster Fall 2024/Spring 2025)
+    * Designed/developed all frontend and backend software
+    * Deployed the site
+    * Currently maintains the site
+    * Coordinated website development
+* Arjun Khandelwal (Data Analyst Fall 2024/Treasurer Spring 2025)
+    * Designed/developed the database portion of the backend
+    * Designed various forms for backend data handling
+* Colin Newton (Treasurer Fall 2023/Spring 2024/Fall 2024)
+    * Oversaw all development activities
+    * Designed and built backend forms, macros, and data pipelines.
+* Ainsley Yates (Data Analyst Spring 2025)
+    * Maintains the database portion of the backend

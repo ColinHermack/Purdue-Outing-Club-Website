@@ -7,7 +7,7 @@ export default async function Pleadership() {
 
     return (
         <div className='flex flex-col justify-top items-center'>
-            <h1 className={title()}>Pleadership</h1>
+            <h1 className="text-5xl text-amber-400 font-bold text-center">Pleadership</h1>
             <p className='mt-4'>
                 It takes a lot of people to keep one of the largest clubs on campus running! Click on anyone's picture
                 below to contact them.
@@ -15,7 +15,7 @@ export default async function Pleadership() {
             <div className='flex flex-col w-screen justify-top items-center text-xl'>
                 {data.map((item) => {
                     return(<div>
-                        <h2 className='m-12 text-2xl font-bold'>{item.label}</h2>
+                        <h2 className='m-12 text-2xl font-bold text-amber-400'>{item.label}</h2>
                         <div className='w-full flex flex-wrap justify-center items-center'>
                             {item.content.map(currOfficer => {
                                 return (

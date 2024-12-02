@@ -17,26 +17,8 @@ export const siteConfig = {
       href: "/pleadership",
     },
     {
-      label: "Gear Closet",
-      href: "/gearcloset",
-    },
-    {
-      label: "POCAR",
-      href: "/pocar",
-    },
-  ],
-  navMenuItems: [
-    {
-      label: "Calendar",
-      href: "/calendar",
-    },
-    {
-      label: "News",
-      href: "/news"
-    },
-    {
-      label: "Pleadership",
-      href: "/pleadership",
+      label: "FAQ",
+      href: "/faq"
     },
     {
       label: "Gear Closet",

@@ -1,7 +1,6 @@
 "use client"
 
 import { Image } from "@nextui-org/image";
-import { title } from "@/components/primitives";
 import { Accordion, AccordionItem } from "@nextui-org/accordion";
 import { Button } from "@nextui-org/button";
 import { Link } from "@nextui-org/link";
@@ -31,7 +30,7 @@ export default function Home() {
         />
       </div>
       <p className="m-10 text-center">
-        The Purdue Outing Club is involved with any activity that involves the outdoors. It is a place for people who 
+        The Purdue Outing Club is involved with any activity that takes place in the outdoors. It is a place for people who 
         enjoy the outdoors to meet each other and have fun. The club is open to Purdue University students as members, 
         but we often communicate with alumni and outdoor professionals across the country.
       </p>
@@ -41,11 +40,44 @@ export default function Home() {
         height={200}
         className='mb-10 rounded-lg'
       />
+
+      <Accordion selectionMode='multiple' defaultExpandedKeys={[1]}>
+        <AccordionItem key={1} aria-label='what-is-the-poc' title='What is the Purdue Outing Club?'>
+          The Purdue Outing Club is pretty much involved with almost any activity that takes place in the outdoors. 
+          Rock climbing, whitewater kayaking, backpacking, hiking, mountaineering, and caving are our main activities, 
+          but trips are certainly not limited to that.  The Outing Club functions as a place for people who enjoy the 
+          outdoors to meet each other and have fun.  The club is very informal and anyone is welcome at anytime. 
+          At our meetings, we go over any business we need to take care of, then talk about past trips - 
+          usually ones that went out the previous weekend. We talk about new trips that are going to be going out 
+          during the coming weekend, or anytime in the future.
+        </AccordionItem>
+        <AccordionItem key={2} aria-label='do-need-experience' title='Do I need experience?'>
+          Nope! The Purdue Outing Club is geared towards beginners discovering the outdoor world and learning from 
+          others along the way. 
+        </AccordionItem>
+        <AccordionItem key={3} aria-label='do-need-gear' title='Do I need gear?'>
+          Besides personal clothing and footwear, the club owns almost all of the gear that you would need for any club
+          trip. See the gear closet page for more information.
+        </AccordionItem>
+        <AccordionItem key={4} aria-label='how-much-cost' title='How much does it cost?'>
+          The club dues are $25 for one semester or $30 for the entire year. With a paid membership, you can join any 
+          official Outing Club trip with gear rental included! The only additional costs are for gas and sometimes park
+          fees, as well as any food you may choose to purchase on the trip.
+        </AccordionItem>
+        <AccordionItem key={5} aria-label='where-meet' title='Where do we meet?'>
+          Meetings are held Mondays at 7:00 PM in the Howard Taylor Conference Room of the CoRec. From the front 
+          entrace, instead of swiping in at the front desk, turn left directly before the front desk and walk down the 
+          hallway. The room will be on your left. Any changes to meeting times will be announced through Slack.
+          There are no meetings during the summer.
+        </AccordionItem>
+      </Accordion>
+
       <Button as={Link} className='bg-amber-400 text-amber-800 w-44 h-20 text-lg m-12 rounded-3xl' href="/join" variant="flat">
             Join
       </Button>
+
       <h2 className='text-4xl m-10 font-bold'>SPORTS</h2>
-      <Accordion selectionMode='multiple' variant='shadow'>
+      <Accordion selectionMode='multiple'>
         <AccordionItem key={1} aria-label='Backpacking' title='Backpacking'>
           Backpacking is an outdoor activity wherein a participant packs all of his or her gear into a backpack. This gear
           may include food, water, and shelter, or the means to obtain them, and often little else. Since each item must 
@@ -90,22 +122,6 @@ export default function Home() {
           challenges that are not present during the rest of the year, like dealing with freezing water, heavy snow,
           or otherwise inclement weather. The Purdue Outing Club generally offers snowshoeing, cross-country skiing, and
           winter backpacking.
-        </AccordionItem>
-      </Accordion>
-      <h2 className='text-4xl font-bold m-10'>FAQ</h2>
-      <Accordion selectionMode='multiple' variant='shadow'>
-        <AccordionItem key={1} aria-label='do-need-experience' title='Do I need experience?'>
-          Nope! The Purdue Outing Club is geared towards beginners discovering the outdoor world and learning from 
-          others along the way. 
-        </AccordionItem>
-        <AccordionItem key={2} aria-label='how-much-cost' title='How much does it cost?'>
-          The club dues are $25 for one semester or $30 for the entire year. With a paid membership, you can join any official Outing Club trip with gear rental included!
-        </AccordionItem>
-        <AccordionItem key={3} aria-label='where-meet' title='Where do we meet?'>
-          Meetings are held Mondays at 7:00 PM in the Howard Taylor Conference Room of the CoRec. From the front 
-          entrace, instead of swiping in at the front desk, turn left directly before the front desk and walk down the 
-          hallway. The room will be on your left. Any changes to meeting times will be announced through Slack.
-          There are no meetings during the summer.
         </AccordionItem>
       </Accordion>
     </section>

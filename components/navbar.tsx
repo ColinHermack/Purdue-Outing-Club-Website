@@ -56,7 +56,7 @@ export const Navbar = () => {
       </NavbarContent>
       
       <NavbarContent className="hidden lg:flex justify-center items-center" justify="end">
-        <ThemeSwitch />
+        <ThemeSwitch className='mr-10' />
         <NavbarItem>
           <Button as={Link} className='bg-amber-400 text-amber-800' href="/join" variant="flat">
             Join

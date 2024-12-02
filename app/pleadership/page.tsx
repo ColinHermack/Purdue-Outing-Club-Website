@@ -2,7 +2,7 @@ import { title } from "@/components/primitives";
 import { getLeaderData } from '@/utils/leadership';
 import Image from 'next/image';
 
-export default async function AboutPage() {
+export default async function Pleadership() {
     const data = await getLeaderData();
 
     return (
@@ -26,13 +26,15 @@ export default async function AboutPage() {
                                             <h4 className="font-bold text-large">{currOfficer.position}</h4>
                                         </div>
                                         <div className="relative w-[200px] h-[200px]">
-                                            <Image
-                                                alt={currOfficer.name}
-                                                className="rounded-xl object-cover"
-                                                src={`/leadership/${currOfficer.officer_data.ImagePath}`}
-                                                fill={true}
-                                                sizes='200px'
-                                            />
+                                            <a href={`mailto:${currOfficer.email}`}>
+                                                <Image
+                                                    alt={currOfficer.name}
+                                                    className="rounded-xl object-cover"
+                                                    src={`/leadership/${currOfficer.officer_data.ImagePath}`}
+                                                    fill={true}
+                                                    sizes='200px'
+                                                />
+                                            </a>
                                         </div>
 
                                     </div>

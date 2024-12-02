@@ -36,7 +36,7 @@ export const Footer = () => {
                   >{socialMediaIcons[index]}</NextLink>
                 ))}
               </div>
-              <div className='m-4'><Link href={siteConfig.navItems[0].href}><Logo/></Link></div>
+              <div className='m-4'><Link href='/'><Logo/></Link></div>
               <div className='m-4'>© 2024 Colin Hermack, Purdue Outing Club</div>
         </footer>
     );

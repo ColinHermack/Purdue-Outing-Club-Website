@@ -1,4 +1,4 @@
-# Next.js & NextUI Template
+# Purdue Outing Club Website
 
 This is a template for creating applications using Next.js 14 (app directory) and NextUI (v2).
 
@@ -16,17 +16,17 @@ This is a template for creating applications using Next.js 14 (app directory) an
 
 ## How to Use
 
-### Use the template with create-next-app
+### Clone the GitHub repository
 
-To create a new project based on this template using `create-next-app`, run the following command:
+Begin by cloning the GitHub repository into a local directory.
 
 ```bash
-npx create-next-app -e https://github.com/nextui-org/next-app-template
+git clone https://github.com/ColinHermack/Outing-Club-Website-Prototype
 ```
 
 ### Install dependencies
 
-You can use one of them `npm`, `yarn`, `pnpm`, `bun`, Example using `npm`:
+Run the following command:
 
 ```bash
 npm install
@@ -37,17 +37,3 @@ npm install
 ```bash
 npm run dev
 ```
-
-### Setup pnpm (optional)
-
-If you are using `pnpm`, you need to add the following code to your `.npmrc` file:
-
-```bash
-public-hoist-pattern[]=*@nextui-org/*
-```
-
-After modifying the `.npmrc` file, you need to run `pnpm install` again to ensure that the dependencies are installed correctly.
-
-## License
-
-Licensed under the [MIT license](https://github.com/nextui-org/next-app-template/blob/main/LICENSE).

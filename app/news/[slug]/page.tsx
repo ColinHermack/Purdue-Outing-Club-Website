@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation'
-import { CustomMDX } from 'app/components/mdx'
-import { getProjects } from 'app/projects/utils'
-import { baseUrl } from 'app/sitemap'
+import { CustomMDX } from '@/components/mdx'
+import { getProjects } from '@/app/news/utils'
+import { BASE_URL } from '@/app/constants'
 import Link from 'next/link'
 import { FaGithub } from 'react-icons/fa';
 import { FaServer } from 'react-icons/fa';
@@ -14,7 +14,7 @@ export async function generateStaticParams() {
   }))
 }
 
-export function generateMetadata({ params }) {
+export function generateMetadata({ params }: any) {
   let post = getProjects().find((post) => post.slug === params.slug)
   if (!post) {
     return
@@ -28,7 +28,7 @@ export function generateMetadata({ params }) {
   } = post.metadata
   let ogImage = image
     ? image
-    : `${baseUrl}/og?title=${encodeURIComponent(title)}`
+    : `${BASE_URL}/og?title=${encodeURIComponent(title)}`
 
   return {
     title,
@@ -38,7 +38,7 @@ export function generateMetadata({ params }) {
       description,
       type: 'article',
       publishedTime,
-      url: `${baseUrl}/blog/${post.slug}`,
+      url: `${BASE_URL}/blog/${post.slug}`,
       images: [
         {
           url: ogImage,
@@ -54,7 +54,7 @@ export function generateMetadata({ params }) {
   }
 }
 
-export default function Blog({ params }) {
+export default function Blog({ params }: any) {
   let post = getProjects().find((post) => post.slug === params.slug)
 
   if (!post) {
@@ -75,9 +75,9 @@ export default function Blog({ params }) {
             dateModified: post.metadata.completedOn,
             description: post.metadata.summary,
             image: post.metadata.image
-              ? `${baseUrl}${post.metadata.image}`
+              ? `${BASE_URL}${post.metadata.image}`
               : `/og?title=${encodeURIComponent(post.metadata.title)}`,
-            url: `${baseUrl}/blog/${post.slug}`,
+            url: `${BASE_URL}/blog/${post.slug}`,
             author: {
               '@type': 'Person',
               name: 'Colin Hermack',

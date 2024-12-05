@@ -86,7 +86,7 @@ let leadershipCategories = [
     }
 ]
 
-export const getLeaderData = async () => {
+export async function getLeaderData() {
     interface BranchData {
         label: string,
         content: Officer[]

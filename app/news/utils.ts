@@ -3,7 +3,7 @@ import path from 'path'
 
 type Metadata = {
   title: string
-  completedOn: string
+  postedOn: string
   summary: string
   image?: string,
   github?: string,
@@ -51,6 +51,6 @@ function getMDXData(dir: string) {
   })
 }
 
-export function getProjects() {
+export function getPosts() {
   return getMDXData(path.join(process.cwd(), 'app', 'news', 'posts'))
 }

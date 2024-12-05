@@ -72,7 +72,7 @@ export default function Home() {
         </AccordionItem>
       </Accordion>
 
-      <Button as={Link} className='bg-amber-400 text-amber-800 w-44 h-20 text-lg m-12 rounded-3xl' href="/join" variant="flat">
+      <Button as={Link} className='bg-amber-400 text-black w-44 h-20 text-lg m-12 rounded-3xl font-bold' href="/join" variant="flat">
             Join
       </Button>
 

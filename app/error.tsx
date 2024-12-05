@@ -23,6 +23,7 @@ export default function Error({
           // Attempt to recover by trying to re-render the segment
           () => reset()
         }
+        className='bg-amber-400 text-black w-44 h-20 text-lg m-12 rounded-3xl font-bold'
       >
         Try again
       </button>

@@ -1,5 +1,3 @@
-import { title } from "@/components/primitives";
-
 export default function CalendarPage() {
   return (
     <div className='flex flex-col justify-top items-center'>

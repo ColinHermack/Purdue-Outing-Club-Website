@@ -1,13 +1,12 @@
 import { notFound } from 'next/navigation'
-import { CustomMDX } from '@/components/mdx'
-import { getProjects } from '@/app/news/utils'
+import { getPosts } from '@/app/news/utils'
 import { BASE_URL } from '@/app/constants'
 import Link from 'next/link'
 import { FaGithub } from 'react-icons/fa';
 import { FaServer } from 'react-icons/fa';
 
 export async function generateStaticParams() {
-  let projects = getProjects()
+  let projects = getPosts()
 
   return projects.map((curr) => ({
     slug: curr.slug,
@@ -15,14 +14,14 @@ export async function generateStaticParams() {
 }
 
 export function generateMetadata({ params }: any) {
-  let post = getProjects().find((post) => post.slug === params.slug)
+  let post = getPosts().find((post) => post.slug === params.slug)
   if (!post) {
     return
   }
 
   let {
     title,
-    completedOn: publishedTime,
+    postedOn: publishedTime,
     summary: description,
     image,
   } = post.metadata
@@ -55,7 +54,7 @@ export function generateMetadata({ params }: any) {
 }
 
 export default function Blog({ params }: any) {
-  let post = getProjects().find((post) => post.slug === params.slug)
+  let post = getPosts().find((post) => post.slug === params.slug)
 
   if (!post) {
     notFound()
@@ -71,8 +70,8 @@ export default function Blog({ params }: any) {
             '@context': 'https://schema.org',
             '@type': 'BlogPosting',
             headline: post.metadata.title,
-            datePublished: post.metadata.completedOn,
-            dateModified: post.metadata.completedOn,
+            datePublished: post.metadata.postedOn,
+            dateModified: post.metadata.postedOn,
             description: post.metadata.summary,
             image: post.metadata.image
               ? `${BASE_URL}${post.metadata.image}`
@@ -85,16 +84,13 @@ export default function Blog({ params }: any) {
           }),
         }}
       />
-      <h1 className="title font-semibold text-2xl tracking-tighter">
+      <h1 className="text-5xl text-amber-400 font-bold text-center">
         {post.metadata.title}
       </h1>
-      <div className='mt-4 text-xl flex flex-row content-left items-center'>
-        {post.metadata.github ? <div className='hover:text-neutral-600 mr-8 transition-all'><Link href={post.metadata.github}><FaGithub /></Link></div> : null}
-        {post.metadata.deployment ? <div className='hover:text-neutral-600 transition-all'><Link href={post.metadata.deployment}><FaServer /></Link></div> : null}
-      </div>
-      <p className='mt-4 mb-4'>{post.metadata.summary}</p>
-      <article className="prose">
-        <CustomMDX source={post.content} />
+      <p className='mt-2 text-left font-bold text-neutral-400 text-xs'>{post.metadata.postedOn}</p>
+      <p className='my-8'>{post.metadata.summary}</p>
+      <article className="prose dark:prose-invert prose-a:text-amber-400 prose-a:no-underline text-left">
+        {post.content}
       </article>
     </section>
   )

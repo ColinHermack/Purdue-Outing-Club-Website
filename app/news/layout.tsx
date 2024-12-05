@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function CalendarLayout({
+export default function NewsLayout({
     children,
   }: {
     children: React.ReactNode;

@@ -4,8 +4,22 @@ import { Image } from "@nextui-org/image";
 import { Accordion, AccordionItem } from "@nextui-org/accordion";
 import { Button } from "@nextui-org/button";
 import { Link } from "@nextui-org/link";
+import { useState, useEffect } from 'react'
+import {Spinner} from "@nextui-org/spinner";
+import {Divider} from "@nextui-org/divider";
 
 export default function Home() {
+  const [recentNews, setRecentNews] = useState([]);
+
+  useEffect(() => {
+    async function fetchNews() {
+      const response = await fetch('/api/news/recent');
+      const data = await response.json();
+      setRecentNews(data);
+    }
+    fetchNews();
+  }, []);
+
   return (
     <section className="flex flex-col items-center justify-top">
       <div className="text-5xl text-amber-400 font-bold text-center">PURDUE OUTING CLUB</div>
@@ -41,6 +55,31 @@ export default function Home() {
         className='mb-10 rounded-lg'
       />
 
+      <Divider className='my-5'/>
+
+      <h2 className='text-4xl m-10 font-bold'>NEWS</h2>
+      <div className='mb-10'>
+        {(recentNews.length > 0) ? recentNews.map((post: any) => {
+          return (
+            <Link
+              key={post.slug}
+              className="flex flex-col space-y-1 mb-4 text-black"
+              href={`/news/${post.slug}`}
+            >
+              <div className="w-full flex flex-col rounded transition-all duration-300 pt-2 pb-2 hover:bg-neutral-300/25 hover:pl-2 hover:shadow dark:hover:bg-neutral-500/10">
+                <h2 className="font-semibold tracking-tight">
+                  {post.title}
+                </h2>
+                <p className='max-w-[95%]'>{post.summary}</p>
+              </div>
+            </Link>
+          )
+        }) : <Spinner color='default' /> }
+      </div>
+
+      <Divider className='my-5'/>
+
+      <h2 className='text-4xl m-10 font-bold'>FAQ</h2>
       <Accordion selectionMode='multiple' defaultExpandedKeys={[1]}>
         <AccordionItem key={1} aria-label='what-is-the-poc' title='What is the Purdue Outing Club?'>
           The Purdue Outing Club is pretty much involved with almost any activity that takes place in the outdoors. 
@@ -71,10 +110,6 @@ export default function Home() {
           There are no meetings during the summer.
         </AccordionItem>
       </Accordion>
-
-      <Button as={Link} className='bg-amber-400 text-black w-44 h-20 text-lg m-12 rounded-3xl font-bold' href="/join" variant="flat">
-            Join
-      </Button>
 
       <h2 className='text-4xl m-10 font-bold'>SPORTS</h2>
       <Accordion selectionMode='multiple'>
@@ -124,6 +159,12 @@ export default function Home() {
           winter backpacking.
         </AccordionItem>
       </Accordion>
+      
+      <Divider className='my-5' />
+
+      <Button as={Link} className='bg-amber-400 text-black w-44 h-20 text-lg m-12 rounded-3xl font-bold' href="/join" variant="flat">
+            Join
+      </Button>
     </section>
   );
 }

@@ -32,7 +32,7 @@ export function NewsArticles() {
 }
 
 interface IRecentProjectProps {
-  numProjects: number
+  numPosts: number
 }
 
 export function RecentNews(props: IRecentProjectProps) {
@@ -47,7 +47,7 @@ export function RecentNews(props: IRecentProjectProps) {
                 return 1
                 
               })
-            .slice(0, props.numProjects)
+            .slice(0, props.numPosts)
             .map((project) => (
               <Link
                 key={project.slug}

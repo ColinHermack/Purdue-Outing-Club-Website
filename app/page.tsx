@@ -63,7 +63,7 @@ export default function Home() {
           return (
             <Link
               key={post.slug}
-              className="flex flex-col space-y-1 mb-4 text-black"
+              className="flex flex-col space-y-1 mb-4 text-black dark:text-white"
               href={`/news/${post.slug}`}
             >
               <div className="w-full flex flex-col rounded transition-all duration-300 pt-2 pb-2 hover:bg-neutral-300/25 hover:pl-2 hover:shadow dark:hover:bg-neutral-500/10">

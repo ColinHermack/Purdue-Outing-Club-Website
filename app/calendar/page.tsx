@@ -1,3 +1,8 @@
+export const metadata = {
+  title: 'Calendar',
+  description: 'Calendar of events from the Purdue Outing Club.',
+}
+
 export default function CalendarPage() {
   return (
     <div className='flex flex-col justify-top items-center'>

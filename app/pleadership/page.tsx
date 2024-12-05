@@ -1,6 +1,10 @@
-import { title } from "@/components/primitives";
 import { getLeaderData } from '@/utils/leadership';
 import Image from 'next/image';
+
+export const metadata = {
+    title: 'Pleadership',
+    description: 'Officers and leadership of the Purdue Outing Club.',
+  }
 
 export default async function Pleadership() {
     const data = await getLeaderData();

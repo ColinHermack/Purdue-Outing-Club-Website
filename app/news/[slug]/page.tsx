@@ -1,14 +1,11 @@
 import { notFound } from 'next/navigation'
 import { getPosts } from '@/app/news/utils'
 import { BASE_URL } from '@/app/constants'
-import Link from 'next/link'
-import { FaGithub } from 'react-icons/fa';
-import { FaServer } from 'react-icons/fa';
 
 export async function generateStaticParams() {
-  let projects = getPosts()
+  let posts = getPosts()
 
-  return projects.map((curr) => ({
+  return posts.map((curr) => ({
     slug: curr.slug,
   }))
 }
@@ -43,17 +40,11 @@ export function generateMetadata({ params }: any) {
           url: ogImage,
         },
       ],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-      images: [ogImage],
-    },
+    }
   }
 }
 
-export default function Blog({ params }: any) {
+export default function NewsPost({ params }: any) {
   let post = getPosts().find((post) => post.slug === params.slug)
 
   if (!post) {
@@ -84,11 +75,12 @@ export default function Blog({ params }: any) {
           }),
         }}
       />
-      <h1 className="text-5xl text-amber-400 font-bold text-center">
+      <h1 className="text-5xl text-amber-400 font-bold text-left">
         {post.metadata.title}
       </h1>
       <p className='mt-2 text-left font-bold text-neutral-400 text-xs'>{post.metadata.postedOn}</p>
-      <p className='my-8'>{post.metadata.summary}</p>
+      <p className='mt-2 text-left font-bold text-neutral-400 text-xs'>Written by {post.metadata.author}</p>
+      <p className='my-8 text-left'>{post.metadata.summary}</p>
       <article className="prose dark:prose-invert prose-a:text-amber-400 prose-a:no-underline text-left">
         {post.content}
       </article>

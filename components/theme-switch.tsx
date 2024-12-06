@@ -6,8 +6,7 @@ import { SwitchProps, useSwitch } from "@nextui-org/switch";
 import { useTheme } from "next-themes";
 import { useIsSSR } from "@react-aria/ssr";
 import clsx from "clsx";
-
-import { FaSun, FaMoon } from 'react-icons/fa';
+import { FaSun, FaMoon } from "react-icons/fa";
 
 export interface ThemeSwitchProps {
   className?: string;
@@ -70,11 +69,7 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({
           ),
         })}
       >
-        {!isSelected || isSSR ? (
-          <FaSun />
-        ) : (
-          <FaMoon />
-        )}
+        {!isSelected || isSSR ? <FaSun /> : <FaMoon />}
       </div>
     </Component>
   );

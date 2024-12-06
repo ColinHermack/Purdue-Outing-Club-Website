@@ -10,11 +10,11 @@ export const siteConfig = {
     },
     {
       label: "News",
-      href: "/news"
+      href: "/news",
     },
     {
       label: "Trips",
-      href: "/trips"
+      href: "/trips",
     },
     {
       label: "Pleadership",
@@ -22,7 +22,7 @@ export const siteConfig = {
     },
     {
       label: "FAQ",
-      href: "/faq"
+      href: "/faq",
     },
     {
       label: "Gear Closet",
@@ -31,58 +31,58 @@ export const siteConfig = {
     {
       label: "POCAR",
       href: "/pocar",
-    }
+    },
   ],
   footerItems: [
     {
       label: "Constitution",
-      href: "/docs/poc_constitution.pdf"
+      href: "/docs/poc_constitution.pdf",
     },
     {
       label: "Diversity and Inclusion",
-      href: "/diversity"
+      href: "/diversity",
     },
     {
       label: "Trip Leaders",
-      href: "/trip-leaders"
+      href: "/trip-leaders",
     },
     {
       label: "Elections",
-      href: "/elections"
+      href: "/elections",
     },
     {
       label: "Alumni",
-      href: "/alumni"
+      href: "/alumni",
     },
     {
       label: "Sponsorship",
-      href: "/sponsorship"
-    }
+      href: "/sponsorship",
+    },
   ],
   links: [
     {
-      label: 'instagram',
-      href: 'https://www.instagram.com/purdue.outing.club/'
+      label: "instagram",
+      href: "https://www.instagram.com/purdue.outing.club/",
     },
     {
-      label: 'youtube',
-      href: 'https://www.youtube.com/@TheOutingClub'
+      label: "youtube",
+      href: "https://www.youtube.com/@TheOutingClub",
     },
     {
-      label: 'facebook',
-      href: 'https://www.facebook.com/groups/PurdueOutingClub/'
+      label: "facebook",
+      href: "https://www.facebook.com/groups/PurdueOutingClub/",
     },
     {
-      label: 'slack',
-      href: 'https://purdueouting.slack.com/'
+      label: "slack",
+      href: "https://purdueouting.slack.com/",
     },
     {
-      label: 'linkedin',
-      href: 'https://www.linkedin.com/company/purdueoutingclub/about/'
+      label: "linkedin",
+      href: "https://www.linkedin.com/company/purdueoutingclub/about/",
     },
     {
-      'label': 'boilerlink',
-      'href': 'https://boilerlink.purdue.edu/organization/outingclub'
-    }
+      label: "boilerlink",
+      href: "https://boilerlink.purdue.edu/organization/outingclub",
+    },
   ],
 };

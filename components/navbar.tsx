@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import {
   Navbar as NextUINavbar,
@@ -14,22 +14,23 @@ import { Link } from "@nextui-org/link";
 import { link as linkStyles } from "@nextui-org/theme";
 import NextLink from "next/link";
 import clsx from "clsx";
+import { useState } from "react";
 
-import { ThemeSwitch } from './theme-switch';
-import {useState} from 'react';
+import { ThemeSwitch } from "./theme-switch";
 
 import { siteConfig } from "@/config/site";
-import {Logo} from "@/components/icons";
+import { Logo } from "@/components/icons";
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
-    <NextUINavbar 
-      position="sticky" 
+    <NextUINavbar
       className="flex p-2"
       isMenuOpen={isMenuOpen}
+      position="sticky"
       onMenuOpenChange={setIsMenuOpen}
-      >
+    >
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
@@ -54,18 +55,26 @@ export const Navbar = () => {
           ))}
         </ul>
       </NavbarContent>
-      
-      <NavbarContent className="hidden lg:flex justify-center items-center" justify="end">
-        <ThemeSwitch className='mr-10' />
+
+      <NavbarContent
+        className="hidden lg:flex justify-center items-center"
+        justify="end"
+      >
+        <ThemeSwitch className="mr-10" />
         <NavbarItem>
-          <Button as={Link} className='bg-amber-400 text-black font-bold' href="/join" variant="flat">
+          <Button
+            as={Link}
+            className="bg-amber-400 text-black font-bold"
+            href="/join"
+            variant="flat"
+          >
             Join
           </Button>
         </NavbarItem>
       </NavbarContent>
 
       <NavbarContent className="lg:hidden basis-1 pl-4" justify="end">
-        <ThemeSwitch className='mr-10'/>
+        <ThemeSwitch className="mr-10" />
         <NavbarMenuToggle />
       </NavbarContent>
 
@@ -74,17 +83,22 @@ export const Navbar = () => {
           {siteConfig.navItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>
               <Link
+                className="text-2xl font-semibold m-2"
                 color={"foreground"}
                 href={item.href}
-                className='text-2xl font-semibold m-2'
                 onPress={() => setIsMenuOpen(!isMenuOpen)}
               >
                 {item.label}
               </Link>
             </NavbarMenuItem>
           ))}
-          <NavbarMenuItem key='join'>
-            <Link className='text-amber-400 font-semibold text-2xl m-2' href='/join'>Join</Link>
+          <NavbarMenuItem key="join">
+            <Link
+              className="text-amber-400 font-semibold text-2xl m-2"
+              href="/join"
+            >
+              Join
+            </Link>
           </NavbarMenuItem>
         </div>
       </NavbarMenu>

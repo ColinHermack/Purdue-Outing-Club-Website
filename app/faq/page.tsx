@@ -46,18 +46,26 @@ export default function FAQPage() {
           key={5}
           aria-label='chain-of-command'
           title='Who can I talk to about general club concerns?'>
-            If you have a general concern about the club, you can contact the officer responsible for that area of 
-            concern by clicking on their picture on the <Link href='/pleadership' className='text-amber-400'>pleadership page</Link>.
+          If you have a general concern about the club, you can contact the officer responsible for that area of 
+          concern by clicking on their picture on the <Link href='/pleadership' className='text-amber-400'>pleadership page</Link>.
         </AccordionItem>
         <AccordionItem
           key={6}
           aria-label='trip-unsafe'
           title='If I went on a trip and felt unsafe, what should I do?'
         >
-            If you went on a club trip and felt as though you or someone else was put into an unsafe situation, you
-            can report it <Link className='text-amber-400' href='/safety-concern-report'>here</Link>. This information will only be shared with the
-            club safety committee. You have the option of remaining anonymous. If you choose to provide your name, it
-            may be used to follow up with you if necessary.
+          If you went on a club trip and felt as though you or someone else was put into an unsafe situation, you
+          can report it <Link className='text-amber-400' href='/safetyconcernreport'>here</Link>. This information will only be shared with the
+          club safety committee. You have the option of remaining anonymous. If you choose to provide your name, it
+          may be used to follow up with you if necessary.
+        </AccordionItem>
+        <AccordionItem
+          key={7}
+          aria-label='trip-unable-to-go'
+          title={'If I was selected for a trip but I\'m unable to go, what should I do?'}
+        >
+          If you were selected for a trip but you are unable to go on that trip, you should contact the trip leader 
+          as soon as possible so that they can select someone else to fill your spot.
         </AccordionItem>
       </Accordion>
 

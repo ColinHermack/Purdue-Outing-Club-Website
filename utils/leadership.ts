@@ -27,7 +27,7 @@ interface Officer {
   phone: string;
 }
 
-let leadershipCategories = [
+const leadershipCategories = [
   {
     branch: "Executive",
     positions: ["President", "Vice President"],
@@ -107,6 +107,35 @@ let leadershipCategories = [
     positions: ["Primary Advisor"],
   },
 ];
+
+export async function getLeaderDataByPosition(position: string): Promise<Officer | undefined> {
+  let result: typeof QueryResult = null;
+  const client = await pool.connect();
+
+  try {
+    result = await client.query(
+      `SELECT officer.position, 
+                officer.officer_data,
+                member.name, 
+                member.email, 
+                member.pronouns, 
+                member.phone
+            FROM officer
+            JOIN member ON officer.member_id = member.member_id
+            WHERE officer.position = $1;`,
+    [position]);
+  } catch (error: any) {
+    console.error(error);
+  } finally {
+    client.release();
+  }
+
+  if (result === null || result.rows.length === 0) {
+    return undefined;
+  } else {
+    return result.rows[0];
+  }
+}
 
 export async function getLeaderData() {
   interface BranchData {

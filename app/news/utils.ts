@@ -35,7 +35,7 @@ function getMDXFiles(dir: string) {
 }
 
 function readMDXFile(filePath: string) {
-  let rawContent = fs.readFileSync(filePath, "utf-8");
+  let rawContent = fs.readFileSync(filePath, "utf-8"); // eslint-disable-line
 
   return parseFrontmatter(rawContent);
 }

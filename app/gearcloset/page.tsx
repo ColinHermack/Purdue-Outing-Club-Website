@@ -52,7 +52,7 @@ export default function GearClosetPage() {
             </p>
 
             <Divider className='mt-10'/>
-            <h2 className='font-bold text-center w-3/4 my-10'>Gear Hours</h2>
+            <h2 className='font-bold text-center w-3/4 my-10 text-xl'>Gear Hours</h2>
             <Table aria-label='gear hours table' removeWrapper className='w-3/4'>
                 <TableHeader columns={columns}>
                     {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
@@ -67,7 +67,7 @@ export default function GearClosetPage() {
             </Table>
 
             <Divider className='mt-10'/>
-            <h2 className='font-bold text-center w-3/4 my-10'>Where is the gear closet?</h2>
+            <h2 className='font-bold text-center w-3/4 my-10 text-xl'>Where is the gear closet?</h2>
             <p className='text-center w-3/4'>
                 The gear closet is located on the bottom floor of the Corec. After swiping in, go down the main stairs
                 to the lowest level. Keep walking through the weight room past the treadmills and rowing machines until

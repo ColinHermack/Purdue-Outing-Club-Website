@@ -47,6 +47,10 @@ export const siteConfig = {
       href: "/trip-leaders",
     },
     {
+      label: "Merch",
+      href: "https://www.toocoolpurdue.com/TooCOOLPurdueWL/vECItemCatalogOrganizationItems/OrganizationItemsGallery.aspx?Organization=1231"
+    },
+    {
       label: "Elections",
       href: "/elections",
     },
@@ -55,9 +59,13 @@ export const siteConfig = {
       href: "/alumni",
     },
     {
-      label: "Sponsorship",
-      href: "/sponsorship",
+      label: "Club Connections",
+      href: "/connections",
     },
+    {
+      label: "Endowment",
+      href: "/endowment"
+    }
   ],
   links: [
     {

@@ -7,7 +7,6 @@ export default function JoinPage() {
     return (
         <div className='flex flex-col justify-top items-center'>
             <h1 className='text-5xl text-amber-400 font-bold text-center'>How to Join</h1>
-            <h2 className='font-bold text-center mt-4 text-xl'>Joining is easy.</h2>
 
             <p className='flex-left w-3/4 mt-5'>
                 Once you've paid dues, you will receive an email with further instructions. Either follow the instructions
@@ -131,6 +130,21 @@ export default function JoinPage() {
                 rel='noopener noreferrer'
             >
                 Instagram
+            </Button>
+
+            <Divider className='my-10' />
+            <h2 className='font-bold text-center text-xl'>First Aid Certifications</h2>
+            <p className='w-3/4 text-center'>
+                Do you have a CPR, first aid, lifeguarding, or other safety certification? Upload it below.
+            </p>
+            <Button
+                as={Link}
+                className='bg-amber-400 text-black font-bold mt-8'
+                href='https://forms.office.com/pages/responsepage.aspx?id=Ob0wQVN8nEGx5YdY1tY_IYsPEC-CwDJNo7LaWV5ygUJUMjM1RFc1RlBBNUNFMkZKTUdBWlVYTjFQVS4u&route=shorturl'
+                target='_blank'
+                rel='noopener noreferrer'
+            >
+                Submit Here
             </Button>
         </div>
     )

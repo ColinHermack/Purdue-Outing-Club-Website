@@ -217,8 +217,6 @@ export default function Home() {
         </AccordionItem>
       </Accordion>
 
-      <Divider className="my-5" />
-
       <Button
         as={Link}
         className="bg-amber-400 text-black w-44 h-20 text-lg m-12 rounded-3xl font-bold"

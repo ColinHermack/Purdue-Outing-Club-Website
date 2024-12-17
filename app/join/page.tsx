@@ -1,0 +1,138 @@
+import React from 'react';
+import { Button } from "@nextui-org/button";
+import { Link } from "@nextui-org/link";
+import { Divider } from '@nextui-org/divider';
+
+export default function JoinPage() {
+    return (
+        <div className='flex flex-col justify-top items-center'>
+            <h1 className='text-5xl text-amber-400 font-bold text-center'>How to Join</h1>
+            <h2 className='font-bold text-center mt-4 text-xl'>Joining is easy.</h2>
+
+            <p className='flex-left w-3/4 mt-5'>
+                Once you've paid dues, you will receive an email with further instructions. Either follow the instructions
+                in the email or continue with the remaining steps on this page.
+            </p>
+
+            <Divider className='my-10' />
+
+            <h2 className='font-bold text-center mb-4 text-xl'>Step 1: Pay Dues</h2>
+            <p className='flex-left w-3/4 text-center'>
+                If you receive need-based financial aid, your dues are eligible to be waived. Fill out the dues waiver,
+                and mark out all sensitive information other than your name and proof of financial aid receipt. Only the
+                POC treasurer and secretary of the treasury will have access to this information.
+            </p>
+            <Button 
+                as={Link}
+                className='bg-amber-400 text-black font-bold mt-10 mb-4'
+                href='https://www.toocoolpurdue.com/TooCOOLPurdueWL/vECItemCatalogOrganizationItems/OrganizationItemsGallery.aspx?Organization=1231'
+                target='_blank'
+                rel='noopener noreferrer'
+            >
+                Pay Dues
+            </Button>
+            <Button
+                as={Link}
+                className='bg-amber-400 text-black font-bold mt-4'
+                href='https://forms.office.com/r/SHebtBNcke'
+                target='_blank'
+                rel='noopener noreferrer'
+            >
+                Dues Waiver
+            </Button>
+
+            <Divider className='my-10' />
+            
+            <h2 className='font-bold text-center text-xl'>Step 2: Policy Agreement</h2>
+            <p className='w-3/4 text-center'>
+                Once you've payed dues, you must complete the club policy agreement before signing up for trips.
+            </p>
+            <Button
+                as={Link}
+                className='bg-amber-400 text-black font-bold mt-8'
+                href='https://forms.office.com/Pages/ResponsePage.aspx?id=Ob0wQVN8nEGx5YdY1tY_IYsPEC-CwDJNo7LaWV5ygUJUMktTMk9HWTBNVEcyQVZEUFJZNzE2SUU1MC4u'
+                target='_blank'
+                rel='noopener noreferrer'
+            >
+                Policy Agreement
+            </Button>
+
+            <Divider className='my-10' />
+
+            <h2 className='font-bold text-center text-xl'>Step 3: RecWell Waiver</h2>
+            <p className='w-3/4 text-center'>
+                Per university policy, you must complete a waiver for RecWell before joining the club.
+            </p>
+            <Button
+                as={Link}
+                className='bg-amber-400 text-black font-bold mt-8'
+                href='https://na2.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=6d628f57-6989-4bf9-8bd6-511f6a0d0250&env=na2&acct=9ad6adfd-6804-409b-91bc-173cbee909f9&v=2'
+                target='_blank'
+                rel='noopener noreferrer'
+            >
+                RecWell Waiver
+            </Button>
+
+            <Divider className='my-10' />
+
+            <h2 className='font-bold text-center text-xl'>Step 4 (Optional): Get Driver Certified</h2>
+            <p className='w-3/4 text-center'>
+                If you have a valid driver's license, you can fill out Purdue's RM01 form below and become certified to
+                drive a car on Outing Club trips. This will increase your likelihood of being selected for trips.
+            </p>
+            <Button
+                as={Link}
+                className='bg-amber-400 text-black font-bold mt-8'
+                href='https://na2.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=8a978c81-9a69-45d7-b3c0-9baa6718cff5&env=na2&acct=9ad6adfd-6804-409b-91bc-173cbee909f9&v=2'
+                target='_blank'
+                rel='noopener noreferrer'
+            >
+                RM01 Form
+            </Button>
+
+            <Divider className='my-10' />
+
+            <h2 className='font-bold text-center text-xl'>Step 5: Join the Mailing List</h2>
+            <p className='w-3/4 text-center'>
+                Click the button below to join the mailing list. Once your email client opens, just click send to 
+                sign up.
+            </p>
+            <Button
+                as={Link}
+                className='bg-amber-400 text-black font-bold mt-8'
+                href='mailto:listserv@lists.purdue.edu?body=SUBSCRIBE%20poc'
+                target='_blank'
+            >
+                Join Mailing List
+            </Button>
+
+            <Divider className='my-10' />
+
+            <h2 className='font-bold text-center text-xl'>Step 6: Stay Connected</h2>
+            <p className='w-3/4 text-center'>
+                Keep up with the latest Outing Club happenings by joining the Slack and following the club Instagram.
+            </p>
+
+            <Button
+                as={Link}
+                className='bg-amber-400 text-black font-bold mt-8'
+                href='https://purdueouting.slack.com/'
+                target='_blank'
+                rel='noopener noreferrer'
+            >
+                Slack
+            </Button>
+
+            <Button
+                as={Link}
+                className='bg-amber-400 text-black font-bold mt-8'
+                href='https://www.instagram.com/purdue.outing.club/'
+                target='_blank'
+                rel='noopener noreferrer'
+            >
+                Instagram
+            </Button>
+        </div>
+    )
+    
+}

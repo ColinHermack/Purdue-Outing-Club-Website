@@ -3,6 +3,9 @@ import { notFound } from "next/navigation";
 import { getPosts } from "@/app/news/utils";
 import { BASE_URL } from "@/app/constants";
 
+import { remark } from 'remark';
+import html from 'remark-html';
+
 export async function generateStaticParams() {
   let posts = getPosts();
 
@@ -46,12 +49,19 @@ export function generateMetadata({ params }: any) {
   };
 }
 
-export default function NewsPost({ params }: any) {
+export default async function NewsPost({ params }: any) {
   let post = getPosts().find((post) => post.slug === params.slug);
 
   if (!post) {
     notFound();
   }
+
+  const processedContent = await remark()
+    .use(html)
+    .process(post.content);
+
+  const contentHtml = processedContent.toString();
+  console.log(contentHtml);
 
   return (
     <section>
@@ -67,11 +77,7 @@ export default function NewsPost({ params }: any) {
             image: post.metadata.image
               ? `${BASE_URL}${post.metadata.image}`
               : `/og?title=${encodeURIComponent(post.metadata.title)}`,
-            url: `${BASE_URL}/blog/${post.slug}`,
-            author: {
-              "@type": "Person",
-              name: "Colin Hermack",
-            },
+            url: `${BASE_URL}/blog/${post.slug}`
           }),
         }}
         suppressHydrationWarning
@@ -87,9 +93,10 @@ export default function NewsPost({ params }: any) {
         Written by {post.metadata.author}
       </p>
       <p className="my-8 text-left">{post.metadata.summary}</p>
-      <article className="prose dark:prose-invert prose-a:text-amber-400 prose-a:no-underline text-left">
-        {post.content}
-      </article>
+      <article 
+        className="prose dark:prose-invert prose-a:text-amber-400 prose-a:no-underline text-left [&>p]:my-4 [&>ul]:list-disc [&>ul]:ml-8 [&>a]:text-red-400 [&>a]:underline" 
+        dangerouslySetInnerHTML={{ __html: contentHtml }} 
+      />
     </section>
   );
 }

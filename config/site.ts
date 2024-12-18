@@ -51,20 +51,16 @@ export const siteConfig = {
       href: "https://www.toocoolpurdue.com/TooCOOLPurdueWL/vECItemCatalogOrganizationItems/OrganizationItemsGallery.aspx?Organization=1231"
     },
     {
-      label: "Elections",
-      href: "/elections",
-    },
-    {
       label: "Alumni",
-      href: "/alumni",
+      href: "https://sites.google.com/view/purdueoutingclub-alumni/Welcome",
     },
     {
-      label: "Club Connections",
-      href: "/connections",
+      label: "Sponsorship",
+      href: "/sponsorship",
     },
     {
-      label: "Endowment",
-      href: "/endowment"
+      label: "Request Reimbursement",
+      href: "https://docs.google.com/forms/d/e/1FAIpQLSc_w1PuFjQ-N3QhX6uVUwwywuJ8HhHmjLUh40VyisTqj25hiA/viewform"
     }
   ],
   links: [

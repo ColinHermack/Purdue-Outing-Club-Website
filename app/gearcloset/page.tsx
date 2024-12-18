@@ -30,7 +30,6 @@ export default function GearClosetPage() {
             fetch('/api/gear/hours')
             .then(response => response.json())
             .then((data) => {
-                console.log(data);
                 setGearHours(data);
             })
         } catch (error) {

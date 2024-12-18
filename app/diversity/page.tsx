@@ -8,7 +8,6 @@ import {Image} from "@nextui-org/image";
 
 export default async function DiversityPage() {
     let diversityOfficerData = await getLeaderDataByPosition("Diversity & Community Outreach");
-    console.log(diversityOfficerData);
 
     return (
         <div className='flex flex-col items-center justify-center gap-4 md:py-10'>
@@ -58,7 +57,7 @@ export default async function DiversityPage() {
             <p className='text-center w-3/4'>
                 Contact our diversity and community outreach coordinator with questions or feedback for the club.
             </p>
-            {(diversityOfficerData !== undefined) ? <Link href={`mailto:${diversityOfficerData.email}`} className='text-amber-400'>{diversityOfficerData.name}</Link> : <></>}
+            {(diversityOfficerData !== undefined) ? <Link href={`mailto:${diversityOfficerData.email}`} className='text-amber-400 font-bold'>{diversityOfficerData.name}</Link> : <></>}
             {(diversityOfficerData !== undefined) ? 
                 <Image
                     alt="POC Diversity and Community Outreach Officer"

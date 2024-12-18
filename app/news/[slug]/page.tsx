@@ -61,7 +61,6 @@ export default async function NewsPost({ params }: any) {
     .process(post.content);
 
   const contentHtml = processedContent.toString();
-  console.log(contentHtml);
 
   return (
     <section>
@@ -94,7 +93,7 @@ export default async function NewsPost({ params }: any) {
       </p>
       <p className="my-8 text-left">{post.metadata.summary}</p>
       <article 
-        className="prose dark:prose-invert prose-a:text-amber-400 prose-a:no-underline text-left [&>p]:my-4 [&>ul]:list-disc [&>ul]:ml-8 [&>a]:text-red-400 [&>a]:underline" 
+        className="prose dark:prose-invert prose-a:text-amber-400 prose-a:no-underline text-left [&>p]:my-4 [&>ul]:list-disc [&>ul]:ml-8" 
         dangerouslySetInnerHTML={{ __html: contentHtml }} 
       />
     </section>

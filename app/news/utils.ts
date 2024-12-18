@@ -43,7 +43,7 @@ function readMDXFile(filePath: string) {
 function getMDXData(dir: string) {
   let mdxFiles = getMDXFiles(dir);
 
-  return mdxFiles.map((file) => {
+  let postsData = mdxFiles.map((file) => {
     let { metadata, content } = readMDXFile(path.join(dir, file));
     let slug = path.basename(file, path.extname(file));
 
@@ -53,6 +53,12 @@ function getMDXData(dir: string) {
       content,
     };
   });
+
+  postsData.sort((a, b) => {
+    return (new Date(b.metadata.postedOn).getTime() - new Date(a.metadata.postedOn).getTime());
+  })
+
+  return postsData;
 }
 
 export function getPosts() {

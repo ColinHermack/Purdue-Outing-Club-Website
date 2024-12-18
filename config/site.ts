@@ -44,7 +44,7 @@ export const siteConfig = {
     },
     {
       label: "Trip Leaders",
-      href: "/trip-leaders",
+      href: "/tripleaders",
     },
     {
       label: "Merch",

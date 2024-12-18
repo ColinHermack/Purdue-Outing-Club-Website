@@ -61,7 +61,7 @@ export default async function DiversityPage() {
             {(diversityOfficerData !== undefined) ? <Link href={`mailto:${diversityOfficerData.email}`} className='text-amber-400'>{diversityOfficerData.name}</Link> : <></>}
             {(diversityOfficerData !== undefined) ? 
                 <Image
-                    alt="NextUI hero Image"
+                    alt="POC Diversity and Community Outreach Officer"
                     src={`/leadership/${diversityOfficerData.officer_data.ImagePath}`}
                     width={300}
                 /> : <></>}

@@ -42,7 +42,7 @@ export default async function SponsorshipPage() {
       <Divider className="my-5" />
 
       <h2 className="font-bold text-center mb-5 text-xl">Our Past Partners</h2>
-      <div className="w-full flex flex-wrap justify-center items-center space-x-24">
+      <div className="w-full flex flex-col justify-top items-center">
         {sponsors.map((item) => {
           return (
             <Link key={item.name} href={item.website} target="_blank">

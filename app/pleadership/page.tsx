@@ -15,7 +15,7 @@ export default async function Pleadership() {
       <h1 className="text-5xl text-amber-400 font-bold text-center">
         Pleadership
       </h1>
-      <p className="mt-4">
+      <p className="mt-4 mx-4">
         It takes a lot of people to keep one of the largest clubs on campus
         running! Click on anyone&#39;s picture below to contact them.
       </p>

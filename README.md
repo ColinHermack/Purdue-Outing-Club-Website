@@ -36,6 +36,13 @@ npm install
 npm run dev
 ```
 
+## Deployment Information
+This app is deployed on Vercel
+
+### Login Information
+- Name: Purdue Outing Club
+- Email: purdueouting@gmail.com
+
 ## Contributors
 
 * Colin Hermack (Webmaster Fall 2024/Spring 2025)

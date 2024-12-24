@@ -95,7 +95,7 @@ export default function GearClosetPage() {
         the gear closet.
       </p>
       <iframe
-        className="w-1/2 h-96 mt-5 mb-10 rounded-large"
+        className="w-3/4 md:w-1/3 h-[300px] mt-10 rounded-lg"
         src="https://www.youtube.com/embed/CpTz2dSFf90"
         title="gear closet video"
       />

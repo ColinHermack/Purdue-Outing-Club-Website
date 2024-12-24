@@ -1,5 +1,5 @@
 {
-	"name": "next-app-template",
+	"name": "poc-website",
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
@@ -44,6 +44,7 @@
 		"remark-html": "^16.0.1"
 	},
 	"devDependencies": {
+		"@next/eslint-plugin-next": "^15.1.2",
 		"@types/node": "20.5.7",
 		"@types/react": "18.3.3",
 		"@types/react-dom": "18.3.0",

@@ -17,19 +17,22 @@ export default async function Pleadership() {
       </h1>
       <p className="mt-4">
         It takes a lot of people to keep one of the largest clubs on campus
-        running! Click on anyone's picture below to contact them.
+        running! Click on anyone&#39;s picture below to contact them.
       </p>
       <div className="flex flex-col w-screen justify-top items-center text-xl">
         {data.map((item) => {
           return (
-            <div>
+            <div key={item.label}>
               <h2 className="m-12 text-2xl font-bold text-amber-400">
                 {item.label}
               </h2>
               <div className="w-full flex flex-wrap justify-center items-center">
                 {item.content.map((currOfficer) => {
                   return (
-                    <div className="py-4 m-4 w-[250px] h-[350px] flex flex-col justify-between items-center">
+                    <div
+                      key={currOfficer.name}
+                      className="py-4 m-4 w-[250px] h-[350px] flex flex-col justify-between items-center"
+                    >
                       <div className="pb-0 pt-2 px-4 flex-col items-start">
                         <p className="text-small uppercase font-bold">
                           {currOfficer.name}

@@ -12,7 +12,7 @@ export default function NotFound() {
         src="/archives.png"
         width={400}
       />
-      <p className="my-10">Looks like you've lost track of the trail. </p>
+      <p className="my-10">Looks like you&#39;ve lost track of the trail. </p>
       <Button
         as={Link}
         className="bg-amber-400 text-amber-800 my-10"

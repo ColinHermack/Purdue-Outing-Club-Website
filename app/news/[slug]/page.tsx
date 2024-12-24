@@ -1,10 +1,9 @@
 import { notFound } from "next/navigation";
+import { remark } from "remark";
+import html from "remark-html";
 
 import { getPosts } from "@/app/news/utils";
 import { BASE_URL } from "@/app/constants";
-
-import { remark } from 'remark';
-import html from 'remark-html';
 
 export async function generateStaticParams() {
   let posts = getPosts();
@@ -56,9 +55,7 @@ export default async function NewsPost({ params }: any) {
     notFound();
   }
 
-  const processedContent = await remark()
-    .use(html)
-    .process(post.content);
+  const processedContent = await remark().use(html).process(post.content);
 
   const contentHtml = processedContent.toString();
 
@@ -76,7 +73,7 @@ export default async function NewsPost({ params }: any) {
             image: post.metadata.image
               ? `${BASE_URL}${post.metadata.image}`
               : `/og?title=${encodeURIComponent(post.metadata.title)}`,
-            url: `${BASE_URL}/blog/${post.slug}`
+            url: `${BASE_URL}/blog/${post.slug}`,
           }),
         }}
         suppressHydrationWarning
@@ -92,9 +89,9 @@ export default async function NewsPost({ params }: any) {
         Written by {post.metadata.author}
       </p>
       <p className="my-8 text-left">{post.metadata.summary}</p>
-      <article 
-        className="prose dark:prose-invert prose-a:text-amber-400 prose-a:no-underline text-left [&>p]:my-4 [&>ul]:list-disc [&>ul]:ml-8" 
-        dangerouslySetInnerHTML={{ __html: contentHtml }} 
+      <article
+        dangerouslySetInnerHTML={{ __html: contentHtml }}
+        className="prose dark:prose-invert prose-a:text-amber-400 prose-a:no-underline text-left [&>p]:my-4 [&>ul]:list-disc [&>ul]:ml-8"
       />
     </section>
   );

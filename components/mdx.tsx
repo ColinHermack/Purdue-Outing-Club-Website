@@ -1,28 +1,28 @@
-import Link from 'next/link'
-import Image from 'next/image'
-import { MDXRemote } from 'next-mdx-remote/rsc'
-import React from 'react'
+import Link from "next/link";
+import Image from "next/image";
+import { MDXRemote } from "next-mdx-remote/rsc";
+import React from "react";
 
 interface ITablePropData {
-  headers: string[]
-  rows: string[]
+  headers: string[];
+  rows: string[];
 }
 
 interface ITableProps {
-  data: ITablePropData
+  data: ITablePropData;
 }
 
 function Table({ data }: ITableProps) {
   let headers = data.headers.map((header: string, index: number) => (
     <th key={index}>{header}</th>
-  ))
+  ));
   let rows = data.rows.map((row: any, index: any) => (
     <tr key={index}>
       {row.map((cell: any, cellIndex: any) => (
         <td key={cellIndex}>{cell}</td>
       ))}
     </tr>
-  ))
+  ));
 
   return (
     <table>
@@ -31,39 +31,37 @@ function Table({ data }: ITableProps) {
       </thead>
       <tbody>{rows}</tbody>
     </table>
-  )
+  );
 }
 
 interface ICustomLinkProps {
-  href: string
-  children: React.ReactNode
+  href: string;
+  children: React.ReactNode;
 }
 
 function CustomLink(props: ICustomLinkProps) {
-  let href = props.href
+  let href = props.href;
 
-  if (href.startsWith('/')) {
-    return (
-      <Link {...props}>
-        {props.children}
-      </Link>
-    )
+  if (href.startsWith("/")) {
+    return <Link {...props}>{props.children}</Link>;
   }
 
-  if (href.startsWith('#')) {
-    return <a {...props} />
+  if (href.startsWith("#")) {
+    // eslint-disable-next-line jsx-a11y/anchor-has-content
+    return <a {...props} />;
   }
 
-  return <a target="_blank" rel="noopener noreferrer" {...props} />
+  // eslint-disable-next-line jsx-a11y/anchor-has-content
+  return <a rel="noopener noreferrer" target="_blank" {...props} />;
 }
 
 interface IRoundedImageProps {
-  src: string
-  alt: string
+  src: string;
+  alt: string;
 }
 
 function RoundedImage(props: IRoundedImageProps) {
-  return <Image className="rounded-lg" {...props} />
+  return <Image className="rounded-lg" {...props} />;
 }
 
 function slugify(str: string) {
@@ -71,36 +69,37 @@ function slugify(str: string) {
     .toString()
     .toLowerCase()
     .trim() // Remove whitespace from both ends of a string
-    .replace(/\s+/g, '-') // Replace spaces with -
-    .replace(/&/g, '-and-') // Replace & with 'and'
-    .replace(/[^\w\-]+/g, '') // Remove all non-word characters except for -
-    .replace(/\-\-+/g, '-') // Replace multiple - with single -
+    .replace(/\s+/g, "-") // Replace spaces with -
+    .replace(/&/g, "-and-") // Replace & with "and"
+    .replace(/[^\w\-]+/g, "") // Remove all non-word characters except for -
+    .replace(/\-\-+/g, "-"); // Replace multiple - with single -
 }
 
 interface IHeaderProps {
-  children: string
+  children: string;
 }
 
 function createHeading(level: number) {
   const Heading = ({ children }: IHeaderProps) => {
-    let slug = slugify(children)
+    let slug = slugify(children);
+
     return React.createElement(
       `h${level}`,
       { id: slug },
       [
-        React.createElement('a', {
+        React.createElement("a", {
           href: `#${slug}`,
           key: `link-${slug}`,
-          className: 'anchor',
+          className: "anchor",
         }),
       ],
-      children
-    )
-  }
+      children,
+    );
+  };
 
-  Heading.displayName = `Heading${level}`
+  Heading.displayName = `Heading${level}`;
 
-  return Heading
+  return Heading;
 }
 
 let components = {
@@ -112,12 +111,12 @@ let components = {
   h6: createHeading(6),
   Image: RoundedImage,
   a: CustomLink,
-  Table
-}
+  Table,
+};
 
 interface ICustomMDXProps {
-  source: string
-  components?: any
+  source: string;
+  components?: any;
 }
 
 export function CustomMDX(props: ICustomMDXProps) {
@@ -126,5 +125,5 @@ export function CustomMDX(props: ICustomMDXProps) {
       {...props}
       components={{ ...components, ...(props.components || {}) }}
     />
-  )
+  );
 }

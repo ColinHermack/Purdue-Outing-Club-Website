@@ -57,6 +57,7 @@ export default function Home() {
         className="mb-10 rounded-lg"
         height={200}
         src="https://www.youtube.com/embed/05dKVZUYwSY"
+        title="poctoberfest video"
         width={350}
       />
 
@@ -173,18 +174,19 @@ export default function Home() {
           getting away from this wonder of concrete and red brick, challenging
           yourself physically and mentally, seeing the beauty of the formations,
           and generally getting really dirty. You may have heard caving referred
-          to as spelunking. Many cavers prefer to say 'caving' instead of
-          'spelunking'; however, it's the same thing.
+          to as spelunking. Many cavers prefer to say &#39;caving&#39; instead
+          of &#39;spelunking&#39;; however, it&#39;s the same thing.
         </AccordionItem>
         <AccordionItem key={4} aria-label="Climbing" title="Climbing">
           Rock climbing is a sport in which participants climb up or across
           natural rock formations or artificial rock walls. The goal is to reach
           the summit of a formation or the endpoint of a pre-defined route
           without falling. Rock climbing is a physically and mentally demanding
-          sport, one that often tests a climber's strength, endurance, agility
-          and balance along with his mental control. It can be a dangerous sport
-          and knowledge of proper climbing techniques and usage of specialized
-          climbing equipment is crucial for the safe completion of routes.
+          sport, one that often tests a climber&#39;s strength, endurance,
+          agility and balance along with his mental control. It can be a
+          dangerous sport and knowledge of proper climbing techniques and usage
+          of specialized climbing equipment is crucial for the safe completion
+          of routes.
         </AccordionItem>
         <AccordionItem
           key={5}

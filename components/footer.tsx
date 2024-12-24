@@ -15,12 +15,12 @@ import { Logo } from "@/components/icons";
 import { siteConfig } from "@/config/site";
 
 const socialMediaIcons = [
-  <FaInstagram />,
-  <FaYoutube />,
-  <FaFacebook />,
-  <FaSlack />,
-  <FaLinkedin />,
-  <FaLink />,
+  <FaInstagram key={0} />,
+  <FaYoutube key={1} />,
+  <FaFacebook key={2} />,
+  <FaSlack key={3} />,
+  <FaLinkedin key={4} />,
+  <FaLink key={5} />,
 ];
 
 export const Footer = () => {

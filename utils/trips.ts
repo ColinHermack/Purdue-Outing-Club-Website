@@ -18,7 +18,8 @@ export async function getTripData(id: number) {
   const client = await pool.connect();
 
   try {
-    result = await client.query(`SELECT
+    result = await client.query(
+      `SELECT
                         trip_id,
                         name,
                         startdate AT TIME ZONE 'UTC' AS startdate,
@@ -28,11 +29,13 @@ export async function getTripData(id: number) {
                         location,
                         description,
                         signup
-                    FROM trip WHERE trip_id=$1;`, [id]);
+                    FROM trip WHERE trip_id=$1;`,
+      [id],
+    );
 
     return result.rows[0];
   } catch (error: any) {
-    console.error(error);
+    //Intentionally left blank
   } finally {
     client.release();
   }

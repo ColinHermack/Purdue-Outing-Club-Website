@@ -55,8 +55,11 @@ function getMDXData(dir: string) {
   });
 
   postsData.sort((a, b) => {
-    return (new Date(b.metadata.postedOn).getTime() - new Date(a.metadata.postedOn).getTime());
-  })
+    return (
+      new Date(b.metadata.postedOn).getTime() -
+      new Date(a.metadata.postedOn).getTime()
+    );
+  });
 
   return postsData;
 }

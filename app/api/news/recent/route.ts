@@ -1,6 +1,6 @@
 import { getPosts } from "@/app/news/utils";
 
-export async function GET(request: Request) {
+export async function GET() {
   let posts = getPosts();
   let recentPosts = posts.slice(0, 3);
   let json = recentPosts.map((post) => {

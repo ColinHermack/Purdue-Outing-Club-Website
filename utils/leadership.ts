@@ -108,7 +108,9 @@ const leadershipCategories = [
   },
 ];
 
-export async function getLeaderDataByPosition(position: string): Promise<Officer | undefined> {
+export async function getLeaderDataByPosition(
+  position: string,
+): Promise<Officer | undefined> {
   let result: typeof QueryResult = null;
   const client = await pool.connect();
 
@@ -123,9 +125,10 @@ export async function getLeaderDataByPosition(position: string): Promise<Officer
             FROM officer
             JOIN member ON officer.member_id = member.member_id
             WHERE officer.position = $1;`,
-    [position]);
+      [position],
+    );
   } catch (error: any) {
-    console.error(error);
+    //Intentionally left blank
   } finally {
     client.release();
   }
@@ -217,7 +220,7 @@ export async function getLeaderData() {
             JOIN member ON officer.member_id = member.member_id`,
     );
   } catch (error: any) {
-    console.error(error);
+    //Intentionally left blank
   } finally {
     client.release();
   }

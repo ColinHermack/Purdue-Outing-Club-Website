@@ -12,48 +12,48 @@ const pool = new Pool({
 });
 
 interface IGearOfficerMetaData {
-    ImagePath: string;
-    GearHours: string;
+  ImagePath: string;
+  GearHours: string;
 }
 
 interface IGearOfficerData {
-    position: string;
-    officer_data: IGearOfficerMetaData;
-    name: string;
+  position: string;
+  officer_data: IGearOfficerMetaData;
+  name: string;
 }
 
 interface IGearHoursData {
-    name: string;
-    hours: string;
+  name: string;
+  hours: string;
 }
 
-const getGearHours = async() => {
-    let result: typeof QueryResult = null;
-    const client = await pool.connect();
+const getGearHours = async () => {
+  let result: typeof QueryResult = null;
+  const client = await pool.connect();
 
-    try {
-        result = await client.query(`
+  try {
+    result = await client.query(`
             SELECT o.position, o.officer_data, m.name FROM officer AS o
             JOIN member AS m ON m.member_id = o.member_id
             WHERE position LIKE '%Gear%';`);
-    } catch (error: any) {
-        console.error(error);
-    } finally {
-        client.release();
-    }
+  } catch (error: any) {
+    //Intentionally left empty
+  } finally {
+    client.release();
+  }
 
-    return result.rows;
-}
+  return result.rows;
+};
 
 export async function GET() {
   let gearHours: IGearOfficerData[] = await getGearHours();
 
   let cleanedHours: IGearHoursData[] = gearHours.map((officer) => {
     return {
-        name: officer.name,
-        hours: officer.officer_data.GearHours
-    }
-  })
+      name: officer.name,
+      hours: officer.officer_data.GearHours,
+    };
+  });
 
   return new Response(JSON.stringify(cleanedHours), {
     status: 200,

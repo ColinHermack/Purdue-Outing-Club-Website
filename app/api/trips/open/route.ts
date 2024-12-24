@@ -26,7 +26,7 @@ const getOpenTrips = async () => {
       WHERE trip.signup=true;`,
     );
   } catch (error: any) {
-    console.error(error);
+    //Intentionally left blank
   } finally {
     client.release();
   }

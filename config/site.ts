@@ -48,7 +48,7 @@ export const siteConfig = {
     },
     {
       label: "Merch",
-      href: "https://www.toocoolpurdue.com/TooCOOLPurdueWL/vECItemCatalogOrganizationItems/OrganizationItemsGallery.aspx?Organization=1231"
+      href: "https://www.toocoolpurdue.com/TooCOOLPurdueWL/vECItemCatalogOrganizationItems/OrganizationItemsGallery.aspx?Organization=1231",
     },
     {
       label: "Alumni",
@@ -60,8 +60,8 @@ export const siteConfig = {
     },
     {
       label: "Request Reimbursement",
-      href: "https://docs.google.com/forms/d/e/1FAIpQLSc_w1PuFjQ-N3QhX6uVUwwywuJ8HhHmjLUh40VyisTqj25hiA/viewform"
-    }
+      href: "https://docs.google.com/forms/d/e/1FAIpQLSc_w1PuFjQ-N3QhX6uVUwwywuJ8HhHmjLUh40VyisTqj25hiA/viewform",
+    },
   ],
   links: [
     {

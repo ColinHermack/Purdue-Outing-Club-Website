@@ -46,6 +46,7 @@ export default function GearClosetPage() {
 
   return (
     <div className="flex flex-col justify-top items-center">
+      <title>Gear Closet - Purdue Outing Club</title>
       <h1 className="text-5xl text-amber-400 font-bold text-center">
         Gear Closet
       </h1>

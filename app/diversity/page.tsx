@@ -5,6 +5,11 @@ import { Image } from "@nextui-org/image";
 
 import { getLeaderDataByPosition } from "@/utils/leadership";
 
+export const metadata = {
+  title: "Diversity",
+  description: "Diversity & Inclusion in the Purdue Outing Club.",
+};
+
 export default async function DiversityPage() {
   let diversityOfficerData = await getLeaderDataByPosition(
     "Diversity & Community Outreach",

@@ -3,6 +3,11 @@ import { Button } from "@nextui-org/button";
 import { Link } from "@nextui-org/link";
 import { Divider } from "@nextui-org/divider";
 
+export const metadata = {
+  title: "Join",
+  description: "Information on how to join the Purdue Outing Club."
+}
+
 export default function JoinPage() {
   return (
     <div className="flex flex-col justify-top items-center">

@@ -5,6 +5,11 @@ import { Divider } from "@nextui-org/divider";
 import { Button } from "@nextui-org/button";
 import { Link } from "@nextui-org/link";
 
+export const metadata = { 
+  title: "POCAR 2025",
+  description: "Information for POCAR 2025."
+}
+
 export default function PocarPage() {
   return (
     <div className="flex flex-col justify-top items-center">

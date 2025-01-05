@@ -2,6 +2,11 @@ import React from "react";
 import { Button } from "@nextui-org/button";
 import { Link } from "@nextui-org/link";
 
+export const metadata = {
+  title: "Safety Concern Report",
+  description: "Report unsafe conditions on Purdue Outing Club trips."
+}
+
 export default function SafetyConcernReportPage() {
   return (
     <div className="flex flex-col justify-top items-center">

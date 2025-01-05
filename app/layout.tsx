@@ -9,6 +9,8 @@ import { fontSans } from "@/config/fonts";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 
+import { Analytics } from "@vercel/analytics/react"
+
 export const metadata: Metadata = {
   title: {
     default: siteConfig.name,
@@ -48,6 +50,7 @@ export default function RootLayout({
               {children}
             </main>
             <Footer />
+            <Analytics />
           </div>
         </Providers>
       </body>

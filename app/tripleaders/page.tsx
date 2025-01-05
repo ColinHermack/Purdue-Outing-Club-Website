@@ -10,6 +10,7 @@ import { Accordion, AccordionItem } from "@nextui-org/accordion";
 export default function TripLeaderPage() {
   return (
     <div className="flex flex-col items-center justify-center gap-4 md:py-10">
+      <title>Trip Leaders - Purdue Outing Club</title>
       <h1 className="text-5xl text-amber-400 font-bold text-center">
         Trip Leaders
       </h1>

@@ -8,6 +8,7 @@ import { Link } from "@nextui-org/link";
 export default function PocarPage() {
   return (
     <div className="flex flex-col justify-top items-center">
+      <title>POCAR 2025 - Purdue Outing Club</title>
       <h1 className="text-5xl text-amber-400 font-bold text-center">
         POCAR 2025
       </h1>

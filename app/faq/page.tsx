@@ -7,6 +7,7 @@ import { Link } from "@nextui-org/link";
 export default function FAQPage() {
   return (
     <div className="flex flex-col justify-top items-center">
+      <title>FAQ - Purdue Outing Club</title>
       <h1 className="text-5xl text-amber-400 font-bold text-center">
         Frequently Asked Questions
       </h1>

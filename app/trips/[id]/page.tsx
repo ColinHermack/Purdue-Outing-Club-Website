@@ -1,6 +1,6 @@
 import React from "react";
 import { redirect } from "next/navigation";
-import { FaMapMarkerAlt, FaCalendar, FaClock } from "react-icons/fa";
+import { FaMapMarkerAlt, FaCalendar, FaExternalLinkAlt } from "react-icons/fa";
 import { Button } from "@nextui-org/button";
 import { Link } from "@nextui-org/link";
 
@@ -20,22 +20,17 @@ export default async function TripPage({ params }: any) {
       <h1 className="text-5xl text-amber-400 font-bold text-center">
         {tripData.name}
       </h1>
-      <div className="flex flex-row justify-left items-center mt-8 w-full text-neutral-500">
+      <div className="flex flex-row justify-left items-center mt-8 w-full text-inherit">
         <FaMapMarkerAlt />
         <p className="text-sm ml-2 font-bold">{tripData.location}</p>
       </div>
-      <div className="flex flex-row justify-left items-center mt-2 w-full text-neutral-500">
-        <FaCalendar />
-        <p className="text-sm ml-2 font-bold">
-          {tripData.startdate.toLocaleDateString().replace(/\//g, "-")}
-        </p>
-      </div>
-      <div className="flex flex-row justify-left items-center mt-2 w-full text-neutral-500">
-        <FaClock />
-        <p className="text-sm ml-2 font-bold">
-          {tripData.startdate.toLocaleTimeString()}
-        </p>
-      </div>
+      <Link 
+        className="flex flex-row justify-left items-center mt-2 w-full text-inherit mt-5"
+        href="/calendar"
+      >
+        <FaCalendar className='mr-2' />
+        <FaExternalLinkAlt />
+      </Link>
       <p className="mt-10">{tripData.description}</p>
       {tripData.signup ? (
         <Button

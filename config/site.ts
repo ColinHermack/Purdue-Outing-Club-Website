@@ -52,7 +52,7 @@ export const siteConfig = {
     },
     {
       label: "Alumni",
-      href: "https://sites.google.com/view/purdueoutingclub-alumni/Welcome",
+      href: "/alumni",
     },
     {
       label: "Sponsorship",

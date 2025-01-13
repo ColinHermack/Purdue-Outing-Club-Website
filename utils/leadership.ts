@@ -18,7 +18,7 @@ interface OfficerData {
   GearHours?: string;
 }
 
-interface Officer {
+export interface Officer {
   position: string;
   officer_data: OfficerData;
   name: string;

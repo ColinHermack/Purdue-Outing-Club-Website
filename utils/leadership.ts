@@ -104,7 +104,7 @@ const leadershipCategories = [
   },
   {
     branch: "Advisors",
-    positions: ["Primary Advisor"],
+    positions: ["Primary Advisor", "Advisor Emeritus/Club Elder"],
   },
 ];
 

@@ -1,5 +1,8 @@
 const { Pool, QueryResult } = require("pg"); //PostgreSQL
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 const pool = new Pool({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
@@ -41,6 +44,7 @@ export async function GET() {
     status: 200,
     headers: {
       "Content-Type": "application/json",
+      "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
     },
   });
 }

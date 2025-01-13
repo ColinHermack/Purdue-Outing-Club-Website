@@ -6,10 +6,10 @@ import { Button } from "@nextui-org/button";
 
 import { getLeaderDataByPosition } from "@/utils/leadership";
 
-const metadata = {
+export const metadata = {
   title: "Sponsorship",
-  description: "Sponsorship information for the Purdue Outing Club."
-}
+  description: "Sponsorship information for the Purdue Outing Club.",
+};
 
 const sponsors = [
   {

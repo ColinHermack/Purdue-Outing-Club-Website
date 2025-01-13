@@ -5,8 +5,8 @@ import { Divider } from "@nextui-org/divider";
 
 export const metadata = {
   title: "Join",
-  description: "Information on how to join the Purdue Outing Club."
-}
+  description: "Information on how to join the Purdue Outing Club.",
+};
 
 export default function JoinPage() {
   return (

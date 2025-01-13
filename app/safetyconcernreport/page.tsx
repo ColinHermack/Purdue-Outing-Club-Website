@@ -4,8 +4,8 @@ import { Link } from "@nextui-org/link";
 
 export const metadata = {
   title: "Safety Concern Report",
-  description: "Report unsafe conditions on Purdue Outing Club trips."
-}
+  description: "Report unsafe conditions on Purdue Outing Club trips.",
+};
 
 export default function SafetyConcernReportPage() {
   return (

@@ -108,8 +108,6 @@ const leadershipCategories = [
   },
 ];
 
-//Test comment
-
 export async function getLeaderDataByPosition(
   position: string,
 ): Promise<Officer | undefined> {

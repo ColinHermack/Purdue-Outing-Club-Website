@@ -24,11 +24,11 @@ export default async function TripPage({ params }: any) {
         <FaMapMarkerAlt />
         <p className="text-sm ml-2 font-bold">{tripData.location}</p>
       </div>
-      <Link 
+      <Link
         className="flex flex-row justify-left items-center mt-2 w-full text-inherit mt-5"
         href="/calendar"
       >
-        <FaCalendar className='mr-2' />
+        <FaCalendar className="mr-2" />
         <FaExternalLinkAlt />
       </Link>
       <p className="mt-10">{tripData.description}</p>

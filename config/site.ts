@@ -32,6 +32,10 @@ export const siteConfig = {
       label: "POCAR",
       href: "/pocar",
     },
+    {
+      label: "Support Us",
+      href: "/supportus",
+    }
   ],
   footerItems: [
     {

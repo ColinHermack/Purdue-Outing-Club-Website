@@ -35,7 +35,7 @@ export const siteConfig = {
     {
       label: "Support Us",
       href: "/supportus",
-    }
+    },
   ],
   footerItems: [
     {

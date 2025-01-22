@@ -7,6 +7,12 @@ import { Image } from "@nextui-org/image";
 
 import { getLeaderDataByPosition } from "@/utils/leadership";
 
+export const metadata = {
+  title: "Support Us",
+  description:
+    "Information on how to support Purdue Outing Club fundraising efforts.",
+};
+
 export default async function Page() {
   const presidentData = await getLeaderDataByPosition("President");
   const secretaryData = await getLeaderDataByPosition("Secretary of Outreach");
@@ -16,7 +22,7 @@ export default async function Page() {
       <h1 className="text-5xl text-amber-400 font-bold">Support Us</h1>
       <p className="my-4 text-center max-w-[800px]">
         Our goal as the Purdue Outing Club is and always has been to make
-        outdoor recreeation as <strong>accessible as possible</strong> for those
+        outdoor recreation as <strong>accessible as possible</strong> for those
         who want to participate.
       </p>
       <p className="my-4 text-center max-w-[800px]">

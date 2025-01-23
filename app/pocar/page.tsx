@@ -13,7 +13,17 @@ export default function PocarPage() {
       <h1 className="text-5xl text-amber-400 font-bold text-center">
         POCAR 2025
       </h1>
+
       <h2 className="font-bold text-center my-10 text-xl">
+        Race Results
+      </h2>
+      <p className="text-left w-3/4 my-2">
+        Race results for POCAR 2025 and a recap can be viewed <Link href='/news/POCAR2025' className='text-amber-400'>here.</Link>
+      </p>
+
+      <Divider className='my-10' />
+
+      <h2 className="font-bold text-center mb-10 text-xl">
         General Race Information
       </h2>
       <p className="text-left w-3/4 my-2">

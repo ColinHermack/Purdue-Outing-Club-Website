@@ -5,6 +5,7 @@ import { Divider } from "@nextui-org/divider";
 import { Button } from "@nextui-org/button";
 import { Link } from "@nextui-org/link";
 import { Accordion, AccordionItem } from "@nextui-org/accordion";
+import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell } from "@nextui-org/table";
 
 export default function PocarPage() {
   return (
@@ -17,8 +18,71 @@ export default function PocarPage() {
       <h2 className="font-bold text-center my-10 text-xl">
         Race Results
       </h2>
-      <p className="text-left w-3/4 my-2">
-        Race results for POCAR 2025 and a recap can be viewed <Link href='/news/POCAR2025' className='text-amber-400'>here.</Link>
+
+      <p className='text-xl'>Open Division Results</p>
+
+      <Table className='my-10'>
+        <TableHeader>
+          <TableColumn>Place</TableColumn>
+          <TableColumn>Team Name</TableColumn>
+          <TableColumn>Team Number</TableColumn>
+          <TableColumn>Time</TableColumn>
+        </TableHeader>
+        <TableBody>
+          <TableRow>
+            <TableCell>First</TableCell>
+            <TableCell>38.6 Degrees</TableCell>
+            <TableCell>38</TableCell>
+            <TableCell>22:09</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>Second</TableCell>
+            <TableCell>Ruck Around and Find Out</TableCell>
+            <TableCell>45</TableCell>
+            <TableCell>27:42</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>Third</TableCell>
+            <TableCell>Hosanna</TableCell>
+            <TableCell>43</TableCell>
+            <TableCell>28:01</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+
+      <p className='text-xl'>Collegiate Division Results</p>
+
+      <Table className='my-10'>
+        <TableHeader>
+          <TableColumn>Place</TableColumn>
+          <TableColumn>Team Name</TableColumn>
+          <TableColumn>Team Number</TableColumn>
+          <TableColumn>Points Found</TableColumn>
+        </TableHeader>
+        <TableBody>
+          <TableRow>
+            <TableCell>First</TableCell>
+            <TableCell>Super Duper Seniors</TableCell>
+            <TableCell>27</TableCell>
+            <TableCell>6 points, leg 3</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>Second</TableCell>
+            <TableCell>Thirsty Cowboys</TableCell>
+            <TableCell>33</TableCell>
+            <TableCell>5 points, leg 3</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>Third</TableCell>
+            <TableCell>Lost in Transition</TableCell>
+            <TableCell>17</TableCell>
+            <TableCell>3 points, leg 3</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+
+      <p className="text-left w-3/4 my-2 text-center">
+        Race results for POCAR 2025 and a full recap can be viewed <Link href='/news/POCAR2025' className='text-amber-400'>here.</Link>
       </p>
 
       <Divider className='my-10' />

@@ -86,14 +86,12 @@ export default async function Page() {
           <Button
             as={Link}
             className="bg-amber-400 text-black font-bold my-5 w-full"
-            href="/"
-            isDisabled={true}
+            href="/docs/how_to_ask.pdf"
           >
             How to ask
           </Button>
           <p className="w-full text-center w-full">
-            Follow this guide to ask those close to you to support our cause!{" "}
-            <strong>(COMING SOON)</strong>
+            Follow this guide to ask those close to you to support our cause!
           </p>
         </div>
         <div className="flex flex-col w-56 my-4 mx-8 justify-top h-56 w-56">

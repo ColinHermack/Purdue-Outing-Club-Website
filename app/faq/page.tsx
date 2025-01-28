@@ -104,6 +104,14 @@ export default function FAQPage() {
           you should contact the trip leader as soon as possible so that they
           can select someone else to fill your spot.
         </AccordionItem>
+        <AccordionItem
+          key={8}
+          aria-label="driving-on-trips"
+          title={"How does driving work on trips?"}
+        >
+          If you have a car registered with the club, you will be asked when you sign up for a trip whether you car can
+          be used on a trip. 
+        </AccordionItem>
       </Accordion>
     </div>
   );

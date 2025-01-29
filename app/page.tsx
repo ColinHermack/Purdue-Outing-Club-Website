@@ -87,7 +87,6 @@ export default function Home() {
 
       <Divider className="my-5" />
 
-      <h2 className="text-4xl m-10 font-bold">FAQ</h2>
       <Accordion defaultExpandedKeys={[1]} selectionMode="multiple">
         <AccordionItem
           key={1}

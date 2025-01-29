@@ -104,6 +104,16 @@ export default function FAQPage() {
           you should contact the trip leader as soon as possible so that they
           can select someone else to fill your spot.
         </AccordionItem>
+        <AccordionItem
+          key={8}
+          aria-label="driving-on-trips"
+          title={"How does driving work on trips?"}
+        >
+          If you have a car registered with the club, you will be asked when you
+          sign up for a trip whether you car can be used on a trip. Trip leaders
+          will then coordinate transportation to and from the trip location. We
+          almost always carpool to and from trips.
+        </AccordionItem>
       </Accordion>
     </div>
   );

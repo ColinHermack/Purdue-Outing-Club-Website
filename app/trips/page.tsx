@@ -34,13 +34,11 @@ export default function TripsPage() {
         Accepting Signups
       </h2>
       <div>
-        {
-          trips != null ? (
-            <TripCards trips={trips} />
-          ) : (
-            <Spinner color="default" />
-          )
-        }
+        {trips != null ? (
+          <TripCards trips={trips} />
+        ) : (
+          <Spinner color="default" />
+        )}
       </div>
     </div>
   );
@@ -51,40 +49,36 @@ interface TripCardProps {
 }
 
 function TripCards(props: TripCardProps) {
-  return (
-    props.trips.length > 0 ? (
-        props.trips.map((trip: any) => (
-          <Link
-            key={trip.trip_id}
-            className="text-amber-400"
-            href={`/trips/${trip.trip_id}`}
-          >
-            <Card className="w-[400px] my-2">
-              <CardHeader className="flex gap-3">
-                <div className="flex flex-col items-left">
-                  <p className="text-md font-bold text-amber-400">
-                    {trip.name}
-                  </p>
-                  <p className="text-small text-default-500 text-left">
-                    {trip.startdate.toLocaleDateString().replace(/\//g, "-")}
-                  </p>
-                  <p className="text-small text-default-500 text-left">
-                    {trip.startdate.toLocaleTimeString()}
-                  </p>
-                  <p />
-                </div>
-              </CardHeader>
-              <CardBody>
-                <div className="flex flex-row justify-left items-center">
-                  <FaMapMarkerAlt />
-                  <p className="ml-4">{trip.location}</p>
-                </div>
-              </CardBody>
-            </Card>
-          </Link>
-        ))
-      ) : (
-        <p>No trips currently open.</p>
-      )
-  )
+  return props.trips.length > 0 ? (
+    props.trips.map((trip: any) => (
+      <Link
+        key={trip.trip_id}
+        className="text-amber-400"
+        href={`/trips/${trip.trip_id}`}
+      >
+        <Card className="w-[400px] my-2">
+          <CardHeader className="flex gap-3">
+            <div className="flex flex-col items-left">
+              <p className="text-md font-bold text-amber-400">{trip.name}</p>
+              <p className="text-small text-default-500 text-left">
+                {trip.startdate.toLocaleDateString().replace(/\//g, "-")}
+              </p>
+              <p className="text-small text-default-500 text-left">
+                {trip.startdate.toLocaleTimeString()}
+              </p>
+              <p />
+            </div>
+          </CardHeader>
+          <CardBody>
+            <div className="flex flex-row justify-left items-center">
+              <FaMapMarkerAlt />
+              <p className="ml-4">{trip.location}</p>
+            </div>
+          </CardBody>
+        </Card>
+      </Link>
+    ))
+  ) : (
+    <p>No trips currently open.</p>
+  );
 }

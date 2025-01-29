@@ -1,9 +1,9 @@
 import React from "react";
-import { Button } from "@nextui-org/button";
-import { Link } from "@nextui-org/link";
-import { Divider } from "@nextui-org/divider";
-import { Card, CardHeader, CardBody } from "@nextui-org/card";
-import { Image } from "@nextui-org/image";
+import { Button } from "@heroui/button";
+import { Link } from "@heroui/link";
+import { Divider } from "@heroui/divider";
+import { Card, CardHeader, CardBody } from "@heroui/card";
+import { Image } from "@heroui/image";
 
 import { getLeaderDataByPosition } from "@/utils/leadership";
 

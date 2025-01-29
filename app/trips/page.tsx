@@ -2,10 +2,10 @@
 
 import React from "react";
 import { useState, useEffect } from "react";
-import { Card, CardHeader, CardBody } from "@nextui-org/card";
-import { Link } from "@nextui-org/link";
+import { Card, CardHeader, CardBody } from "@heroui/card";
+import { Link } from "@heroui/link";
 import { FaMapMarkerAlt } from "react-icons/fa";
-import { Spinner } from "@nextui-org/spinner";
+import { Spinner } from "@heroui/spinner";
 
 export default function TripsPage() {
   const [trips, setTrips] = useState(null);

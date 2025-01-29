@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Divider } from "@nextui-org/divider";
+import { Divider } from "@heroui/divider";
 import { useEffect, useState } from "react";
 import {
   Table,
@@ -11,7 +11,7 @@ import {
   TableRow,
   TableCell,
   getKeyValue,
-} from "@nextui-org/table";
+} from "@heroui/table";
 
 interface IGearHoursData {
   name: string;

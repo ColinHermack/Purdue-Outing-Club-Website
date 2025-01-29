@@ -1,6 +1,6 @@
 import React from "react";
-import { Button } from "@nextui-org/button";
-import { Link } from "@nextui-org/link";
+import { Button } from "@heroui/button";
+import { Link } from "@heroui/link";
 
 export const metadata = {
   title: "Safety Concern Report",

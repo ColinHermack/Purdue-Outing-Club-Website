@@ -29,6 +29,7 @@ export async function getTripData(id: number) {
                         location,
                         description,
                         signup
+                        
                     FROM trip WHERE trip_id=$1;`,
       [id],
     );

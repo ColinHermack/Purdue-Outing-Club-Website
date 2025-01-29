@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import { Accordion, AccordionItem } from "@nextui-org/accordion";
-import { Link } from "@nextui-org/link";
+import { Accordion, AccordionItem } from "@heroui/accordion";
+import { Link } from "@heroui/link";
 
 export default function FAQPage() {
   return (

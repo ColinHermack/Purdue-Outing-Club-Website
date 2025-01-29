@@ -1,12 +1,12 @@
 "use client";
 
-import { Image } from "@nextui-org/image";
-import { Accordion, AccordionItem } from "@nextui-org/accordion";
-import { Button } from "@nextui-org/button";
-import { Link } from "@nextui-org/link";
+import { Image } from "@heroui/image";
+import { Accordion, AccordionItem } from "@heroui/accordion";
+import { Button } from "@heroui/button";
+import { Link } from "@heroui/link";
 import { useState, useEffect } from "react";
-import { Spinner } from "@nextui-org/spinner";
-import { Divider } from "@nextui-org/divider";
+import { Spinner } from "@heroui/spinner";
+import { Divider } from "@heroui/divider";
 
 export default function Home() {
   const [recentNews, setRecentNews] = useState([]);

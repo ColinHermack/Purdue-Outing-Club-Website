@@ -1,11 +1,11 @@
 "use client";
 
 import React from "react";
-import { Divider } from "@nextui-org/divider";
-import { Link } from "@nextui-org/link";
-import { Image } from "@nextui-org/image";
-import { Button } from "@nextui-org/button";
-import { Accordion, AccordionItem } from "@nextui-org/accordion";
+import { Divider } from "@heroui/divider";
+import { Link } from "@heroui/link";
+import { Image } from "@heroui/image";
+import { Button } from "@heroui/button";
+import { Accordion, AccordionItem } from "@heroui/accordion";
 
 export default function TripLeaderPage() {
   return (

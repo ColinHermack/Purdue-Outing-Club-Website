@@ -1,7 +1,7 @@
 import React from "react";
-import { Divider } from "@nextui-org/divider";
-import { Link } from "@nextui-org/link";
-import { Image } from "@nextui-org/image";
+import { Divider } from "@heroui/divider";
+import { Link } from "@heroui/link";
+import { Image } from "@heroui/image";
 
 import { getLeaderDataByPosition } from "@/utils/leadership";
 

@@ -1,11 +1,18 @@
 "use client";
 
 import React from "react";
-import { Divider } from "@nextui-org/divider";
-import { Button } from "@nextui-org/button";
-import { Link } from "@nextui-org/link";
-import { Accordion, AccordionItem } from "@nextui-org/accordion";
-import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell } from "@nextui-org/table";
+import { Divider } from "@heroui/divider";
+import { Button } from "@heroui/button";
+import { Link } from "@heroui/link";
+import { Accordion, AccordionItem } from "@heroui/accordion";
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableColumn,
+  TableRow,
+  TableCell,
+} from "@heroui/table";
 
 export default function PocarPage() {
   return (
@@ -15,13 +22,11 @@ export default function PocarPage() {
         POCAR 2025
       </h1>
 
-      <h2 className="font-bold text-center my-10 text-xl">
-        Race Results
-      </h2>
+      <h2 className="font-bold text-center my-10 text-xl">Race Results</h2>
 
-      <p className='text-xl'>Open Division Results</p>
+      <p className="text-xl">Open Division Results</p>
 
-      <Table className='my-10'>
+      <Table className="my-10">
         <TableHeader>
           <TableColumn>Place</TableColumn>
           <TableColumn>Team Name</TableColumn>
@@ -50,9 +55,9 @@ export default function PocarPage() {
         </TableBody>
       </Table>
 
-      <p className='text-xl'>Collegiate Division Results</p>
+      <p className="text-xl">Collegiate Division Results</p>
 
-      <Table className='my-10'>
+      <Table className="my-10">
         <TableHeader>
           <TableColumn>Place</TableColumn>
           <TableColumn>Team Name</TableColumn>
@@ -82,10 +87,13 @@ export default function PocarPage() {
       </Table>
 
       <p className="text-left w-3/4 my-2 text-center">
-        Race results for POCAR 2025 and a full recap can be viewed <Link href='/news/POCAR2025' className='text-amber-400'>here.</Link>
+        Race results for POCAR 2025 and a full recap can be viewed{" "}
+        <Link className="text-amber-400" href="/news/POCAR2025">
+          here.
+        </Link>
       </p>
 
-      <Divider className='my-10' />
+      <Divider className="my-10" />
 
       <h2 className="font-bold text-center mb-10 text-xl">
         General Race Information

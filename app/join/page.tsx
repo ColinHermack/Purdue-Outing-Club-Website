@@ -1,7 +1,7 @@
 import React from "react";
-import { Button } from "@nextui-org/button";
-import { Link } from "@nextui-org/link";
-import { Divider } from "@nextui-org/divider";
+import { Button } from "@heroui/button";
+import { Link } from "@heroui/link";
+import { Divider } from "@heroui/divider";
 
 export const metadata = {
   title: "Join",

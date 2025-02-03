@@ -8,10 +8,10 @@ import {
   NavbarBrand,
   NavbarItem,
   NavbarMenuItem,
-} from "@nextui-org/navbar";
-import { Button } from "@nextui-org/button";
-import { Link } from "@nextui-org/link";
-import { link as linkStyles } from "@nextui-org/theme";
+} from "@heroui/navbar";
+import { Button } from "@heroui/button";
+import { Link } from "@heroui/link";
+import { link as linkStyles } from "@heroui/theme";
 import NextLink from "next/link";
 import clsx from "clsx";
 import { useState } from "react";
@@ -35,7 +35,6 @@ export const Navbar = () => {
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
             <Logo />
-            <p className="font-bold">Purdue Outing Club</p>
           </NextLink>
         </NavbarBrand>
         <ul className="hidden lg:flex gap-4 justify-start ml-2">

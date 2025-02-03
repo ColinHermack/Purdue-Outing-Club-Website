@@ -1,8 +1,8 @@
 import React from "react";
 import { redirect } from "next/navigation";
 import { FaMapMarkerAlt, FaCalendar, FaExternalLinkAlt } from "react-icons/fa";
-import { Button } from "@nextui-org/button";
-import { Link } from "@nextui-org/link";
+import { Button } from "@heroui/button";
+import { Link } from "@heroui/link";
 
 import { SPORTS } from "@/app/constants";
 import { getTripData } from "@/utils/trips";

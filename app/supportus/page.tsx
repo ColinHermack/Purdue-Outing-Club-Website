@@ -108,6 +108,20 @@ export default async function Page() {
         </div>
       </div>
 
+      <div className="h-56 w-56 my-4 mx-8">
+        <Button
+          as={Link}
+          className="bg-amber-400 text-black font-bold my-5 w-full"
+          href="https://www.youtube.com/watch?v=0cWX6zu5kC0"
+          isExternal={true}
+        >
+          Fundraising Video
+        </Button>
+        <p className="w-full text-center w-full">
+          Share this video to help understand our fundraising goals!
+        </p>
+      </div>
+
       <Divider className="my-10" />
 
       <h2 className="text-xl font-bold">Interested in a brand partnership?</h2>

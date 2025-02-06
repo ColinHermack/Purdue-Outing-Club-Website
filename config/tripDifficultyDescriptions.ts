@@ -42,5 +42,11 @@ export const tripDifficultyDescriptions: ITripDifficultyDescriptions = {
         "Some previous experience recommended. May entail more elevation and more distance covered per day. Could be your first trip if you have camp skills and are physically fit enough.",
         "More suitable for someone who has been on several multi-night trips. May include steeper elevations and more technical trails.",
         "Suitable for people with significant experience. Could include significant elevation changes, high mileage, and extreme weather."
+    ],
+    "Hiking": [
+        "No previous experience needed. Mostly flat trails and shorter distances.",
+        "May include longer distances or more technical trails with elevation changes.",
+        "Long distances and steeper elevation changes.",
+        "Extreme distances, terrain, or weather."
     ]
 }

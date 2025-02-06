@@ -27,13 +27,13 @@ export async function getTripData(id: number) {
                         category,
                         sport,
                         location,
+                        difficulty,
                         description,
                         signup
                         
                     FROM trip WHERE trip_id=$1;`,
       [id],
     );
-
     return result.rows[0];
   } catch (error: any) {
     //Intentionally left blank

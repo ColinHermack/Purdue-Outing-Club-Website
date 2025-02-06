@@ -7,6 +7,8 @@ import { Link } from "@heroui/link";
 import { SPORTS } from "@/app/constants";
 import { getTripData } from "@/utils/trips";
 
+import TripDifficultyIcon from "./tripDifficultyIcon";
+
 export default async function TripPage({ params }: any) {
   const id = params.id;
   const tripData = await getTripData(id);
@@ -31,6 +33,7 @@ export default async function TripPage({ params }: any) {
         <FaCalendar className="mr-2" />
         <FaExternalLinkAlt />
       </Link>
+      <TripDifficultyIcon difficulty={tripData.difficulty} sport={tripData.sport} />
       <p className="mt-10">{tripData.description}</p>
       {tripData.signup ? (
         <Button

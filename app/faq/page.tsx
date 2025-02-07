@@ -23,7 +23,7 @@ export default function FAQPage() {
           title="When is the gear closet open?"
         >
           Check the gear closet page{" "}
-          <Link className="text-amber-400" href="/gear-closet">
+          <Link className="text-amber-400" href="/gearcloset">
             here
           </Link>{" "}
           to find the current gear hours. Also please check the announcements

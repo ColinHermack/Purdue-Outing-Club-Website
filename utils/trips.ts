@@ -34,6 +34,7 @@ export async function getTripData(id: number) {
                     FROM trip WHERE trip_id=$1;`,
       [id],
     );
+
     return result.rows[0];
   } catch (error: any) {
     //Intentionally left blank

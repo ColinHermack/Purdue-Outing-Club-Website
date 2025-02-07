@@ -4,10 +4,10 @@ import { FaMapMarkerAlt, FaCalendar, FaExternalLinkAlt } from "react-icons/fa";
 import { Button } from "@heroui/button";
 import { Link } from "@heroui/link";
 
+import TripDifficultyIcon from "./tripDifficultyIcon";
+
 import { SPORTS } from "@/app/constants";
 import { getTripData } from "@/utils/trips";
-
-import TripDifficultyIcon from "./tripDifficultyIcon";
 
 export default async function TripPage({ params }: any) {
   const id = params.id;
@@ -33,7 +33,10 @@ export default async function TripPage({ params }: any) {
         <FaCalendar className="mr-2" />
         <FaExternalLinkAlt />
       </Link>
-      <TripDifficultyIcon difficulty={tripData.difficulty} sport={tripData.sport} />
+      <TripDifficultyIcon
+        difficulty={tripData.difficulty}
+        sport={tripData.sport}
+      />
       <p className="mt-10">{tripData.description}</p>
       {tripData.signup ? (
         <Button

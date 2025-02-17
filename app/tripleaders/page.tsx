@@ -61,16 +61,16 @@ export default function TripLeaderPage() {
 
       <Divider className="my-5" />
       <h2 className="font-bold text-center text-xl">
-        Apply to become a trip leader
+        Sign up for Trip Leader Training
       </h2>
       <Button
         as={Link}
         className="bg-amber-400 text-black font-bold"
-        href="https://docs.google.com/forms/d/e/1FAIpQLSfrpYoz1rnsuiER9PazbMtaIZJkOdKr0gOGpXBE6KPAmUKbXg/viewform?usp=sf_link"
+        href="https://forms.office.com/r/PtgUuiJNCh"
         rel="noopener noreferrer"
         target="_blank"
       >
-        Apply
+        Sign Up
       </Button>
 
       <p className="text-center max-w-full mt-5">

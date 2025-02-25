@@ -18,8 +18,8 @@ export default async function TripPage({ params }: any) {
   }
 
   return (
-    <div className="flex flex-col justify-top items-center">
-      <h1 className="text-5xl text-amber-400 font-bold text-center">
+    <div className="flex flex-col justify-top items-center max-w-full">
+      <h1 className="text-5xl text-amber-400 font-bold text-center max-w-full">
         {tripData.name}
       </h1>
       <div className="flex flex-row justify-left items-center mt-8 w-full text-inherit">

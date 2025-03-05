@@ -48,6 +48,7 @@ const leadershipCategories = [
       "Fundraising, Sponsorship, & Alumni",
       "Diversity & Community Outreach",
       "Social Media Coordinator",
+      "Social Events Coordinator",
       "Webmaster",
       "Data Analyst",
       "Cheese Consultant",

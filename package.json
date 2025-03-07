@@ -9,7 +9,8 @@
   "lint": "eslint . --ext .ts,.tsx -c .eslintrc.json --fix"
  },
  "dependencies": {
-  "@maptiler/sdk": "^2.5.1",
+  "@azure/msal-browser": "^4.5.1",
+  "@azure/msal-node": "^3.2.3",
   "@heroui/accordion": "2.2.8",
   "@heroui/button": "2.2.10",
   "@heroui/code": "2.2.7",
@@ -25,6 +26,7 @@
   "@heroui/system": "2.4.7",
   "@heroui/tabs": "2.2.8",
   "@heroui/theme": "2.4.6",
+  "@maptiler/sdk": "^2.5.1",
   "@react-aria/ssr": "3.9.4",
   "@react-aria/visually-hidden": "3.8.12",
   "@vercel/analytics": "^1.4.1",
@@ -36,6 +38,7 @@
   "intl-messageformat": "^10.5.0",
   "next": "^14.2.4",
   "next-absolute-url": "^1.2.2",
+  "next-auth": "^4.24.11",
   "next-mdx-remote": "^4.4.1",
   "next-themes": "^0.2.1",
   "pg": "^8.13.1",

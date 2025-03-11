@@ -91,7 +91,7 @@ export default async function NewsPost({ params }: any) {
       <p className="my-8 text-left">{post.metadata.summary}</p>
       <article
         dangerouslySetInnerHTML={{ __html: contentHtml }}
-        className="prose dark:prose-invert prose-a:text-amber-400 prose-a:no-underline text-left [&>p]:my-4 [&>ul]:list-disc [&>ul]:ml-8 [&>h2]:font-bold [&>h2]:text-xl [&>h2]:my-4"
+        className="prose dark:prose-invert prose-a:text-amber-400 prose-a:no-underline text-left [&>p]:my-4 [&>ul]:list-disc [&>ul]:ml-8 [&>h2]:font-bold [&>h2]:text-xl [&>h2]:my-4 [&>p>a]:text-amber-400"
       />
     </section>
   );

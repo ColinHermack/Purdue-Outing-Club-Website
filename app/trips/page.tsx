@@ -59,7 +59,7 @@ function TripCards(props: TripCardProps) {
         <Card className="w-[400px] my-2">
           <CardHeader className="flex gap-3">
             <div className="flex flex-col items-left">
-              <p className="text-md font-bold text-amber-400">{trip.name}</p>
+              <p className="text-md font-bold text-amber-400 text-left">{trip.name}</p>
               <p className="text-small text-default-500 text-left">
                 {trip.startdate.toLocaleDateString().replace(/\//g, "-")}
               </p>

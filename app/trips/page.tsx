@@ -50,7 +50,9 @@ interface TripCardProps {
 
 function TripCards(props: TripCardProps) {
   return props.trips.length > 0 ? (
-    props.trips.map((trip: any) => (
+    props.trips.sort((a, b) => {
+        return a.startdate - b.startdate;
+    }).map((trip: any) => (
       <Link
         key={trip.trip_id}
         className="text-amber-400"

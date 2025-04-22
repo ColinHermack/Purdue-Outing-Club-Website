@@ -45,7 +45,8 @@ const leadershipCategories = [
   {
     branch: "Public Relations",
     positions: [
-      "Fundraising, Sponsorship, & Alumni",
+      "Alumni Coordinator",
+      "Fundraising & Sponsorship",
       "Diversity & Community Outreach",
       "Social Media Coordinator",
       "Social Events Coordinator",

@@ -52,7 +52,8 @@ const leadershipCategories = [
       "Social Events Coordinator",
       "Webmaster",
       "Data Analyst",
-      "Cheese Consultant",
+      "Club Goober",
+      "Cheese Consultant"
     ],
   },
   {

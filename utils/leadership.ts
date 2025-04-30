@@ -36,22 +36,27 @@ const leadershipCategories = [
     branch: "Administrative",
     positions: [
       "Secretary of Sports",
-      "Secretary of Treasury",
+      "Secretary of Operations",
       "Secretary of Outreach",
-      "Treasurer",
       "Health & Safety",
     ],
   },
   {
-    branch: "Public Relations",
+    branch: "Operations",
+    positions: [
+      "Treasurer",
+      "Webmaster",
+      "Data Analyst"
+    ]
+  },
+  {
+    branch: "Outreach",
     positions: [
       "Alumni Coordinator",
       "Fundraising & Sponsorship",
       "Diversity & Community Outreach",
       "Social Media Coordinator",
       "Social Events Coordinator",
-      "Webmaster",
-      "Data Analyst",
       "Club Goober",
       "Cheese Consultant"
     ],
@@ -159,7 +164,11 @@ export async function getLeaderData() {
       content: [],
     },
     {
-      label: "Public Relations",
+      label: "Operations",
+      content: [],
+    },
+    {
+      label: "Outreach",
       content: [],
     },
     {

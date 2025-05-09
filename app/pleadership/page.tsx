@@ -22,7 +22,7 @@ export default async function Pleadership() {
       <div className="flex flex-col w-screen justify-top items-center text-xl">
         {data.map((item) => {
           return (
-            <div key={item.label}>
+            <div key={item.label} className='flex flex-col justify-top items-center'>
               <h2 className="m-12 text-2xl font-bold text-amber-400">
                 {item.label}
               </h2>
@@ -34,13 +34,13 @@ export default async function Pleadership() {
                       className="py-4 m-4 w-[250px] h-[350px] flex flex-col justify-between items-center"
                     >
                       <div className="pb-0 pt-2 px-4 flex-col items-start">
-                        <p className="text-small uppercase font-bold">
+                        <p className="text-small uppercase font-bold text-center">
                           {currOfficer.name}
                         </p>
-                        <small className="text-default-500 text-tiny">
+                        <small className="text-default-500 text-tiny text-center">
                           {currOfficer.pronouns}
                         </small>
-                        <h4 className="font-bold text-large">
+                        <h4 className="font-bold text-large text-center">
                           {currOfficer.position}
                         </h4>
                       </div>

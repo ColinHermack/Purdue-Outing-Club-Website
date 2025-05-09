@@ -33,7 +33,7 @@ export default function TripsPage() {
       <h2 className="mt-10 mb-8 text-center font-bold text-2xl">
         Accepting Signups
       </h2>
-      <div>
+      <div className='flex flex-col'>
         {trips != null ? (
           <TripCards trips={trips} />
         ) : (

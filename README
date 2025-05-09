@@ -23,7 +23,7 @@ This is a full-stack web application used for the management of Purdue Outing Cl
 ## Technologies Used
 
 - [Next.js 14](https://nextjs.org/docs/getting-started)
-- [NextUI v2](https://nextui.org/)
+- [HeroUI v2](https://heroui.org/)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [Tailwind Variants](https://tailwind-variants.org)
 - [TypeScript](https://www.typescriptlang.org/)
@@ -31,7 +31,12 @@ This is a full-stack web application used for the management of Purdue Outing Cl
 - [next-themes](https://github.com/pacocoursey/next-themes)
 - [Google Calendar](calendar.google.com)
 
-## How to Use
+## Documentation
+Each subdirectory of the main project directory has its own README explaining what it contains. Each code file has an
+in-depth block comment at the top of the file explaining its purpose. Also view the 
+[NextJS Documentation](https://nextjs.org/docs/getting-started) for an in-depth explanation of NextJS and how it works.
+
+## How to Contribute
 
 ### Clone the GitHub repository
 
@@ -43,10 +48,10 @@ git clone https://github.com/ColinHermack/Outing-Club-Website-Prototype
 
 ### Install dependencies
 
-Run the following command:
+Run the following command to install NPM packages:
 
 ```bash
-npm install
+npm install --legacy-peer-deps
 ```
 
 ### Run the development server
@@ -55,25 +60,29 @@ npm install
 npm run dev
 ```
 
-## Deployment Information
-This app is deployed on Vercel
+### Create a feature branch
+```git
+git branch myfeaturebranch
+```
 
-### Login Information
-- Name: Purdue Outing Club
-- Email: purdueouting@gmail.com
+### Create a pull request on GitHub
+Create a pull request to merge your feature branch with main. It will have to successfully deploy and be reviewed
+by the webmaster before merging.
+
+## Deployment Information
+This app is deployed on Vercel and deploys automatically whenever a pull request is accepted.
 
 ## Contributors
-
-* Colin Hermack (Webmaster Fall 2024/Spring 2025)
+* Colin Hermack (Webmaster Fall 2024 - Present)
     * Designed/developed all frontend and backend software
     * Deployed the site
     * Currently maintains the site
     * Coordinated website development
-* Arjun Khandelwal (Data Analyst Fall 2024/Treasurer Spring 2025)
+* Arjun Khandelwal (Data Analyst Fall 2024/Secretary of Operations Spring 2025 - Present)
     * Designed/developed the database portion of the backend
     * Designed various forms for backend data handling
 * Colin Newton (Treasurer Fall 2023/Spring 2024/Fall 2024)
     * Oversaw all development activities
     * Designed and built backend forms, macros, and data pipelines.
-* Ainsley Yates (Data Analyst Spring 2025)
+* Ainsley Yates (Data Analyst Spring 2025 - Present)
     * Maintains the database portion of the backend

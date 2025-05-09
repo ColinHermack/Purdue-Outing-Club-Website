@@ -3,7 +3,7 @@ import { remark } from "remark";
 import html from "remark-html";
 
 import { getPosts } from "@/app/news/utils";
-import { BASE_URL } from "@/app/constants";
+import { BASE_URL } from "@/config/constants";
 
 export async function generateStaticParams() {
   let posts = getPosts();

@@ -32,8 +32,8 @@ This is a full-stack web application used for the management of Purdue Outing Cl
 - [Google Calendar](calendar.google.com)
 
 ## Documentation
-Each subdirectory of the main project directory has its own README explaining what it contains. Each code file has an
-in-depth block comment at the top of the file explaining its purpose. Also view the 
+Each subdirectory of the main project directory has its own README explaining what it contains. Code files whose purpose
+is not immediately obvious have a block comment explaining what they do.
 [NextJS Documentation](https://nextjs.org/docs/getting-started) for an in-depth explanation of NextJS and how it works.
 
 ## How to Contribute

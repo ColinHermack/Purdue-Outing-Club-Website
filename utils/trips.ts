@@ -1,3 +1,9 @@
+/**
+ * Utilies related to fetching trip data from the database.
+ *
+ * @author Colin Hermack
+ */
+
 "use server";
 
 const { Pool, QueryResult } = require("pg"); //PostgreSQL
@@ -13,6 +19,13 @@ const pool = new Pool({
   },
 });
 
+/**
+ * Queries the database asynchronously to get trip data.
+ *
+ * @param id - The ID of the trip to get data for.
+ *
+ * @returns A JSON object representing the trip data if the trip exists, else undefined.
+ */
 export async function getTripData(id: number) {
   let result: typeof QueryResult = null;
   const client = await pool.connect();

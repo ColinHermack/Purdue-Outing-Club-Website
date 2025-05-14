@@ -1,3 +1,9 @@
+/**
+ * Utilities related to fetching leadership data from the database.
+ *
+ * @author Colin Hermack
+ */
+
 "use server";
 
 const { Pool, QueryResult } = require("pg"); //PostgreSQL
@@ -36,20 +42,24 @@ const leadershipCategories = [
     branch: "Administrative",
     positions: [
       "Secretary of Sports",
-      "Secretary of Treasury",
+      "Secretary of Operations",
       "Secretary of Outreach",
-      "Treasurer",
       "Health & Safety",
     ],
   },
   {
-    branch: "Public Relations",
+    branch: "Operations",
+    positions: ["Treasurer", "Webmaster", "Data Analyst"],
+  },
+  {
+    branch: "Outreach",
     positions: [
-      "Fundraising, Sponsorship, & Alumni",
+      "Alumni Coordinator",
+      "Fundraising & Sponsorship",
       "Diversity & Community Outreach",
       "Social Media Coordinator",
-      "Webmaster",
-      "Data Analyst",
+      "Social Events Coordinator",
+      "Club Goober",
       "Cheese Consultant",
     ],
   },
@@ -156,7 +166,11 @@ export async function getLeaderData() {
       content: [],
     },
     {
-      label: "Public Relations",
+      label: "Operations",
+      content: [],
+    },
+    {
+      label: "Outreach",
       content: [],
     },
     {

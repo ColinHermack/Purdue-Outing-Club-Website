@@ -1,5 +1,12 @@
 "use client";
 
+/**
+ * This page contains answers to frequently asked questions about the Purdue Outing Club. It is a client component
+ * because the dropdown menus require React state management.
+ *
+ * @author Colin Hermack
+ */
+
 import React from "react";
 import { Accordion, AccordionItem } from "@heroui/accordion";
 import { Link } from "@heroui/link";

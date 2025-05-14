@@ -1,3 +1,9 @@
+/**
+ * Footer component which will be reused on every page.
+ *
+ * @author Colin Hermack
+ */
+
 import { Link } from "@heroui/link";
 import { link as linkStyles } from "@heroui/theme";
 import NextLink from "next/link";
@@ -11,7 +17,7 @@ import {
   FaLink,
 } from "react-icons/fa";
 
-import { Logo } from "@/components/icons";
+import { Logo } from "@/components/logos";
 import { siteConfig } from "@/config/site";
 
 const socialMediaIcons = [

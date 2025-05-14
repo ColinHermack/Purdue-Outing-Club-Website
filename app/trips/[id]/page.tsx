@@ -1,3 +1,9 @@
+/*
+ * This page displays the details of a specific trip, based on the trip ID which is part of the URL.
+ *
+ * @Author: Firstname Lastname
+ */
+
 import React from "react";
 import { redirect } from "next/navigation";
 import { FaMapMarkerAlt, FaCalendar, FaExternalLinkAlt } from "react-icons/fa";
@@ -6,7 +12,7 @@ import { Link } from "@heroui/link";
 
 import TripDifficultyIcon from "./tripDifficultyIcon";
 
-import { SPORTS } from "@/app/constants";
+import { SPORTS } from "@/config/constants";
 import { getTripData } from "@/utils/trips";
 
 export default async function TripPage({ params }: any) {
@@ -18,8 +24,8 @@ export default async function TripPage({ params }: any) {
   }
 
   return (
-    <div className="flex flex-col justify-top items-center">
-      <h1 className="text-5xl text-amber-400 font-bold text-center">
+    <div className="flex flex-col justify-top items-center max-w-full">
+      <h1 className="text-5xl text-amber-400 font-bold text-center max-w-full">
         {tripData.name}
       </h1>
       <div className="flex flex-row justify-left items-center mt-8 w-full text-inherit">

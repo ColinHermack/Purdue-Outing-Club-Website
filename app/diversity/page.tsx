@@ -1,3 +1,10 @@
+/**
+ * This page contains information about the Purdue Outing Club's diversity programs, with contact information for the
+ * diversity and community outreach officer.
+ *
+ * @author Colin Hermack
+ */
+
 import React from "react";
 import { Divider } from "@heroui/divider";
 import { Link } from "@heroui/link";

@@ -1,3 +1,9 @@
+/**
+ * This page contains the relevant information for those wishing to make a donation to the endowment.
+ *
+ * @author Colin Hermack
+ */
+
 import React from "react";
 import { Button } from "@heroui/button";
 import { Link } from "@heroui/link";
@@ -66,7 +72,8 @@ export default async function Page() {
       </h2>
       <p className="my-4 text-center max-w-[800px]">
         Whether you have connections, want to help us fundraise, or simply can
-        spread the word of who we are and what we do, we need help from everyone!
+        spread the word of who we are and what we do, we need help from
+        everyone!
       </p>
 
       <div className="flex flex-col justify-top items-center my-10 lg:flex-row md:justify-center md:items-top">

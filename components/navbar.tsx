@@ -1,3 +1,9 @@
+/**
+ * The navbar component which will be reused on every page.
+ *
+ * @author Colin Hermack
+ */
+
 "use client";
 
 import {
@@ -19,7 +25,7 @@ import { useState } from "react";
 import { ThemeSwitch } from "./theme-switch";
 
 import { siteConfig } from "@/config/site";
-import { Logo } from "@/components/icons";
+import { Logo } from "@/components/logos";
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

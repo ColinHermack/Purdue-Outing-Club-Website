@@ -1,3 +1,10 @@
+/**
+ * This page contains information about how to become a trip leader, and frequently asked questions regarding trip leader
+ * training and certification.
+ *
+ * @author Colin Hermack
+ */
+
 "use client";
 
 import React from "react";

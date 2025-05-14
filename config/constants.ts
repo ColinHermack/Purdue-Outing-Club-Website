@@ -1,3 +1,22 @@
+/**
+ * Sitewide constant values that will be used in multiple locations.
+ *
+ * @author Colin Hermack
+ */
+
+export const BASE_URL = "https://purdueoutingclub.com";
+
+export const SPORTS = [
+  "Backpacking",
+  "Canoeing",
+  "Caving",
+  "Climbing",
+  "Mountain Biking",
+  "Whitewater",
+  "Winter Sports",
+  "Fishing",
+];
+
 interface ITripDifficultyDescriptions {
   [key: string]: string[];
 }

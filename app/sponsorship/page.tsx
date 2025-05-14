@@ -1,3 +1,9 @@
+/**
+ * This page contains information for prospective corporate sponsors of the club.
+ *
+ * @author Colin Hermack
+ */
+
 import React from "react";
 import { Divider } from "@heroui/divider";
 import { Image } from "@heroui/image";
@@ -14,7 +20,7 @@ export const metadata = {
 const sponsors = [
   {
     name: "Celsius",
-    image: "/sponsors/celsius_logo.png",
+    image: "/sponsors/celsius_logo.webp",
     website: "https://www.celsius.com",
   },
   {

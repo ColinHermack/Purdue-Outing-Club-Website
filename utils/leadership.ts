@@ -1,3 +1,9 @@
+/**
+ * Utilities related to fetching leadership data from the database.
+ *
+ * @author Colin Hermack
+ */
+
 "use server";
 
 const { Pool, QueryResult } = require("pg"); //PostgreSQL
@@ -43,11 +49,7 @@ const leadershipCategories = [
   },
   {
     branch: "Operations",
-    positions: [
-      "Treasurer",
-      "Webmaster",
-      "Data Analyst"
-    ]
+    positions: ["Treasurer", "Webmaster", "Data Analyst"],
   },
   {
     branch: "Outreach",
@@ -58,7 +60,7 @@ const leadershipCategories = [
       "Social Media Coordinator",
       "Social Events Coordinator",
       "Club Goober",
-      "Cheese Consultant"
+      "Cheese Consultant",
     ],
   },
   {

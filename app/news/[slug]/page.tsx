@@ -2,51 +2,8 @@ import { notFound } from "next/navigation";
 import { remark } from "remark";
 import html from "remark-html";
 
-import { getPosts } from "@/app/news/utils";
-import { BASE_URL } from "@/app/constants";
-
-export async function generateStaticParams() {
-  let posts = getPosts();
-
-  return posts.map((curr) => ({
-    slug: curr.slug,
-  }));
-}
-
-export function generateMetadata({ params }: any) {
-  let post = getPosts().find((post) => post.slug === params.slug);
-
-  if (!post) {
-    return;
-  }
-
-  let {
-    title,
-    postedOn: publishedTime,
-    summary: description,
-    image,
-  } = post.metadata;
-  let ogImage = image
-    ? image
-    : `${BASE_URL}/og?title=${encodeURIComponent(title)}`;
-
-  return {
-    title,
-    description,
-    openGraph: {
-      title,
-      description,
-      type: "article",
-      publishedTime,
-      url: `${BASE_URL}/blog/${post.slug}`,
-      images: [
-        {
-          url: ogImage,
-        },
-      ],
-    },
-  };
-}
+import { getPosts } from "@/app/news/postUtils";
+import { BASE_URL } from "@/config/constants";
 
 export default async function NewsPost({ params }: any) {
   let post = getPosts().find((post) => post.slug === params.slug);
@@ -70,9 +27,6 @@ export default async function NewsPost({ params }: any) {
             datePublished: post.metadata.postedOn,
             dateModified: post.metadata.postedOn,
             description: post.metadata.summary,
-            image: post.metadata.image
-              ? `${BASE_URL}${post.metadata.image}`
-              : `/og?title=${encodeURIComponent(post.metadata.title)}`,
             url: `${BASE_URL}/blog/${post.slug}`,
           }),
         }}

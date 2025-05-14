@@ -20,7 +20,7 @@ export const metadata = {
 const sponsors = [
   {
     name: "Celsius",
-    image: "/sponsors/celsius_logo.png",
+    image: "/sponsors/celsius_logo.webp",
     website: "https://www.celsius.com",
   },
   {

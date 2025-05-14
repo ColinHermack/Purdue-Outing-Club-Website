@@ -1,4 +1,4 @@
-/*
+/**
  * This page essentially just functions as a wrapped for the club Google Calendar.
  *
  * @author Colin Hermack

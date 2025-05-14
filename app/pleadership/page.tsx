@@ -1,3 +1,10 @@
+/**
+ * This page contains information on the officers and leadership of the Purdue Outing Club. Note that this is a server
+ * component, so it will only be rendered when the site is built.
+ *
+ * @author Colin Hermack
+ */
+
 import Image from "next/image";
 
 import { getLeaderData } from "@/utils/leadership";
@@ -22,7 +29,10 @@ export default async function Pleadership() {
       <div className="flex flex-col w-screen justify-top items-center text-xl">
         {data.map((item) => {
           return (
-            <div key={item.label} className='flex flex-col justify-top items-center'>
+            <div
+              key={item.label}
+              className="flex flex-col justify-top items-center"
+            >
               <h2 className="m-12 text-2xl font-bold text-amber-400">
                 {item.label}
               </h2>

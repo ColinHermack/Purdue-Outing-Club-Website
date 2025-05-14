@@ -1,3 +1,9 @@
+/**
+ * Logos for use reuse across the site.
+ *
+ * @author Colin Hermack
+ */
+
 import * as React from "react";
 import Image from "next/image";
 

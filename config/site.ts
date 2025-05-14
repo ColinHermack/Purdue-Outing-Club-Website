@@ -1,3 +1,9 @@
+/**
+ * This file contains the site configuration for the Purdue Outing Club website.
+ *
+ * @author Colin Hermack
+ */
+
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {

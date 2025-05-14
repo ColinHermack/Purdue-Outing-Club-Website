@@ -1,3 +1,9 @@
+/**
+ * This page contains information on how to join the Purdue Outing Club.
+ *
+ * @author Colin Hermack
+ */
+
 import React from "react";
 import { Button } from "@heroui/button";
 import { Link } from "@heroui/link";

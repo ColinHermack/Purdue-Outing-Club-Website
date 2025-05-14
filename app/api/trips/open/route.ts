@@ -1,4 +1,4 @@
-/*
+/**
  * Serves a JSON string containing the open trips.
  *
  * @author Colin Hermack
@@ -6,8 +6,8 @@
 
 const { Pool, QueryResult } = require("pg"); //PostgreSQL
 
-export const dynamic = "force-dynamic";  // Stops NextJS from overoptimizing and breaking this endpoint
-export const revalidate = 0;  // Stops NextJS from overoptimizing and breaking this endpoint
+export const dynamic = "force-dynamic"; // Stops NextJS from overoptimizing and breaking this endpoint
+export const revalidate = 0; // Stops NextJS from overoptimizing and breaking this endpoint
 
 // Create a new pool of database connections
 const pool = new Pool({
@@ -21,8 +21,9 @@ const pool = new Pool({
   },
 });
 
-/*
+/**
  * Queries the database asynchronously to get open trips.
+ *
  * @returns An array of JSON objects representing open trips.
  */
 const getOpenTrips = async () => {
@@ -48,8 +49,9 @@ const getOpenTrips = async () => {
   return result.rows;
 };
 
-/*
+/**
  * The actual route handler.
+ *
  * @returns An HTTPS response object.
  */
 export async function GET() {

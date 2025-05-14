@@ -1,5 +1,12 @@
 "use client";
 
+/**
+ * This page displays the gear closet hours for the Purdue Outing Club, and shows how to find it. It is a client component
+ * because the gear hours should be updated in real time.
+ *
+ * @author Colin Hermack
+ */
+
 import React from "react";
 import { Divider } from "@heroui/divider";
 import { useEffect, useState } from "react";

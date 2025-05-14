@@ -1,3 +1,9 @@
+/**
+ * This is a page where members can submit a report if they felt that there was an unsafe situation on a trip.
+ *
+ * @author Colin Hermack
+ */
+
 import React from "react";
 import { Button } from "@heroui/button";
 import { Link } from "@heroui/link";

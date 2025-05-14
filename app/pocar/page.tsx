@@ -1,5 +1,12 @@
 "use client";
 
+/**
+ * This page contains information about the 2025 POCAR race. It will need to be updated soon with information about the
+ * 2026 race.
+ *
+ * @author Colin Hermack
+ */
+
 import React from "react";
 import { Divider } from "@heroui/divider";
 import { Button } from "@heroui/button";

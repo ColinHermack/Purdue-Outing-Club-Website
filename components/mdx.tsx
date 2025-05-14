@@ -1,3 +1,9 @@
+/**
+ * Various HTML components customized for use with MDX files in the news articles.
+ *
+ * @author Colin Hermack
+ */
+
 import Link from "next/link";
 import Image from "next/image";
 import { MDXRemote } from "next-mdx-remote/rsc";

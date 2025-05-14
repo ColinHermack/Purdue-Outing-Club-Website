@@ -1,17 +1,32 @@
-import Link from "next/link";
+/**
+ * Helper functions for rendering the news articles from markdown.
+ *
+ * @author Colin Hermack
+ */
 
 import fs from "fs";
 import path from "path";
 
+import Link from "next/link";
+
+// The news metadata type
 type Metadata = {
   title: string;
   postedOn: string;
   summary: string;
   author: string;
-  image?: string;
-  github?: string;
-  deployment?: string;
 };
+
+interface IRecentProjectProps {
+  numPosts: number;
+}
+
+/**
+ * Parses the frontmatter from a markdown file and extracts metadata.
+ *
+ * @param fileContent - The content of the file including frontmatter.
+ * @returns An object containing parsed metadata and the content without frontmatter.
+ */
 
 function parseFrontmatter(fileContent: string) {
   let frontmatterRegex = /---\s*([\s\S]*?)\s*---/;
@@ -32,16 +47,35 @@ function parseFrontmatter(fileContent: string) {
   return { metadata: metadata as Metadata, content };
 }
 
+/**
+ * Retrieves a list of MDX files from the specified directory.
+ *
+ * @param dir - The directory path to search for MDX files.
+ * @returns An array of filenames with the .mdx extension found in the directory.
+ */
 function getMDXFiles(dir: string) {
   return fs.readdirSync(dir).filter((file) => path.extname(file) === ".mdx");
 }
 
+/**
+ * Reads an MDX file from the given file path and parses its frontmatter.
+ *
+ * @param filePath - The path to the MDX file to be read.
+ * @returns An object containing the parsed metadata and the content without frontmatter.
+ */
 function readMDXFile(filePath: string) {
   let rawContent = fs.readFileSync(filePath, "utf-8");
 
   return parseFrontmatter(rawContent);
 }
 
+/**
+ * Retrieves a list of metadata, slugs, and content from a directory of MDX files.
+ *
+ * @param dir - The directory path to search for MDX files.
+ * @returns An array of objects containing the metadata, slug, and content of each file.
+ *          The array is sorted in descending order of posting date.
+ */
 function getMDXData(dir: string) {
   let mdxFiles = getMDXFiles(dir);
 
@@ -66,10 +100,22 @@ function getMDXData(dir: string) {
   return postsData;
 }
 
+/**
+ * Retrieves the list of metadata, slugs, and content from the "newsposts" directory.
+ *
+ * @returns A list of metadata, slugs, and content from the "newsposts" directory
+ */
 export function getPosts() {
   return getMDXData(path.join(process.cwd(), "newsposts"));
 }
 
+/**
+ * A React component that displays a list of news articles.
+ *
+ * @returns A <div> element containing a list of news articles. The list is sorted
+ *          in descending order of posting date. Each article is a link to the
+ *          article's page.
+ */
 export function NewsArticles() {
   let posts = getPosts();
 
@@ -99,10 +145,6 @@ export function NewsArticles() {
         ))}
     </div>
   );
-}
-
-interface IRecentProjectProps {
-  numPosts: number;
 }
 
 export function RecentNews(props: IRecentProjectProps) {

@@ -1,4 +1,4 @@
-/*
+/**
  * Serves an array of JSON strings containing the name and hours of each gear officer.
  *
  * @author Colin Hermack
@@ -37,19 +37,20 @@ interface IGearHoursData {
   hours: string;
 }
 
-/*
+/**
  * Queries the database asynchronously to get gear officer data.
+ *
  * @returns An array of JSON objects representing gear officer positions, names, and metadata.
  */
 const getGearHours = async () => {
   let result: typeof QueryResult = null;
-  const client = await pool.connect();  // Wait for a database connection to become available
+  const client = await pool.connect(); // Wait for a database connection to become available
 
   try {
     result = await client.query(`
             SELECT o.position, o.officer_data, m.name FROM officer AS o
             JOIN member AS m ON m.member_id = o.member_id
-            WHERE position LIKE '%Gear%';`); 
+            WHERE position LIKE '%Gear%';`);
   } catch (error: any) {
     //Intentionally left empty
   } finally {
@@ -59,12 +60,15 @@ const getGearHours = async () => {
   return result.rows;
 };
 
-/*
- * The actual route handler.
- * @returns An HTTPS response object.
+/**
+ * GET /api/gear/hours
+ *
+ * Retrieves the hours for all gear officers.
+ *
+ * @returns An array of JSON objects containing the name and hours of each gear officer.
  */
 export async function GET() {
-  let gearHours: IGearOfficerData[] = await getGearHours();  // Get an array of gear officer data
+  let gearHours: IGearOfficerData[] = await getGearHours(); // Get an array of gear officer data
 
   let cleanedHours: IGearHoursData[] = gearHours.map((officer) => {
     return {

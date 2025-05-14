@@ -31,7 +31,7 @@ export default function TripsPage() {
     <div className="flex flex-col justify-top items-center">
       <title>Trips - Purdue Outing Club</title>
       <h1 className="text-5xl text-amber-400 font-bold text-center">Trips</h1>
-      <p className="my-4">
+      <p className="my-4 text-center">
         A note on signing up for trips: sometimes the form may ask you whether
         you want to create a new draft or use a previous draft. ALWAYS CLICK NEW
         DRAFT. Otherwise you will not be signed up for the trip properly.

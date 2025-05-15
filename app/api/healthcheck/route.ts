@@ -1,4 +1,4 @@
-/*
+/**
  * This route is only used to check if the API is online, and has no other purpose.
  *
  * @author Colin Hermack

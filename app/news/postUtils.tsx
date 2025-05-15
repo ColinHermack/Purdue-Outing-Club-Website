@@ -147,6 +147,14 @@ export function NewsArticles() {
   );
 }
 
+/**
+ * A React component that displays a list of the most recent news articles.
+ *
+ * @param {IRecentProjectProps} props The number of news articles to display.
+ * @returns A <div> element containing a list of news articles. The list is sorted
+ *          in descending order of posting date. Each article is a link to the
+ *          article's page.
+ */
 export function RecentNews(props: IRecentProjectProps) {
   let projects = getPosts();
 

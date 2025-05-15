@@ -1,6 +1,5 @@
 /**
  * Utilities related to fetching leadership data from the database.
- *
  * @author Colin Hermack
  */
 
@@ -118,6 +117,12 @@ const leadershipCategories = [
   },
 ];
 
+/**
+ * Retrieves the officer data for a given position.
+ *
+ * @param position The position to retrieve officer data for.
+ * @returns An object containing the officer data for the given position, or undefined if the position does not exist.
+ */
 export async function getLeaderDataByPosition(
   position: string,
 ): Promise<Officer | undefined> {
@@ -150,6 +155,12 @@ export async function getLeaderDataByPosition(
   }
 }
 
+/**
+ * Retrieves all officer data, organized by branch.
+ *
+ * @returns An array of objects, each representing a branch of the club. Each object contains a label and an array of
+ *          Officer objects, containing the officer data for each officer in the branch.
+ */
 export async function getLeaderData() {
   interface BranchData {
     label: string;

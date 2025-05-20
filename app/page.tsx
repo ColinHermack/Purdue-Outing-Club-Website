@@ -7,6 +7,7 @@ import { Link } from "@heroui/link";
 import { useState, useEffect } from "react";
 import { Spinner } from "@heroui/spinner";
 import { Divider } from "@heroui/divider";
+import Leaderboard from "@/components/leaderboard";
 
 export default function Home() {
   const [recentNews, setRecentNews] = useState([]);
@@ -217,6 +218,11 @@ export default function Home() {
           backpacking.
         </AccordionItem>
       </Accordion>
+
+      <h2 className="text-4xl m-10 font-bold">LEADERBOARDS</h2>
+      <Leaderboard />
+
+      <Divider className='mt-10 mb-5' />
 
       <Button
         as={Link}

@@ -15,10 +15,6 @@ export const siteConfig = {
       href: "/calendar",
     },
     {
-      label: "News",
-      href: "/news",
-    },
-    {
       label: "Trips",
       href: "/trips",
     },
@@ -35,6 +31,10 @@ export const siteConfig = {
       href: "/gearcloset",
     },
     {
+      label: "Climbing Team",
+      href: "/climbingteam",
+    },
+    {
       label: "POCAR",
       href: "/pocar",
     },
@@ -47,6 +47,10 @@ export const siteConfig = {
     {
       label: "Constitution",
       href: "/docs/poc_constitution.pdf",
+    },
+        {
+      label: "News",
+      href: "/news",
     },
     {
       label: "Diversity and Inclusion",

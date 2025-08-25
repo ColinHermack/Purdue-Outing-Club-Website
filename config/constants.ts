@@ -15,6 +15,8 @@ export const SPORTS = [
   "Whitewater",
   "Winter Sports",
   "Fishing",
+  "Labor Day",
+  "POCtoberfest"
 ];
 
 interface ITripDifficultyDescriptions {

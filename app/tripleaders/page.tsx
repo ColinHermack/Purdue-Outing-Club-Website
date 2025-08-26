@@ -67,6 +67,11 @@ export default function TripLeaderPage() {
       </p>
 
       <Divider className="my-5" />
+      <div className='mt-4'>
+        Trip leader training resources will be posted on this page when they are released.
+      </div>
+
+      {/* 
       <h2 className="font-bold text-center text-xl">
         Sign up for Trip Leader Training
       </h2>
@@ -79,7 +84,7 @@ export default function TripLeaderPage() {
       >
         Sign Up
       </Button>
-
+      */}
       <p className="text-center max-w-full mt-5">
         Before you can lead trips, you will need to obtain a CPR certification.
         Please submit proof of your certification here for approval by our

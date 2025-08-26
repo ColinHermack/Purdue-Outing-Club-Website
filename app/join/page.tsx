@@ -37,6 +37,10 @@ export default function JoinPage() {
         treasurer and secretary of the treasury will have access to this
         information.
       </p>
+      <p className='flex-left w-3/4 text-center mt-4'>
+        If you fill out the dues waiver, DO NOT pay dues in TooCool. If the waiver is accepted,
+        you will not have to pay dues. If the waiver is rejected, only then must you pay dues.
+      </p>
       <Button
         as={Link}
         className="bg-amber-400 text-black font-bold mt-10 mb-4"

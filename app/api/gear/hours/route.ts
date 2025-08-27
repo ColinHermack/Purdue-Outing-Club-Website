@@ -6,6 +6,9 @@
 
 const { Pool, QueryResult } = require("pg"); //PostgreSQL
 
+export const dynamic = "force-dynamic"; // Stops NextJS from overoptimizing and breaking this endpoint
+export const revalidate = 0; // Stops NextJS from overoptimizing and breaking this endpoint
+
 // Create a new database connection pool
 const pool = new Pool({
   user: process.env.DB_USER,

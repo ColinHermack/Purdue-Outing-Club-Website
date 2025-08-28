@@ -43,13 +43,13 @@ export default async function Pleadership() {
                       key={currOfficer.name}
                       className="py-4 m-4 w-[250px] h-[350px] flex flex-col justify-between items-center"
                     >
-                      <div className="pb-0 pt-2 px-4 flex-col items-start">
+                      <div className="pb-0 pt-2 px-4 flex-col items-center">
                         <p className="text-small uppercase font-bold text-center">
                           {currOfficer.name}
                         </p>
-                        <small className="text-default-500 text-tiny text-center">
+                        <p className="text-default-500 text-tiny text-center pt-2">
                           {currOfficer.pronouns}
-                        </small>
+                        </p>
                         <h4 className="font-bold text-large text-center">
                           {currOfficer.position}
                         </h4>

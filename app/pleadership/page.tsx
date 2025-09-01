@@ -7,25 +7,68 @@
 
 import Image from "next/image";
 
-import { getLeaderData } from "@/utils/leadership";
+import { getLeaderData, BranchData, Officer } from "@/utils/leadership";
+import { Button } from '@heroui/button';
+import { Link } from '@heroui/link';
+import { Divider } from '@heroui/divider';
+import { MdEmail } from 'react-icons/md';
 
 export const metadata = {
   title: "Pleadership",
   description: "Officers and leadership of the Purdue Outing Club.",
 };
 
+function LeaderCard(props: { officer: Officer }) {
+  return (
+    <div
+      key={props.officer.name}
+      className="py-4 m-4 w-[250px] h-[400px] flex flex-col justify-between items-center"
+    >
+      <div className='relative w-[200px] h-[200px]'>
+        <Image
+          alt={props.officer.name}
+          className="rounded-xl object-cover w-[200px] h-[200px]"
+          fill={true}
+          sizes="200px"
+          src={`/leadership/${props.officer.officer_data.ImagePath}`}
+        />
+      </div>
+      <div className="pb-0 pt-2 px-4 flex-col justify-top items-center text-center">
+        <p className="font-bold text-xl text-center">
+          {props.officer.name}
+        </p>
+        <p className="text-default-500 text-tiny text-center">
+          {props.officer.pronouns}
+        </p>
+        <p className="text-sm font-bold text-center pt-2 uppercase text-amber-400">
+          {props.officer.position}
+        </p>
+        <Button
+          as={Link}
+          href={`mailto:${props.officer.email}`}
+          size="sm"
+          className='bg-amber-400 hover:bg-amber-400/80 text-xl mt-4'
+          isIconOnly
+        >
+          <MdEmail />        
+        </Button>
+      </div>
+    </div>
+  )
+}
+
 export default async function Pleadership() {
-  const data = await getLeaderData();
+  const data: BranchData[] = await getLeaderData();
 
   return (
     <div className="flex flex-col justify-top items-center">
       <h1 className="text-5xl text-amber-400 font-bold text-center">
         Pleadership
       </h1>
-      <p className="mt-4 mx-4">
-        It takes a lot of people to keep one of the largest clubs on campus
-        running! Click on anyone&#39;s picture below to contact them.
-      </p>
+      <Divider className='mt-8 mb-4 w-[90vw]' />
+      <div className='w-full flex-row justify-center items-center'>
+
+      </div>
       <div className="flex flex-col w-screen justify-top items-center text-xl">
         {data.map((item) => {
           return (
@@ -39,36 +82,11 @@ export default async function Pleadership() {
               <div className="w-full flex flex-wrap justify-center items-center">
                 {item.content.map((currOfficer) => {
                   return (
-                    <div
-                      key={currOfficer.name}
-                      className="py-4 m-4 w-[250px] h-[350px] flex flex-col justify-between items-center"
-                    >
-                      <div className="pb-0 pt-2 px-4 flex-col items-center">
-                        <p className="text-small uppercase font-bold text-center">
-                          {currOfficer.name}
-                        </p>
-                        <p className="text-default-500 text-tiny text-center pt-2">
-                          {currOfficer.pronouns}
-                        </p>
-                        <h4 className="font-bold text-large text-center">
-                          {currOfficer.position}
-                        </h4>
-                      </div>
-                      <div className="relative w-[200px] h-[200px]">
-                        <a href={`mailto:${currOfficer.email}`}>
-                          <Image
-                            alt={currOfficer.name}
-                            className="rounded-xl object-cover"
-                            fill={true}
-                            sizes="200px"
-                            src={`/leadership/${currOfficer.officer_data.ImagePath}`}
-                          />
-                        </a>
-                      </div>
-                    </div>
+                    <LeaderCard key={currOfficer.name} officer={currOfficer} />
                   );
                 })}
               </div>
+              <Divider className='w-[90vw] mt-8 mb-4' />
             </div>
           );
         })}

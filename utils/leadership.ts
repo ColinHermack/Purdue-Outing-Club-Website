@@ -32,6 +32,11 @@ export interface Officer {
   phone: string;
 }
 
+export interface BranchData {
+  label: string;
+  content: Officer[];
+}
+
 const leadershipCategories = [
   {
     branch: "Executive",
@@ -162,11 +167,6 @@ export async function getLeaderDataByPosition(
  *          Officer objects, containing the officer data for each officer in the branch.
  */
 export async function getLeaderData() {
-  interface BranchData {
-    label: string;
-    content: Officer[];
-  }
-
   let allData: BranchData[] = [
     {
       label: "Executive",

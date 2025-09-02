@@ -11,15 +11,10 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 const { Pool, QueryResult } = require("pg"); //PostgreSQL
 const officersAllowed = ["Data Analyst", "Webmaster", "President", "Vice President"];
 
-interface IUpdateTripProps {
-    tripName: string;
-    startDate: string;  // In UTC
-    endDate: string;  // In UTC
-    category: string;
-    sport: string;
-    location: string;
-    description: string;
-    difficulty: number;
+interface IUpdateRosterProps {
+    tripId: number;
+    tripLeaders: string[];
+    tripMembers: string[];
 }
 
 const pool = new Pool({
@@ -50,45 +45,35 @@ async function verifyUserIsAuthorized(email: string): Promise<boolean> {
     }
 }
 
-async function updateTrip(props: IUpdateTripProps): Promise<number> {
+async function updateTrip(props: IUpdateRosterProps): Promise<boolean> {
     const client = await pool.connect();
-    let idResult: typeof QueryResult;
-    let highestResult: number;
+    let result: typeof QueryResult = null;
 
     try {
-        idResult = await client.query("SELECT trip_id FROM trip ORDER BY trip_id DESC LIMIT 1;");
-        if (idResult === null || idResult.rows.length === 0) {
-            return -1;
-        } else {
-            highestResult = idResult.rows[0].trip_id;
+        for (let i = 0; i < props.tripLeaders.length; i++) {
+            result = await client.query("SELECT member_id FROM member WHERE email = $1;", [props.tripLeaders[i]]);
+            if (result === null || result.rows.length === 0) {
+                return false;
+            } else {
+                await client.query("INSERT INTO trip_roster (trip_id, member_id, is_leader) VALUES ($1, $2, true);", [props.tripId, result.rows[0].member_id]);
+            }
+        }
+
+        for (let i = 0; i < props.tripMembers.length; i++) {
+            result = await client.query("SELECT member_id FROM member WHERE email = $1;", [props.tripMembers[i]]);
+            if (result === null || result.rows.length === 0) {
+                return false;
+            } else {
+                await client.query("INSERT INTO trip_roster (trip_id, member_id, is_leader) VALUES ($1, $2, false);", [props.tripId, result.rows[0].member_id]);
+            }
         }
     } catch (error: any) {
-        return -1;
+        return false;
     } finally {
         client.release();
     }
 
-    try {
-        await client.query(
-            "INSERT INTO trip (trip_id, trip_name, start_date, end_date, category, sport, location, description, difficulty) VALUES ($1, $2, $3, $4, $5, $6, $7, $8);",
-            [
-                highestResult + 1,
-                props.tripName,
-                props.startDate,
-                props.endDate,
-                props.category,
-                props.sport,
-                props.location,
-                props.description,
-                props.difficulty,
-            ],
-        );
-        return highestResult + 1;
-    } catch (error: any) {
-        return -1;
-    } finally {
-        client.release();
-    }
+    return false;
 }
 
 export async function POST(request: Request) {
@@ -115,22 +100,17 @@ export async function POST(request: Request) {
     const body = await request.json();
     if (typeof body === "object") {
         if (
-            typeof body.tripName !== "string" ||
-            typeof body.startDate !== "string" ||
-            typeof body.endDate !== "string" ||
-            typeof body.category !== "string" ||
-            typeof body.sport !== "string" ||
-            typeof body.location !== "string" ||
-            typeof body.description !== "string" ||
-            typeof body.difficulty !== "number"
+            typeof body.tripId !== "number" ||
+            typeof body.tripLeaders !== "object" ||
+            typeof body.tripMembers !== "object"
         ) {
             return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
         }
 
-        const newTripId: number = await updateTrip(body);
+        const didUpdateRoster: boolean = await updateTrip(body);
 
-        if (newTripId !== -1) {
-            return NextResponse.json({tripId: newTripId}, { status: 200 });
+        if (didUpdateRoster) {
+            return NextResponse.json({message: "Roster Updated"}, { status: 200 });
         } else {
             return NextResponse.json({ error: "Trip could not be added" }, { status: 500 });
         }

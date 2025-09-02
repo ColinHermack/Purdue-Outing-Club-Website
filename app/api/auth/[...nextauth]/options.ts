@@ -1,6 +1,19 @@
 import AzureADProvider from "next-auth/providers/azure-ad";
 import { NextAuthOptions } from "next-auth";
 
+const { Pool, QueryResult } = require("pg"); //PostgreSQL
+
+const pool = new Pool({
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  database: process.env.DB_DATABASE,
+  ssl: {
+    rejectUnauthorized: false,
+  },
+});
+
 export const authOptions: NextAuthOptions = {
   providers: [
     AzureADProvider({
@@ -26,17 +39,22 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
     async signIn({ user }) {
-      // Check if this user's email exists in your database
+      const client = await pool.connect();
       try {
-        // const email = user.email;
-        // Example: Query your database to check if the user is authorized
-        // const userExists = await db.user.findUnique({ where: { email } });
-        // return !!userExists;
+        const result = await client.query(
+          "SELECT * FROM member WHERE email = $1;",
+          [user.email]
+        );
 
-        // For demonstration, we'll just allow all authenticated users
+        if (result === null || result.rows.length === 0) {
+          return false;
+        }
+
         return true;
       } catch (error) {
         return false;
+      } finally {
+        client.release();
       }
     },
   },

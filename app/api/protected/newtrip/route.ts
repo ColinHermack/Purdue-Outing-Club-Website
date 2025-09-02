@@ -8,7 +8,7 @@ import { getServerSession } from "next-auth/next";
 import { NextResponse } from "next/server";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 
-const { Pool } = require("pg"); //PostgreSQL
+const { Pool, QueryResult } = require("pg"); //PostgreSQL
 const officersAllowed = ["Data Analyst", "Webmaster", "President", "Vice President"];
 
 interface IUpdateTripProps {
@@ -52,11 +52,27 @@ async function verifyUserIsAuthorized(email: string): Promise<boolean> {
 
 async function updateTrip(props: IUpdateTripProps): Promise<boolean> {
     const client = await pool.connect();
+    let idResult: typeof QueryResult;
+    let highestResult: number;
+
+    try {
+        idResult = await client.query("SELECT trip_id FROM trip ORDER BY trip_id DESC LIMIT 1;");
+        if (idResult === null || idResult.rows.length === 0) {
+            return false;
+        } else {
+            highestResult = idResult.rows[0].trip_id;
+        }
+    } catch (error: any) {
+        return false;
+    } finally {
+        client.release();
+    }
 
     try {
         await client.query(
-            "INSERT INTO trip (trip_name, start_date, end_date, category, sport, location, description, difficulty) VALUES ($1, $2, $3, $4, $5, $6, $7, $8);",
+            "INSERT INTO trip (trip_id, trip_name, start_date, end_date, category, sport, location, description, difficulty) VALUES ($1, $2, $3, $4, $5, $6, $7, $8);",
             [
+                highestResult + 1,
                 props.tripName,
                 props.startDate,
                 props.endDate,

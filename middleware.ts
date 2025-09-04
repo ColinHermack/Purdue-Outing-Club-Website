@@ -25,5 +25,5 @@ export default withAuth(
 
 // Specify which routes to protect
 export const config = {
-  matcher: ["/api/protected/:path*", "/dashboard"],
+  matcher: ["/api/protected/:path*", "/dashboard", "/addtrip"],
 };

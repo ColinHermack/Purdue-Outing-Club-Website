@@ -9,7 +9,7 @@ import { NextResponse } from "next/server";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 
 const { Pool, QueryResult } = require("pg"); //PostgreSQL
-const officersAllowed = ["Data Analyst", "Webmaster", "President", "Vice President"];
+const officersAllowed = ["Data Analyst", "Webmaster", "Secretary of Operations", "President", "Vice President"];
 
 interface IUpdateRosterProps {
     tripId: number;
@@ -112,7 +112,7 @@ export async function POST(request: Request) {
         if (didUpdateRoster) {
             return NextResponse.json({message: "Roster Updated"}, { status: 200 });
         } else {
-            return NextResponse.json({ error: "Trip could not be added" }, { status: 500 });
+            return NextResponse.json({ error: "Roster could not be updated" }, { status: 500 });
         }
     }
 }

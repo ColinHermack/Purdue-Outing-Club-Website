@@ -99,27 +99,7 @@ export default function JoinPage() {
       <Divider className="my-10" />
 
       <h2 className="font-bold text-center text-xl">
-        Step 4 (Optional): Get Driver Certified
-      </h2>
-      <p className="w-3/4 text-center">
-        If you have a valid driver&#39;s license, you can fill out Purdue&#39;s
-        RM01 form below and become certified to drive a car on Outing Club
-        trips. This will increase your likelihood of being selected for trips.
-      </p>
-      <Button
-        as={Link}
-        className="bg-amber-400 text-black font-bold mt-8"
-        href="https://na2.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=8a978c81-9a69-45d7-b3c0-9baa6718cff5&env=na2&acct=9ad6adfd-6804-409b-91bc-173cbee909f9&v=2"
-        rel="noopener noreferrer"
-        target="_blank"
-      >
-        RM01 Form
-      </Button>
-
-      <Divider className="my-10" />
-
-      <h2 className="font-bold text-center text-xl">
-        Step 5: Join the Mailing List
+        Step 4: Join the Mailing List
       </h2>
       <p className="w-3/4 text-center">
         Click the button below to join the mailing list. Once your email client
@@ -136,7 +116,7 @@ export default function JoinPage() {
 
       <Divider className="my-10" />
 
-      <h2 className="font-bold text-center text-xl">Step 6: Stay Connected</h2>
+      <h2 className="font-bold text-center text-xl">Step 5: Stay Connected</h2>
       <p className="w-3/4 text-center">
         Keep up with the latest Outing Club happenings by joining the Slack and
         following the club Instagram.

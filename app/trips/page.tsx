@@ -106,8 +106,7 @@ function TripCards(props: TripCardProps) {
       ))
   ) : (
     <p>
-      Trips will start again at the beginning of the fall semester. Have a great
-      summer!
+      No trip signups currently open.
     </p>
   );
 }

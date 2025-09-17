@@ -48,7 +48,7 @@ export const siteConfig = {
       label: "Constitution",
       href: "/docs/poc_constitution.pdf",
     },
-        {
+    {
       label: "News",
       href: "/news",
     },

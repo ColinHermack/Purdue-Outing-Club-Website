@@ -6,12 +6,12 @@
  */
 
 import Image from "next/image";
+import { Button } from "@heroui/button";
+import { Link } from "@heroui/link";
+import { Divider } from "@heroui/divider";
+import { MdEmail } from "react-icons/md";
 
 import { getLeaderData, BranchData, Officer } from "@/utils/leadership";
-import { Button } from '@heroui/button';
-import { Link } from '@heroui/link';
-import { Divider } from '@heroui/divider';
-import { MdEmail } from 'react-icons/md';
 
 export const metadata = {
   title: "Pleadership",
@@ -24,7 +24,7 @@ function LeaderCard(props: { officer: Officer }) {
       key={props.officer.name}
       className="py-4 m-4 w-[250px] h-[400px] flex flex-col justify-between items-center"
     >
-      <div className='relative w-[200px] h-[200px]'>
+      <div className="relative w-[200px] h-[200px]">
         <Image
           alt={props.officer.name}
           className="rounded-xl object-cover w-[200px] h-[200px]"
@@ -34,9 +34,7 @@ function LeaderCard(props: { officer: Officer }) {
         />
       </div>
       <div className="pb-0 pt-2 px-4 flex-col justify-top items-center text-center">
-        <p className="font-bold text-xl text-center">
-          {props.officer.name}
-        </p>
+        <p className="font-bold text-xl text-center">{props.officer.name}</p>
         <p className="text-default-500 text-tiny text-center">
           {props.officer.pronouns}
         </p>
@@ -44,17 +42,17 @@ function LeaderCard(props: { officer: Officer }) {
           {props.officer.position}
         </p>
         <Button
+          isIconOnly
           as={Link}
+          className="bg-amber-400 hover:bg-amber-400/80 text-xl mt-4"
           href={`mailto:${props.officer.email}`}
           size="sm"
-          className='bg-amber-400 hover:bg-amber-400/80 text-xl mt-4'
-          isIconOnly
         >
-          <MdEmail />        
+          <MdEmail />
         </Button>
       </div>
     </div>
-  )
+  );
 }
 
 export default async function Pleadership() {
@@ -65,10 +63,8 @@ export default async function Pleadership() {
       <h1 className="text-5xl text-amber-400 font-bold text-center">
         Pleadership
       </h1>
-      <Divider className='mt-8 mb-4 w-[90vw]' />
-      <div className='w-full flex-row justify-center items-center'>
-
-      </div>
+      <Divider className="mt-8 mb-4 w-[90vw]" />
+      <div className="w-full flex-row justify-center items-center" />
       <div className="flex flex-col w-screen justify-top items-center text-xl">
         {data.map((item) => {
           return (
@@ -86,7 +82,7 @@ export default async function Pleadership() {
                   );
                 })}
               </div>
-              <Divider className='w-[90vw] mt-8 mb-4' />
+              <Divider className="w-[90vw] mt-8 mb-4" />
             </div>
           );
         })}

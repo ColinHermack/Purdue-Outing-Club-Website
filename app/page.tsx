@@ -7,6 +7,7 @@ import { Link } from "@heroui/link";
 import { useState, useEffect } from "react";
 import { Spinner } from "@heroui/spinner";
 import { Divider } from "@heroui/divider";
+
 import Leaderboard from "@/components/leaderboard";
 
 export default function Home() {
@@ -222,7 +223,7 @@ export default function Home() {
       <h2 className="text-4xl m-10 font-bold">LEADERBOARDS</h2>
       <Leaderboard />
 
-      <Divider className='mt-24 mb-12' />
+      <Divider className="mt-24 mb-12" />
 
       <Button
         as={Link}

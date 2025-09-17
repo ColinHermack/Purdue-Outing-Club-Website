@@ -105,8 +105,6 @@ function TripCards(props: TripCardProps) {
         </Link>
       ))
   ) : (
-    <p>
-      No trip signups currently open.
-    </p>
+    <p>No trip signups currently open.</p>
   );
 }

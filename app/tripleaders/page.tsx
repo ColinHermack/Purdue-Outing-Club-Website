@@ -67,8 +67,9 @@ export default function TripLeaderPage() {
       </p>
 
       <Divider className="my-5" />
-      <div className='mt-4'>
-        Trip leader training resources will be posted on this page when they are released.
+      <div className="mt-4">
+        Trip leader training resources will be posted on this page when they are
+        released.
       </div>
 
       {/* 

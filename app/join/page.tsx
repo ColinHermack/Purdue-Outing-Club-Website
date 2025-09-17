@@ -37,9 +37,10 @@ export default function JoinPage() {
         treasurer and secretary of the treasury will have access to this
         information.
       </p>
-      <p className='flex-left w-3/4 text-center mt-4'>
-        If you fill out the dues waiver, DO NOT pay dues in TooCool. If the waiver is accepted,
-        you will not have to pay dues. If the waiver is rejected, only then must you pay dues.
+      <p className="flex-left w-3/4 text-center mt-4">
+        If you fill out the dues waiver, DO NOT pay dues in TooCool. If the
+        waiver is accepted, you will not have to pay dues. If the waiver is
+        rejected, only then must you pay dues.
       </p>
       <Button
         as={Link}
@@ -98,22 +99,22 @@ export default function JoinPage() {
 
       <Divider className="my-10" />
 
-      <h2 className='font-bold text-center text-xl'>
+      <h2 className="font-bold text-center text-xl">
         Step 4 (Optional): Become Driver Certified
       </h2>
-      <p className='w-3/4 text-center'>
-        In order to increase your chances of being selected for club trips, you can become a certified driver with the
-        club.
+      <p className="w-3/4 text-center">
+        In order to increase your chances of being selected for club trips, you
+        can become a certified driver with the club.
       </p>
-      <Button 
+      <Button
         as={Link}
-        className='bg-amber-400 text-black font-bold mt-8'
-        href='/drivers'
+        className="bg-amber-400 text-black font-bold mt-8"
+        href="/drivers"
       >
         Become a Certified Driver
       </Button>
 
-      <Divider className='my-10' />
+      <Divider className="my-10" />
 
       <h2 className="font-bold text-center text-xl">
         Step 5: Join the Mailing List

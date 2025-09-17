@@ -98,8 +98,25 @@ export default function JoinPage() {
 
       <Divider className="my-10" />
 
+      <h2 className='font-bold text-center text-xl'>
+        Step 4 (Optional): Become Driver Certified
+      </h2>
+      <p className='w-3/4 text-center'>
+        In order to increase your chances of being selected for club trips, you can become a certified driver with the
+        club.
+      </p>
+      <Button 
+        as={Link}
+        className='bg-amber-400 text-black font-bold mt-8'
+        href='/drivers'
+      >
+        Become a Certified Driver
+      </Button>
+
+      <Divider className='my-10' />
+
       <h2 className="font-bold text-center text-xl">
-        Step 4: Join the Mailing List
+        Step 5: Join the Mailing List
       </h2>
       <p className="w-3/4 text-center">
         Click the button below to join the mailing list. Once your email client
@@ -116,7 +133,7 @@ export default function JoinPage() {
 
       <Divider className="my-10" />
 
-      <h2 className="font-bold text-center text-xl">Step 5: Stay Connected</h2>
+      <h2 className="font-bold text-center text-xl">Step 6: Stay Connected</h2>
       <p className="w-3/4 text-center">
         Keep up with the latest Outing Club happenings by joining the Slack and
         following the club Instagram.

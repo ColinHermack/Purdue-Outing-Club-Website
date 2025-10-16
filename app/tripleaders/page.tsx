@@ -67,25 +67,20 @@ export default function TripLeaderPage() {
       </p>
 
       <Divider className="my-5" />
-      <div className="mt-4">
-        Trip leader training resources will be posted on this page when they are
-        released.
-      </div>
 
-      {/* 
       <h2 className="font-bold text-center text-xl">
-        Sign up for Trip Leader Training
+        Access Trip Leader Training
       </h2>
       <Button
         as={Link}
         className="bg-amber-400 text-black font-bold"
-        href="https://forms.office.com/r/PtgUuiJNCh"
+        href="https://classroom.google.com/c/NjkwODg3OTk4NDUz?cjc=r6gtglg"
         rel="noopener noreferrer"
         target="_blank"
       >
         Sign Up
       </Button>
-      */}
+
       <p className="text-center max-w-full mt-5">
         Before you can lead trips, you will need to obtain a CPR certification.
         Please submit proof of your certification here for approval by our
@@ -134,7 +129,7 @@ export default function TripLeaderPage() {
         >
           Unlike officers, trip leaders are not part of club leadership, and do
           not have the roles or as many responsibilities as a sports officer. It
-          is a more flexible role which trip leaders can adjust to firt their
+          is a more flexible role which trip leaders can adjust to fit their
           schedule. Officers have more responsibility and ability to shape the
           club. Head sports officers have final say on all decisions made by
           their officers and trip leaders. Becoming a trip leader is a great way
@@ -148,7 +143,7 @@ export default function TripLeaderPage() {
           The first step to becoming a trip leader is to express interest in a
           sport by going on a trip with a sports officer. After that, you can
           apply to become a trip leader. If approved, you will need to complete
-          first aid training and trip leader training. More detailed steps can
+          CPR training and trip leader training. More detailed steps can
           be found in the trip leader overview.
         </AccordionItem>
         <AccordionItem

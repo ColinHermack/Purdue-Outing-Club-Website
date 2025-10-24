@@ -19,7 +19,7 @@ export default function SafetyConcernReportPage() {
       <h1 className="text-5xl text-amber-400 font-bold text-center">
         Safety Concern Report
       </h1>
-      <p className="my-10 text-center">
+      <p className="my-10 text-center max-w-[600px]">
         If you felt as though as unsafe situation was created for you or another
         person on a Purdue Outing Club trip, please report it here. You have the
         option of remaining anonymous, but you are encouraged to leave your name
@@ -32,7 +32,7 @@ export default function SafetyConcernReportPage() {
       </p>
       <Button
         as={Link}
-        className="bg-amber-400 text-black font-bold"
+        className="bg-amber-400 text-black font-bold my-16"
         href="https://docs.google.com/forms/d/e/1FAIpQLSfHlU_G1uQAJXvKWEygxDEfJFSKYeRlljdRNLt_Ig48dZUUoQ/viewform?usp=sf_link"
         variant="flat"
       >

@@ -4,6 +4,7 @@
  * @author Colin Hermack
  */
 
+import { Button } from '@heroui/button';
 import { Link } from "@heroui/link";
 import { link as linkStyles } from "@heroui/theme";
 import NextLink from "next/link";
@@ -47,6 +48,16 @@ export const Footer = () => {
           </NextLink>
         ))}
       </div>
+
+      <Button
+        as={Link}
+        className="bg-amber-400 text-black font-bold my-8"
+        href="/safetyconcernreport"
+        variant="flat"
+      >
+        Report a Safety Concern
+      </Button>
+      
       <div className="flex flex-row text-2xl">
         {siteConfig.links.map((item, index) => (
           <NextLink
@@ -63,7 +74,7 @@ export const Footer = () => {
           <Logo />
         </Link>
       </div>
-      <div className="m-4">© 2024 Colin Hermack, Purdue Outing Club</div>
+      <div className="mt-4 mb-8 text-xs">© 2024 Colin Hermack, Purdue Outing Club</div>
     </footer>
   );
 };

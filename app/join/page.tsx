@@ -143,7 +143,7 @@ export default function JoinPage() {
       <Button
         as={Link}
         className="bg-amber-400 text-black font-bold mt-8"
-        href="https://purdueouting.slack.com/"
+        href="https://join.slack.com/t/purdueouting/shared_invite/zt-2tpkpjw5z-aSz~8H_6YWb5mYjn85xYZA"
         rel="noopener noreferrer"
         target="_blank"
       >

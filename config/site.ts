@@ -92,7 +92,7 @@ export const siteConfig = {
     },
     {
       label: "slack",
-      href: "https://purdueouting.slack.com/",
+      href: "https://join.slack.com/t/purdueouting/shared_invite/zt-2tpkpjw5z-aSz~8H_6YWb5mYjn85xYZA",
     },
     {
       label: "linkedin",

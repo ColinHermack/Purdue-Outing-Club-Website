@@ -7,128 +7,46 @@
  * @author Colin Hermack
  */
 
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { Divider } from "@heroui/divider";
 import { Button } from "@heroui/button";
 import { Link } from "@heroui/link";
 import { Accordion, AccordionItem } from "@heroui/accordion";
-import {
-  Table,
-  TableHeader,
-  TableBody,
-  TableColumn,
-  TableRow,
-  TableCell,
-} from "@heroui/table";
 
 export default function PocarPage() {
   return (
     <div className="flex flex-col justify-top items-center">
-      <title>POCAR 2025 - Purdue Outing Club</title>
-      <h1 className="text-5xl text-amber-400 font-bold text-center">
-        POCAR 2025
+      <title>POCAR 2026 - Purdue Outing Club</title>
+      <h1 className="text-5xl text-amber-400 font-bold text-center mb-10">
+        POCAR 2026
       </h1>
-
-      <h2 className="font-bold text-center my-10 text-xl">Race Results</h2>
-
-      <p className="text-xl">Open Division Results</p>
-
-      <Table className="my-10">
-        <TableHeader>
-          <TableColumn>Place</TableColumn>
-          <TableColumn>Team Name</TableColumn>
-          <TableColumn>Team Number</TableColumn>
-          <TableColumn>Time</TableColumn>
-        </TableHeader>
-        <TableBody>
-          <TableRow>
-            <TableCell>First</TableCell>
-            <TableCell>38.6 Degrees</TableCell>
-            <TableCell>38</TableCell>
-            <TableCell>22:09</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>Second</TableCell>
-            <TableCell>Ruck Around and Find Out</TableCell>
-            <TableCell>45</TableCell>
-            <TableCell>27:42</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>Third</TableCell>
-            <TableCell>Hosanna</TableCell>
-            <TableCell>43</TableCell>
-            <TableCell>28:01</TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
-
-      <p className="text-xl">Collegiate Division Results</p>
-
-      <Table className="my-10">
-        <TableHeader>
-          <TableColumn>Place</TableColumn>
-          <TableColumn>Team Name</TableColumn>
-          <TableColumn>Team Number</TableColumn>
-          <TableColumn>Points Found</TableColumn>
-        </TableHeader>
-        <TableBody>
-          <TableRow>
-            <TableCell>First</TableCell>
-            <TableCell>Super Duper Seniors</TableCell>
-            <TableCell>27</TableCell>
-            <TableCell>6 points, leg 3</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>Second</TableCell>
-            <TableCell>Thirsty Cowboys</TableCell>
-            <TableCell>33</TableCell>
-            <TableCell>5 points, leg 3</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>Third</TableCell>
-            <TableCell>Lost in Transition</TableCell>
-            <TableCell>17</TableCell>
-            <TableCell>3 points, leg 3</TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
-
-      <p className="text-left w-3/4 my-2 text-center">
-        Race results for POCAR 2025 and a full recap can be viewed{" "}
-        <Link className="text-amber-400" href="/news/POCAR2025">
-          here.
-        </Link>
-      </p>
-
-      <Divider className="my-10" />
 
       <h2 className="font-bold text-center mb-10 text-xl">
         General Race Information
       </h2>
       <p className="text-left w-3/4 my-2">
-        <strong>Location:</strong> Morgan Monroe State Forest
+        <strong>Location:</strong> Yellowwood State Forest
       </p>
       <p className="text-left w-3/4 my-2">
-        <strong>Date:</strong> January 18-20, 2025
+        <strong>Date:</strong> January 16-19, 2025
       </p>
-      <p className="text-left w-3/4 my-2">
-        <strong>Start Time:</strong> 10:00 AM (Open Division), 10:30 AM
-        (Collegiate Division)
+
+      <p className="text-left w-3/4 mt-2">
+        <strong>Race Fees</strong>
       </p>
-      <p className="text-left w-3/4 my-2">
-        <strong>Race Fee:</strong> $400 (Open Division), $250 (Collegiate
-        Division)
-      </p>
+      <p className="text-left w-3/4 my-2"><strong>Purdue Outing Club Members:</strong> $35</p>
+      <p className="text-left w-3/4 my-2"><strong>Collegiate:</strong> $70</p>
+      <p className="text-left w-3/4 my-2"><strong>Open:</strong> $80</p>
 
       <Divider className="my-10" />
 
       <h2 className="font-bold text-center mb-10 text-xl">Racer Information</h2>
-      <p className="text-left w-3/4 my-2">
-        <strong>Check In:</strong> 8:00 AM, January 18, 2025
-      </p>
-      <p className="text-left w-3/4 my-2">
-        <strong>Race Ends:</strong> 10:30 AM, January 20, 2025
-      </p>
+      
+      <p className="text-left w-3/4 my-2"><strong>Check In:</strong> Opens at 8:30 AM, January 17, 2025</p>
+      <p className='text-left w-3/4 mt-2'><strong>Race Start (Open):</strong> 10:00 AM, January 17, 2025</p>
+      <p className='text-left w-3/4'><strong>Race Start (Collegiate):</strong> 10:30 AM, January 17, 2025</p>
+
+      <p className='text-left w-3/4 mb-2'>Teams who do not check in by the race start time for their division will be disqualified.</p>
 
       <Divider className="my-10" />
 
@@ -136,19 +54,50 @@ export default function PocarPage() {
         Volunteer Information
       </h2>
       <p className="text-left w-3/4 my-2">
-        Volunteering begins on January 17, 2025 and will last until January 20,
-        2025. There was a required volunteer meeting on December 2, 2024.
+        Volunteering begins on January 16, 2025 and will last until January 19,
+        2025. There will be a mandatory volunteer meeting before the race.
       </p>
 
       <Divider className="my-10" />
 
-      <h2 className="font-bold text-center mb-10 text-xl">
-        Registration Information
+      <h2 className="font-bold text-center mb-4 text-xl">
+        Register to Race
       </h2>
-      <p className="text-left w-3/4 my-2">
-        Registration for both racers and volunteers is now closed.
-      </p>
+      <p className='mb-4'>All registration for racers will be through IMLeagues.</p>
+      <Button 
+        as={Link}
+        isExternal={true}
+        className="bg-amber-400 text-black"
+        href='http://imleagues.com/Purdue_Outing_POCAR/Orienteering1'
+      >
+        Racer Registration
+      </Button>
 
+      <Divider className="my-10" />
+
+      <h2 className="font-bold text-center mb-10 text-xl">
+        Register to Volunteer
+      </h2>
+      <p className='mb-8'>Volunteers are required to register on both IMLeagues and through the Purdue Outing Club website.</p>
+      <Button 
+        as={Link}
+        isExternal={true}
+        className="bg-amber-400 text-black"
+        href='http://imleagues.com/Purdue_Outing_POCAR/Orienteering1'
+      >
+        Volunteer Registration (IMLeagues)
+      </Button>
+
+      <Button 
+        as={Link}
+        className="bg-amber-400 text-black mt-4"
+        target='_blank'
+        href='/trips/231'
+      >
+        Volunteer Registration (POC)
+      </Button>
+
+      {/*}
       <Divider className="my-10" />
 
       <h2 className="font-bold text-center text-xl">More Information</h2>
@@ -179,6 +128,7 @@ export default function PocarPage() {
       >
         Instructions
       </Button>
+      {*/}
 
       <Divider className="my-10" />
       <h2 className="font-bold text-center text-xl">FAQ</h2>

@@ -73,6 +73,22 @@ export default function PocarPage() {
         Racer Registration
       </Button>
 
+      <h2 className="font-bold text-center mb-4 text-xl">
+        Find a Team
+      </h2>
+      <p className='mb-4'>
+        If you want to race but do not have a team, or you need additional members for your team, you can find others
+        to race with on the team finder.
+      </p>
+      <Button 
+        as={Link}
+        isExternal={true}
+        className="bg-amber-400 text-black"
+        href='https://docs.google.com/spreadsheets/d/1YmNarc1XFBIcolYodnXX9OEf0FW12QcvbZ3mABi1adQ/edit?gid=0#gid=0'
+      >
+        Team Finder
+      </Button>
+
       <Divider className="my-10" />
 
       <h2 className="font-bold text-center mb-10 text-xl">

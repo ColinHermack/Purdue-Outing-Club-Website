@@ -1,5 +1,6 @@
 import AzureADProvider from "next-auth/providers/azure-ad";
 import { NextAuthOptions } from "next-auth";
+import { verifyMember } from '@/utils/members';
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -28,13 +29,17 @@ export const authOptions: NextAuthOptions = {
     async signIn({ user }) {
       // Check if this user's email exists in your database
       try {
-        // const email = user.email;
-        // Example: Query your database to check if the user is authorized
-        // const userExists = await db.user.findUnique({ where: { email } });
-        // return !!userExists;
+        if (!user.email) {
+          return false;
+        }
 
-        // For demonstration, we'll just allow all authenticated users
-        return true;
+        let isMember: boolean = await verifyMember(user.email);
+
+        if (isMember) {
+          return true;
+        }
+        
+        return false;
       } catch (error) {
         return false;
       }

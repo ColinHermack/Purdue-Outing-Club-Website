@@ -80,7 +80,7 @@ export default function DashBoardPage() {
                   <Button
                     key={trip.trip_id}
                     as={Link}
-                    className="text-left font-bold"
+                    className="text-left font-bold my-1 overflow-y-scroll"
                     href={`/trips/${trip.trip_id}`}
                     variant="flat"
                   >

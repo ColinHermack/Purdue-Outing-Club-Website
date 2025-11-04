@@ -97,7 +97,7 @@ async function getUserPosition(userID: number): Promise<string> {
     );
 
     if (result !== null && result.rows.length !== 0) {
-      return "Officer";
+      return result.rows[0].position;
     } else {
       let result = await client.query(
         "SELECT * FROM trip_leader WHERE member_id = $1",

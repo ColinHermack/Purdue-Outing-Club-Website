@@ -43,7 +43,7 @@ export default async function TripPage({ params }: any) {
         difficulty={tripData.difficulty}
         sport={tripData.sport}
       />
-      <p className="mt-10">{tripData.description}</p>
+      <p className="mt-10 max-w-[600px]">{tripData.description}</p>
       {tripData.signup ? (
         <Button
           as={Link}

@@ -28,7 +28,7 @@ export default function PocarPage() {
         <strong>Location:</strong> Yellowwood State Forest
       </p>
       <p className="text-left w-3/4 my-2">
-        <strong>Date:</strong> January 16-19, 2025
+        <strong>Date:</strong> January 16-19, 2026
       </p>
 
       <p className="text-left w-3/4 mt-2">
@@ -42,9 +42,9 @@ export default function PocarPage() {
 
       <h2 className="font-bold text-center mb-10 text-xl">Racer Information</h2>
       
-      <p className="text-left w-3/4 my-2"><strong>Check In:</strong> Opens at 8:30 AM, January 17, 2025</p>
-      <p className='text-left w-3/4 mt-2'><strong>Race Start (Open):</strong> 10:00 AM, January 17, 2025</p>
-      <p className='text-left w-3/4'><strong>Race Start (Collegiate):</strong> 10:30 AM, January 17, 2025</p>
+      <p className="text-left w-3/4 my-2"><strong>Check In:</strong> Opens at 8:30 AM, January 17, 2026</p>
+      <p className='text-left w-3/4 mt-2'><strong>Race Start (Open):</strong> 10:00 AM, January 17, 2026</p>
+      <p className='text-left w-3/4'><strong>Race Start (Collegiate):</strong> 10:30 AM, January 17, 2026</p>
 
       <p className='text-left w-3/4 mb-2'>Teams who do not check in by the race start time for their division will be disqualified.</p>
 
@@ -54,8 +54,8 @@ export default function PocarPage() {
         Volunteer Information
       </h2>
       <p className="text-left w-3/4 my-2">
-        Volunteering begins on January 16, 2025 and will last until January 19,
-        2025. There will be a mandatory volunteer meeting before the race.
+        Volunteering begins on January 16, 2026 and will last until January 19,
+        2026. There will be a mandatory volunteer meeting before the race.
       </p>
 
       <Divider className="my-10" />

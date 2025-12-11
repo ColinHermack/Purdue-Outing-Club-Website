@@ -31,12 +31,29 @@ export default function PocarPage() {
         <strong>Date:</strong> January 16-19, 2026
       </p>
 
-      <p className="text-left w-3/4 mt-2">
+      <p className="text-left w-3/4 mt-2 mb-2">
         <strong>Race Fees</strong>
       </p>
       <p className="text-left w-3/4 my-2"><strong>Purdue Outing Club Members:</strong> $35</p>
       <p className="text-left w-3/4 my-2"><strong>Collegiate:</strong> $70</p>
       <p className="text-left w-3/4 my-2"><strong>Open:</strong> $80</p>
+
+      <Button 
+        as={Link}
+        className="bg-amber-400 text-black mb-2"
+        href='/docs/pocar_instructions.pdf'
+      >
+        Race Instructions
+      </Button>
+
+      <Button 
+        as={Link}
+        isExternal={true}
+        className="bg-amber-400 text-black mt-2"
+        href='/docs/pocar_rules.pdf'
+      >
+        Race Rules
+      </Button>
 
       <Divider className="my-10" />
 

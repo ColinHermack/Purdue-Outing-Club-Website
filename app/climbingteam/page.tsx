@@ -1,3 +1,5 @@
+'use client';
+
 import { Divider } from "@heroui/divider";
 import { Image, Button, Link } from "@heroui/react";
 import { FaInstagram } from "react-icons/fa";

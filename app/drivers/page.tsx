@@ -1,3 +1,4 @@
+'use client';
 import { Button, Link, Image } from "@heroui/react";
 
 export default function DriverPage() {

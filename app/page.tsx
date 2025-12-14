@@ -48,7 +48,7 @@ export default function Home() {
           src="/beach.jpg"
         />
       </div>
-      <p className="m-10 text-center">
+      <p className="m-10 text-center max-w-[600px]">
         The Purdue Outing Club is involved with any activity that takes place in
         the outdoors. It is a place for people who enjoy the outdoors to meet
         each other and have fun. The club is open to Purdue University students

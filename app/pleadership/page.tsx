@@ -78,7 +78,7 @@ export default async function Pleadership() {
               <div className="w-full flex flex-wrap justify-center items-center">
                 {item.content.map((currOfficer) => {
                   return (
-                    <LeaderCard key={currOfficer.name} officer={currOfficer} />
+                    <LeaderCard key={`${currOfficer.position}: ${currOfficer.name}`} officer={currOfficer} />
                   );
                 })}
               </div>

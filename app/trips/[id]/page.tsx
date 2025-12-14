@@ -1,10 +1,9 @@
 /*
  * This page displays the details of a specific trip, based on the trip ID which is part of the URL.
  *
- * @Author: Firstname Lastname
+ * @Author: Colin Hermack
  */
 
-import React from "react";
 import { redirect } from "next/navigation";
 import { FaMapMarkerAlt, FaCalendar, FaExternalLinkAlt } from "react-icons/fa";
 import { Button } from "@heroui/button";

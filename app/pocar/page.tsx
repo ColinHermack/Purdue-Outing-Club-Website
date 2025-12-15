@@ -48,11 +48,18 @@ export default function PocarPage() {
 
       <Button 
         as={Link}
-        isExternal={true}
-        className="bg-amber-400 text-black mt-2"
+        className="bg-amber-400 text-black my-4"
         href='/docs/pocar_rules.pdf'
       >
         Race Rules
+      </Button>
+
+      <Button 
+        as={Link}
+        className="bg-amber-400 text-black mt-2"
+        href='/docs/pocar_emergency_procedures.pdf'
+      >
+        Emergency Procedures
       </Button>
 
       <Divider className="my-10" />

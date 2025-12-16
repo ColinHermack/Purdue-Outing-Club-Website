@@ -9,8 +9,8 @@ interface TripDifficultyIconProps {
   sport: string;
 }
 
-function getTripDifficultyIcon(difficulty: number) {
-  switch (difficulty) {
+function TripDifficultyIcon(props: {difficulty: number}) {
+  switch (props.difficulty) {
     case 1:
       return <div className="text-4xl">🟢</div>;
     case 2:
@@ -27,7 +27,7 @@ function getTripDifficultyIcon(difficulty: number) {
   }
 }
 
-export default function TripDifficultyIcon(props: TripDifficultyIconProps) {
+export default function TripDifficultyCard(props: TripDifficultyIconProps) {
   let difficultyDescription = getTripDifficultyDescription(
     props.difficulty,
     props.sport,
@@ -39,12 +39,11 @@ export default function TripDifficultyIcon(props: TripDifficultyIconProps) {
 
   return (
     <div className="flex flex-col justify-top items-center mt-10">
-      <Tooltip content={difficultyDescription}>
-        {getTripDifficultyIcon(props.difficulty)}
-      </Tooltip>
+      <TripDifficultyIcon difficulty={props.difficulty} />
       <p className="mt-4 font-bold">
         {DIFFICULTIES[props.difficulty - 1]} Difficulty
       </p>
+      <p className='mt-2 text-xs'>{difficultyDescription}</p>
     </div>
   );
 }

@@ -9,7 +9,7 @@ import { FaMapMarkerAlt, FaCalendar, FaExternalLinkAlt } from "react-icons/fa";
 import { Button } from "@heroui/button";
 import { Link } from "@heroui/link";
 
-import TripDifficultyIcon from "./tripDifficultyIcon";
+import TripDifficultyCard from "./tripDifficultyIcon";
 
 import { SPORTS } from "@/config/constants";
 import { getTripData } from "@/utils/trips";
@@ -40,7 +40,7 @@ export default async function TripPage({ params }: any) {
           <FaCalendar className="mr-2" />
           <FaExternalLinkAlt />
         </Link>
-        <TripDifficultyIcon
+        <TripDifficultyCard
           difficulty={tripData.difficulty}
           sport={tripData.sport}
         />

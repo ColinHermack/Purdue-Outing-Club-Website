@@ -1,3 +1,5 @@
+'use client';
+
 /*
  * This page displays the details of a specific trip, based on the trip ID which is part of the URL.
  *
@@ -9,14 +11,34 @@ import { FaMapMarkerAlt, FaCalendar, FaExternalLinkAlt } from "react-icons/fa";
 import { Button } from "@heroui/button";
 import { Link } from "@heroui/link";
 
+import { useSearchParams } from 'next/navigation'
+
 import TripDifficultyCard from "./tripDifficultyIcon";
 
 import { SPORTS } from "@/config/constants";
-import { getTripData } from "@/utils/trips";
+
+function getTripData(id: string | null) {
+  if (id == null) {
+    return undefined;
+  }
+
+  let tripId: number = -1;
+  try {
+    tripId = parseInt(id);
+  } catch (error: any) {
+    return undefined;
+  }
+
+  fetch(`/api/trips?id=${tripId}`)
+    .then(response => response.json())
+    .then(data => {
+      return data;
+    })
+}
 
 export default async function TripPage({ params }: any) {
-  const paramsLocal = await params;
-  const id = paramsLocal.id;
+  const searchParams = useSearchParams();
+  const id: string | null = searchParams.get('id');
   const tripData = await getTripData(id);
 
   if (tripData === undefined) {

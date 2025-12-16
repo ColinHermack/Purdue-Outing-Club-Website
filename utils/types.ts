@@ -4,6 +4,22 @@
  * @author Colin Hermack
  */
 
+export type GearOfficerMetadataType = {
+  imagePath: string;
+  gearHours: string;
+}
+
+export type GearOfficerDataType = {
+  position: string;
+  officerData: GearOfficerMetadataType;
+  name: string;
+}
+
+export type GearHoursDataType = {
+  name: string;
+  hours: string;
+}
+
 export type TripInfoT = {
   trip_id: string;
   name: number;

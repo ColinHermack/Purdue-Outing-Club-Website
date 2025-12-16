@@ -19,6 +19,10 @@ const pool = new Pool({
   },
 });
 
+/**
+ * Query the database and get the gear hours and gear officer data for each gear officer
+ * @returns An array of GearOfficerDataTypes, or null if there is an issue querying the database
+ */
 export async function getAllGearHours(): Promise<GearOfficerDataType[] | null> {
     let result: typeof QueryResult = null;
     const client = await pool.connect();

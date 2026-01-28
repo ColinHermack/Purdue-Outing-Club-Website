@@ -20,6 +20,11 @@ export type GearHoursDataType = {
   hours: string;
 }
 
+export type LeaderboardRowType = {
+  name: string;
+  trips: number;
+};
+
 export type TripInfoT = {
   trip_id: string;
   name: number;

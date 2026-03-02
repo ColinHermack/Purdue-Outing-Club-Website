@@ -39,7 +39,7 @@
   "next": "^16.0.7",
   "next-absolute-url": "^1.2.2",
   "next-auth": "^4.24.11",
-  "next-mdx-remote": "^4.4.1",
+  "next-mdx-remote": "^6.0.0",
   "next-themes": "^0.2.1",
   "pg": "^8.13.1",
   "prettier": "^3.4.2",

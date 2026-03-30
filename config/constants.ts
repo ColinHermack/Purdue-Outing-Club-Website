@@ -6,6 +6,8 @@
 
 export const BASE_URL = "https://purdueoutingclub.com";
 
+export const WEEKDAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"] as const;
+
 export const SPORTS = [
   "Backpacking",
   "Canoeing",
@@ -17,7 +19,8 @@ export const SPORTS = [
   "Fishing",
   "Labor Day",
   "POCtoberfest",
-  "Spring Break"
+  "Spring Break",
+  "Aproberfest"
 ];
 
 interface ITripDifficultyDescriptions {

@@ -17,34 +17,49 @@ import {
   TableColumn,
   TableRow,
   TableCell,
-  getKeyValue,
 } from "@heroui/table";
+import { Chip } from "@heroui/chip";
+import { WEEKDAYS } from "@/config/constants";
 
-interface IGearHoursData {
+type GearHoursDataType = {
   name: string;
-  hours: string;
+  gearhours: {day: string, time: string}[];
 }
 
-const columns = [
-  {
-    key: "name",
-    label: "Officer",
-  },
-  {
-    key: "hours",
-    label: "Gear Hours",
-  },
-];
+type GearHourEntryType = {
+  time: string;
+  officer: string;
+}
+
+type GearHoursByDayType = {
+  "Monday": GearHourEntryType[],
+  "Tuesday": GearHourEntryType[],
+  "Wednesday": GearHourEntryType[],
+  "Thursday": GearHourEntryType[],
+  "Friday": GearHourEntryType[]
+}
 
 export default function GearClosetPage() {
-  const [gearHours, setGearHours] = useState<IGearHoursData[]>([]);
+  const [gearHoursByDay, setGearHoursByDay] = useState<GearHoursByDayType>();
 
   useEffect(() => {
     try {
       fetch("/api/gear/hours")
         .then((response) => response.json())
         .then((data) => {
-          setGearHours(data);
+          const byDay: GearHoursByDayType = {
+            "Monday": [],
+            "Tuesday": [],
+            "Wednesday": [],
+            "Thursday": [],
+            "Friday": [],
+          };
+          data.forEach((officer: GearHoursDataType) => {
+            officer.gearhours.forEach((item: { day: string; time: string }) => {
+              byDay[item.day as keyof GearHoursByDayType].push({ time: item.time, officer: officer.name });
+            });
+          });
+          setGearHoursByDay(byDay);
         });
     } catch (error) {
       //Intentionally left blank
@@ -68,26 +83,36 @@ export default function GearClosetPage() {
         Additional gear hours may be posted there as well.
       </p>
 
-      {/*}
       <Divider className="mt-10" />
       <h2 className="font-bold text-center w-3/4 my-10 text-xl">Gear Hours</h2>
-      <Table removeWrapper aria-label="gear hours table" className="w-3/4">
-        <TableHeader columns={columns}>
-          {(column) => (
-            <TableColumn key={column.key}>{column.label}</TableColumn>
-          )}
+      <Table removeWrapper aria-label="gear hours table" className="w-3/4 mx-auto">
+        <TableHeader>
+          {WEEKDAYS.map((day) => (
+            <TableColumn key={day}>{day}</TableColumn>
+          ))}
         </TableHeader>
-        <TableBody emptyContent={"Loading..."} items={gearHours}>
-          {(item) => (
-            <TableRow key={item.name}>
-              {(columnKey) => (
-                <TableCell>{getKeyValue(item, columnKey)}</TableCell>
-              )}
-            </TableRow>
-          )}
+        <TableBody>
+          <TableRow>
+            {WEEKDAYS.map((day) => (
+              <TableCell key={day}>
+                <div className="flex flex-col gap-1">
+                  {gearHoursByDay?.[day]
+                    .slice()
+                    .sort((a, b) => (a.time > b.time ? 1 : -1))
+                    .map((entry, i) => (
+                      <Chip key={i} className="bg-amber-400 text-black h-auto py-1">
+                        <div className="flex flex-col items-center">
+                          <span>{entry.time}</span>
+                          <span className="text-xs">{entry.officer}</span>
+                        </div>
+                      </Chip>
+                    ))}
+                </div>
+              </TableCell>
+            ))}
+          </TableRow>
         </TableBody>
       </Table>
-      {*/}
 
       <Divider className="mt-10" />
       <h2 className="font-bold text-center w-3/4 my-10 text-xl">

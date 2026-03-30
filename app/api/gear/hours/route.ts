@@ -24,7 +24,7 @@ const pool = new Pool({
 // Interface for the gear officer metadata object returned by the database
 interface IGearOfficerMetaData {
   ImagePath: string;
-  GearHours: string;
+  GearHours: {date: string, time: string}[];
 }
 
 // Interface for the gear officer object returned by the database
@@ -51,9 +51,9 @@ const getGearHours = async () => {
 
   try {
     result = await client.query(`
-            SELECT o.position, o.officer_data, m.name FROM officer AS o
+            SELECT m.name, o.officer_data->'GearHours' AS gearHours FROM officer AS o
             JOIN member AS m ON m.member_id = o.member_id
-            WHERE position LIKE '%Gear%';`);
+            WHERE position LIKE '%Gear%'`);
   } catch (error: any) {
     //Intentionally left empty
   } finally {
@@ -71,16 +71,9 @@ const getGearHours = async () => {
  * @returns An array of JSON objects containing the name and hours of each gear officer.
  */
 export async function GET() {
-  let gearHours: IGearOfficerData[] = await getGearHours(); // Get an array of gear officer data
+  let gearHours: IGearHoursData[] = await getGearHours(); // Get an array of gear officer data
 
-  let cleanedHours: IGearHoursData[] = gearHours.map((officer) => {
-    return {
-      name: officer.name,
-      hours: officer.officer_data.GearHours,
-    };
-  }); // Map over the array and extract only the data we want to send to the client
-
-  return new Response(JSON.stringify(cleanedHours), {
+  return new Response(JSON.stringify(gearHours), {
     status: 200,
     headers: {
       "Content-Type": "application/json",

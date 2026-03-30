@@ -68,6 +68,7 @@ export default function GearClosetPage() {
         Additional gear hours may be posted there as well.
       </p>
 
+      {/*}
       <Divider className="mt-10" />
       <h2 className="font-bold text-center w-3/4 my-10 text-xl">Gear Hours</h2>
       <Table removeWrapper aria-label="gear hours table" className="w-3/4">
@@ -86,6 +87,7 @@ export default function GearClosetPage() {
           )}
         </TableBody>
       </Table>
+      {*/}
 
       <Divider className="mt-10" />
       <h2 className="font-bold text-center w-3/4 my-10 text-xl">

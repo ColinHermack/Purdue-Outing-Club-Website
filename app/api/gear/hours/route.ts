@@ -24,7 +24,7 @@ const pool = new Pool({
 // Interface for the gear officer metadata object returned by the database
 interface IGearOfficerMetaData {
   ImagePath: string;
-  GearHours: {date: string, time: string}[];
+  GearHours: {day: string, time: string}[];
 }
 
 // Interface for the gear officer object returned by the database
@@ -53,7 +53,7 @@ const getGearHours = async () => {
     result = await client.query(`
             SELECT m.name, o.officer_data->'GearHours' AS gearHours FROM officer AS o
             JOIN member AS m ON m.member_id = o.member_id
-            WHERE position LIKE '%Gear%'`);
+            WHERE position LIKE '%Gear%';`);
   } catch (error: any) {
     //Intentionally left empty
   } finally {

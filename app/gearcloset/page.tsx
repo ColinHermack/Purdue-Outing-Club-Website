@@ -19,6 +19,7 @@ import {
   TableCell,
 } from "@heroui/table";
 import { Chip } from "@heroui/chip";
+import { WEEKDAYS } from "@/config/constants";
 
 type GearHoursDataType = {
   name: string;
@@ -37,8 +38,6 @@ type GearHoursByDayType = {
   "Thursday": GearHourEntryType[],
   "Friday": GearHourEntryType[]
 }
-
-const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"] as const;
 
 export default function GearClosetPage() {
   const [gearHoursByDay, setGearHoursByDay] = useState<GearHoursByDayType>();
@@ -88,13 +87,13 @@ export default function GearClosetPage() {
       <h2 className="font-bold text-center w-3/4 my-10 text-xl">Gear Hours</h2>
       <Table removeWrapper aria-label="gear hours table" className="w-3/4 mx-auto">
         <TableHeader>
-          {days.map((day) => (
+          {WEEKDAYS.map((day) => (
             <TableColumn key={day}>{day}</TableColumn>
           ))}
         </TableHeader>
         <TableBody>
           <TableRow>
-            {days.map((day) => (
+            {WEEKDAYS.map((day) => (
               <TableCell key={day}>
                 <div className="flex flex-col gap-1">
                   {gearHoursByDay?.[day]

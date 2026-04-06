@@ -64,7 +64,7 @@ const leadershipCategories = [
       "Social Media Coordinator",
       "Social Events Coordinator",
       "Graduate and Nontraditional Student Coordinator",
-      "Club Goober",
+      "Club Goober"
     ],
   },
   {

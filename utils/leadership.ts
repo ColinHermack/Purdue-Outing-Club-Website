@@ -58,14 +58,14 @@ const leadershipCategories = [
   {
     branch: "Outreach",
     positions: [
-      "Alumni Coordinator",
+      /* "Alumni Coordinator", TODO: Uncomment this line after officer transitions */
       "Fundraising & Sponsorship",
       "Diversity & Community Outreach",
       "Social Media Coordinator",
       "Social Events Coordinator",
       "Graduate and Nontraditional Student Coordinator",
       "Club Goober",
-      "Cheese Consultant",
+      /* "Cheese Consultant", TODO: Uncomment this line after officer transitions */
     ],
   },
   {

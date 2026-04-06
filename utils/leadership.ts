@@ -64,8 +64,7 @@ const leadershipCategories = [
       "Social Media Coordinator",
       "Social Events Coordinator",
       "Graduate and Nontraditional Student Coordinator",
-      "Club Goober",
-      /*"Cheese Consultant", TODO: Uncomment this line after officer transitions */
+      "Club Goober"
     ],
   },
   {

@@ -15,7 +15,7 @@ import { Divider } from "@heroui/divider";
 import { Button } from "@heroui/button";
 import { Link } from "@heroui/link";
 
-import { MemberStatsT } from "@/utils/types";
+import { MemberStatsT } from "@/config/types";
 
 export default function DashBoardPage() {
   const [user, setUser] = useState<MemberStatsT | null>(null);

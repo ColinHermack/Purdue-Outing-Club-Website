@@ -71,18 +71,3 @@ by the webmaster before merging.
 
 ## Deployment Information
 This app is deployed on Vercel and deploys automatically whenever a pull request is accepted.
-
-## Contributors
-* Colin Hermack (Webmaster Fall 2024 - Present)
-    * Designed/developed all frontend and backend software
-    * Deployed the site
-    * Currently maintains the site
-    * Coordinated website development
-* Arjun Khandelwal (Data Analyst Fall 2024/Secretary of Operations Spring 2025 - Present)
-    * Designed/developed the database portion of the backend
-    * Designed various forms for backend data handling
-* Colin Newton (Treasurer Fall 2023/Spring 2024/Fall 2024)
-    * Oversaw all development activities
-    * Designed and built backend forms, macros, and data pipelines.
-* Ainsley Yates (Data Analyst Spring 2025 - Present)
-    * Maintains the database portion of the backend

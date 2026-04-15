@@ -1,14 +1,13 @@
 /**
- * A model of a row of the trip table of the database. For use when interacting with the
- * database.
+ * A data type object for representing a trip in code.
  * 
  * @author Colin Hermack
  */
 
-export default class Trip {
+export default class TripDTO {
     tripId?: number;
     name?: string;
-    startDate?: Date;
+    startdate?: Date;
     endDate?: Date;
     category?: string;
     sport?: string;

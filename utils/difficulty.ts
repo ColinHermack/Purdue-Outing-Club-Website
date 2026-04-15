@@ -4,7 +4,7 @@
  * @author Colin Hermack
  */
 
-import { tripDifficultyDescriptions } from "@/config/constants";
+import { TRIP_DIFFICULTY_DESCRIPTIONS } from "@/config/constants";
 
 /**
  * Given a difficulty number and sport, returns the description of the difficulty level.
@@ -22,15 +22,15 @@ import { tripDifficultyDescriptions } from "@/config/constants";
  * @returns The description of the difficulty level.
  */
 export function getTripDifficultyDescription(difficulty: number, sport: string): string {
-  if (!Object.keys(tripDifficultyDescriptions).includes(sport)) {
+  if (!Object.keys(TRIP_DIFFICULTY_DESCRIPTIONS).includes(sport)) {
     return "";
   }
 
-  if (tripDifficultyDescriptions[sport].length < difficulty) {
-    return tripDifficultyDescriptions[sport][
-      tripDifficultyDescriptions[sport].length - 1
+  if (TRIP_DIFFICULTY_DESCRIPTIONS[sport].length < difficulty) {
+    return TRIP_DIFFICULTY_DESCRIPTIONS[sport][
+      TRIP_DIFFICULTY_DESCRIPTIONS[sport].length - 1
     ];
   }
 
-  return tripDifficultyDescriptions[sport][difficulty - 1];
+  return TRIP_DIFFICULTY_DESCRIPTIONS[sport][difficulty - 1];
 }

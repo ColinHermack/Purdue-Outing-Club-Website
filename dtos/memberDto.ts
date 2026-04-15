@@ -1,11 +1,10 @@
 /**
- * A model of a row of the member table of the database. For use when interacting with the
- * database.
+ * A data type object for representing a club member in code.
  * 
  * @author Colin Hermack
  */
 
-export default class Member {
+export default class MemberDTO {
     id?: number;
     name?: string;
     pronouns?: string;
@@ -16,7 +15,7 @@ export default class Member {
     car_data?: object;
     driver_data?: object;
     emergency_data?: object;
-    policy_agreement?: boolean;
+    policy_agreeement?: boolean;
     waiver_agreement?: boolean;
     school_year?: string;
     medical_data?: object;

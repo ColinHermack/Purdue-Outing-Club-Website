@@ -8,6 +8,7 @@
 
 import { LEADERSHIP_CATEGORIES } from '@/config/constants';
 import OfficerDTO from '@/dtos/officerDto';
+import { GearHoursDataT } from '@/config/types';
 
 const { Pool, QueryResult } = require("pg");
 
@@ -157,4 +158,25 @@ export async function getOfficerDataByPosition(position: string): Promise<Office
     }
 
     return result.rows;
+}
+
+/**
+ * Gets gear hours
+ * @returns A promise that resolves to an array of GearHoursDataT type
+ */
+export async function getGearHours(): Promise<GearHoursDataT[]> {
+    const client = await pool.connect();
+
+    try {
+        let result = await client.query(`
+            SELECT m.name, o.officer_data->'GearHours' AS gearHours FROM officer AS o
+            JOIN member AS m ON m.member_id = o.member_id
+            WHERE position LIKE '%Gear%';`);
+
+        return result.rows;
+    } catch (error: any) {
+        throw error;
+    } finally {
+        client.release();
+    }
 }

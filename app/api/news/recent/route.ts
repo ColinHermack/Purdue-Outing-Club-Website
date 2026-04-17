@@ -12,22 +12,26 @@ import { getPosts } from "@/app/news/utils";
  * @returns An HTTP response object.
  */
 export async function GET() {
-  let posts = getPosts();
-  let recentPosts = posts.slice(0, 3); // Get first 3 posts
+  try {
+    let posts = getPosts();
+    let recentPosts = posts.slice(0, 3); // Get first 3 posts
 
-  let json = recentPosts.map((post) => {
-    return {
-      title: post.metadata.title,
-      postedOn: post.metadata.postedOn,
-      summary: post.metadata.summary,
-      slug: post.slug,
-    };
-  }); // Map over the posts and extract only the data we want to send to the client
+    let json = recentPosts.map((post) => {
+      return {
+        title: post.metadata.title,
+        postedOn: post.metadata.postedOn,
+        summary: post.metadata.summary,
+        slug: post.slug,
+      };
+    }); // Map over the posts and extract only the data we want to send to the client
 
-  return new Response(JSON.stringify(json), {
-    status: 200,
-    headers: {
-      "Content-Type": "application/json",
-    },
-  }); // Send to the client with code 200 OK
+    return new Response(JSON.stringify(json), {
+      status: 200,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }); // Send to the client with code 200 OK
+  } catch (error: any) {
+    return new Response("Internal Server Error", { status: 500 });
+  }
 }

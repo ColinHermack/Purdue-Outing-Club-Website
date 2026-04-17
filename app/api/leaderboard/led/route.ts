@@ -15,7 +15,9 @@ export async function GET() {
   try {
     const leaderboard: { tripsLed: number, member: MemberDTO }[] = await getMostTripsLed();
 
-    return new Response(JSON.stringify(leaderboard));
+    let retVal = leaderboard.map((item: { tripsLed: number, member: MemberDTO }) => ({ name: item.member.name, count: item.tripsLed }));
+
+    return new Response(JSON.stringify(retVal));
   } catch (error: any) {
     return new Response("Internal Server Error", { status: 500 });
   }

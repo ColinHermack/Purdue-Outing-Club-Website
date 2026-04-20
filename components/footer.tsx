@@ -74,7 +74,7 @@ export const Footer = () => {
           <Logo />
         </Link>
       </div>
-      <div className="mt-4 mb-8 text-xs">© 2024 Colin Hermack, Purdue Outing Club</div>
+      <div className="mt-4 mb-8 text-xs">© 2024 Purdue Outing Club</div>
     </footer>
   );
 };

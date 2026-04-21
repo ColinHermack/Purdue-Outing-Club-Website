@@ -6,7 +6,7 @@
 
 export const BASE_URL = "https://purdueoutingclub.com";
 
-export const WEEKDAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+export const WEEKDAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"] as const;
 
 export const SPORTS = [
   "Backpacking",

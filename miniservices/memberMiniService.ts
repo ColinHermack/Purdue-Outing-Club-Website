@@ -8,7 +8,7 @@
 
 import MemberDTO from "@/dtos/memberDto";
 
-const { Pool, QueryResult } = require("pg");
+const { Pool } = require("pg");
 
 const pool = new Pool({
     user: process.env.DB_USER,
@@ -54,31 +54,30 @@ export async function getMostTripsLed(): Promise<{ tripsLed: number, member: Mem
     try {
         const result = await client.query(`
             SELECT m.member_id,
-                    m.name,
-                    m.pronouns,
-                    m.email,
-                    m.phone,
-                    m.dues_data,
-                    m.first_aid_data,
-                    m.car_data,
-                    m.driver_data,
-                    m.emergency_data,
-                    m.policy_agreement,
-                    m.waiver_agreement,
-                    m.school_year,
-                    m.medical_data,
-                    m.trip_count,
-                    m.holds,
-                    m.signup_count,
-                    m.years_active,
-                    m.campus,
-                    COUNT(*) FROM trip_roster AS trips_led
-                FROM trip_roster
-                JOIN member AS m ON m.member_id = trip_roster.member_id
-                WHERE trip_roster.is_leader = true
-                GROUP BY member.member_id
-                ORDER BY COUNT(*) DESC
-                LIMIT 5;`);
+                m.name,
+                m.pronouns,
+                m.email,
+                m.phone,
+                m.dues_data,
+                m.first_aid_data,
+                m.car_data,
+                m.driver_data,
+                m.emergency_data,
+                m.policy_agreement,
+                m.waiver_agreement,
+                m.school_year,
+                m.medical_data,
+                m.trip_count,
+                m.holds,
+                m.signup_count,
+                m.years_active,
+                m.campus,
+            (SELECT COUNT(*) FROM trip_roster WHERE trip_roster.member_id = m.member_id AND trip_roster.is_leader = TRUE) AS trips_led
+            FROM member AS m
+            JOIN trip_roster AS t ON m.member_id = t.member_id
+            GROUP BY m.member_id
+            ORDER BY trips_led DESC
+            LIMIT 5;`);
         
         result.rows.map((row: any) => {
             retVal.push({
@@ -112,7 +111,7 @@ export async function getMostTripsLed(): Promise<{ tripsLed: number, member: Mem
         client.release();
     }
 
-    return retVal.sort((a, b) => a.tripsLed - b.tripsLed);
+    return retVal;
 }
 
 /**
@@ -126,34 +125,34 @@ export async function getMostTripsAttended(): Promise<{ tripsAttended: number, m
     try {
         const result = await client.query(`
             SELECT m.member_id,
-                    m.name,
-                    m.pronouns,
-                    m.email,
-                    m.phone,
-                    m.dues_data,
-                    m.first_aid_data,
-                    m.car_data,
-                    m.driver_data,
-                    m.emergency_data,
-                    m.policy_agreement,
-                    m.waiver_agreement,
-                    m.school_year,
-                    m.medical_data,
-                    m.trip_count,
-                    m.holds,
-                    m.signup_count,
-                    m.years_active,
-                    m.campus,
-                    COUNT(*) FROM trip_roster AS trips_led
-                FROM trip_roster
-                JOIN member AS m ON m.member_id = trip_roster.member_id
-                GROUP BY member.member_id
-                ORDER BY COUNT(*) DESC
-                LIMIT 5;`);
+            m.name,
+            m.pronouns,
+            m.email,
+            m.phone,
+            m.dues_data,
+            m.first_aid_data,
+            m.car_data,
+            m.driver_data,
+            m.emergency_data,
+            m.policy_agreement,
+            m.waiver_agreement,
+            m.school_year,
+            m.medical_data,
+            m.trip_count,
+            m.holds,
+            m.signup_count,
+            m.years_active,
+            m.campus,
+        (SELECT COUNT(*) FROM trip_roster WHERE trip_roster.member_id = m.member_id) AS trips_attended
+        FROM member AS m
+        JOIN trip_roster AS t ON m.member_id = t.member_id
+        GROUP BY m.member_id
+        ORDER BY trips_attended DESC
+        LIMIT 5;`);
 
         result.rows.map((row: any) => {
             retVal.push({
-                tripsAttended: row.trips_led,
+                tripsAttended: row.trips_attended,
                 member: {
                     id: row.member_id,
                     name: row.name,
@@ -183,5 +182,5 @@ export async function getMostTripsAttended(): Promise<{ tripsAttended: number, m
         client.release();
     }
 
-    return retVal.sort((a, b) => a.tripsAttended - b.tripsAttended)
+    return retVal;
 }

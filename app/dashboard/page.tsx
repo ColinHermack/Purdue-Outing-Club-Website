@@ -15,7 +15,7 @@ import { Divider } from "@heroui/divider";
 import { Button } from "@heroui/button";
 import { Link } from "@heroui/link";
 
-import { MemberStatsT } from "@/utils/types";
+import { MemberStatsT } from "@/config/types";
 
 export default function DashBoardPage() {
   const [user, setUser] = useState<MemberStatsT | null>(null);
@@ -80,7 +80,7 @@ export default function DashBoardPage() {
                   <Button
                     key={trip.trip_id}
                     as={Link}
-                    className="text-left font-bold"
+                    className="text-left font-bold my-1"
                     href={`/trips/${trip.trip_id}`}
                     variant="flat"
                   >

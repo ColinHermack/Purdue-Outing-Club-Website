@@ -9,7 +9,7 @@ import { getServerSession } from "next-auth/next";
 import { NextResponse } from "next/server";
 
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
-import { MemberStatsT, TripInfoT } from "@/utils/types";
+import { MemberStatsT, TripInfoT } from "@/config/types";
 
 const { Pool, QueryResult } = require("pg"); //PostgreSQL
 

@@ -16,3 +16,8 @@ export type MemberStatsT = {
   num_trips_led: number;
   trips: TripInfoT[];
 };
+
+export type GearHoursDataT = {
+  name: string;
+  hours: string;
+}

@@ -27,7 +27,7 @@ interface ITripDifficultyDescriptions {
   [key: string]: string[];
 }
 
-export const tripDifficultyDescriptions: ITripDifficultyDescriptions = {
+export const TRIP_DIFFICULTY_DESCRIPTIONS: ITripDifficultyDescriptions = {
   Backpacking: [
     "No previous experience required. May entail mostly flat trails, shorter distances, and instruction from trip leaders.",
     "Some previous experience recommended. May entail more elevation and more distance covered per day. Could be your first trip if you have camp skills and are physically fit enough.",
@@ -71,3 +71,88 @@ export const tripDifficultyDescriptions: ITripDifficultyDescriptions = {
     "Extreme distances, terrain, or weather.",
   ],
 };
+
+export const LEADERSHIP_CATEGORIES = [
+  {
+    branch: "Executive",
+    positions: ["President", "Vice President"],
+  },
+  {
+    branch: "Administrative",
+    positions: [
+      "Secretary of Sports",
+      "Secretary of Operations",
+      "Secretary of Outreach",
+      "Health & Safety",
+    ],
+  },
+  {
+    branch: "Operations",
+    positions: ["Treasurer", "Webmaster", "Data Analyst"],
+  },
+  {
+    branch: "Outreach",
+    positions: [
+      /* "Alumni Coordinator", TODO: Uncomment this line after officer transitions */
+      "Fundraising & Sponsorship",
+      "Diversity & Community Outreach",
+      "Social Media Coordinator",
+      "Social Events Coordinator",
+      "Graduate and Nontraditional Student Coordinator",
+      "Club Goober"
+    ],
+  },
+  {
+    branch: "Event Planning",
+    positions: [
+      "POCAR Race Coordinator",
+      "POCAR Volunteer Coordinator",
+      "POCAR Registration Coordinator",
+      "POCtoberfest Coordinator",
+    ],
+  },
+  {
+    branch: "Backpacking",
+    positions: ["Head Backpacking Officer", "Backpacking Officer"],
+  },
+  {
+    branch: "Canoeing",
+    positions: ["Head Canoeing Officer", "Canoeing Officer"],
+  },
+  {
+    branch: "Caving",
+    positions: ["Head Caving Officer", "Caving Officer"],
+  },
+  {
+    branch: "Climbing",
+    positions: [
+      "Head Climbing Officer",
+      "Climbing Team Captain",
+      "Climbing Officer",
+    ],
+  },
+  {
+    branch: "Fishing",
+    positions: ["Chief Angler"],
+  },
+  {
+    branch: "Mountain Biking",
+    positions: ["Head Mountain Biking Officer", "Mountain Biking Officer"],
+  },
+  {
+    branch: "Whitewater",
+    positions: ["Head Whitewater Officer", "Whitewater Officer"],
+  },
+  {
+    branch: "Winter Sports",
+    positions: ["Head Winter Sports Officer", "Winter Sports Officer"],
+  },
+  {
+    branch: "Gear",
+    positions: ["Gear Lord", "Gear Gremlin"],
+  },
+  {
+    branch: "Advisors",
+    positions: ["Primary Advisor", "Advisor Emeritus/Club Elder"],
+  },
+];

@@ -1,3 +1,9 @@
+/**
+ * Route definition for Microsoft authentication.
+ * 
+ * @author Colin Hermack
+ */
+
 import NextAuth from "next-auth";
 
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";

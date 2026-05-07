@@ -1,24 +1,6 @@
 # Purdue Outing Club Website
 
-This is a full-stack web application used for the management of Purdue Outing Club trip and member data. Some of the functions of this website are the following:
-
-## Features
-- Homepage with pictures and videos of club events, club news, frequently asked questions, and information on club sports
-- Calendar of events (powered by Google Calendar)
-- Trip pages with signups
-- Leadership page with contact information for all officers
-- FAQ page with answers to the questions that we get asked most commonly on Slack and by email
-- Gear closet page with gear hours listed
-- POCAR page with general information and signup information
-- Join page with detailed instructions for joining the club
-- Club constitution
-- Information on becoming a trip leader
-- Links to the merch store and alumni newsletter
-- Sponsorship page to hopefully attract more sponsors
-
-## Future Features
-- Trip recaps linked directly to trip pages
-- An interactive map with markers indicating all of the trip destinations
+This is a full-stack web application used for the management of Purdue Outing Club trip and member data. Some of the functions of this website are the following.
 
 ## Technologies Used
 
@@ -31,11 +13,6 @@ This is a full-stack web application used for the management of Purdue Outing Cl
 - [next-themes](https://github.com/pacocoursey/next-themes)
 - [Google Calendar](calendar.google.com)
 
-## Documentation
-Each subdirectory of the main project directory has its own README explaining what it contains. Code files whose purpose
-is not immediately obvious have a block comment explaining what they do.
-[NextJS Documentation](https://nextjs.org/docs/getting-started) for an in-depth explanation of NextJS and how it works.
-
 ## How to Contribute
 
 ### Clone the GitHub repository
@@ -43,7 +20,7 @@ is not immediately obvious have a block comment explaining what they do.
 Begin by cloning the GitHub repository into a local directory.
 
 ```bash
-git clone https://github.com/ColinHermack/Outing-Club-Website-Prototype
+git clone https://github.com/ColinHermack/Purdue-Outing-Club-Website.git
 ```
 
 ### Install dependencies
@@ -51,7 +28,7 @@ git clone https://github.com/ColinHermack/Outing-Club-Website-Prototype
 Run the following command to install NPM packages:
 
 ```bash
-npm install --legacy-peer-deps
+npm install
 ```
 
 ### Run the development server
@@ -61,8 +38,13 @@ npm run dev
 ```
 
 ### Create a feature branch
-```git
+```bash
 git branch myfeaturebranch
+```
+
+### Build locally before creating a pull request
+```bash
+npm run build
 ```
 
 ### Create a pull request on GitHub
@@ -70,4 +52,4 @@ Create a pull request to merge your feature branch with main. It will have to su
 by the webmaster before merging.
 
 ## Deployment Information
-This app is deployed on Vercel and deploys automatically whenever a pull request is accepted.
+This app is deployed on Vercel and deploys a preview whenever a pull request is created, and deploys to production once the PR is approved and completed.

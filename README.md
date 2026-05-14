@@ -23,6 +23,9 @@ Begin by cloning the GitHub repository into a local directory.
 git clone https://github.com/ColinHermack/Purdue-Outing-Club-Website.git
 ```
 
+### Create environment variables
+Get the environment variables from the webmaster and create a .env file in the root of the project.
+
 ### Install dependencies
 
 Run the following command to install NPM packages:
@@ -31,11 +34,8 @@ Run the following command to install NPM packages:
 npm install
 ```
 
-### Run the development server
-
-```bash
-npm run dev
-```
+### Choose an issue to work on
+Choose an issue from the `Issues` tab on GitHub or the project on GitHub to work on. The issues are the same whether you find them in the issues tab or the project.
 
 ### Create a feature branch
 ```bash

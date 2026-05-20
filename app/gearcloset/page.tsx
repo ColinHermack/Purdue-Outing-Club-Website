@@ -66,7 +66,7 @@ export default function GearClosetPage() {
       <h2 className="font-bold text-center my-10 w-3/4">
         The Gear Closet is a one-stop-shop for all of your outdoor needs. It has
         everything from mountain bikes to climbing gear. Gear can be checked out
-        for official Purdue Outing Club trips.
+        for official Purdue Outing Club trips and is usually due in two weeks.
       </h2>
       <p className="text-center w-3/4">
         Before going to the gear closet, check the #announcements channel in the

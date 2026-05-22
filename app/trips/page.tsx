@@ -31,12 +31,19 @@ export default function TripsPage() {
     <div className="flex flex-col justify-top items-center">
       <title>Trips - Purdue Outing Club</title>
       <h1 className="text-5xl text-amber-400 font-bold text-center">Trips</h1>
-      <p className="my-4 text-center">
-        A note on signing up for trips: sometimes the form may ask you whether
-        you want to create a new draft or use a previous draft. ALWAYS CLICK NEW
-        DRAFT. Otherwise you will not be signed up for the trip properly.
+      <p className="mt-10 mb-2 text-center font-bold text-2xl">Signing Up</p>
+      <p className="my-4 text-center max-w-3xl">
+        To sign up for a trip, select a trip and fill out the form. You should
+        get a confirmation email immediately after saying that you’ve
+        successfully signed up.
+        <br />
+        <b>
+          Sometimes the form may ask you to create a new draft or use a previous
+          draft. ALWAYS CLICK NEW DRAFT. Otherwise you will not be signed up for
+          the trip properly.
+        </b>
       </p>
-      <h2 className="mt-10 mb-8 text-center font-bold text-2xl">
+      <h2 className="mt-5 mb-8 text-center font-bold text-2xl">
         Accepting Signups
       </h2>
       <div className="flex flex-col">
@@ -46,6 +53,48 @@ export default function TripsPage() {
           <Spinner color="default" />
         )}
       </div>
+      <ul className="list-disc pl-6 my-4 text-center max-w-3xl min-w-0">
+        <li>
+          If you talk to the trip leader before signing up for the trip or
+          before the roster is selected, you will be more likely to get on the
+          trip since you showed interest. You are also substantially more likely
+          to get on trips if you are driver certified.
+        </li>
+        <li>
+          Make sure you check your email over the next week, as the trip leader
+          will contact you later letting you know if you’ve gotten on the trip
+          (or got waitlisted/didn’t get on).
+        </li>
+        <li>
+          If you&apos;re on the trip, this email will contain things you have to
+          do before the trip to confirm your spot! (This often involves joining
+          a GroupMe and a driver/tent board.)
+        </li>
+
+        <b>
+          Don&apos;t wait until the last minute to join the GroupMe since there
+          might be useful information shared in the days before the trip.
+        </b>
+      </ul>
+      <h2 className="mt-5 mb-2 text-center font-bold text-2xl">Gear</h2>
+      <p className="my-4 text-center max-w-3xl min-w-0">
+        If you don’t have everything you need, you can borrow from the gear
+        closet. If needed, <b>get gear as soon </b> as you can after confirming
+        your spot for a trip so that you&apos;re not scrambling at the last
+        minute to get gear.
+        <br />→ If you can&apos;t make it to any of the gear hours, talk to the
+        leader about it.
+      </p>
+      <h2 className="mt-5 mb-2 text-center font-bold text-2xl max-w-3xl min-w-0">
+        Going on the trip
+      </h2>
+      <p className="my-4 text-center max-w-3xl min-w-0">
+        Make sure to communicate with the driver who you signed up for in the
+        driver board. They will determine a pickup time and locations based on
+        the group.
+        <br />
+        Have fun!
+      </p>
     </div>
   );
 }

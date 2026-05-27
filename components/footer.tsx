@@ -48,6 +48,72 @@ export const Footer = () => {
           </NextLink>
         ))}
       </div>
+      <div className="flex flex-col lg:flex-row h-screen justify-center items-start gap-4 m-auto">
+        <div className="flex flex-col">
+          <p className="text-start text-lg font-semibold">About</p>
+          {siteConfig.aboutItems.map((item) => (
+            <NextLink
+              key={item.href}
+              className={clsx(
+                linkStyles({ color: "foreground" }),
+                "data-[active=true]:text-primary data-[active=true]:font-medium flex justify-start items-center",
+              )}
+              color="foreground"
+              href={item.href}
+            >
+              {item.label}
+            </NextLink>
+          ))}
+        </div>
+        <div className="flex flex-col">
+          <p className="text-start text-lg font-semibold">Trips</p>
+          {siteConfig.tripsItems.map((item) => (
+            <NextLink
+              key={item.href}
+              className={clsx(
+                linkStyles({ color: "foreground" }),
+                "data-[active=true]:text-primary data-[active=true]:font-medium justify-start items-center",
+              )}
+              color="foreground"
+              href={item.href}
+            >
+              {item.label}
+            </NextLink>
+          ))}
+        </div>
+        <div className="flex flex-col">
+          <p className="text-start text-lg font-semibold">Support</p>
+          {siteConfig.supportItems.map((item) => (
+            <NextLink
+              key={item.href}
+              className={clsx(
+                linkStyles({ color: "foreground" }),
+                "data-[active=true]:text-primary data-[active=true]:font-medium justify-start items-center",
+              )}
+              color="foreground"
+              href={item.href}
+            >
+              {item.label}
+            </NextLink>
+          ))}
+        </div>
+        <div className="flex flex-col">
+          <p className="text-start text-lg font-semibold">Other</p>
+          {siteConfig.otherItems.map((item) => (
+            <NextLink
+              key={item.href}
+              className={clsx(
+                linkStyles({ color: "foreground" }),
+                "data-[active=true]:text-primary data-[active=true]:font-medium justify-start items-center",
+              )}
+              color="foreground"
+              href={item.href}
+            >
+              {item.label}
+            </NextLink>
+          ))}
+        </div>
+      </div>
 
       <Button
         as={Link}

@@ -77,6 +77,78 @@ export const siteConfig = {
       href: "https://docs.google.com/forms/d/e/1FAIpQLSc_w1PuFjQ-N3QhX6uVUwwywuJ8HhHmjLUh40VyisTqj25hiA/viewform",
     },
   ],
+  aboutItems: [
+    {
+      label: "FAQ",
+      href: "/faq",
+    },
+    {
+      label: "Pleadership",
+      href: "/pleadership",
+    },
+    {
+      label: "Trip Leaders",
+      href: "/tripleaders",
+    },
+    {
+      label: "Constitution",
+      href: "/docs/poc_constitution.pdf",
+    },
+    {
+      label: "News",
+      href: "/news",
+    },
+    {
+      label: "Diversity and Inclusion",
+      href: "/diversity",
+    },
+  ],
+  tripsItems: [
+    {
+      label: "Calendar",
+      href: "/calendar",
+    },
+    {
+      label: "Trips",
+      href: "/trips",
+    },
+    {
+      label: "Gear Closet",
+      href: "/gearcloset",
+    },
+    {
+      label: "Request Reimbursement",
+      href: "https://docs.google.com/forms/d/e/1FAIpQLSc_w1PuFjQ-N3QhX6uVUwwywuJ8HhHmjLUh40VyisTqj25hiA/viewform",
+    },
+  ],
+  supportItems: [
+    {
+      label: "Sponsorship",
+      href: "/sponsorship",
+    },
+    {
+      label: "Support Us",
+      href: "/supportus",
+    },
+  ],
+  otherItems: [
+    {
+      label: "Alumni",
+      href: "https://sites.google.com/view/purdueoutingclub-alumni/Welcome",
+    },
+    {
+      label: "Climbing Team",
+      href: "/climbingteam",
+    },
+    {
+      label: "Merch",
+      href: "https://www.toocoolpurdue.com/TooCOOLPurdueWL/vECItemCatalogOrganizationItems/OrganizationItemsGallery.aspx?Organization=1231",
+    },
+    {
+      label: "POCAR",
+      href: "/pocar",
+    },
+  ],
   links: [
     {
       label: "instagram",

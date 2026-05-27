@@ -48,7 +48,28 @@ export const Footer = () => {
           </NextLink>
         ))}
       </div>
-      <div className="flex flex-col lg:flex-row h-screen justify-center items-start gap-4 m-auto">
+
+      <Button
+        as={Link}
+        className="bg-amber-400 text-black font-bold my-8"
+        href="/safetyconcernreport"
+        variant="flat"
+      >
+        Report a Safety Concern
+      </Button>
+      
+      <div className="flex flex-row text-2xl">
+        {siteConfig.links.map((item, index) => (
+          <NextLink
+            key={item.href}
+            className="text-foreground text-2xl m-4 hover:text-gray-400"
+            href={item.href}
+          >
+            {socialMediaIcons[index]}
+          </NextLink>
+        ))}
+      </div>
+      <div className="flex flex-col lg:flex-row justify-center lg:justify-evenly items-center lg:items-start w-screen m-auto my-10">
         <div className="flex flex-col">
           <p className="text-start text-lg font-semibold">About</p>
           {siteConfig.aboutItems.map((item) => (
@@ -113,27 +134,6 @@ export const Footer = () => {
             </NextLink>
           ))}
         </div>
-      </div>
-
-      <Button
-        as={Link}
-        className="bg-amber-400 text-black font-bold my-8"
-        href="/safetyconcernreport"
-        variant="flat"
-      >
-        Report a Safety Concern
-      </Button>
-      
-      <div className="flex flex-row text-2xl">
-        {siteConfig.links.map((item, index) => (
-          <NextLink
-            key={item.href}
-            className="text-foreground text-2xl m-4 hover:text-gray-400"
-            href={item.href}
-          >
-            {socialMediaIcons[index]}
-          </NextLink>
-        ))}
       </div>
       <div className="m-4">
         <Link href="/">

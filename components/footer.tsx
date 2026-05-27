@@ -57,7 +57,6 @@ export const Footer = () => {
       >
         Report a Safety Concern
       </Button>
-      
       <div className="flex flex-row text-2xl">
         {siteConfig.links.map((item, index) => (
           <NextLink
@@ -67,6 +66,28 @@ export const Footer = () => {
           >
             {socialMediaIcons[index]}
           </NextLink>
+        ))}
+      </div>
+      <div className="flex flex-col lg:flex-row justify-center lg:justify-evenly items-center lg:items-start w-screen m-auto my-10">
+        {siteConfig.sitemapLinks.map((section) => (
+          <div key={section.category} className="flex flex-col">
+            <p className="text-start text-lg font-semibold">
+              {section.category}
+            </p>
+            {section.links.map((link) => (
+              <NextLink
+                key={link.href}
+                className={clsx(
+                  linkStyles({ color: "foreground" }),
+                  "data-[active=true]:text-primary data-[active=true]:font-medium flex justify-start items-center",
+                )}
+                color="foreground"
+                href={link.href}
+              >
+                {link.label}
+              </NextLink>
+            ))}
+          </div>
         ))}
       </div>
       <div className="flex flex-col lg:flex-row justify-center lg:justify-evenly items-center lg:items-start w-screen m-auto my-10">

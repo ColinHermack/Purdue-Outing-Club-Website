@@ -68,9 +68,12 @@ export const Footer = () => {
           </NextLink>
         ))}
       </div>
-      <div className="flex flex-col lg:flex-row justify-center lg:justify-evenly items-center lg:items-start w-screen m-auto my-10">
+      <div className="flex flex-col md:flex-row justify-center md:justify-evenly items-center md:items-start w-screen m-auto my-10">
         {siteConfig.sitemapLinks.map((section) => (
-          <div key={section.category} className="flex flex-col">
+          <div
+            key={section.category}
+            className="flex flex-col items-center m-3 md:items-start gap-1"
+          >
             <p className="text-start text-lg font-semibold">
               {section.category}
             </p>
@@ -79,7 +82,7 @@ export const Footer = () => {
                 key={link.href}
                 className={clsx(
                   linkStyles({ color: "foreground" }),
-                  "data-[active=true]:text-primary data-[active=true]:font-medium flex justify-start items-center",
+                  "data-[active=true]:text-primary data-[active=true]:font-medium flex md:justify-start items-center",
                 )}
                 color="foreground"
                 href={link.href}

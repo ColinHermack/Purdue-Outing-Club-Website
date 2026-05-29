@@ -12,6 +12,7 @@ import { Card, CardHeader, CardBody } from "@heroui/card";
 import { Link } from "@heroui/link";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { Spinner } from "@heroui/spinner";
+import { Divider } from "@heroui/react";
 
 export default function TripsPage() {
   const [trips, setTrips] = useState(null);
@@ -46,13 +47,17 @@ export default function TripsPage() {
       <h2 className="mt-5 mb-8 text-center font-bold text-2xl">
         Accepting Signups
       </h2>
-      <div className="flex flex-col">
+      <div className="flex flex-col mb-8">
         {trips != null ? (
           <TripCards trips={trips} />
         ) : (
           <Spinner color="default" />
         )}
       </div>
+      <Divider />
+      <h2 className="mt-8 mb-2 text-center font-bold text-2xl">
+        Getting on Trips
+      </h2>
       <ul className="list-disc pl-6 my-4 text-center max-w-3xl min-w-0">
         <li>
           If you talk to the trip leader before signing up for the trip or

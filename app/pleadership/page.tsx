@@ -9,6 +9,7 @@ import Image from "next/image";
 import { Button } from "@heroui/button";
 import { Link } from "@heroui/link";
 import { Divider } from "@heroui/divider";
+import { Card } from "@heroui/card";
 import { MdEmail } from "react-icons/md";
 
 import { getLeaderData, BranchData, Officer } from "@/utils/leadership";
@@ -20,19 +21,26 @@ export const metadata = {
 
 function LeaderCard(props: { officer: Officer }) {
   return (
-    <div
+    <Card
       key={props.officer.name}
-      className="py-4 m-4 w-[250px] h-[400px] flex flex-col justify-between items-center"
+      className="py-4 m-4 w-[250px] h-48 flex flex-col justify-between items-center"
     >
+      {/*}
+      TODO: Uncomment images at the end of the summer
       <div className="relative w-[200px] h-[200px]">
-        <Image
-          alt={props.officer.name}
-          className="rounded-xl object-cover w-[200px] h-[200px]"
-          fill={true}
-          sizes="200px"
-          src={`/leadership/${props.officer.officer_data.ImagePath}`}
-        />
+        {
+          props.officer.officer_data.ImagePath != null ? 
+          <Image
+            alt={props.officer.name}
+            className="rounded-xl object-cover w-[200px] h-[200px]"
+            fill={true}
+            sizes="200px"
+            src={`/leadership/${props.officer.officer_data.ImagePath}`}
+          />
+          : null
+        }
       </div>
+      {*/}
       <div className="pb-0 pt-2 px-4 flex-col justify-top items-center text-center">
         <p className="font-bold text-xl text-center">{props.officer.name}</p>
         <p className="text-default-500 text-tiny text-center">
@@ -51,7 +59,7 @@ function LeaderCard(props: { officer: Officer }) {
           <MdEmail />
         </Button>
       </div>
-    </div>
+    </Card>
   );
 }
 

@@ -58,7 +58,7 @@ const leadershipCategories = [
   {
     branch: "Outreach",
     positions: [
-      /* "Alumni Coordinator", TODO: Uncomment this line after officer transitions */
+      "Alumni Coordinator",
       "Fundraising & Sponsorship",
       "Diversity & Community Outreach",
       "Social Media Coordinator",

@@ -10,7 +10,7 @@ import { Image } from "@heroui/image";
 import { Link } from "@heroui/link";
 import { Button } from "@heroui/button";
 
-import { getLeaderDataByPosition } from "@/utils/leadership";
+import { getLeaderDataByPosition } from "@/miniservices/officerMiniService";
 
 export const metadata = {
   title: "Sponsorship",

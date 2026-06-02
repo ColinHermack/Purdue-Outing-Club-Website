@@ -7,6 +7,7 @@
 "use server";
 
 import MemberDTO from "@/dtos/memberDto";
+import { TripInfoT } from "@/config/types";
 
 const { Pool, QueryResult } = require("pg");
 

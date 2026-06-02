@@ -9,6 +9,7 @@
 import { LEADERSHIP_CATEGORIES } from "@/config/constants";
 import OfficerDTO from "@/dtos/officerDto";
 import { GearHoursDataT } from "@/config/types";
+import { Officer, BranchData } from "@/utils/leadership";
 
 const { Pool, QueryResult } = require("pg");
 
@@ -186,4 +187,145 @@ export async function getGearHours(): Promise<GearHoursDataT[]> {
   } finally {
     client.release();
   }
+}
+
+/**
+ * Retrieves the officer data for a given position.
+ *
+ * @param position The position to retrieve officer data for.
+ * @returns An object containing the officer data for the given position, or undefined if the position does not exist.
+ */
+export async function getLeaderDataByPosition(
+  position: string,
+): Promise<Officer | undefined> {
+  let result: typeof QueryResult = null;
+  const client = await pool.connect();
+
+  try {
+    result = await client.query(
+      `SELECT officer.position, 
+                officer.officer_data,
+                member.name, 
+                member.email, 
+                member.pronouns, 
+                member.phone
+            FROM officer
+            JOIN member ON officer.member_id = member.member_id
+            WHERE officer.position = $1;`,
+      [position],
+    );
+  } catch (error: any) {
+    //Intentionally left blank
+  } finally {
+    client.release();
+  }
+
+  if (result === null || result.rows.length === 0) {
+    return undefined;
+  } else {
+    return result.rows[0];
+  }
+}
+
+/**
+ * Retrieves all officer data, organized by branch.
+ *
+ * @returns An array of objects, each representing a branch of the club. Each object contains a label and an array of
+ *          Officer objects, containing the officer data for each officer in the branch.
+ */
+export async function getLeaderData() {
+  let allData: BranchData[] = [
+    {
+      label: "Executive",
+      content: [],
+    },
+    {
+      label: "Administrative",
+      content: [],
+    },
+    {
+      label: "Operations",
+      content: [],
+    },
+    {
+      label: "Outreach",
+      content: [],
+    },
+    {
+      label: "Event Planning",
+      content: [],
+    },
+    {
+      label: "Backpacking",
+      content: [],
+    },
+    {
+      label: "Canoeing",
+      content: [],
+    },
+    {
+      label: "Caving",
+      content: [],
+    },
+    {
+      label: "Climbing",
+      content: [],
+    },
+    {
+      label: "Fishing",
+      content: [],
+    },
+    {
+      label: "Mountain Biking",
+      content: [],
+    },
+    {
+      label: "Whitewater",
+      content: [],
+    },
+    {
+      label: "Winter Sports",
+      content: [],
+    },
+    {
+      label: "Gear",
+      content: [],
+    },
+    {
+      label: "Advisors",
+      content: [],
+    },
+  ];
+
+  let result: typeof QueryResult = null;
+  const client = await pool.connect();
+
+  try {
+    result = await client.query(
+      `SELECT officer.position, 
+                officer.officer_data,
+                member.name, 
+                member.email, 
+                member.pronouns, 
+                member.phone
+            FROM officer
+            JOIN member ON officer.member_id = member.member_id`,
+    );
+  } catch (error: any) {
+    //Intentionally left blank
+  } finally {
+    client.release();
+  }
+
+  for (let i = 0; i < LEADERSHIP_CATEGORIES.length; i++) {
+    for (let j = 0; j < LEADERSHIP_CATEGORIES[i].positions.length; j++) {
+      for (let k = 0; k < result.rows.length; k++) {
+        if (result.rows[k].position === LEADERSHIP_CATEGORIES[i].positions[j]) {
+          allData[i].content.push(result.rows[k]);
+        }
+      }
+    }
+  }
+
+  return allData;
 }

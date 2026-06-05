@@ -80,7 +80,6 @@ export default function TripLeaderPage() {
       >
         Sign Up
       </Button>
-
       <p className="text-center max-w-full mt-5">
         Before you can lead trips, you will need to obtain a CPR certification.
         Please submit proof of your certification here for approval by our
@@ -95,7 +94,13 @@ export default function TripLeaderPage() {
       >
         Submit Here
       </Button>
-
+      <Button
+        as={Link}
+        className="bg-amber-400 text-black font-bold"
+        href="/leadTrips"
+      >
+        Learn how I can lead a trip
+      </Button>
       <Divider className="my-5" />
       <h2 className="font-bold text-center text-xl">FAQ</h2>
       <Accordion>
@@ -143,8 +148,8 @@ export default function TripLeaderPage() {
           The first step to becoming a trip leader is to express interest in a
           sport by going on a trip with a sports officer. After that, you can
           apply to become a trip leader. If approved, you will need to complete
-          CPR training and trip leader training. More detailed steps can
-          be found in the trip leader overview.
+          CPR training and trip leader training. More detailed steps can be
+          found in the trip leader overview.
         </AccordionItem>
         <AccordionItem
           key="5"

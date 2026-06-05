@@ -10,7 +10,7 @@ import { Divider } from "@heroui/divider";
 import { Link } from "@heroui/link";
 import { Image } from "@heroui/image";
 
-import { getLeaderDataByPosition } from "@/utils/leadership";
+import { getLeaderDataByPosition } from "@/miniservices/officerMiniService";
 
 export const metadata = {
   title: "Diversity",

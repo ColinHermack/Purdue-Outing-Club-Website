@@ -12,7 +12,8 @@ import { Divider } from "@heroui/divider";
 import { Card } from "@heroui/card";
 import { MdEmail } from "react-icons/md";
 
-import { getLeaderData, BranchData, Officer } from "@/utils/leadership";
+import { getLeaderData} from "@/miniservices/officerMiniService";
+import { BranchData, Officer } from "@/utils/leadership";
 
 export const metadata = {
   title: "Pleadership",

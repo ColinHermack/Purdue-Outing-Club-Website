@@ -1,6 +1,7 @@
 /**
  * Handles all database communication related to trips.
  *
+ * @author Eli Orlov
  */
 
 "use server";

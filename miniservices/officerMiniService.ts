@@ -28,9 +28,7 @@ const pool = new Pool({
  * Gets data for all officers.
  * @returns A promise resolving to a list of objects representing each category of officer.
  */
-export async function getAllOfficerData(): Promise<
-  { label: string; content: OfficerDTO[] }[]
-> {
+export async function getAllOfficerData(): Promise<{ label: string; content: OfficerDTO[] }[]> {
   let retVal: { label: string; content: OfficerDTO[] }[] =
     LEADERSHIP_CATEGORIES.map((category) => {
       return {

@@ -8,7 +8,7 @@ import MemberDTO from '@/dtos/memberDto';
 
 export default class TripLeaderDTO {
     member?: MemberDTO;
-    sport?: string;
+    sport?: string[];
     process?: object;
     leadCount?: number;
     gmail?: string;

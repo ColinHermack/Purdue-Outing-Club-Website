@@ -11,24 +11,26 @@ import { Divider } from "@heroui/divider";
 import { useEffect, useState } from "react";
 import { Chip } from "@heroui/chip";
 import { WEEKDAYS } from "@/config/constants";
+import Link from "next/link";
+import { Button } from "@heroui/react";
 
 type GearHoursDataType = {
   name: string;
-  gearhours: {day: string, time: string}[];
-}
+  gearhours: { day: string; time: string }[];
+};
 
 type GearHourEntryType = {
   time: string;
   officer: string;
-}
+};
 
 type GearHoursByDayType = {
-  "Monday": GearHourEntryType[],
-  "Tuesday": GearHourEntryType[],
-  "Wednesday": GearHourEntryType[],
-  "Thursday": GearHourEntryType[],
-  "Friday": GearHourEntryType[]
-}
+  Monday: GearHourEntryType[];
+  Tuesday: GearHourEntryType[];
+  Wednesday: GearHourEntryType[];
+  Thursday: GearHourEntryType[];
+  Friday: GearHourEntryType[];
+};
 
 export default function GearClosetPage() {
   const [gearHoursByDay, setGearHoursByDay] = useState<GearHoursByDayType>();
@@ -39,15 +41,18 @@ export default function GearClosetPage() {
         .then((response) => response.json())
         .then((data) => {
           const byDay: GearHoursByDayType = {
-            "Monday": [],
-            "Tuesday": [],
-            "Wednesday": [],
-            "Thursday": [],
-            "Friday": [],
+            Monday: [],
+            Tuesday: [],
+            Wednesday: [],
+            Thursday: [],
+            Friday: [],
           };
           data.forEach((officer: GearHoursDataType) => {
             officer.gearhours.forEach((item: { day: string; time: string }) => {
-              byDay[item.day as keyof GearHoursByDayType].push({ time: item.time, officer: officer.name });
+              byDay[item.day as keyof GearHoursByDayType].push({
+                time: item.time,
+                officer: officer.name,
+              });
             });
           });
           setGearHoursByDay(byDay);
@@ -116,6 +121,13 @@ export default function GearClosetPage() {
         src="https://www.youtube.com/embed/CpTz2dSFf90"
         title="gear closet video"
       />
+      <Button
+        as={Link}
+        className="bg-amber-400 text-black font-bold mt-10"
+        href="/gearCare"
+      >
+        Learn how to take care of gear
+      </Button>
     </div>
   );
 }

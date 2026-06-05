@@ -11,7 +11,7 @@ import { Divider } from "@heroui/divider";
 import { Card, CardHeader, CardBody } from "@heroui/card";
 import { Image } from "@heroui/image";
 
-import { getLeaderDataByPosition } from "@/utils/leadership";
+import { getLeaderDataByPosition } from "@/miniservices/officerMiniService";
 
 export const metadata = {
   title: "Support Us",

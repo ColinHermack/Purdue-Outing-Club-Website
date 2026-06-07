@@ -2,7 +2,7 @@ import { Tooltip } from "@heroui/tooltip";
 
 import { getTripDifficultyDescription } from "@/utils/difficulty";
 
-const DIFFICULTIES = ["Beginner", "Intermediate", "Advanced", "Expert"];
+import { DIFFICULTIES } from "@/config/constants";
 
 interface TripDifficultyIconProps {
   difficulty: number;

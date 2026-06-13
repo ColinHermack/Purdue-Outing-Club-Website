@@ -10,6 +10,8 @@ import { Divider } from "@heroui/divider";
 
 import Leaderboard from "@/components/leaderboard";
 
+import { SPORT_DESCRIPTIONS } from "@/config/constants";
+
 export default function Home() {
   const [recentNews, setRecentNews] = useState([]);
 
@@ -151,72 +153,29 @@ export default function Home() {
       <h2 className="text-4xl m-10 font-bold">SPORTS</h2>
       <Accordion selectionMode="multiple">
         <AccordionItem key={1} aria-label="Backpacking" title="Backpacking">
-          Backpacking is an outdoor activity wherein a participant packs all of
-          his or her gear into a backpack. This gear may include food, water,
-          and shelter, or the means to obtain them, and often little else. Since
-          each item must be carried, weight is a very important factor in
-          equipment and supply choices and options.Backpacking trips may consist
-          of just an overnight stay, a weekend (one or two nights), or an
-          extended length, as in long-distance expeditions of a weeks or months,
-          sometimes aided by planned food and supply drops. A backpacking trip
-          without an overnight stay is considered a day hike.
+          {SPORT_DESCRIPTIONS.Backpacking}
         </AccordionItem>
         <AccordionItem key={2} aria-label="Canoeing" title="Canoeing">
-          Canoeing is an activity which involves paddling a canoe with a
-          single-bladed paddle. A few of the recreational forms of canoeing are
-          canoe camping and canoe racing. Other forms include a wide range of
-          canoeing on lakes, rivers, oceans, ponds and streams. The Purdue
-          Outing Club offers canoeing day trips and multi-day canoepacking
-          trips.
+          {SPORT_DESCRIPTIONS.Canoeing}
         </AccordionItem>
         <AccordionItem key={3} aria-label="Caving" title="Caving">
-          Caving is the exploration of underground caverns. It can include
-          walking, crawling, rappelling, and climbing. The enjoyment comes from
-          getting away from this wonder of concrete and red brick, challenging
-          yourself physically and mentally, seeing the beauty of the formations,
-          and generally getting really dirty. You may have heard caving referred
-          to as spelunking. Many cavers prefer to say &#39;caving&#39; instead
-          of &#39;spelunking&#39;; however, it&#39;s the same thing.
+          {SPORT_DESCRIPTIONS.Caving}
         </AccordionItem>
         <AccordionItem key={4} aria-label="Climbing" title="Climbing">
-          Rock climbing is a sport in which participants climb up or across
-          natural rock formations or artificial rock walls. The goal is to reach
-          the summit of a formation or the endpoint of a pre-defined route
-          without falling. Rock climbing is a physically and mentally demanding
-          sport, one that often tests a climber&#39;s strength, endurance,
-          agility and balance along with his mental control. It can be a
-          dangerous sport and knowledge of proper climbing techniques and usage
-          of specialized climbing equipment is crucial for the safe completion
-          of routes.
+          {SPORT_DESCRIPTIONS.Climbing}
         </AccordionItem>
         <AccordionItem
           key={5}
           aria-label="Mountain Biking"
           title="Mountain Biking"
         >
-          Mountain biking (abbr. MTB) is a sport of riding bicycles off-road,
-          often over rough terrain, usually using specially designed mountain
-          bikes. Mountain bikes share similarities with other bikes but
-          incorporate features designed to enhance durability and performance in
-          rough terrain, such as air or coil-sprung shocks used as suspension,
-          larger and wider wheels and tires, stronger frame materials, and
-          mechanically or hydraulically actuated disc brakes. The Purdue Outing
-          Club offers indoor mountain biking trips during the winter.
+          {SPORT_DESCRIPTIONS.Biking}
         </AccordionItem>
         <AccordionItem key={6} aria-label="Whitewater" title="Whitewater">
-          This is the sport of paddling a kayak on a river with a good degree of
-          water running through it. Whitewater kayaking can range from simple,
-          gently moving water, to demanding, dangerous whitewater. River rapids
-          are graded like ski runs according to the difficulty, danger, or
-          severity of the rapid.
+          {SPORT_DESCRIPTIONS.Whitewater}
         </AccordionItem>
         <AccordionItem key={7} aria-label="Winter Sports" title="Winter Sports">
-          Winter sports can involve many of the above sports, but performed
-          during the winter. This can present unique challenges that are not
-          present during the rest of the year, like dealing with freezing water,
-          heavy snow, or otherwise inclement weather. The Purdue Outing Club
-          generally offers snowshoeing, cross-country skiing, and winter
-          backpacking.
+          {SPORT_DESCRIPTIONS.WinterSports}
         </AccordionItem>
       </Accordion>
 

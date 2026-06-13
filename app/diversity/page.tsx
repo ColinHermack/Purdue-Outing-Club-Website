@@ -85,7 +85,7 @@ export default async function DiversityPage() {
       {diversityOfficerData !== undefined ? (
         <Image
           alt="POC Diversity and Community Outreach Officer"
-          src={`/leadership/${diversityOfficerData.officer_data.ImagePath}`}
+          src={`/leadership/${diversityOfficerData.officerData.ImagePath}`}
           width={300}
         />
       ) : (

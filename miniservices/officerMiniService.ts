@@ -81,24 +81,24 @@ export async function getAllOfficerData(): Promise<{ label: string; content: Off
                 pronouns: result.rows[k].pronouns,
                 email: result.rows[k].email,
                 phone: result.rows[k].phone,
-                dues_data: result.rows[k].dues_data,
-                first_aid_data: result.rows[k].first_aid_data,
-                car_data: result.rows[k].car_data,
-                driver_data: result.rows[k].driver_data,
-                emergency_data: result.rows[k].emergency_data,
-                policy_agreeement: result.rows[k].policy_agreement,
-                waiver_agreement: result.rows[k].waiver_agreement,
-                school_year: result.rows[k].school_year,
-                medical_data: result.rows[k].medical_data,
-                trip_count: result.rows[k].trip_count,
+                duesData: result.rows[k].dues_data,
+                firstAidData: result.rows[k].first_aid_data,
+                carData: result.rows[k].car_data,
+                driverData: result.rows[k].driver_data,
+                emergencyData: result.rows[k].emergency_data,
+                policyAgreement: result.rows[k].policy_agreement,
+                waiverAgreement: result.rows[k].waiver_agreement,
+                schoolYear: result.rows[k].school_year,
+                medicalData: result.rows[k].medical_data,
+                tripCount: result.rows[k].trip_count,
                 holds: result.rows[k].holds,
-                signup_count: result.rows[k].signup_count,
-                years_active: result.rows[k].years_active,
+                signupCount: result.rows[k].signup_count,
+                yearsActive: result.rows[k].years_active,
                 campus: result.rows[k].campus,
               },
               position: result.rows[k].position,
               year: result.rows[k].year,
-              officer_data: result.rows[k].officer_data,
+              officerData: result.rows[k].officer_data,
             });
           }
         }
@@ -201,11 +201,11 @@ export async function getLeaderDataByPosition(
 
   try {
     result = await client.query(
-      `SELECT officer.position, 
-                officer.officer_data,
-                member.name, 
-                member.email, 
-                member.pronouns, 
+      `SELECT officer.position,
+                officer.officer_data AS "officerData",
+                member.name,
+                member.email,
+                member.pronouns,
                 member.phone
             FROM officer
             JOIN member ON officer.member_id = member.member_id
@@ -300,11 +300,11 @@ export async function getLeaderData() {
 
   try {
     result = await client.query(
-      `SELECT officer.position, 
-                officer.officer_data,
-                member.name, 
-                member.email, 
-                member.pronouns, 
+      `SELECT officer.position,
+                officer.officer_data AS "officerData",
+                member.name,
+                member.email,
+                member.pronouns,
                 member.phone
             FROM officer
             JOIN member ON officer.member_id = member.member_id`,

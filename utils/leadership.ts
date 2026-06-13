@@ -10,7 +10,7 @@ export interface OfficerData {
 
 export interface Officer {
   position: string;
-  officer_data: OfficerData;
+  officerData: OfficerData;
   name: string;
   email: string;
   pronouns: string;

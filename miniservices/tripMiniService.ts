@@ -31,7 +31,7 @@ export const getOpenTrips = async () => {
     result = await client.query(
       `SELECT trip_id, 
               name, 
-              startdate AT TIME ZONE 'UTC' AS startdate, 
+              startdate AT TIME ZONE 'UTC' AS "startDate",
               sport, 
               location
       FROM trip
@@ -62,7 +62,7 @@ export async function getTripData(id: number) {
       `SELECT
                         trip_id,
                         name,
-                        startdate AT TIME ZONE 'UTC' AS startdate,
+                        startdate AT TIME ZONE 'UTC' AS "startDate",
                         enddate AT TIME ZONE 'UTC' AS enddate,
                         category,
                         sport,

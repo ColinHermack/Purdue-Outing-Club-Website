@@ -10,5 +10,5 @@ export default class OfficerDTO {
     member?: MemberDTO;
     position?: string;
     year?: number;
-    officer_data?: object;
+    officerData?: object;
 }

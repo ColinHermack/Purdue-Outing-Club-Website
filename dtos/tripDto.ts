@@ -7,7 +7,7 @@
 export default class TripDTO {
   tripId?: number;
   name?: string;
-  startdate?: Date;
+  startDate?: Date;
   endDate?: Date;
   category?: string;
   sport?: string;

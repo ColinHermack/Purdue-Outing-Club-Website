@@ -142,7 +142,7 @@ export default async function SponsorshipPage() {
         <Image
           alt="POC Fundraising, Sponsorship, & Alumni Officer"
           className="mt-5 max-w-full"
-          src={`/leadership/${officerData.officer_data.ImagePath}`}
+          src={`/leadership/${officerData.officerData.ImagePath}`}
           width={300}
         />
       ) : (

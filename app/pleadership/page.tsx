@@ -30,13 +30,13 @@ function LeaderCard(props: { officer: Officer }) {
       TODO: Uncomment images at the end of the summer
       <div className="relative w-[200px] h-[200px]">
         {
-          props.officer.officer_data.ImagePath != null ? 
+          props.officer.officerData.ImagePath != null ? 
           <Image
             alt={props.officer.name}
             className="rounded-xl object-cover w-[200px] h-[200px]"
             fill={true}
             sizes="200px"
-            src={`/leadership/${props.officer.officer_data.ImagePath}`}
+            src={`/leadership/${props.officer.officerData.ImagePath}`}
           />
           : null
         }

@@ -161,7 +161,7 @@ export default async function Page() {
                 alt="Card background"
                 className="object-cover rounded-xl"
                 height={250}
-                src={`/leadership/${presidentData.officer_data.ImagePath}`}
+                src={`/leadership/${presidentData.officerData.ImagePath}`}
                 width={250}
               />
             </CardBody>
@@ -189,7 +189,7 @@ export default async function Page() {
                 alt="Card background"
                 className="object-cover rounded-xl"
                 height={250}
-                src={`/leadership/${secretaryData.officer_data.ImagePath}`}
+                src={`/leadership/${secretaryData.officerData.ImagePath}`}
                 width={250}
               />
             </CardBody>

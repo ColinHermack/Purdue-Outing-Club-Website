@@ -22,7 +22,7 @@ export default function TripsPage() {
       .then((response) => response.json())
       .then((data) => {
         for (let i = 0; i < data.length; i++) {
-          data[i].startdate = new Date(data[i].startdate);
+          data[i].startDate = new Date(data[i].startDate);
         }
         setTrips(data);
       });
@@ -117,7 +117,7 @@ interface TripCardProps {
  * have the following properties:
  * - trip_id: The ID of the trip.
  * - name: The name of the trip.
- * - startdate: The date and time the trip starts.
+ * - startDate: The date and time the trip starts.
  * - location: The location of the trip.
  *
  * @returns A list of TripCards.
@@ -126,7 +126,7 @@ function TripCards(props: TripCardProps) {
   return props.trips.length > 0 ? (
     props.trips
       .sort((a, b) => {
-        return a.startdate - b.startdate;
+        return a.startDate - b.startDate;
       })
       .map((trip: any) => (
         <Link
@@ -141,10 +141,10 @@ function TripCards(props: TripCardProps) {
                   {trip.name}
                 </p>
                 <p className="text-small text-default-500 text-left">
-                  {trip.startdate.toLocaleDateString().replace(/\//g, "-")}
+                  {trip.startDate.toLocaleDateString().replace(/\//g, "-")}
                 </p>
                 <p className="text-small text-default-500 text-left">
-                  {trip.startdate.toLocaleTimeString()}
+                  {trip.startDate.toLocaleTimeString()}
                 </p>
                 <p />
               </div>

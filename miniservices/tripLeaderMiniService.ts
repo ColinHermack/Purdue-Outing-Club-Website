@@ -1,3 +1,5 @@
+"use server";
+
 /**
  * Provides database interaction for everything related to trip leaders.
  * 
@@ -5,8 +7,6 @@
  */
 
 import TripLeaderDTO from "@/dtos/tripLeaderDto";
-
-"use server";
 
 const { Pool, QueryResult } = require("pg");
 const pool = new Pool({
@@ -28,5 +28,71 @@ const pool = new Pool({
 export async function getAllTripLeaders(): Promise<TripLeaderDTO[]> {
     let result: typeof QueryResult = null;
     const client = await pool.connect();
+
+    try {
+      let result = await client.query(`
+        SELECT
+          m.member_id,
+          m.name,
+          m.pronouns,
+          m.email,
+          m.phone,
+          m.dues_data,
+          m.first_aid_data,
+          m.car_data,
+          m.driver_data,
+          m.emergency_data,
+          m.policy_agreement,
+          m.waiver_agreement,
+          m.school_year,
+          m.medical_data,
+          m.trip_count,
+          m.holds,
+          m.signup_count,
+          m.years_active,
+          m.campus,
+          t.sport,
+          t.process,
+          t.lead_count,
+          t.gmail
+        FROM trip_leader AS t
+        JOIN member AS m ON t.member_id = m.member_id
+        ORDER BY m.name;
+      `);
+
+      return result.rows.map((row: any) => {
+        return {
+          member: {
+            id: row.member_id,
+            name: row.name,
+            pronouns: row.pronouns,
+            email: row.email,
+            phone: row.phone,
+            duesData: row.dues_data,
+            firstAidData: row.first_aid_data,
+            carData: row.car_data,
+            driverData: row.driver_data,
+            emergencyData: row.emergency_data,
+            policyAgreement: row.policy_agreement,
+            waiverAgreement: row.waiver_agreement,
+            schoolYear: row.school_year,
+            medicalData: row.medical_data,
+            tripCount: row.trip_count,
+            holds: row.holds,
+            signupCount: row.signup_count,
+            yearsActive: row.years_active,
+            campus: row.campus,
+          },
+          sport: row.sport,
+          process: row.process,
+          leadCount: row.lead_count,
+          gmail: row.gmail,
+        }
+      })
+    } catch (error: any) {
+      throw error;
+    } finally {
+      client.release();
+    }
 }
 

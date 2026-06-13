@@ -167,6 +167,84 @@ export async function getOfficerDataByPosition(
 }
 
 /**
+ * Retrieves an officer's information based on their email address.
+ * @param email a string containing the officer's email address
+ * @returns A promise resolving to an array of officer DTOs for the member with that email, or null if not found
+ */
+export async function getOfficerDataByEmail(
+  email: string,
+): Promise<OfficerDTO[] | null> {
+  let result: typeof QueryResult = null;
+  const client = await pool.connect();
+
+  try {
+    result = await client.query(
+      `SELECT m.member_id,
+                    m.name,
+                    m.pronouns,
+                    m.email,
+                    m.phone,
+                    m.dues_data,
+                    m.first_aid_data,
+                    m.car_data,
+                    m.driver_data,
+                    m.emergency_data,
+                    m.policy_agreement,
+                    m.waiver_agreement,
+                    m.school_year,
+                    m.medical_data,
+                    m.trip_count,
+                    m.holds,
+                    m.signup_count,
+                    m.years_active,
+                    m.campus,
+                    o.position,
+                    o.year,
+                    o.officer_data
+                FROM officer AS o
+                JOIN member AS m ON m.member_id = o.member_id
+                WHERE m.email = $1`,
+      [email],
+    );
+  } catch (error: any) {
+    throw error;
+  } finally {
+    client.release();
+  }
+
+  if (result === null || result.rows.length === 0) {
+    return null;
+  }
+
+  return result.rows.map((row: any) => ({
+    member: {
+      id: row.member_id,
+      name: row.name,
+      pronouns: row.pronouns,
+      email: row.email,
+      phone: row.phone,
+      duesData: row.dues_data,
+      firstAidData: row.first_aid_data,
+      carData: row.car_data,
+      driverData: row.driver_data,
+      emergencyData: row.emergency_data,
+      policyAgreement: row.policy_agreement,
+      waiverAgreement: row.waiver_agreement,
+      schoolYear: row.school_year,
+      medicalData: row.medical_data,
+      tripCount: row.trip_count,
+      holds: row.holds,
+      signupCount: row.signup_count,
+      yearsActive: row.years_active,
+      campus: row.campus,
+    },
+    position: row.position,
+    year: row.year,
+    officerData: row.officer_data,
+  }));
+}
+
+/**
  * Gets gear hours
  * @returns A promise that resolves to an array of GearHoursDataT type
  */
@@ -327,3 +405,4 @@ export async function getLeaderData() {
 
   return allData;
 }
+

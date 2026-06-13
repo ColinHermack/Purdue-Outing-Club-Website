@@ -1,0 +1,1 @@
+export const GET_TRIP_LEADERS_AUTHORIZED_POSITIONS = ["President", "Vice President", "Secretary of Sports", "Webmaster"];

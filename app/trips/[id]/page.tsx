@@ -12,7 +12,7 @@ import { Link } from "@heroui/link";
 import TripDifficultyCard from "./tripDifficultyIcon";
 
 import { SPORTS } from "@/config/constants";
-import { getTripData } from "@/utils/trips";
+import { getTripData } from "@/miniservices/tripMiniService";
 
 export default async function TripPage({ params }: any) {
   const paramsLocal = await params;

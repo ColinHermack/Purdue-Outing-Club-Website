@@ -12,5 +12,5 @@ import { NextResponse } from "next/server";
  * @returns a 200 OK response with the body "API is online."
  */
 export async function GET() {
-  return new NextResponse("API is online.", { status: 200 });
+  return new Response("API is online.", { status: 200 });
 }

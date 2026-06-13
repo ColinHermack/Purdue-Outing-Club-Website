@@ -12,7 +12,9 @@ import { Spinner } from "@heroui/spinner";
 
 export default function SignIn() {
   useEffect(() => {
-    signOut({ callbackUrl: "/" });
+    signOut({ redirect: false }).then(() => {
+      window.location.href = "/api/azure-signout";
+    });
   }, []);
 
   return (

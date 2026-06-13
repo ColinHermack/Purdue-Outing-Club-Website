@@ -1,13 +1,11 @@
 /**
- * Utilies related to fetching trip data from the database.
+ * Handles all database communication related to trips.
  *
- * @author Colin Hermack
  */
 
 "use server";
 
-const { Pool, QueryResult } = require("pg"); //PostgreSQL
-
+const { Pool, QueryResult } = require("pg");
 const pool = new Pool({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
@@ -18,6 +16,34 @@ const pool = new Pool({
     rejectUnauthorized: false,
   },
 });
+
+/**
+ * Queries the database asynchronously to get open trips.
+ *
+ * @returns An array of JSON objects representing open trips.
+ */
+export const getOpenTrips = async () => {
+  let result: typeof QueryResult = null;
+  const client = await pool.connect();
+
+  try {
+    result = await client.query(
+      `SELECT trip_id, 
+              name, 
+              startdate AT TIME ZONE 'UTC' AS startdate, 
+              sport, 
+              location
+      FROM trip
+      WHERE trip.signup=true;`,
+    );
+  } catch (error: any) {
+    //Intentionally left blank
+  } finally {
+    client.release();
+  }
+
+  return result.rows;
+};
 
 /**
  * Queries the database asynchronously to get trip data.
@@ -55,3 +81,4 @@ export async function getTripData(id: number) {
     client.release();
   }
 }
+

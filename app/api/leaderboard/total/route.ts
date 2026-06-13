@@ -4,36 +4,21 @@
  * @author Colin Hermack
  */
 
-const { Pool } = require("pg"); //PostgreSQL
+import MemberDTO from "@/dtos/memberDto";
+import { getMostTripsAttended } from "@/miniservices/memberMiniService";
 
-// Create a new database connection pool
-const pool = new Pool({
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  database: process.env.DB_DATABASE,
-  ssl: {
-    rejectUnauthorized: false,
-  },
-});
-
+/**
+ * GET /api/leaderboard/total
+ * @returns A response object containing the members who have been on the 5 most trips as a payload
+ */
 export async function GET() {
-  const client = await pool.connect();
-
   try {
-    const result = await client.query(`
-            SELECT member.name, COUNT(*) FROM trip_roster
-                JOIN member ON member.member_id = trip_roster.member_id
-                GROUP BY member.member_id
-                ORDER BY COUNT(*) DESC
-                LIMIT 5;
-        `);
+    const leaderboard: { tripsAttended: number, member: MemberDTO}[] = await getMostTripsAttended();
 
-    return new Response(JSON.stringify(result.rows));
+    const retVal = leaderboard.map((item: {tripsAttended: number, member: MemberDTO}) => ({name: item.member.name, count: item.tripsAttended}));
+
+    return new Response(JSON.stringify(retVal));
   } catch (error: any) {
     return new Response("Internal Server Error", { status: 500 });
-  } finally {
-    client.release();
   }
 }

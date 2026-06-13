@@ -7,17 +7,8 @@
  * @author Colin Hermack
  */
 
-import React from "react";
 import { Divider } from "@heroui/divider";
 import { useEffect, useState } from "react";
-import {
-  Table,
-  TableHeader,
-  TableBody,
-  TableColumn,
-  TableRow,
-  TableCell,
-} from "@heroui/table";
 import { Chip } from "@heroui/chip";
 import { WEEKDAYS } from "@/config/constants";
 
@@ -85,34 +76,25 @@ export default function GearClosetPage() {
 
       <Divider className="mt-10" />
       <h2 className="font-bold text-center w-3/4 my-10 text-xl">Gear Hours</h2>
-      <Table removeWrapper aria-label="gear hours table" className="w-3/4 mx-auto">
-        <TableHeader>
-          {WEEKDAYS.map((day) => (
-            <TableColumn key={day}>{day}</TableColumn>
-          ))}
-        </TableHeader>
-        <TableBody>
-          <TableRow>
-            {WEEKDAYS.map((day) => (
-              <TableCell key={day}>
-                <div className="flex flex-col gap-1">
-                  {gearHoursByDay?.[day]
-                    .slice()
-                    .sort((a, b) => (a.time > b.time ? 1 : -1))
-                    .map((entry, i) => (
-                      <Chip key={i} className="bg-amber-400 text-black h-auto py-1">
-                        <div className="flex flex-col items-center">
-                          <span>{entry.time}</span>
-                          <span className="text-xs">{entry.officer}</span>
-                        </div>
-                      </Chip>
-                    ))}
-                </div>
-              </TableCell>
-            ))}
-          </TableRow>
-        </TableBody>
-      </Table>
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-4 w-3/4 mx-auto">
+        {WEEKDAYS.map((day) => (
+          <div key={day} className="flex flex-col gap-2">
+            <span className="font-semibold text-center">{day}</span>
+            <div className="flex flex-col gap-1 items-center">
+              {gearHoursByDay?.[day]
+                .sort((a, b) => (a.time > b.time ? 1 : -1))
+                .map((entry, i) => (
+                  <Chip key={i} className="bg-amber-400 text-black h-auto py-1">
+                    <div className="flex flex-col items-center">
+                      <span>{entry.time}</span>
+                      <span className="text-xs">{entry.officer}</span>
+                    </div>
+                  </Chip>
+                ))}
+            </div>
+          </div>
+        ))}
+      </div>
 
       <Divider className="mt-10" />
       <h2 className="font-bold text-center w-3/4 my-10 text-xl">

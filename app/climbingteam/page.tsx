@@ -12,7 +12,7 @@ export default function ClimbingTeamPage() {
 
       <img
         alt="The Purdue Climbing Team"
-        className="my-8"
+        className="my-8 rounded-xl"
         src="/climbingteam/climbing_team_group.png"
         width={500}
       />
@@ -69,7 +69,7 @@ export default function ClimbingTeamPage() {
       <Link
         className={buttonVariants({
           isIconOnly: true,
-          className: "h-20 w-20 text-4xl m-4 rounded-3xl font-bold",
+          className: "p-4 text-4xl m-4 rounded-3xl font-bold",
         })}
         href="https://www.instagram.com/purdueclimbingteam/"
         target="_blank"
@@ -82,35 +82,35 @@ export default function ClimbingTeamPage() {
 
       <img
         alt="The Purdue Climbing Team"
-        className="my-8"
+        className="my-8 rounded-xl"
         src="/climbingteam/climbing_team_1.jpg"
         width={500}
       />
 
       <img
         alt="The Purdue Climbing Team"
-        className="my-8"
+        className="my-8 rounded-xl"
         src="/climbingteam/climbing_team_2.jpg"
         width={500}
       />
 
       <img
         alt="The Purdue Climbing Team"
-        className="my-8"
+        className="my-8 rounded-xl"
         src="/climbingteam/climbing_team_3.jpg"
         width={500}
       />
 
       <img
         alt="The Purdue Climbing Team"
-        className="my-8"
+        className="my-8 rounded-xl"
         src="/climbingteam/climbing_team_4.jpg"
         width={500}
       />
 
       <img
         alt="The Purdue Climbing Team"
-        className="my-8"
+        className="my-8 rounded-xl"
         src="/climbingteam/climbing_team_5.jpg"
         width={500}
       />

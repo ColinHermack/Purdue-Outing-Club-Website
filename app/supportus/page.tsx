@@ -159,10 +159,8 @@ export default async function Page() {
             <CardContent className="overflow-visible py-2">
               <img
                 alt="Card background"
-                className="object-cover rounded-xl"
-                height={250}
+                className="object-cover rounded-xl w-[250px] h-[250px]"
                 src={`/leadership/${presidentData.officerData.ImagePath}`}
-                width={250}
               />
             </CardContent>
           </Card>
@@ -187,10 +185,8 @@ export default async function Page() {
             <CardContent className="overflow-visible py-2">
               <img
                 alt="Card background"
-                className="object-cover rounded-xl"
-                height={250}
+                className="object-cover rounded-xl w-[250px] h-[250px]"
                 src={`/leadership/${secretaryData.officerData.ImagePath}`}
-                width={250}
               />
             </CardContent>
           </Card>

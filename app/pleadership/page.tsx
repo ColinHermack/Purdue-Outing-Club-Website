@@ -20,7 +20,7 @@ function LeaderCard(props: { officer: Officer }) {
   return (
     <Card
       key={props.officer.name}
-      className="py-4 m-4 w-[250px] h-48 flex flex-col justify-between items-center"
+      className="py-4 m-4 w-54 h-54 flex flex-col justify-between items-center"
     >
       {/*}
       TODO: Uncomment images at the end of the summer
@@ -39,8 +39,8 @@ function LeaderCard(props: { officer: Officer }) {
       </div>
       {*/}
       <div className="pb-0 pt-2 px-4 flex-col justify-top items-center text-center">
-        <p className="font-bold text-xl text-center">{props.officer.name}</p>
-        <p className="text-default-500 text-tiny text-center">
+        <p className="font-bold text-lg text-center">{props.officer.name}</p>
+        <p className="text-xs text-center">
           {props.officer.pronouns}
         </p>
         <p className="text-sm font-bold text-center pt-2 uppercase text-amber-400">

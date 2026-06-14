@@ -135,7 +135,7 @@ function TripCards(props: TripCardProps) {
       .map((trip: any) => (
         <Link
           key={trip.trip_id}
-          className="text-amber-400"
+          className="text-foreground no-underline hover:no-underline"
           href={`/trips/${trip.trip_id}`}
         >
           <Card className="w-[400px] my-2">

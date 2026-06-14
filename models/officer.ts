@@ -9,5 +9,5 @@ export default class Officer {
     member_id?: number;
     position?: string;
     year?: number;
-    officerData?: object;
+    officer_data?: object;
 }

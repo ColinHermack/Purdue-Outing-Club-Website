@@ -7,17 +7,35 @@
  */
 
 import { signIn } from "next-auth/react";
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { Spinner } from "@heroui/react";
 
-export default function SignIn() {
+function SignInInner() {
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") ?? "/dashboard";
+
   useEffect(() => {
-    signIn("azure-ad", { callbackUrl: "/dashboard" });
-  }, []);
+    signIn("azure-ad", { callbackUrl });
+  }, [callbackUrl]);
 
   return (
     <div className="flex justify-center items-center">
       <Spinner />
     </div>
+  );
+}
+
+export default function SignIn() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex justify-center items-center">
+          <Spinner />
+        </div>
+      }
+    >
+      <SignInInner />
+    </Suspense>
   );
 }

@@ -1,5 +1,5 @@
 'use client';
-import { Button, Link, Image } from "@heroui/react";
+import { Link, buttonVariants } from "@heroui/react";
 
 export default function DriverPage() {
   return (
@@ -24,23 +24,22 @@ export default function DriverPage() {
         complete that part of the form. Be sure to include your respective
         campus (PWL or PUI).
       </p>
-      <Image
+      <img
         alt=""
         className="my-8"
-        height={"auto"}
         src={"/samba_example.png"}
         width={400}
       />
-      <Button
-        as={Link}
-        className="bg-amber-400 text-black"
+      <Link
+        className={buttonVariants()}
         href={
           "https://enroll.sambasafety.com/index.html?Z3VpZD1iNzE0MGNjYmQwYjM0NGExYTU4ODE4MzU4OTQzZGNjOSZmbG93LWlkPWRkMGE5Mjg2LTE5YTUtNDE0My1hOGFkLWZhNDM4MjNlOGM2MiZ0ZW5hbnQtaWQ9ZmNiYWZlNTItMDYyNi00MDQ3LWE4YTMtN2RmYTZjYWU3MTVj"
         }
-        isExternal={true}
+        target="_blank"
+        rel="noopener noreferrer"
       >
         Purdue Driver Certification Form
-      </Button>
+      </Link>
 
       <h2 className="text-2xl font-bold text-center mt-4">
         Step 2: Purdue Outing Club Form
@@ -51,21 +50,20 @@ export default function DriverPage() {
         registration form to let the data analyst know that you are driver
         certified.
       </p>
-      <Image
+      <img
         alt=""
         className="my-8"
         height={400}
         src={"/driver_email.png"}
-        width={"auto"}
       />
-      <Button
-        as={Link}
-        className="bg-amber-400 text-black"
+      <Link
+        className={buttonVariants()}
         href={"https://forms.cloud.microsoft/r/4uJRfr4dRV"}
-        isExternal={true}
+        target="_blank"
+        rel="noopener noreferrer"
       >
         Outing Club Driver Registration Form
-      </Button>
+      </Link>
 
       <h2 className="text-2xl font-bold text-center mt-4">
         Step 3: Become a certified driver

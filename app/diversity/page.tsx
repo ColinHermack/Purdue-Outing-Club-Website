@@ -6,9 +6,7 @@
  */
 
 import React from "react";
-import { Divider } from "@heroui/divider";
-import { Link } from "@heroui/link";
-import { Image } from "@heroui/image";
+import { Separator, Link } from "@heroui/react";
 
 import { getLeaderDataByPosition } from "@/miniservices/officerMiniService";
 
@@ -33,7 +31,7 @@ export default async function DiversityPage() {
         backgrounds and experiences to be a part of our trips.
       </p>
 
-      <Divider className="my-5" />
+      <Separator className="my-5" />
 
       <h2 className="font-bold text-center text-xl">What we are doing</h2>
       <p className="text-center w-3/4">
@@ -50,7 +48,7 @@ export default async function DiversityPage() {
       </p>
       <p className="text-center w-3/4">Offering trips for beginners.</p>
 
-      <Divider className="my-5" />
+      <Separator className="my-5" />
 
       <h2 className="font-bold text-center text-xl">Our Goals</h2>
 
@@ -65,7 +63,7 @@ export default async function DiversityPage() {
         Continue informational and learning sessions for beginners.
       </p>
 
-      <Divider className="my-5" />
+      <Separator className="my-5" />
 
       <h2 className="font-bold text-center text-xl">Learn More</h2>
       <p className="text-center w-3/4">
@@ -83,7 +81,7 @@ export default async function DiversityPage() {
         <></>
       )}
       {diversityOfficerData !== undefined ? (
-        <Image
+        <img
           alt="POC Diversity and Community Outreach Officer"
           src={`/leadership/${diversityOfficerData.officerData.ImagePath}`}
           width={300}

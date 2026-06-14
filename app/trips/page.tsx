@@ -8,11 +8,15 @@
 
 import React from "react";
 import { useState, useEffect } from "react";
-import { Card, CardHeader, CardBody } from "@heroui/card";
-import { Link } from "@heroui/link";
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  Link,
+  Spinner,
+  Separator,
+} from "@heroui/react";
 import { FaMapMarkerAlt } from "react-icons/fa";
-import { Spinner } from "@heroui/spinner";
-import { Divider } from "@heroui/react";
 
 export default function TripsPage() {
   const [trips, setTrips] = useState(null);
@@ -51,10 +55,10 @@ export default function TripsPage() {
         {trips != null ? (
           <TripCards trips={trips} />
         ) : (
-          <Spinner color="default" />
+          <Spinner />
         )}
       </div>
-      <Divider />
+      <Separator />
       <h2 className="mt-8 mb-2 text-center font-bold text-2xl">
         Getting on Trips
       </h2>
@@ -149,12 +153,12 @@ function TripCards(props: TripCardProps) {
                 <p />
               </div>
             </CardHeader>
-            <CardBody>
+            <CardContent>
               <div className="flex flex-row justify-left items-center">
                 <FaMapMarkerAlt />
                 <p className="ml-4">{trip.location}</p>
               </div>
-            </CardBody>
+            </CardContent>
           </Card>
         </Link>
       ))

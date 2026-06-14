@@ -5,10 +5,7 @@
  */
 
 import React from "react";
-import { Divider } from "@heroui/divider";
-import { Image } from "@heroui/image";
-import { Link } from "@heroui/link";
-import { Button } from "@heroui/button";
+import { Separator, Link, buttonVariants } from "@heroui/react";
 
 import { getLeaderDataByPosition } from "@/miniservices/officerMiniService";
 
@@ -50,17 +47,21 @@ export default async function SponsorshipPage() {
         nation, and currently have over 700 active members.
       </p>
 
-      <Divider className="my-5" />
+      <Separator className="my-5" />
 
       <h2 className="font-bold text-center mb-5 text-xl">Our Past Partners</h2>
       <div className="w-full flex flex-col justify-top items-center">
         {sponsors.map((item) => {
           return (
-            <Link key={item.name} href={item.website} target="_blank">
-              <Image
+            <Link
+              key={item.name}
+              href={item.website}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
                 alt={`${item.name} logo`}
-                className="rounded-none my-12"
-                rel="noopener noreferrer"
+                className="my-12"
                 src={item.image}
                 width={200}
               />
@@ -69,7 +70,7 @@ export default async function SponsorshipPage() {
         })}
       </div>
 
-      <Divider className="my-5" />
+      <Separator className="my-5" />
       <h2 className="font-bold text-center mb-5 text-xl">
         Our Goals in Partnership
       </h2>
@@ -81,7 +82,7 @@ export default async function SponsorshipPage() {
       <p className="text-center w-3/4 my-2">Community connections</p>
       <p className="text-center w-3/4 my-2">Mutual benefits</p>
 
-      <Image
+      <img
         className="mt-5 max-w-full"
         src="/pocar_celsius_group.jpg"
         width={400}
@@ -91,37 +92,34 @@ export default async function SponsorshipPage() {
         Types of Sponsorship
       </h2>
 
-      <Button
-        as={Link}
-        className="bg-amber-400 text-black font-bold m-5"
+      <Link
+        className={buttonVariants({ className: "m-5" })}
         href="https://www.rei.com/lists/418038518"
         rel="noopener noreferrer"
         target="_blank"
       >
         Purchase Items from the Wishlist
-      </Button>
-      <Button
-        as={Link}
-        className="bg-amber-400 text-black font-bold m-5"
+      </Link>
+      <Link
+        className={buttonVariants({ className: "m-5" })}
         href="https://connect.purdue.edu/s/givenow?_ga=2.241255040.340950724.1694472480-995752346.1694186482&appealcode=10091&dids=004657&sort=1"
         rel="noopener noreferrer"
         target="_blank"
       >
         Donate to the Club
-      </Button>
+      </Link>
       {officerData !== undefined ? (
-        <Button
-          as={Link}
-          className="bg-amber-400 text-black font-bold m-5"
+        <Link
+          className={buttonVariants({ className: "m-5" })}
           href={`mailto:${officerData.email}`}
         >
           Partner with us for an event
-        </Button>
+        </Link>
       ) : (
         <></>
       )}
 
-      <Divider className="my-5" />
+      <Separator className="my-5" />
 
       <h2 className="font-bold text-center text-xl">Want to Learn More?</h2>
       <p className="text-center w-3/4 my-2">
@@ -139,7 +137,7 @@ export default async function SponsorshipPage() {
         <></>
       )}
       {officerData !== undefined ? (
-        <Image
+        <img
           alt="POC Fundraising, Sponsorship, & Alumni Officer"
           className="mt-5 max-w-full"
           src={`/leadership/${officerData.officerData.ImagePath}`}

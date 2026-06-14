@@ -6,8 +6,7 @@
 
 import { redirect } from "next/navigation";
 import { FaMapMarkerAlt, FaCalendar, FaExternalLinkAlt } from "react-icons/fa";
-import { Button } from "@heroui/button";
-import { Link } from "@heroui/link";
+import { Link, buttonVariants } from "@heroui/react";
 
 import TripDifficultyCard from "./tripDifficultyIcon";
 
@@ -46,18 +45,16 @@ export default async function TripPage({ params }: any) {
         />
         <p className="mt-10 max-w-[600px]">{tripData.description}</p>
         {tripData.signup ? (
-          <Button
-            as={Link}
-            className="bg-amber-400 text-black font-bold my-10"
+          <Link
+            className={buttonVariants({ className: "my-10" })}
             href={
               SPORTS.includes(tripData.sport)
                 ? `https://forms.office.com/Pages/ResponsePage.aspx?id=Ob0wQVN8nEGx5YdY1tY_IYsPEC-CwDJNo7LaWV5ygUJUOVgwNTlJTlJPVEc1T0JETEVUQjJCNzNGTy4u&r603986e16a1343eb98dfe6f6af3bb910=${tripData.trip_id}&r919debb6446f4715b466a83613dde11a=%22${tripData.sport}%22`
                 : `https://forms.office.com/Pages/ResponsePage.aspx?id=Ob0wQVN8nEGx5YdY1tY_IYsPEC-CwDJNo7LaWV5ygUJUOVgwNTlJTlJPVEc1T0JETEVUQjJCNzNGTy4u&r603986e16a1343eb98dfe6f6af3bb910=${tripData.trip_id}&r919debb6446f4715b466a83613dde11a=%22Miscellaneous%22`
             }
-            variant="flat"
           >
             Sign Up
-          </Button>
+          </Link>
         ) : (
           ""
         )}

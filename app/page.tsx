@@ -1,15 +1,9 @@
 "use client";
 
-import { Image } from "@heroui/image";
-import { Accordion, AccordionItem } from "@heroui/accordion";
-import { Button } from "@heroui/button";
-import { Link } from "@heroui/link";
+import { Accordion, Link, Spinner, Separator, buttonVariants } from "@heroui/react";
 import { useState, useEffect } from "react";
-import { Spinner } from "@heroui/spinner";
-import { Divider } from "@heroui/divider";
 
-import Leaderboard from "@/components/leaderboard";
-
+import { AccordionEntry } from "@/components/accordion-entry";
 import { SPORT_DESCRIPTIONS } from "@/config/constants";
 
 export default function Home() {
@@ -31,21 +25,21 @@ export default function Home() {
         PURDUE OUTING CLUB
       </div>
       <div className="flex flex-col justify-top items-center mt-10 lg:flex-row lg:justify-center">
-        <Image
+        <img
           alt="A picture from the Outing Club trip to the rocky mountains"
-          className="my-5 sm:m-5"
+          className="my-5 sm:m-5 rounded-large"
           height={200}
           src="/rocky_mountains.jpg"
         />
-        <Image
+        <img
           alt="A picture of the Outing Club trip leaders."
-          className="my-5 sm:m-5"
+          className="my-5 sm:m-5 rounded-large"
           height={200}
           src="/trip_leaders.JPG"
         />
-        <Image
+        <img
           alt="A picture from an Outing Club trip to Indiana Dunes."
-          className="my-5 sm:m-5"
+          className="my-5 sm:m-5 rounded-large"
           height={200}
           src="/beach.jpg"
         />
@@ -65,7 +59,7 @@ export default function Home() {
         width={350}
       />
 
-      <Divider className="my-5" />
+      <Separator className="my-5" />
 
       <h2 className="text-4xl m-10 font-bold">NEWS</h2>
       <div className="mb-10">
@@ -85,18 +79,14 @@ export default function Home() {
             );
           })
         ) : (
-          <Spinner color="default" />
+          <Spinner />
         )}
       </div>
 
-      <Divider className="my-5" />
+      <Separator className="my-5" />
 
-      <Accordion defaultExpandedKeys={[1]} selectionMode="multiple">
-        <AccordionItem
-          key={1}
-          aria-label="what-is-the-poc"
-          title="What is the Purdue Outing Club?"
-        >
+      <Accordion defaultExpandedKeys={["1"]} allowsMultipleExpanded>
+        <AccordionEntry id="1" title="What is the Purdue Outing Club?">
           The Purdue Outing Club is pretty much involved with almost any
           activity that takes place in the outdoors. Rock climbing, whitewater
           kayaking, backpacking, hiking, mountaineering, and caving are our main
@@ -107,91 +97,68 @@ export default function Home() {
           to take care of, then talk about past trips - usually ones that went
           out the previous weekend. We talk about new trips that are going to be
           going out during the coming weekend, or anytime in the future.
-        </AccordionItem>
-        <AccordionItem
-          key={2}
-          aria-label="do-need-experience"
-          title="Do I need experience?"
-        >
+        </AccordionEntry>
+        <AccordionEntry id="2" title="Do I need experience?">
           Nope! The Purdue Outing Club is geared towards beginners discovering
           the outdoor world and learning from others along the way.
-        </AccordionItem>
-        <AccordionItem
-          key={3}
-          aria-label="do-need-gear"
-          title="Do I need gear?"
-        >
+        </AccordionEntry>
+        <AccordionEntry id="3" title="Do I need gear?">
           Besides personal clothing and footwear, the club owns almost all of
           the gear that you would need for any club trip. See the gear closet
           page for more information.
-        </AccordionItem>
-        <AccordionItem
-          key={4}
-          aria-label="how-much-cost"
-          title="How much does it cost?"
-        >
+        </AccordionEntry>
+        <AccordionEntry id="4" title="How much does it cost?">
           The club dues are $25 for one semester or $30 for the entire year.
           With a paid membership, you can join any official Outing Club trip
           with gear rental included! The only additional costs are for gas and
           sometimes park fees, as well as any food you may choose to purchase on
           the trip.
-        </AccordionItem>
-        <AccordionItem
-          key={5}
-          aria-label="where-meet"
-          title="Where do we meet?"
-        >
+        </AccordionEntry>
+        <AccordionEntry id="5" title="Where do we meet?">
           Meetings are held Mondays at 7:00 PM in the Howard Taylor Conference
           Room of the CoRec. From the front entrace, instead of swiping in at
           the front desk, turn left directly before the front desk and walk down
           the hallway. The room will be on your left. Any changes to meeting
           times will be announced through Slack. There are no meetings during
           the summer.
-        </AccordionItem>
+        </AccordionEntry>
       </Accordion>
 
       <h2 className="text-4xl m-10 font-bold">SPORTS</h2>
-      <Accordion selectionMode="multiple">
-        <AccordionItem key={1} aria-label="Backpacking" title="Backpacking">
+      <Accordion allowsMultipleExpanded>
+        <AccordionEntry id="backpacking" title="Backpacking">
           {SPORT_DESCRIPTIONS.Backpacking}
-        </AccordionItem>
-        <AccordionItem key={2} aria-label="Canoeing" title="Canoeing">
+        </AccordionEntry>
+        <AccordionEntry id="canoeing" title="Canoeing">
           {SPORT_DESCRIPTIONS.Canoeing}
-        </AccordionItem>
-        <AccordionItem key={3} aria-label="Caving" title="Caving">
+        </AccordionEntry>
+        <AccordionEntry id="caving" title="Caving">
           {SPORT_DESCRIPTIONS.Caving}
-        </AccordionItem>
-        <AccordionItem key={4} aria-label="Climbing" title="Climbing">
+        </AccordionEntry>
+        <AccordionEntry id="climbing" title="Climbing">
           {SPORT_DESCRIPTIONS.Climbing}
-        </AccordionItem>
-        <AccordionItem
-          key={5}
-          aria-label="Mountain Biking"
-          title="Mountain Biking"
-        >
+        </AccordionEntry>
+        <AccordionEntry id="biking" title="Mountain Biking">
           {SPORT_DESCRIPTIONS.Biking}
-        </AccordionItem>
-        <AccordionItem key={6} aria-label="Whitewater" title="Whitewater">
+        </AccordionEntry>
+        <AccordionEntry id="whitewater" title="Whitewater">
           {SPORT_DESCRIPTIONS.Whitewater}
-        </AccordionItem>
-        <AccordionItem key={7} aria-label="Winter Sports" title="Winter Sports">
+        </AccordionEntry>
+        <AccordionEntry id="winter-sports" title="Winter Sports">
           {SPORT_DESCRIPTIONS.WinterSports}
-        </AccordionItem>
+        </AccordionEntry>
       </Accordion>
 
-      <h2 className="text-4xl m-10 font-bold">LEADERBOARDS</h2>
-      <Leaderboard />
+      <Separator className="mt-24 mb-12" />
 
-      <Divider className="mt-24 mb-12" />
-
-      <Button
-        as={Link}
-        className="bg-amber-400 text-black w-44 h-20 text-lg m-12 rounded-3xl font-bold"
+      <Link
+        className={buttonVariants({
+          className: "w-44 h-20 text-lg m-12 rounded-3xl font-bold",
+        })}
         href="/join"
-        variant="flat"
       >
         Join
-      </Button>
+      </Link>
     </section>
   );
 }

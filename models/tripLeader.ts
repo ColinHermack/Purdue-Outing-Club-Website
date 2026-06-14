@@ -5,10 +5,16 @@
  * @author Colin Hermack
  */
 
+class TripLeaderProcess {
+    shadow?: boolean;
+    approved?: boolean;
+    certified?: boolean;
+}
+
 export default class TripLeader {
     memberId?: string;
     sport?: string;
-    process?: object;
+    process?: TripLeaderProcess;
     leadCount?: number;
     gmail?: string;
 }

@@ -5,11 +5,14 @@
  */
 
 import React from "react";
-import { Button } from "@heroui/button";
-import { Link } from "@heroui/link";
-import { Divider } from "@heroui/divider";
-import { Card, CardHeader, CardBody } from "@heroui/card";
-import { Image } from "@heroui/image";
+import {
+  Link,
+  Separator,
+  Card,
+  CardHeader,
+  CardContent,
+  buttonVariants,
+} from "@heroui/react";
 
 import { getLeaderDataByPosition } from "@/miniservices/officerMiniService";
 
@@ -56,16 +59,16 @@ export default async function Page() {
         We just need a hand in getting it started.
       </p>
 
-      <Button
-        as={Link}
-        className="bg-amber-400 text-black font-bold my-10"
+      <Link
+        className={buttonVariants({ className: "my-10" })}
         href="https://giving.purdue.edu/outingclub/?appealcode=18240"
-        isExternal={true}
+        target="_blank"
+        rel="noopener noreferrer"
       >
         Click Here to Support Us
-      </Button>
+      </Link>
 
-      <Divider />
+      <Separator />
 
       <h2 className="font-bold text-center my-10 text-xl">
         Want to help in other ways?
@@ -78,37 +81,34 @@ export default async function Page() {
 
       <div className="flex flex-col justify-top items-center my-10 lg:flex-row md:justify-center md:items-top">
         <div className="h-56 w-56 my-4 mx-8">
-          <Button
-            as={Link}
-            className="bg-amber-400 text-black font-bold my-5 w-full"
+          <Link
+            className={buttonVariants({ className: "my-5 w-full" })}
             href="/docs/fundraising_package.pdf"
           >
             Fundraising Package
-          </Button>
+          </Link>
           <p className="w-full text-center w-full">
             Send this fundraising package to help educate about the club!
           </p>
         </div>
         <div className="w-56 h-56 my-4 mx-8">
-          <Button
-            as={Link}
-            className="bg-amber-400 text-black font-bold my-5 w-full"
+          <Link
+            className={buttonVariants({ className: "my-5 w-full" })}
             href="/docs/how_to_ask.pdf"
           >
             How to Ask
-          </Button>
+          </Link>
           <p className="w-full text-center w-full">
             Follow this guide to ask those close to you to support our cause!
           </p>
         </div>
         <div className="flex flex-col w-56 my-4 mx-8 justify-top h-56 w-56">
-          <Button
-            as={Link}
-            className="bg-amber-400 text-black font-bold my-5 w-full"
+          <Link
+            className={buttonVariants({ className: "my-5 w-full" })}
             href="https://linktr.ee/purdue.outing.club"
           >
             Connect With Us
-          </Button>
+          </Link>
           <p className="w-full text-center w-full">
             Use this as a hub to get in touch with us!
           </p>
@@ -116,20 +116,20 @@ export default async function Page() {
       </div>
 
       <div className="h-56 w-56 my-4 mx-8">
-        <Button
-          as={Link}
-          className="bg-amber-400 text-black font-bold my-5 w-full"
+        <Link
+          className={buttonVariants({ className: "my-5 w-full" })}
           href="https://www.youtube.com/watch?v=0cWX6zu5kC0"
-          isExternal={true}
+          target="_blank"
+          rel="noopener noreferrer"
         >
           Fundraising Video
-        </Button>
+        </Link>
         <p className="w-full text-center w-full">
           Share this video to help understand our fundraising goals!
         </p>
       </div>
 
-      <Divider className="my-10" />
+      <Separator className="my-10" />
 
       <h2 className="text-xl font-bold">Interested in a brand partnership?</h2>
       <p className="my-4 text-center max-w-[800px]">
@@ -156,15 +156,15 @@ export default async function Page() {
                 {presidentData.position}
               </h4>
             </CardHeader>
-            <CardBody className="overflow-visible py-2">
-              <Image
+            <CardContent className="overflow-visible py-2">
+              <img
                 alt="Card background"
                 className="object-cover rounded-xl"
                 height={250}
                 src={`/leadership/${presidentData.officerData.ImagePath}`}
                 width={250}
               />
-            </CardBody>
+            </CardContent>
           </Card>
           <Card className="m-4 py-2">
             <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
@@ -184,15 +184,15 @@ export default async function Page() {
                 {secretaryData.position}
               </h4>
             </CardHeader>
-            <CardBody className="overflow-visible py-2">
-              <Image
+            <CardContent className="overflow-visible py-2">
+              <img
                 alt="Card background"
                 className="object-cover rounded-xl"
                 height={250}
                 src={`/leadership/${secretaryData.officerData.ImagePath}`}
                 width={250}
               />
-            </CardBody>
+            </CardContent>
           </Card>
         </div>
       ) : (

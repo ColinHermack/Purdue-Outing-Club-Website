@@ -7,7 +7,7 @@
 import * as React from "react";
 import Image from "next/image";
 
-export const Logo = (): JSX.Element => {
+export const Logo = (): React.JSX.Element => {
   return (
     <div className="bg-amber-400 w-12 h-12 flex justify-center items-center rounded-full mr-2">
       <Image alt="The POC logo" height={45} src="/poc_logo.png" width={45} />
@@ -15,7 +15,7 @@ export const Logo = (): JSX.Element => {
   );
 };
 
-export const LargeLogo = (): JSX.Element => {
+export const LargeLogo = (): React.JSX.Element => {
   return (
     <div className="bg-amber-400 w-fit h-fit flex justify-center items-center rounded-full">
       <Image alt="The POC logo" height={250} src="/poc_logo.png" width={250} />

@@ -8,12 +8,15 @@
 
 "use client";
 
-import React from "react";
 import { useState, useEffect } from "react";
-import { Card, CardHeader, CardBody } from "@heroui/card";
-import { Divider } from "@heroui/divider";
-import { Button } from "@heroui/button";
-import { Link } from "@heroui/link";
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  Separator,
+  Link,
+  buttonVariants,
+} from "@heroui/react";
 
 import { MemberStatsT } from "@/config/types";
 
@@ -47,24 +50,22 @@ export default function DashBoardPage() {
                 My Stats
               </p>
             </CardHeader>
-            <Divider />
-            <CardBody>
+            <Separator />
+            <CardContent>
               <p className="text-md text-left">
                 Total Trips: {user !== null ? user.num_trips_total : ""}
               </p>
               <p className="text-md text-left">
                 Trips Led: {user !== null ? user.num_trips_led : ""}
               </p>
-            </CardBody>
+            </CardContent>
           </Card>
-          <Button
-            as={Link}
-            className="w-full bg-amber-400 font-bold"
+          <Link
+            className={buttonVariants({ className: "w-full font-bold" })}
             href="/auth/signout"
-            variant="flat"
           >
             Sign Out
-          </Button>
+          </Link>
         </div>
         <div className="w-[384px] md:w-[500px] mx-4">
           <Card className="w-full my-4 h-[600px]">
@@ -73,24 +74,24 @@ export default function DashBoardPage() {
                 My Trips
               </p>
             </CardHeader>
-            <Divider />
-            <CardBody>
+            <Separator />
+            <CardContent>
               {user !== null && user.trips.length > 0 ? (
                 user.trips.map((trip: any) => (
-                  <Button
+                  <Link
                     key={trip.trip_id}
-                    as={Link}
-                    className="text-left font-bold my-1"
+                    className={buttonVariants({
+                      className: "text-left font-bold my-1",
+                    })}
                     href={`/trips/${trip.trip_id}`}
-                    variant="flat"
                   >
                     <p className="text-md text-left">{trip.name}</p>
-                  </Button>
+                  </Link>
                 ))
               ) : (
                 <p className="text-md text-left">No trips to display.</p>
               )}
-            </CardBody>
+            </CardContent>
           </Card>
         </div>
       </div>

@@ -5,8 +5,7 @@
  */
 
 import React from "react";
-import { Button } from "@heroui/button";
-import { Link } from "@heroui/link";
+import { Link, buttonVariants } from "@heroui/react";
 
 export const metadata = {
   title: "Safety Concern Report",
@@ -30,14 +29,12 @@ export default function SafetyConcernReportPage() {
         to read your response. Thank you for taking the time to complete this
         form.
       </p>
-      <Button
-        as={Link}
-        className="bg-amber-400 text-black font-bold my-16"
+      <Link
+        className={buttonVariants({ className: "my-16" })}
         href="https://docs.google.com/forms/d/e/1FAIpQLSfHlU_G1uQAJXvKWEygxDEfJFSKYeRlljdRNLt_Ig48dZUUoQ/viewform?usp=sf_link"
-        variant="flat"
       >
         Report
-      </Button>
+      </Link>
     </div>
   );
 }

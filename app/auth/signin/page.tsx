@@ -8,7 +8,7 @@
 
 import { signIn } from "next-auth/react";
 import { useEffect } from "react";
-import { Spinner } from "@heroui/spinner";
+import { Spinner } from "@heroui/react";
 
 export default function SignIn() {
   useEffect(() => {
@@ -17,7 +17,7 @@ export default function SignIn() {
 
   return (
     <div className="flex justify-center items-center">
-      <Spinner color={"default"} />
+      <Spinner />
     </div>
   );
 }

@@ -4,9 +4,7 @@
  * @author Colin Hermack
  */
 
-import { Button } from '@heroui/button';
-import { Link } from "@heroui/link";
-import { link as linkStyles } from "@heroui/theme";
+import { Link, buttonVariants } from "@heroui/react";
 import NextLink from "next/link";
 import clsx from "clsx";
 import {
@@ -38,7 +36,7 @@ export const Footer = () => {
           <NextLink
             key={item.href}
             className={clsx(
-              linkStyles({ color: "foreground" }),
+              "text-foreground hover:opacity-80",
               "data-[active=true]:text-primary data-[active=true]:font-medium m-4 justify-center items-center",
             )}
             color="foreground"
@@ -49,14 +47,12 @@ export const Footer = () => {
         ))}
       </div>
 
-      <Button
-        as={Link}
-        className="bg-amber-400 text-black font-bold my-8"
+      <Link
+        className={buttonVariants({ className: "my-8" })}
         href="/safetyconcernreport"
-        variant="flat"
       >
         Report a Safety Concern
-      </Button>
+      </Link>
       <div className="flex flex-row text-2xl">
         {siteConfig.links.map((item, index) => (
           <NextLink
@@ -81,7 +77,7 @@ export const Footer = () => {
               <NextLink
                 key={link.href}
                 className={clsx(
-                  linkStyles({ color: "foreground" }),
+                  "text-foreground hover:opacity-80",
                   "data-[active=true]:text-primary data-[active=true]:font-medium flex md:justify-start items-center",
                 )}
                 color="foreground"

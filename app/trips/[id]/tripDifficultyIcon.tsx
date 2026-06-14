@@ -1,5 +1,3 @@
-import { Tooltip } from "@heroui/tooltip";
-
 import { getTripDifficultyDescription } from "@/utils/difficulty";
 
 import { DIFFICULTIES } from "@/config/constants";

@@ -7,9 +7,8 @@
  * @author Colin Hermack
  */
 
-import { Divider } from "@heroui/divider";
+import { Separator, Chip } from "@heroui/react";
 import { useEffect, useState } from "react";
-import { Chip } from "@heroui/chip";
 import { WEEKDAYS } from "@/config/constants";
 
 type GearHoursDataType = {
@@ -74,7 +73,7 @@ export default function GearClosetPage() {
         Additional gear hours may be posted there as well.
       </p>
 
-      <Divider className="mt-10" />
+      <Separator className="mt-10" />
       <h2 className="font-bold text-center w-3/4 my-10 text-xl">Gear Hours</h2>
       <div className="grid grid-cols-1 md:grid-cols-5 gap-4 w-3/4 mx-auto">
         {WEEKDAYS.map((day) => (
@@ -96,7 +95,7 @@ export default function GearClosetPage() {
         ))}
       </div>
 
-      <Divider className="mt-10" />
+      <Separator className="mt-10" />
       <h2 className="font-bold text-center w-3/4 my-10 text-xl">
         Where is the gear closet?
       </h2>

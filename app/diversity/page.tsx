@@ -6,9 +6,7 @@
  */
 
 import React from "react";
-import { Divider } from "@heroui/divider";
-import { Link } from "@heroui/link";
-import { Image } from "@heroui/image";
+import { Separator, Link, Card } from "@heroui/react";
 
 import { getLeaderDataByPosition } from "@/miniservices/officerMiniService";
 
@@ -33,7 +31,7 @@ export default async function DiversityPage() {
         backgrounds and experiences to be a part of our trips.
       </p>
 
-      <Divider className="my-5" />
+      <Separator className="my-5" />
 
       <h2 className="font-bold text-center text-xl">What we are doing</h2>
       <p className="text-center w-3/4">
@@ -50,7 +48,7 @@ export default async function DiversityPage() {
       </p>
       <p className="text-center w-3/4">Offering trips for beginners.</p>
 
-      <Divider className="my-5" />
+      <Separator className="my-5" />
 
       <h2 className="font-bold text-center text-xl">Our Goals</h2>
 
@@ -65,32 +63,45 @@ export default async function DiversityPage() {
         Continue informational and learning sessions for beginners.
       </p>
 
-      <Divider className="my-5" />
+      <Separator className="my-5" />
 
       <h2 className="font-bold text-center text-xl">Learn More</h2>
       <p className="text-center w-3/4">
         Contact our diversity and community outreach coordinator with questions
         or feedback for the club.
       </p>
-      {diversityOfficerData !== undefined ? (
-        <Link
-          className="text-amber-400 font-bold"
-          href={`mailto:${diversityOfficerData.email}`}
-        >
-          {diversityOfficerData.name}
-        </Link>
-      ) : (
-        <></>
-      )}
-      {diversityOfficerData !== undefined ? (
-        <Image
-          alt="POC Diversity and Community Outreach Officer"
-          src={`/leadership/${diversityOfficerData.officer_data.ImagePath}`}
-          width={300}
-        />
-      ) : (
-        <></>
-      )}
+      {
+      diversityOfficerData !== undefined ?
+          <Card className="m-4 py-2">
+            <Card.Header className="pb-0 pt-2 px-4 flex-col items-start">
+              <p className="text-tiny uppercase font-bold">
+                {diversityOfficerData.name}
+              </p>
+              <small className="text-default-500">
+                {diversityOfficerData.pronouns}
+              </small>
+              <Link
+                className="text-amber-400 text-small"
+                href={`mailto:${diversityOfficerData.email}`}
+              >
+                {diversityOfficerData.email}
+              </Link>
+              <h4 className="font-bold text-large mt-2">
+                {diversityOfficerData.position}
+              </h4>
+            </Card.Header>
+            <Card.Content className="overflow-visible py-2 justify-center items-center mb-4">
+              <div className="size-52 overflow-hidden rounded-xl shrink-0">
+                <img
+                  alt="Card background"
+                  className="object-cover w-full h-full"
+                  src={`/leadership/${diversityOfficerData.officerData.ImagePath}`}
+                />
+              </div>
+            </Card.Content>
+          </Card>
+        : <></>
+      }
     </div>
   );
 }

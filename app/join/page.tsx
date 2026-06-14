@@ -5,9 +5,7 @@
  */
 
 import React from "react";
-import { Button } from "@heroui/button";
-import { Link } from "@heroui/link";
-import { Divider } from "@heroui/divider";
+import { Link, Separator, buttonVariants } from "@heroui/react";
 
 export const metadata = {
   title: "Join",
@@ -27,7 +25,7 @@ export default function JoinPage() {
         with the remaining steps on this page.
       </p>
 
-      <Divider className="my-10" />
+      <Separator className="my-10" />
 
       <h2 className="font-bold text-center mb-4 text-xl">Step 1: Pay Dues</h2>
       <p className="flex-left w-3/4 text-center">
@@ -42,26 +40,24 @@ export default function JoinPage() {
         waiver is accepted, you will not have to pay dues. If the waiver is
         rejected, only then must you pay dues.
       </p>
-      <Button
-        as={Link}
-        className="bg-amber-400 text-black font-bold mt-10 mb-4"
+      <Link
+        className={buttonVariants({ className: "mt-10 mb-4" })}
         href="https://www.toocoolpurdue.com/TooCOOLPurdueWL/vECItemCatalogOrganizationItems/OrganizationItemsGallery.aspx?Organization=1231"
         rel="noopener noreferrer"
         target="_blank"
       >
         Pay Dues
-      </Button>
-      <Button
-        as={Link}
-        className="bg-amber-400 text-black font-bold mt-4"
+      </Link>
+      <Link
+        className={buttonVariants({ className: "mt-4" })}
         href="https://forms.office.com/r/SHebtBNcke"
         rel="noopener noreferrer"
         target="_blank"
       >
         Dues Waiver
-      </Button>
+      </Link>
 
-      <Divider className="my-10" />
+      <Separator className="my-10" />
 
       <h2 className="font-bold text-center text-xl">
         Step 2: Policy Agreement
@@ -70,34 +66,32 @@ export default function JoinPage() {
         Once you&#39;ve payed dues, you must complete the club policy agreement
         before signing up for trips.
       </p>
-      <Button
-        as={Link}
-        className="bg-amber-400 text-black font-bold mt-8"
+      <Link
+        className={buttonVariants({ className: "mt-8" })}
         href="https://forms.office.com/Pages/ResponsePage.aspx?id=Ob0wQVN8nEGx5YdY1tY_IYsPEC-CwDJNo7LaWV5ygUJUMktTMk9HWTBNVEcyQVZEUFJZNzE2SUU1MC4u"
         rel="noopener noreferrer"
         target="_blank"
       >
         Policy Agreement
-      </Button>
+      </Link>
 
-      <Divider className="my-10" />
+      <Separator className="my-10" />
 
       <h2 className="font-bold text-center text-xl">Step 3: RecWell Waiver</h2>
       <p className="w-3/4 text-center">
         Per university policy, you must complete a waiver for RecWell before
         joining the club.
       </p>
-      <Button
-        as={Link}
-        className="bg-amber-400 text-black font-bold mt-8"
+      <Link
+        className={buttonVariants({ className: "mt-8" })}
         href="https://na2.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=6d628f57-6989-4bf9-8bd6-511f6a0d0250&env=na2&acct=9ad6adfd-6804-409b-91bc-173cbee909f9&v=2"
         rel="noopener noreferrer"
         target="_blank"
       >
         RecWell Waiver
-      </Button>
+      </Link>
 
-      <Divider className="my-10" />
+      <Separator className="my-10" />
 
       <h2 className="font-bold text-center text-xl">
         Step 4 (Optional): Become Driver Certified
@@ -106,15 +100,14 @@ export default function JoinPage() {
         In order to increase your chances of being selected for club trips, you
         can become a certified driver with the club.
       </p>
-      <Button
-        as={Link}
-        className="bg-amber-400 text-black font-bold mt-8"
+      <Link
+        className={buttonVariants({ className: "mt-8" })}
         href="/drivers"
       >
         Become a Certified Driver
-      </Button>
+      </Link>
 
-      <Divider className="my-10" />
+      <Separator className="my-10" />
 
       <h2 className="font-bold text-center text-xl">
         Step 5: Join the Mailing List
@@ -123,16 +116,15 @@ export default function JoinPage() {
         Click the button below to join the mailing list. Once your email client
         opens, just click send to sign up.
       </p>
-      <Button
-        as={Link}
-        className="bg-amber-400 text-black font-bold mt-8"
+      <Link
+        className={buttonVariants({ className: "mt-8" })}
         href="mailto:listserv@lists.purdue.edu?body=SUBSCRIBE%20poc"
         target="_blank"
       >
         Join Mailing List
-      </Button>
+      </Link>
 
-      <Divider className="my-10" />
+      <Separator className="my-10" />
 
       <h2 className="font-bold text-center text-xl">Step 6: Stay Connected</h2>
       <p className="w-3/4 text-center">
@@ -140,27 +132,25 @@ export default function JoinPage() {
         following the club Instagram.
       </p>
 
-      <Button
-        as={Link}
-        className="bg-amber-400 text-black font-bold mt-8"
+      <Link
+        className={buttonVariants({ className: "mt-8" })}
         href="https://join.slack.com/t/purdueouting/shared_invite/zt-2tpkpjw5z-aSz~8H_6YWb5mYjn85xYZA"
         rel="noopener noreferrer"
         target="_blank"
       >
         Slack
-      </Button>
+      </Link>
 
-      <Button
-        as={Link}
-        className="bg-amber-400 text-black font-bold mt-8"
+      <Link
+        className={buttonVariants({ className: "mt-8" })}
         href="https://www.instagram.com/purdue.outing.club/"
         rel="noopener noreferrer"
         target="_blank"
       >
         Instagram
-      </Button>
+      </Link>
 
-      <Divider className="my-10" />
+      <Separator className="my-10" />
       <h2 className="font-bold text-center text-xl">
         First Aid Certifications
       </h2>
@@ -168,15 +158,14 @@ export default function JoinPage() {
         Do you have a CPR, first aid, lifeguarding, or other safety
         certification? Upload it below.
       </p>
-      <Button
-        as={Link}
-        className="bg-amber-400 text-black font-bold mt-8"
+      <Link
+        className={buttonVariants({ className: "mt-8" })}
         href="https://forms.office.com/pages/responsepage.aspx?id=Ob0wQVN8nEGx5YdY1tY_IYsPEC-CwDJNo7LaWV5ygUJUMjM1RFc1RlBBNUNFMkZKTUdBWlVYTjFQVS4u&route=shorturl"
         rel="noopener noreferrer"
         target="_blank"
       >
         Submit Here
-      </Button>
+      </Link>
     </div>
   );
 }

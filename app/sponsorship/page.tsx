@@ -5,10 +5,7 @@
  */
 
 import React from "react";
-import { Divider } from "@heroui/divider";
-import { Image } from "@heroui/image";
-import { Link } from "@heroui/link";
-import { Button } from "@heroui/button";
+import { Separator, Link, buttonVariants, Card } from "@heroui/react";
 
 import { getLeaderDataByPosition } from "@/miniservices/officerMiniService";
 
@@ -32,7 +29,7 @@ const sponsors = [
 
 export default async function SponsorshipPage() {
   const officerData = await getLeaderDataByPosition(
-    "Fundraising, Sponsorship, & Alumni",
+    "Fundraising & Sponsorship",
   );
 
   return (
@@ -50,17 +47,21 @@ export default async function SponsorshipPage() {
         nation, and currently have over 700 active members.
       </p>
 
-      <Divider className="my-5" />
+      <Separator className="my-5" />
 
       <h2 className="font-bold text-center mb-5 text-xl">Our Past Partners</h2>
       <div className="w-full flex flex-col justify-top items-center">
         {sponsors.map((item) => {
           return (
-            <Link key={item.name} href={item.website} target="_blank">
-              <Image
+            <Link
+              key={item.name}
+              href={item.website}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
                 alt={`${item.name} logo`}
-                className="rounded-none my-12"
-                rel="noopener noreferrer"
+                className="my-12"
                 src={item.image}
                 width={200}
               />
@@ -69,7 +70,7 @@ export default async function SponsorshipPage() {
         })}
       </div>
 
-      <Divider className="my-5" />
+      <Separator className="my-5" />
       <h2 className="font-bold text-center mb-5 text-xl">
         Our Goals in Partnership
       </h2>
@@ -81,7 +82,7 @@ export default async function SponsorshipPage() {
       <p className="text-center w-3/4 my-2">Community connections</p>
       <p className="text-center w-3/4 my-2">Mutual benefits</p>
 
-      <Image
+      <img
         className="mt-5 max-w-full"
         src="/pocar_celsius_group.jpg"
         width={400}
@@ -91,63 +92,72 @@ export default async function SponsorshipPage() {
         Types of Sponsorship
       </h2>
 
-      <Button
-        as={Link}
-        className="bg-amber-400 text-black font-bold m-5"
+      <Link
+        className={buttonVariants({ className: "m-5" })}
         href="https://www.rei.com/lists/418038518"
         rel="noopener noreferrer"
         target="_blank"
       >
         Purchase Items from the Wishlist
-      </Button>
-      <Button
-        as={Link}
-        className="bg-amber-400 text-black font-bold m-5"
+      </Link>
+      <Link
+        className={buttonVariants({ className: "m-5" })}
         href="https://connect.purdue.edu/s/givenow?_ga=2.241255040.340950724.1694472480-995752346.1694186482&appealcode=10091&dids=004657&sort=1"
         rel="noopener noreferrer"
         target="_blank"
       >
         Donate to the Club
-      </Button>
+      </Link>
       {officerData !== undefined ? (
-        <Button
-          as={Link}
-          className="bg-amber-400 text-black font-bold m-5"
+        <Link
+          className={buttonVariants({ className: "m-5" })}
           href={`mailto:${officerData.email}`}
         >
           Partner with us for an event
-        </Button>
+        </Link>
       ) : (
         <></>
       )}
 
-      <Divider className="my-5" />
+      <Separator className="my-5" />
 
       <h2 className="font-bold text-center text-xl">Want to Learn More?</h2>
       <p className="text-center w-3/4 my-2">
         Contact our fundraising, sponsorship, & alumni officer with questions.
       </p>
 
-      {officerData !== undefined ? (
-        <Link
-          className="text-amber-400 font-bold"
-          href={`mailto:${officerData.email}`}
-        >
-          {officerData.name}
-        </Link>
-      ) : (
-        <></>
-      )}
-      {officerData !== undefined ? (
-        <Image
-          alt="POC Fundraising, Sponsorship, & Alumni Officer"
-          className="mt-5 max-w-full"
-          src={`/leadership/${officerData.officer_data.ImagePath}`}
-          width={300}
-        />
-      ) : (
-        <></>
-      )}
+      {
+        officerData !== undefined ?
+            <Card className="m-4 py-2">
+              <Card.Header className="pb-0 pt-2 px-4 flex-col items-start">
+                <p className="text-tiny uppercase font-bold">
+                  {officerData.name}
+                </p>
+                <small className="text-default-500">
+                  {officerData.pronouns}
+                </small>
+                <Link
+                  className="text-amber-400 text-small"
+                  href={`mailto:${officerData.email}`}
+                >
+                  {officerData.email}
+                </Link>
+                <h4 className="font-bold text-large mt-2">
+                  {officerData.position}
+                </h4>
+              </Card.Header>
+              <Card.Content className="overflow-visible py-2 justify-center items-center mb-4">
+                <div className="size-52 overflow-hidden rounded-xl shrink-0">
+                  <img
+                    alt="Card background"
+                    className="object-cover w-full h-full"
+                    src={`/leadership/${officerData.officerData.ImagePath}`}
+                  />
+                </div>
+              </Card.Content>
+            </Card>
+        : <></>
+      }
     </div>
   );
 }

@@ -22,19 +22,9 @@ import {
 export async function GET() {
   const session = await getServerSession(authOptions);
 
-  // If nobody is logged in, return a 401 error
-  if (!session) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
-
-  // If the user is undefined, return a 401 error
-  if (session.user === undefined) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
-
-  // If the user does not have an email, return a 401 error
-  if (typeof session.user.email !== "string") {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  // If nobody is logged in, or the user is undefined, return a 401 error
+  if (!session || session.user === undefined || typeof session.user.email !== "string") {
+    return new Response("Unauthorized", {status: 401});
   }
 
   let userID: number = await getMemberId(session.user.email); // Get the user's id from the database

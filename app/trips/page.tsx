@@ -8,11 +8,15 @@
 
 import React from "react";
 import { useState, useEffect } from "react";
-import { Card, CardHeader, CardBody } from "@heroui/card";
-import { Link } from "@heroui/link";
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  Link,
+  Spinner,
+  Separator,
+} from "@heroui/react";
 import { FaMapMarkerAlt } from "react-icons/fa";
-import { Spinner } from "@heroui/spinner";
-import { Divider } from "@heroui/react";
 
 export default function TripsPage() {
   const [trips, setTrips] = useState(null);
@@ -22,7 +26,7 @@ export default function TripsPage() {
       .then((response) => response.json())
       .then((data) => {
         for (let i = 0; i < data.length; i++) {
-          data[i].startdate = new Date(data[i].startdate);
+          data[i].startDate = new Date(data[i].startDate);
         }
         setTrips(data);
       });
@@ -51,10 +55,10 @@ export default function TripsPage() {
         {trips != null ? (
           <TripCards trips={trips} />
         ) : (
-          <Spinner color="default" />
+          <Spinner />
         )}
       </div>
-      <Divider />
+      <Separator />
       <h2 className="mt-8 mb-2 text-center font-bold text-2xl">
         Getting on Trips
       </h2>
@@ -117,7 +121,7 @@ interface TripCardProps {
  * have the following properties:
  * - trip_id: The ID of the trip.
  * - name: The name of the trip.
- * - startdate: The date and time the trip starts.
+ * - startDate: The date and time the trip starts.
  * - location: The location of the trip.
  *
  * @returns A list of TripCards.
@@ -126,12 +130,12 @@ function TripCards(props: TripCardProps) {
   return props.trips.length > 0 ? (
     props.trips
       .sort((a, b) => {
-        return a.startdate - b.startdate;
+        return a.startDate - b.startDate;
       })
       .map((trip: any) => (
         <Link
           key={trip.trip_id}
-          className="text-amber-400"
+          className="text-foreground no-underline hover:no-underline"
           href={`/trips/${trip.trip_id}`}
         >
           <Card className="w-[400px] my-2">
@@ -141,20 +145,20 @@ function TripCards(props: TripCardProps) {
                   {trip.name}
                 </p>
                 <p className="text-small text-default-500 text-left">
-                  {trip.startdate.toLocaleDateString().replace(/\//g, "-")}
+                  {trip.startDate.toLocaleDateString().replace(/\//g, "-")}
                 </p>
                 <p className="text-small text-default-500 text-left">
-                  {trip.startdate.toLocaleTimeString()}
+                  {trip.startDate.toLocaleTimeString()}
                 </p>
                 <p />
               </div>
             </CardHeader>
-            <CardBody>
+            <CardContent>
               <div className="flex flex-row justify-left items-center">
                 <FaMapMarkerAlt />
                 <p className="ml-4">{trip.location}</p>
               </div>
-            </CardBody>
+            </CardContent>
           </Card>
         </Link>
       ))

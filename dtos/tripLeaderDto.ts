@@ -6,10 +6,16 @@
 
 import MemberDTO from '@/dtos/memberDto';
 
+class TripLeaderProcessDTO {
+    shadow?: boolean;
+    approved?: boolean;
+    certified?: boolean;
+}
+
 export default class TripLeaderDTO {
     member?: MemberDTO;
     sport?: string;
-    process?: object;
+    process?: TripLeaderProcessDTO;
     leadCount?: number;
     gmail?: string;
 }

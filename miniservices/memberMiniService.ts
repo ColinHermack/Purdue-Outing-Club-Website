@@ -47,6 +47,45 @@ export async function verifyMembershipByEmail(email: string): Promise<boolean> {
   return false;
 }
 
+export async function getMemberById(id: number): Promise<MemberDTO | null> {
+  const client = await pool.connect();
+
+  try {
+    let result = await client.query("SELECT * from member WHERE member_id = $1", [id]);
+
+    if (result.rows.length > 0) {
+      const row = result.rows[0];
+      return {
+        id: row.member_id,
+        name: row.name,
+        pronouns: row.pronouns,
+        email: row.email,
+        phone: row.phone,
+        duesData: row.dues_data,
+        firstAidData: row.first_aid_data,
+        carData: row.car_data,
+        driverData: row.driver_data,
+        emergencyData: row.emergency_data,
+        policyAgreement: row.policy_agreement,
+        waiverAgreement: row.waiver_agreement,
+        schoolYear: row.school_year,
+        medicalData: row.medical_data,
+        tripCount: row.trip_count,
+        holds: row.holds,
+        signupCount: row.signup_count,
+        yearsActive: row.years_active,
+        campus: row.campus,
+      };
+    }
+    return null;
+  }
+  catch (error: any) {
+    throw error;
+  } finally {
+    client.release();
+  }
+}
+
 /**
  * Gets the top 5 of the trips led leaderboard
  * @returns A promise resolving to a sorted array of objects representing the 5 members who have led the most
@@ -95,19 +134,19 @@ export async function getMostTripsLed(): Promise<
           pronouns: row.pronouns,
           email: row.email,
           phone: row.phone,
-          dues_data: row.dues_data,
-          first_aid_data: row.first_aid_data,
-          car_data: row.car_data,
-          driver_data: row.driver_data,
-          emergency_data: row.emergency_data,
-          policy_agreeement: row.policy_agreement,
-          waiver_agreement: row.waiver_agreement,
-          school_year: row.school_year,
-          medical_data: row.medical_data,
-          trip_count: row.trip_count,
+          duesData: row.dues_data,
+          firstAidData: row.first_aid_data,
+          carData: row.car_data,
+          driverData: row.driver_data,
+          emergencyData: row.emergency_data,
+          policyAgreement: row.policy_agreement,
+          waiverAgreement: row.waiver_agreement,
+          schoolYear: row.school_year,
+          medicalData: row.medical_data,
+          tripCount: row.trip_count,
           holds: row.holds,
-          signup_count: row.signup_count,
-          years_active: row.years_active,
+          signupCount: row.signup_count,
+          yearsActive: row.years_active,
           campus: row.campus,
         },
       });
@@ -168,19 +207,19 @@ export async function getMostTripsAttended(): Promise<
           pronouns: row.pronouns,
           email: row.email,
           phone: row.phone,
-          dues_data: row.dues_data,
-          first_aid_data: row.first_aid_data,
-          car_data: row.car_data,
-          driver_data: row.driver_data,
-          emergency_data: row.emergency_data,
-          policy_agreeement: row.policy_agreement,
-          waiver_agreement: row.waiver_agreement,
-          school_year: row.school_year,
-          medical_data: row.medical_data,
-          trip_count: row.trip_count,
+          duesData: row.dues_data,
+          firstAidData: row.first_aid_data,
+          carData: row.car_data,
+          driverData: row.driver_data,
+          emergencyData: row.emergency_data,
+          policyAgreement: row.policy_agreement,
+          waiverAgreement: row.waiver_agreement,
+          schoolYear: row.school_year,
+          medicalData: row.medical_data,
+          tripCount: row.trip_count,
           holds: row.holds,
-          signup_count: row.signup_count,
-          years_active: row.years_active,
+          signupCount: row.signup_count,
+          yearsActive: row.years_active,
           campus: row.campus,
         },
       });

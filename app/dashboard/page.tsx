@@ -80,9 +80,7 @@ export default function DashBoardPage() {
                 user.trips.map((trip: any) => (
                   <Link
                     key={trip.trip_id}
-                    className={buttonVariants({
-                      className: "text-left font-bold my-1",
-                    })}
+                    className='w-full py-1'
                     href={`/trips/${trip.trip_id}`}
                   >
                     <p className="text-md text-left">{trip.name}</p>

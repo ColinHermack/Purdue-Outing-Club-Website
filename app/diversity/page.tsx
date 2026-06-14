@@ -91,7 +91,7 @@ export default async function DiversityPage() {
               </h4>
             </Card.Header>
             <Card.Content className="overflow-visible py-2 justify-center items-center mb-4">
-              <div className="w-[225px] h-[225px] overflow-hidden rounded-xl shrink-0">
+              <div className="size-52 overflow-hidden rounded-xl shrink-0">
                 <img
                   alt="Card background"
                   className="object-cover w-full h-full"

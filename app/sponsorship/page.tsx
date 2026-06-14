@@ -5,7 +5,7 @@
  */
 
 import React from "react";
-import { Separator, Link, buttonVariants } from "@heroui/react";
+import { Separator, Link, buttonVariants, Card } from "@heroui/react";
 
 import { getLeaderDataByPosition } from "@/miniservices/officerMiniService";
 
@@ -29,7 +29,7 @@ const sponsors = [
 
 export default async function SponsorshipPage() {
   const officerData = await getLeaderDataByPosition(
-    "Fundraising, Sponsorship, & Alumni",
+    "Fundraising & Sponsorship",
   );
 
   return (
@@ -126,26 +126,38 @@ export default async function SponsorshipPage() {
         Contact our fundraising, sponsorship, & alumni officer with questions.
       </p>
 
-      {officerData !== undefined ? (
-        <Link
-          className="text-amber-400 font-bold"
-          href={`mailto:${officerData.email}`}
-        >
-          {officerData.name}
-        </Link>
-      ) : (
-        <></>
-      )}
-      {officerData !== undefined ? (
-        <img
-          alt="POC Fundraising, Sponsorship, & Alumni Officer"
-          className="mt-5 max-w-full"
-          src={`/leadership/${officerData.officerData.ImagePath}`}
-          width={300}
-        />
-      ) : (
-        <></>
-      )}
+      {
+        officerData !== undefined ?
+            <Card className="m-4 py-2">
+              <Card.Header className="pb-0 pt-2 px-4 flex-col items-start">
+                <p className="text-tiny uppercase font-bold">
+                  {officerData.name}
+                </p>
+                <small className="text-default-500">
+                  {officerData.pronouns}
+                </small>
+                <Link
+                  className="text-amber-400 text-small"
+                  href={`mailto:${officerData.email}`}
+                >
+                  {officerData.email}
+                </Link>
+                <h4 className="font-bold text-large mt-2">
+                  {officerData.position}
+                </h4>
+              </Card.Header>
+              <Card.Content className="overflow-visible py-2 justify-center items-center mb-4">
+                <div className="size-52 overflow-hidden rounded-xl shrink-0">
+                  <img
+                    alt="Card background"
+                    className="object-cover w-full h-full"
+                    src={`/leadership/${officerData.officerData.ImagePath}`}
+                  />
+                </div>
+              </Card.Content>
+            </Card>
+        : <></>
+      }
     </div>
   );
 }

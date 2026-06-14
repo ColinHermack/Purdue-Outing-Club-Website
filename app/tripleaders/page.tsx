@@ -21,7 +21,7 @@ export default function TripLeaderPage() {
       </h1>
       <img
         alt="POC Trip Leaders"
-        className="mt-5 max-w-full"
+        className="mt-5 max-w-full rounded-xl"
         src="/trip_leaders.JPG"
         width={400}
       />

@@ -11,7 +11,11 @@ export default withAuth(
     //   (await yourDatabaseCheck(token.email));
 
     if (!isAuthenticated) {
-      return NextResponse.redirect(new URL("/auth/signin", req.url));
+      const signInUrl = new URL("/auth/signin", req.url);
+
+      signInUrl.searchParams.set("callbackUrl", req.nextUrl.pathname);
+
+      return NextResponse.redirect(signInUrl);
     }
 
     return NextResponse.next();

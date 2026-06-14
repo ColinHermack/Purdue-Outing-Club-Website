@@ -9,8 +9,9 @@
 
 "use client";
 
-import { Link, buttonVariants } from "@heroui/react";
+import { Link, Button } from "@heroui/react";
 import NextLink from "next/link";
+import { redirect } from "next/navigation";
 import { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 
@@ -23,8 +24,8 @@ export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <nav className="sticky top-0 z-40 w-full bg-background/70 backdrop-blur-lg p-2">
-      <div className="flex items-center justify-between">
+    <nav className="sticky top-0 z-40 w-full bg-background/70 backdrop-blur-lg p-2 flex flex-row justify-center pt-4">
+      <div className="flex items-center justify-between text-s">
         <div className="flex items-center gap-3">
           <NextLink className="flex justify-start items-center gap-1" href="/">
             <Logo />
@@ -43,11 +44,14 @@ export const Navbar = () => {
           </ul>
         </div>
 
-        <div className="hidden lg:flex justify-center items-center gap-4">
+        <div className="hidden lg:flex justify-center items-center gap-4 ml-12">
           <ThemeSwitch className="mr-10" />
-          <Link className={buttonVariants()} href="/join">
+          <Button
+            variant='primary'
+            onClick={() => {redirect('/join')}}
+          >
             Join
-          </Link>
+          </Button>
         </div>
 
         <div className="lg:hidden flex items-center gap-4 pl-4">
@@ -75,14 +79,17 @@ export const Navbar = () => {
               {item.label}
             </Link>
           ))}
-          <Link
+          <Button
             key="join"
-            className="text-amber-400 font-semibold text-2xl m-2"
-            href="/join"
-            onPress={() => setIsMenuOpen(false)}
+            className="font-semibold text-2xl m-2"
+            variant="primary"
+            onPress={() => {
+              setIsMenuOpen(false);
+              redirect('/join');
+            }}
           >
             Join
-          </Link>
+          </Button>
         </div>
       ) : null}
     </nav>

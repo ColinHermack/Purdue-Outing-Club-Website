@@ -3,6 +3,58 @@
 @source "../components/**/*.{js,ts,jsx,tsx}";
 @source "../app/**/*.{js,ts,jsx,tsx}";
 
+/*
+ * Dark mode is class-based: next-themes is configured with `attribute: "class"`
+ * (see app/layout.tsx), so the `dark:` variant must follow the `.dark` class
+ * rather than the OS `prefers-color-scheme`. (Replaces the old
+ * `darkMode: "class"` from the now-unused tailwind.config.js.)
+ */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * Brand palette. HeroUI v3 themes via CSS variables (not the Tailwind plugin).
+ *   - accent    = Tailwind amber-400  (primary / default button color)
+ *   - secondary = Tailwind amber-600
+ * Hover/soft/etc. tokens are derived from these by HeroUI via color-mix(),
+ * so overriding the base values is enough to retheme the whole system.
+ */
+:root,
+.light,
+[data-theme="light"] {
+  --accent: #fbbf24;
+  --accent-foreground: #000000;
+
+  --secondary: #d97706;
+  --secondary-foreground: #ffffff;
+  --secondary-hover: color-mix(in oklab, var(--secondary) 90%, var(--secondary-foreground) 10%);
+}
+
+.dark,
+[data-theme="dark"] {
+  --accent: #fbbf24;
+  --accent-foreground: #000000;
+
+  --secondary: #d97706;
+  --secondary-foreground: #ffffff;
+  --secondary-hover: color-mix(in oklab, var(--secondary) 90%, var(--secondary-foreground) 10%);
+}
+
+/* Expose the custom secondary color to Tailwind utilities (bg-secondary, text-secondary, ...). */
+@theme inline {
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+}
+
+/* Map HeroUI's secondary button variant to the brand secondary color. */
+@layer components {
+  .button--secondary {
+    --button-bg: var(--secondary);
+    --button-bg-hover: var(--secondary-hover);
+    --button-bg-pressed: var(--secondary-hover);
+    --button-fg: var(--secondary-foreground);
+  }
+}
+
 body {
-    overflow-x: hidden;
+  overflow-x: hidden;
 }

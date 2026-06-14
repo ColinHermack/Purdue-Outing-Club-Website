@@ -1,7 +1,7 @@
 /**
  * A small wrapper around the HeroUI v3 Accordion composition (Item / Heading / Trigger /
- * Panel). HeroUI v3 no longer ships the v2 `<AccordionItem title="..." />` shorthand, so this
- * keeps the per-item markup readable across the pages that use accordions.
+ * Panel / Body). HeroUI v3 no longer ships the v2 `<AccordionItem title="..." />` shorthand, so
+ * this keeps the per-item markup readable across the pages that use accordions.
  *
  * @author Colin Hermack
  */
@@ -27,7 +27,9 @@ export function AccordionEntry({ id, title, children }: AccordionEntryProps) {
           <Accordion.Indicator />
         </Accordion.Trigger>
       </Accordion.Heading>
-      <Accordion.Panel>{children}</Accordion.Panel>
+      <Accordion.Panel>
+        <Accordion.Body>{children}</Accordion.Body>
+      </Accordion.Panel>
     </Accordion.Item>
   );
 }

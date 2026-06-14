@@ -68,7 +68,7 @@ export default function Home() {
             return (
               <Link
                 key={post.slug}
-                className="flex flex-col space-y-1 mb-4 text-black dark:text-white"
+                className="flex flex-col w-full space-y-1 mb-4 text-black dark:text-white"
                 href={`/news/${post.slug}`}
               >
                 <div className="w-full flex flex-col rounded transition-all duration-300 pt-2 pb-2 hover:bg-neutral-300/25 hover:pl-2 hover:shadow dark:hover:bg-neutral-500/10">
@@ -85,8 +85,8 @@ export default function Home() {
 
       <Separator className="my-5" />
 
-      <Accordion defaultExpandedKeys={["1"]} allowsMultipleExpanded>
-        <AccordionEntry id="1" title="What is the Purdue Outing Club?">
+      <Accordion defaultExpandedKeys={["1"]} allowsMultipleExpanded className='max-w-[1000px]'>
+        <AccordionEntry id="1" title="What is the Purdue Outing Club">
           The Purdue Outing Club is pretty much involved with almost any
           activity that takes place in the outdoors. Rock climbing, whitewater
           kayaking, backpacking, hiking, mountaineering, and caving are our main
@@ -125,7 +125,7 @@ export default function Home() {
       </Accordion>
 
       <h2 className="text-4xl m-10 font-bold">SPORTS</h2>
-      <Accordion allowsMultipleExpanded>
+      <Accordion allowsMultipleExpanded className='max-w-[1000px]'>
         <AccordionEntry id="backpacking" title="Backpacking">
           {SPORT_DESCRIPTIONS.Backpacking}
         </AccordionEntry>

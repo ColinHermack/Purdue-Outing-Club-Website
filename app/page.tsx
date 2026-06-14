@@ -27,19 +27,19 @@ export default function Home() {
       <div className="flex flex-col justify-top items-center mt-10 lg:flex-row lg:justify-center">
         <img
           alt="A picture from the Outing Club trip to the rocky mountains"
-          className="my-5 sm:m-5 rounded-large"
+          className="my-5 sm:m-5 rounded-lg h-[200px] w-auto"
           height={200}
           src="/rocky_mountains.jpg"
         />
         <img
           alt="A picture of the Outing Club trip leaders."
-          className="my-5 sm:m-5 rounded-large"
+          className="my-5 sm:m-5 rounded-lg h-[200px] w-auto"
           height={200}
           src="/trip_leaders.JPG"
         />
         <img
           alt="A picture from an Outing Club trip to Indiana Dunes."
-          className="my-5 sm:m-5 rounded-large"
+          className="my-5 sm:m-5 rounded-lg h-[200px] w-auto"
           height={200}
           src="/beach.jpg"
         />

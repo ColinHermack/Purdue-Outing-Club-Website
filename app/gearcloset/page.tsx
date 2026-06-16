@@ -124,8 +124,9 @@ export default function GearClosetPage() {
         Gear Care Information
       </h2>
 
-      <Divider className="mt-10" />
-      <h2 className="font-bold text-center w-3/4 my-10 text-xl">Tents</h2>
+      <h2 className="font-bold text-center w-3/4 mt-10 mb-3 text-base">
+        Tents
+      </h2>
       <p className="text-center w-3/4">
         If your tent gets wet on the trip (which it most likely will due to
         condensation after you sleep inside of it), take it out of its stuff
@@ -139,7 +140,7 @@ export default function GearClosetPage() {
       </p>
 
       <Divider className="mt-10" />
-      <h2 className="font-bold text-center w-3/4 my-10 text-xl">
+      <h2 className="font-bold text-center w-3/4 mt-10 mb-3 text-base">
         Sleeping Bags
       </h2>
       <p className="text-center w-3/4">
@@ -150,7 +151,9 @@ export default function GearClosetPage() {
       </p>
 
       <Divider className="mt-10" />
-      <h2 className="font-bold text-center w-3/4 my-10 text-xl">Backpacks</h2>
+      <h2 className="font-bold text-center w-3/4 mt-10 mb-3 text-base">
+        Backpacks
+      </h2>
       <p className="text-center w-3/4">
         Make sure to check your backpack for any trash or personal belongings
         before returning it to the closet. If your backpack gets dirty, you can
@@ -158,7 +161,9 @@ export default function GearClosetPage() {
       </p>
 
       <Divider className="mt-10" />
-      <h2 className="font-bold text-center w-3/4 my-10 text-xl">Stoves</h2>
+      <h2 className="font-bold text-center w-3/4 mt-10 mb-3 text-base">
+        Stoves
+      </h2>
       <p className="text-center w-3/4">
         Trip leaders will typically check out stoves for everyone on their trip
         to share, but it doesn&apos;t hurt to know how to use one. Check out the

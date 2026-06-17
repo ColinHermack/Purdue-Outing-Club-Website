@@ -28,8 +28,10 @@ const pool = new Pool({
  * Gets data for all officers.
  * @returns A promise resolving to a list of objects representing each category of officer.
  */
-export async function getAllOfficerData(): Promise<{ label: string; content: OfficerDTO[] }[]> {
-  let retVal: { label: string; content: OfficerDTO[] }[] =
+export async function getAllOfficerData(): Promise<
+  { label: string; content: OfficerDTO[] }[]
+> {
+  const retVal: { label: string; content: OfficerDTO[] }[] =
     LEADERSHIP_CATEGORIES.map((category) => {
       return {
         label: category.branch,
@@ -252,7 +254,7 @@ export async function getGearHours(): Promise<GearHoursDataT[]> {
   const client = await pool.connect();
 
   try {
-    let result = await client.query(`
+    const result = await client.query(`
             SELECT m.name, o.officer_data->'GearHours' AS gearHours FROM officer AS o
             JOIN member AS m ON m.member_id = o.member_id
             WHERE position LIKE '%Gear%';`);
@@ -310,7 +312,7 @@ export async function getLeaderDataByPosition(
  *          Officer objects, containing the officer data for each officer in the branch.
  */
 export async function getLeaderData() {
-  let allData: BranchData[] = [
+  const allData: BranchData[] = [
     {
       label: "Executive",
       content: [],
@@ -405,4 +407,3 @@ export async function getLeaderData() {
 
   return allData;
 }
-

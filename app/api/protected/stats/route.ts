@@ -23,18 +23,22 @@ export async function GET() {
   const session = await getServerSession(authOptions);
 
   // If nobody is logged in, or the user is undefined, return a 401 error
-  if (!session || session.user === undefined || typeof session.user.email !== "string") {
-    return new Response("Unauthorized", {status: 401});
+  if (
+    !session ||
+    session.user === undefined ||
+    typeof session.user.email !== "string"
+  ) {
+    return new Response("Unauthorized", { status: 401 });
   }
 
-  let userID: number = await getMemberId(session.user.email); // Get the user's id from the database
+  const userID: number = await getMemberId(session.user.email); // Get the user's id from the database
 
   // If the user ID is -1, the user does not exist in the database, so return a 403 error
   if (userID === -1) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
-  let userStats: MemberStatsT = {
+  const userStats: MemberStatsT = {
     name: "",
     position: "",
     num_trips_total: 0,

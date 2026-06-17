@@ -15,7 +15,7 @@ import { getOpenTrips } from "@/miniservices/tripMiniService";
  * @returns An HTTPS response object.
  */
 export async function GET() {
-  let openTrips = await getOpenTrips();
+  const openTrips = await getOpenTrips();
 
   return new Response(JSON.stringify(openTrips), {
     status: 200,

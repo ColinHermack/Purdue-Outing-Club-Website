@@ -23,7 +23,7 @@ export default async function TripPage({ params }: any) {
   }
 
   return (
-    <div className='flex flex-col justify-top items-center w-full'>
+    <div className="flex flex-col justify-top items-center w-full">
       <div className="flex flex-col justify-top items-center max-w-[600px]">
         <h1 className="text-5xl text-amber-400 font-bold text-center max-w-full">
           {tripData.name}

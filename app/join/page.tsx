@@ -100,10 +100,7 @@ export default function JoinPage() {
         In order to increase your chances of being selected for club trips, you
         can become a certified driver with the club.
       </p>
-      <Link
-        className={buttonVariants({ className: "mt-8" })}
-        href="/drivers"
-      >
+      <Link className={buttonVariants({ className: "mt-8" })} href="/drivers">
         Become a Certified Driver
       </Link>
 

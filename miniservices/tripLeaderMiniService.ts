@@ -2,7 +2,7 @@
 
 /**
  * Provides database interaction for everything related to trip leaders.
- * 
+ *
  * @author Colin Hermack
  */
 
@@ -24,15 +24,15 @@ const pool = new Pool({
 
 /**
  * Gets a list of all trip leaders
- * 
+ *
  * @returns A promise that resolves to a list of trip leader DTOs
  */
 export async function getAllTripLeaders(): Promise<TripLeaderDTO[]> {
-    let result: typeof QueryResult = null;
-    const client = await pool.connect();
+  const result: typeof QueryResult = null;
+  const client = await pool.connect();
 
-    try {
-      let result = await client.query(`
+  try {
+    const result = await client.query(`
         SELECT
           m.member_id,
           m.name,
@@ -62,65 +62,72 @@ export async function getAllTripLeaders(): Promise<TripLeaderDTO[]> {
         ORDER BY m.name;
       `);
 
-      return result.rows.map((row: any) => {
-        return {
-          member: {
-            id: row.member_id,
-            name: row.name,
-            pronouns: row.pronouns,
-            email: row.email,
-            phone: row.phone,
-            duesData: row.dues_data,
-            firstAidData: row.first_aid_data ? {
-              type: row.first_aid_data.Type,
-              expires: row.first_aid_data.Expires,
-              verified: row.first_aid_data.Verified,
-            } : undefined,
-            carData: row.car_data,
-            driverData: row.driver_data,
-            emergencyData: row.emergency_data ? {
-              name: row.emergency_data.Name,
-              email: row.emergency_data.Email,
-              phone: row.emergency_data.Phone,
-              relation: row.emergency_data.Relation,
-            } : undefined,
-            policyAgreement: row.policy_agreement,
-            waiverAgreement: row.waiver_agreement,
-            schoolYear: row.school_year,
-            medicalData: row.medical_data ? {
-              allergies: row.medical_data.Allergies,
-              conditions: row.medical_data.Conditions,
-              medications: row.medical_data.Medications,
-            } : undefined,
-            tripCount: row.trip_count,
-            holds: row.holds,
-            signupCount: row.signup_count,
-            yearsActive: row.years_active,
-            campus: row.campus,
-          },
-          sport: row.sport,
-          process: row.process,
-          leadCount: row.lead_count,
-          gmail: row.gmail,
-        }
-      })
-    } catch (error: any) {
-      throw error;
-    } finally {
-      client.release();
-    }
+    return result.rows.map((row: any) => {
+      return {
+        member: {
+          id: row.member_id,
+          name: row.name,
+          pronouns: row.pronouns,
+          email: row.email,
+          phone: row.phone,
+          duesData: row.dues_data,
+          firstAidData: row.first_aid_data
+            ? {
+                type: row.first_aid_data.Type,
+                expires: row.first_aid_data.Expires,
+                verified: row.first_aid_data.Verified,
+              }
+            : undefined,
+          carData: row.car_data,
+          driverData: row.driver_data,
+          emergencyData: row.emergency_data
+            ? {
+                name: row.emergency_data.Name,
+                email: row.emergency_data.Email,
+                phone: row.emergency_data.Phone,
+                relation: row.emergency_data.Relation,
+              }
+            : undefined,
+          policyAgreement: row.policy_agreement,
+          waiverAgreement: row.waiver_agreement,
+          schoolYear: row.school_year,
+          medicalData: row.medical_data
+            ? {
+                allergies: row.medical_data.Allergies,
+                conditions: row.medical_data.Conditions,
+                medications: row.medical_data.Medications,
+              }
+            : undefined,
+          tripCount: row.trip_count,
+          holds: row.holds,
+          signupCount: row.signup_count,
+          yearsActive: row.years_active,
+          campus: row.campus,
+        },
+        sport: row.sport,
+        process: row.process,
+        leadCount: row.lead_count,
+        gmail: row.gmail,
+      };
+    });
+  } catch (error: any) {
+    throw error;
+  } finally {
+    client.release();
+  }
 }
 
 /**
  * Gets a specific trip leader based on their member id
- * 
+ *
  * @param memberId The member id corresponding to the trip leader
  */
 export async function getTripLeader(memberId: number): Promise<TripLeaderDTO> {
   const client = await pool.connect();
 
   try {
-    let result = await client.query(`
+    const result = await client.query(
+      `
         SELECT
           m.member_id,
           m.name,
@@ -149,52 +156,57 @@ export async function getTripLeader(memberId: number): Promise<TripLeaderDTO> {
         JOIN member AS m ON t.member_id = m.member_id
         WHERE m.member_id = $1;
       `,
-      [memberId]
+      [memberId],
     );
 
-    let row = result.rows[0];
+    const row = result.rows[0];
 
     return {
-          member: {
-            id: row.member_id,
-            name: row.name,
-            pronouns: row.pronouns,
-            email: row.email,
-            phone: row.phone,
-            duesData: row.dues_data,
-            firstAidData: row.first_aid_data ? {
+      member: {
+        id: row.member_id,
+        name: row.name,
+        pronouns: row.pronouns,
+        email: row.email,
+        phone: row.phone,
+        duesData: row.dues_data,
+        firstAidData: row.first_aid_data
+          ? {
               type: row.first_aid_data.Type,
               expires: row.first_aid_data.Expires,
               verified: row.first_aid_data.Verified,
-            } : undefined,
-            carData: row.car_data,
-            driverData: row.driver_data,
-            emergencyData: row.emergency_data ? {
+            }
+          : undefined,
+        carData: row.car_data,
+        driverData: row.driver_data,
+        emergencyData: row.emergency_data
+          ? {
               name: row.emergency_data.Name,
               email: row.emergency_data.Email,
               phone: row.emergency_data.Phone,
               relation: row.emergency_data.Relation,
-            } : undefined,
-            policyAgreement: row.policy_agreement,
-            waiverAgreement: row.waiver_agreement,
-            schoolYear: row.school_year,
-            medicalData: row.medical_data ? {
+            }
+          : undefined,
+        policyAgreement: row.policy_agreement,
+        waiverAgreement: row.waiver_agreement,
+        schoolYear: row.school_year,
+        medicalData: row.medical_data
+          ? {
               allergies: row.medical_data.Allergies,
               conditions: row.medical_data.Conditions,
               medications: row.medical_data.Medications,
-            } : undefined,
-            tripCount: row.trip_count,
-            holds: row.holds,
-            signupCount: row.signup_count,
-            yearsActive: row.years_active,
-            campus: row.campus,
-          },
-          sport: row.sport,
-          process: row.process,
-          leadCount: row.lead_count,
-          gmail: row.gmail,
-        }
-
+            }
+          : undefined,
+        tripCount: row.trip_count,
+        holds: row.holds,
+        signupCount: row.signup_count,
+        yearsActive: row.years_active,
+        campus: row.campus,
+      },
+      sport: row.sport,
+      process: row.process,
+      leadCount: row.lead_count,
+      gmail: row.gmail,
+    };
   } catch (error: any) {
     throw error;
   } finally {
@@ -207,7 +219,9 @@ export async function getTripLeader(memberId: number): Promise<TripLeaderDTO> {
  *
  * @param updatedTripLeader Data for the updated trip leader entry
  */
-export async function updateTripLeader(updatedTripLeader: UpdateTripLeaderDTO): Promise<boolean> {
+export async function updateTripLeader(
+  updatedTripLeader: UpdateTripLeaderDTO,
+): Promise<boolean> {
   const client = await pool.connect();
 
   try {
@@ -220,11 +234,10 @@ export async function updateTripLeader(updatedTripLeader: UpdateTripLeaderDTO): 
         updatedTripLeader.process?.certified,
         updatedTripLeader.gmail,
         updatedTripLeader.memberId,
-      ]
+      ],
     );
 
     return true;
-
   } catch (error: any) {
     throw error;
   } finally {
@@ -237,23 +250,25 @@ export async function updateTripLeader(updatedTripLeader: UpdateTripLeaderDTO): 
  *
  * @param newTripLeader Data for the new trip leader entry
  */
-export async function createTripLeader(newTripLeader: CreateTripLeaderDTO): Promise<boolean> {
+export async function createTripLeader(
+  newTripLeader: CreateTripLeaderDTO,
+): Promise<boolean> {
   const client = await pool.connect();
 
   try {
     await client.query(
-      "INSERT INTO trip_leader VALUES ($1, '$2', '{\"shadow\": $3, \"approved\": $4, \"certified\": $5}', 0, '$6');", 
+      "INSERT INTO trip_leader VALUES ($1, '$2', '{\"shadow\": $3, \"approved\": $4, \"certified\": $5}', 0, '$6');",
       [
         newTripLeader.memberId,
         newTripLeader.sport?.concat(", "),
         newTripLeader.process?.shadow,
         newTripLeader.process?.approved,
         newTripLeader.process?.certified,
-        newTripLeader.gmail
-      ]);
+        newTripLeader.gmail,
+      ],
+    );
 
-      return true;
-    
+    return true;
   } catch (error: any) {
     throw error;
   } finally {

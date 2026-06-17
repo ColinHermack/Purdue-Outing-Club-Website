@@ -16,7 +16,7 @@ export const metadata = {
 };
 
 export default async function DiversityPage() {
-  let diversityOfficerData = await getLeaderDataByPosition(
+  const diversityOfficerData = await getLeaderDataByPosition(
     "Diversity & Community Outreach",
   );
 
@@ -70,38 +70,38 @@ export default async function DiversityPage() {
         Contact our diversity and community outreach coordinator with questions
         or feedback for the club.
       </p>
-      {
-      diversityOfficerData !== undefined ?
-          <Card className="m-4 py-2">
-            <Card.Header className="pb-0 pt-2 px-4 flex-col items-start">
-              <p className="text-tiny uppercase font-bold">
-                {diversityOfficerData.name}
-              </p>
-              <small className="text-default-500">
-                {diversityOfficerData.pronouns}
-              </small>
-              <Link
-                className="text-amber-400 text-small"
-                href={`mailto:${diversityOfficerData.email}`}
-              >
-                {diversityOfficerData.email}
-              </Link>
-              <h4 className="font-bold text-large mt-2">
-                {diversityOfficerData.position}
-              </h4>
-            </Card.Header>
-            <Card.Content className="overflow-visible py-2 justify-center items-center mb-4">
-              <div className="size-52 overflow-hidden rounded-xl shrink-0">
-                <img
-                  alt="Card background"
-                  className="object-cover w-full h-full"
-                  src={`/leadership/${diversityOfficerData.officerData.ImagePath}`}
-                />
-              </div>
-            </Card.Content>
-          </Card>
-        : <></>
-      }
+      {diversityOfficerData !== undefined ? (
+        <Card className="m-4 py-2">
+          <Card.Header className="pb-0 pt-2 px-4 flex-col items-start">
+            <p className="text-tiny uppercase font-bold">
+              {diversityOfficerData.name}
+            </p>
+            <small className="text-default-500">
+              {diversityOfficerData.pronouns}
+            </small>
+            <Link
+              className="text-amber-400 text-small"
+              href={`mailto:${diversityOfficerData.email}`}
+            >
+              {diversityOfficerData.email}
+            </Link>
+            <h4 className="font-bold text-large mt-2">
+              {diversityOfficerData.position}
+            </h4>
+          </Card.Header>
+          <Card.Content className="overflow-visible py-2 justify-center items-center mb-4">
+            <div className="size-52 overflow-hidden rounded-xl shrink-0">
+              <img
+                alt="Card background"
+                className="object-cover w-full h-full"
+                src={`/leadership/${diversityOfficerData.officerData.ImagePath}`}
+              />
+            </div>
+          </Card.Content>
+        </Card>
+      ) : (
+        <></>
+      )}
     </div>
   );
 }

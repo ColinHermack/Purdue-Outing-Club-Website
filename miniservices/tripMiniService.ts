@@ -82,4 +82,3 @@ export async function getTripData(id: number) {
     client.release();
   }
 }
-

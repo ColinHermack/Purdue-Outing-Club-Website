@@ -29,10 +29,10 @@ interface ITableProps {
  */
 
 function Table({ data }: ITableProps) {
-  let headers = data.headers.map((header: string, index: number) => (
+  const headers = data.headers.map((header: string, index: number) => (
     <th key={index}>{header}</th>
   ));
-  let rows = data.rows.map((row: any, index: any) => (
+  const rows = data.rows.map((row: any, index: any) => (
     <tr key={index}>
       {row.map((cell: any, cellIndex: any) => (
         <td key={cellIndex}>{cell}</td>
@@ -69,7 +69,7 @@ interface ICustomLinkProps {
  * @returns A JSX element representing the link.
  */
 function CustomLink(props: ICustomLinkProps) {
-  let href = props.href;
+  const href = props.href;
 
   if (href.startsWith("/")) {
     return <Link {...props}>{props.children}</Link>;
@@ -131,7 +131,7 @@ interface IHeaderProps {
  */
 function createHeading(level: number) {
   const Heading = ({ children }: IHeaderProps) => {
-    let slug = slugify(children);
+    const slug = slugify(children);
 
     return React.createElement(
       `h${level}`,
@@ -152,7 +152,7 @@ function createHeading(level: number) {
   return Heading;
 }
 
-let components = {
+const components = {
   h1: createHeading(1),
   h2: createHeading(2),
   h3: createHeading(3),

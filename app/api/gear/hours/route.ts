@@ -4,9 +4,8 @@
  * @author Colin Hermack
  */
 
-import { GearHoursDataT } from '@/config/types';
-import { getGearHours } from '@/miniservices/officerMiniService';
-
+import { GearHoursDataT } from "@/config/types";
+import { getGearHours } from "@/miniservices/officerMiniService";
 
 export const dynamic = "force-dynamic"; // Stops NextJS from overoptimizing and breaking this endpoint
 export const revalidate = 0; // Stops NextJS from overoptimizing and breaking this endpoint
@@ -23,7 +22,7 @@ export async function GET() {
   try {
     gearHours = await getGearHours(); // Get an array of gear officer data
   } catch (error: any) {
-    return new Response("Error getting gear hours", {status: 500});
+    return new Response("Error getting gear hours", { status: 500 });
   }
 
   return new Response(JSON.stringify(gearHours), {

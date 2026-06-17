@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { Link, buttonVariants } from "@heroui/react";
 
 export default function DriverPage() {
@@ -24,12 +24,7 @@ export default function DriverPage() {
         complete that part of the form. Be sure to include your respective
         campus (PWL or PUI).
       </p>
-      <img
-        alt=""
-        className="my-8"
-        src={"/samba_example.png"}
-        width={400}
-      />
+      <img alt="" className="my-8" src={"/samba_example.png"} width={400} />
       <Link
         className={buttonVariants()}
         href={
@@ -50,12 +45,7 @@ export default function DriverPage() {
         registration form to let the data analyst know that you are driver
         certified.
       </p>
-      <img
-        alt=""
-        className="my-8"
-        height={400}
-        src={"/driver_email.png"}
-      />
+      <img alt="" className="my-8" height={400} src={"/driver_email.png"} />
       <Link
         className={buttonVariants()}
         href={"https://forms.cloud.microsoft/r/4uJRfr4dRV"}

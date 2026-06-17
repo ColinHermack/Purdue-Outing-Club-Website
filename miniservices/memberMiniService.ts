@@ -31,7 +31,7 @@ export async function verifyMembershipByEmail(email: string): Promise<boolean> {
   const client = await pool.connect();
 
   try {
-    let result = await client.query("SELECT * FROM member WHERE email = $1", [
+    const result = await client.query("SELECT * FROM member WHERE email = $1", [
       email,
     ]);
 
@@ -51,7 +51,10 @@ export async function getMemberById(id: number): Promise<MemberDTO | null> {
   const client = await pool.connect();
 
   try {
-    let result = await client.query("SELECT * from member WHERE member_id = $1", [id]);
+    const result = await client.query(
+      "SELECT * from member WHERE member_id = $1",
+      [id],
+    );
 
     if (result.rows.length > 0) {
       const row = result.rows[0];
@@ -78,8 +81,7 @@ export async function getMemberById(id: number): Promise<MemberDTO | null> {
       };
     }
     return null;
-  }
-  catch (error: any) {
+  } catch (error: any) {
     throw error;
   } finally {
     client.release();
@@ -95,7 +97,7 @@ export async function getMostTripsLed(): Promise<
   { tripsLed: number; member: MemberDTO }[]
 > {
   const client = await pool.connect();
-  let retVal: { tripsLed: number; member: MemberDTO }[] = [];
+  const retVal: { tripsLed: number; member: MemberDTO }[] = [];
 
   try {
     const result = await client.query(`
@@ -168,7 +170,7 @@ export async function getMostTripsAttended(): Promise<
   { tripsAttended: number; member: MemberDTO }[]
 > {
   const client = await pool.connect();
-  let retVal: { tripsAttended: number; member: MemberDTO }[] = [];
+  const retVal: { tripsAttended: number; member: MemberDTO }[] = [];
 
   try {
     const result = await client.query(`
@@ -271,7 +273,7 @@ export async function getUserName(userID: number): Promise<string> {
   const client = await pool.connect();
 
   try {
-    let result: typeof QueryResult = await client.query(
+    const result: typeof QueryResult = await client.query(
       "SELECT name FROM member WHERE member_id = $1",
       [userID],
     );
@@ -385,7 +387,7 @@ export async function getUserPosition(userID: number): Promise<string> {
   const client = await pool.connect();
 
   try {
-    let result: typeof QueryResult = await client.query(
+    const result: typeof QueryResult = await client.query(
       "SELECT * FROM officer WHERE member_id = $1",
       [userID],
     );
@@ -393,7 +395,7 @@ export async function getUserPosition(userID: number): Promise<string> {
     if (result !== null && result.rows.length !== 0) {
       return "Officer";
     } else {
-      let result = await client.query(
+      const result = await client.query(
         "SELECT * FROM trip_leader WHERE member_id = $1",
         [userID],
       );

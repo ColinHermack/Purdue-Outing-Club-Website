@@ -24,6 +24,7 @@ git clone https://github.com/ColinHermack/Purdue-Outing-Club-Website.git
 ```
 
 ### Create environment variables
+
 Get the environment variables from the webmaster and create a .env file in the root of the project.
 
 ### Install dependencies
@@ -35,21 +36,26 @@ npm install
 ```
 
 ### Choose an issue to work on
+
 Choose an issue from the `Issues` tab on GitHub or the project on GitHub to work on. The issues are the same whether you find them in the issues tab or the project.
 
 ### Create a feature branch
+
 ```bash
 git branch myfeaturebranch
 ```
 
 ### Build locally before creating a pull request
+
 ```bash
 npm run build
 ```
 
 ### Create a pull request on GitHub
+
 Create a pull request to merge your feature branch with main. It will have to successfully deploy and be reviewed
 by the webmaster before merging.
 
 ## Deployment Information
+
 This app is deployed on Vercel and deploys a preview whenever a pull request is created, and deploys to production once the PR is approved and completed.

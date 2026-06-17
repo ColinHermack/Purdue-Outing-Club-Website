@@ -26,7 +26,11 @@
 
   --secondary: #d97706;
   --secondary-foreground: #ffffff;
-  --secondary-hover: color-mix(in oklab, var(--secondary) 90%, var(--secondary-foreground) 10%);
+  --secondary-hover: color-mix(
+    in oklab,
+    var(--secondary) 90%,
+    var(--secondary-foreground) 10%
+  );
 }
 
 .dark,
@@ -36,7 +40,11 @@
 
   --secondary: #d97706;
   --secondary-foreground: #ffffff;
-  --secondary-hover: color-mix(in oklab, var(--secondary) 90%, var(--secondary-foreground) 10%);
+  --secondary-hover: color-mix(
+    in oklab,
+    var(--secondary) 90%,
+    var(--secondary-foreground) 10%
+  );
 }
 
 /* Expose the custom secondary color to Tailwind utilities (bg-secondary, text-secondary, ...). */

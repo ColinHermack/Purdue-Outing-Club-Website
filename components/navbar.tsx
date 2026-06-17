@@ -58,10 +58,13 @@ export const Navbar = () => {
 
   return (
     <nav className="sticky top-0 z-40 w-full bg-background/70 backdrop-blur-lg pt-4 p-2 flex flex-col justify-top items-left">
-      <div className='w-full flex flex-row justify-apart items-center' >
+      <div className="w-full flex flex-row justify-apart items-center">
         <div className="w-full flex items-center justify-between text-s">
           <div className="flex items-center gap-3">
-            <NextLink className="flex justify-start items-center gap-1 ml-4" href="/">
+            <NextLink
+              className="flex justify-start items-center gap-1 ml-4"
+              href="/"
+            >
               <Logo />
             </NextLink>
             <ul className="hidden lg:flex gap-4 justify-start ml-2">
@@ -81,9 +84,11 @@ export const Navbar = () => {
           <div className="hidden lg:flex justify-right items-center mr-4">
             <ThemeSwitch className="mr-8" />
             <Button
-              variant='primary'
-              onClick={() => {redirect('/join')}}
-              className='font-bold'
+              variant="primary"
+              onClick={() => {
+                redirect("/join");
+              }}
+              className="font-bold"
             >
               Join
             </Button>
@@ -109,7 +114,10 @@ export const Navbar = () => {
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <motion.line
-                  style={{ transformBox: "view-box", transformOrigin: "center" }}
+                  style={{
+                    transformBox: "view-box",
+                    transformOrigin: "center",
+                  }}
                   transition={ICON_TRANSITION}
                   variants={topBarVariants}
                   x1="4"
@@ -118,7 +126,10 @@ export const Navbar = () => {
                   y2="12"
                 />
                 <motion.line
-                  style={{ transformBox: "view-box", transformOrigin: "center" }}
+                  style={{
+                    transformBox: "view-box",
+                    transformOrigin: "center",
+                  }}
                   transition={ICON_TRANSITION}
                   variants={bottomBarVariants}
                   x1="4"
@@ -159,7 +170,7 @@ export const Navbar = () => {
                 variant="primary"
                 onPress={() => {
                   setIsMenuOpen(false);
-                  redirect('/join');
+                  redirect("/join");
                 }}
               >
                 Join

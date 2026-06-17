@@ -49,5 +49,6 @@ A `.env` at the repo root is required (not committed). Keys used by the app: `AZ
 Deployed on Vercel. Every PR gets a preview deployment; merging to `main` deploys to production. PRs must build successfully and be reviewed by the webmaster before merge (per README).
 
 ## HeroUI
+
 For all prompts that mention HeroUI, use HeroUI React documentation from https://heroui.com/react/llms.txt. Treat this
 as the ultimate source of truth on HeroUI.

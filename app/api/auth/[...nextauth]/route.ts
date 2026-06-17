@@ -1,6 +1,6 @@
 /**
  * Route definition for Microsoft authentication.
- * 
+ *
  * @author Colin Hermack
  */
 

@@ -126,38 +126,34 @@ export default async function SponsorshipPage() {
         Contact our fundraising, sponsorship, & alumni officer with questions.
       </p>
 
-      {
-        officerData !== undefined ?
-            <Card className="m-4 py-2">
-              <Card.Header className="pb-0 pt-2 px-4 flex-col items-start">
-                <p className="text-tiny uppercase font-bold">
-                  {officerData.name}
-                </p>
-                <small className="text-default-500">
-                  {officerData.pronouns}
-                </small>
-                <Link
-                  className="text-amber-400 text-small"
-                  href={`mailto:${officerData.email}`}
-                >
-                  {officerData.email}
-                </Link>
-                <h4 className="font-bold text-large mt-2">
-                  {officerData.position}
-                </h4>
-              </Card.Header>
-              <Card.Content className="overflow-visible py-2 justify-center items-center mb-4">
-                <div className="size-52 overflow-hidden rounded-xl shrink-0">
-                  <img
-                    alt="Card background"
-                    className="object-cover w-full h-full"
-                    src={`/leadership/${officerData.officerData.ImagePath}`}
-                  />
-                </div>
-              </Card.Content>
-            </Card>
-        : <></>
-      }
+      {officerData !== undefined ? (
+        <Card className="m-4 py-2">
+          <Card.Header className="pb-0 pt-2 px-4 flex-col items-start">
+            <p className="text-tiny uppercase font-bold">{officerData.name}</p>
+            <small className="text-default-500">{officerData.pronouns}</small>
+            <Link
+              className="text-amber-400 text-small"
+              href={`mailto:${officerData.email}`}
+            >
+              {officerData.email}
+            </Link>
+            <h4 className="font-bold text-large mt-2">
+              {officerData.position}
+            </h4>
+          </Card.Header>
+          <Card.Content className="overflow-visible py-2 justify-center items-center mb-4">
+            <div className="size-52 overflow-hidden rounded-xl shrink-0">
+              <img
+                alt="Card background"
+                className="object-cover w-full h-full"
+                src={`/leadership/${officerData.officerData.ImagePath}`}
+              />
+            </div>
+          </Card.Content>
+        </Card>
+      ) : (
+        <></>
+      )}
     </div>
   );
 }

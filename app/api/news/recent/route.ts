@@ -13,10 +13,10 @@ import { getPosts } from "@/app/news/utils";
  */
 export async function GET() {
   try {
-    let posts = getPosts();
-    let recentPosts = posts.slice(0, 3); // Get first 3 posts
+    const posts = getPosts();
+    const recentPosts = posts.slice(0, 3); // Get first 3 posts
 
-    let json = recentPosts.map((post) => {
+    const json = recentPosts.map((post) => {
       return {
         title: post.metadata.title,
         postedOn: post.metadata.postedOn,

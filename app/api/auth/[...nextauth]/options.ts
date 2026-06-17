@@ -1,13 +1,13 @@
 /**
  * Configuration file for Microsoft authentication.
- * 
+ *
  * @author Colin Hermack
  */
 
 import AzureADProvider from "next-auth/providers/azure-ad";
 import { NextAuthOptions } from "next-auth";
 
-import { verifyMembershipByEmail } from '@/miniservices/memberMiniService';
+import { verifyMembershipByEmail } from "@/miniservices/memberMiniService";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -36,11 +36,11 @@ export const authOptions: NextAuthOptions = {
     async signIn({ user }) {
       // Check if this user's email exists in your database
       try {
-        const email: string = user.email ? user.email : '';
-        let userExists = await verifyMembershipByEmail(email);
+        const email: string = user.email ? user.email : "";
+        const userExists = await verifyMembershipByEmail(email);
         if (userExists) return true;
         return false;
-      } catch (error) {
+      } catch {
         return false;
       }
     },

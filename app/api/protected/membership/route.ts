@@ -8,7 +8,7 @@
 import { getServerSession } from "next-auth/next";
 import { NextResponse } from "next/server";
 
-import { authOptions } from "@/app/api/auth/[...nextauth]/options"
+import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 
 import { verifyMembershipByEmail } from "@/miniservices/memberMiniService";
 
@@ -26,11 +26,16 @@ export async function GET() {
   }
 
   if (!isMember) {
-    return new Response(JSON.stringify({ error: "Forbidden" }), { status: 403 });
+    return new Response(JSON.stringify({ error: "Forbidden" }), {
+      status: 403,
+    });
   } else {
-    return new Response(JSON.stringify({
-      message: "Membership verified",
-      user: session.user === undefined ? "" : session.user.email,
-    }), { status: 200 });
+    return new Response(
+      JSON.stringify({
+        message: "Membership verified",
+        user: session.user === undefined ? "" : session.user.email,
+      }),
+      { status: 200 },
+    );
   }
 }

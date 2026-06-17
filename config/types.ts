@@ -20,4 +20,4 @@ export type MemberStatsT = {
 export type GearHoursDataT = {
   name: string;
   hours: string;
-}
+};

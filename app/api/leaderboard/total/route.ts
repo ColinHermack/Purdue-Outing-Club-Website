@@ -13,9 +13,15 @@ import { getMostTripsAttended } from "@/miniservices/memberMiniService";
  */
 export async function GET() {
   try {
-    const leaderboard: { tripsAttended: number, member: MemberDTO}[] = await getMostTripsAttended();
+    const leaderboard: { tripsAttended: number; member: MemberDTO }[] =
+      await getMostTripsAttended();
 
-    const retVal = leaderboard.map((item: {tripsAttended: number, member: MemberDTO}) => ({name: item.member.name, count: item.tripsAttended}));
+    const retVal = leaderboard.map(
+      (item: { tripsAttended: number; member: MemberDTO }) => ({
+        name: item.member.name,
+        count: item.tripsAttended,
+      }),
+    );
 
     return new Response(JSON.stringify(retVal));
   } catch (error: any) {

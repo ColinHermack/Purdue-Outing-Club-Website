@@ -52,11 +52,7 @@ export default function TripsPage() {
         Accepting Signups
       </h2>
       <div className="flex flex-col mb-8">
-        {trips != null ? (
-          <TripCards trips={trips} />
-        ) : (
-          <Spinner />
-        )}
+        {trips != null ? <TripCards trips={trips} /> : <Spinner />}
       </div>
       <Separator />
       <h2 className="mt-8 mb-2 text-center font-bold text-2xl">

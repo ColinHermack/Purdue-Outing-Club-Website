@@ -6,8 +6,8 @@ import { getPosts } from "@/app/news/postUtils";
 import { BASE_URL } from "@/config/constants";
 
 export default async function NewsPost({ params }: any) {
-  let paramsResponse = await params;
-  let post = getPosts().find((post) => post.slug === paramsResponse.slug);
+  const paramsResponse = await params;
+  const post = getPosts().find((post) => post.slug === paramsResponse.slug);
 
   if (!post) {
     notFound();

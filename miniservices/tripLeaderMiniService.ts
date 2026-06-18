@@ -110,8 +110,6 @@ export async function getAllTripLeaders(): Promise<TripLeaderDTO[]> {
         gmail: row.gmail,
       };
     });
-  } catch (error: any) {
-    throw error;
   } finally {
     client.release();
   }
@@ -207,8 +205,6 @@ export async function getTripLeader(memberId: number): Promise<TripLeaderDTO> {
       leadCount: row.lead_count,
       gmail: row.gmail,
     };
-  } catch (error: any) {
-    throw error;
   } finally {
     client.release();
   }
@@ -238,8 +234,6 @@ export async function updateTripLeader(
     );
 
     return true;
-  } catch (error: any) {
-    throw error;
   } finally {
     client.release();
   }
@@ -269,8 +263,6 @@ export async function createTripLeader(
     );
 
     return true;
-  } catch (error: any) {
-    throw error;
   } finally {
     client.release();
   }

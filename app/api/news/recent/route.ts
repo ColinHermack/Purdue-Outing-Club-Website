@@ -31,7 +31,7 @@ export async function GET() {
         "Content-Type": "application/json",
       },
     }); // Send to the client with code 200 OK
-  } catch (error: any) {
+  } catch {
     return new Response("Internal Server Error", { status: 500 });
   }
 }

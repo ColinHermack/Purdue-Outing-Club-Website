@@ -9,14 +9,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import {
-  Card,
-  CardHeader,
-  CardContent,
-  Separator,
-  Link,
-  buttonVariants,
-} from "@heroui/react";
+import { Card, Separator, Link, buttonVariants } from "@heroui/react";
 
 import { MemberStatsT } from "@/config/types";
 
@@ -37,28 +30,12 @@ export default function DashBoardPage() {
       <div className="flex flex-col md:flex-row justify-top md:justify-left items-center md:items-start w-screen px-10">
         <div className=" w-[384px] md:w-[300px]">
           <Card className="w-full my-4">
-            <CardHeader className="flex flex-col items-left">
+            <Card.Header className="flex flex-col items-left">
               <p className="text-xl font-bold text-amber-400">
                 {user !== null ? user.name : "Loading..."}
               </p>
               <p className="text-md">{user !== null ? user.position : ""}</p>
-            </CardHeader>
-          </Card>
-          <Card className="w-full my-4">
-            <CardHeader>
-              <p className="text-lg font-bold text-amber-400 text-left">
-                My Stats
-              </p>
-            </CardHeader>
-            <Separator />
-            <CardContent>
-              <p className="text-md text-left">
-                Total Trips: {user !== null ? user.num_trips_total : ""}
-              </p>
-              <p className="text-md text-left">
-                Trips Led: {user !== null ? user.num_trips_led : ""}
-              </p>
-            </CardContent>
+            </Card.Header>
           </Card>
           <Link
             className={buttonVariants({ className: "w-full font-bold" })}
@@ -69,13 +46,13 @@ export default function DashBoardPage() {
         </div>
         <div className="w-[384px] md:w-[500px] mx-4">
           <Card className="w-full my-4 h-[600px]">
-            <CardHeader>
+            <Card.Header>
               <p className="text-lg font-bold text-amber-400 text-left">
                 My Trips
               </p>
-            </CardHeader>
+            </Card.Header>
             <Separator />
-            <CardContent>
+            <Card.Content>
               {user !== null && user.trips.length > 0 ? (
                 user.trips.map((trip: any) => (
                   <Link
@@ -89,7 +66,7 @@ export default function DashBoardPage() {
               ) : (
                 <p className="text-md text-left">No trips to display.</p>
               )}
-            </CardContent>
+            </Card.Content>
           </Card>
         </div>
       </div>

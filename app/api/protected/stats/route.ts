@@ -9,7 +9,7 @@ import { getServerSession } from "next-auth/next";
 import { NextResponse } from "next/server";
 
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
-import { MemberStatsT, TripInfoT } from "@/config/types";
+import { MemberStatsT } from "@/config/types";
 import {
   getMemberId,
   getUserName,

@@ -6,7 +6,8 @@
 
 "use server";
 
-const { Pool, QueryResult } = require("pg");
+import { Pool } from "pg";
+
 const pool = new Pool({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
@@ -23,12 +24,11 @@ const pool = new Pool({
  *
  * @returns An array of JSON objects representing open trips.
  */
-export const getOpenTrips = async () => {
-  let result: typeof QueryResult = null;
+export async function getOpenTrips() {
   const client = await pool.connect();
 
   try {
-    result = await client.query(
+    const result = await client.query(
       `SELECT trip_id, 
               name, 
               startdate AT TIME ZONE 'UTC' AS "startDate",
@@ -37,14 +37,14 @@ export const getOpenTrips = async () => {
       FROM trip
       WHERE trip.signup=true;`,
     );
-  } catch (error: any) {
+
+    return result.rows;
+  } catch {
     //Intentionally left blank
   } finally {
     client.release();
   }
-
-  return result.rows;
-};
+}
 
 /**
  * Queries the database asynchronously to get trip data.
@@ -54,11 +54,10 @@ export const getOpenTrips = async () => {
  * @returns A JSON object representing the trip data if the trip exists, else undefined.
  */
 export async function getTripData(id: number) {
-  let result: typeof QueryResult = null;
   const client = await pool.connect();
 
   try {
-    result = await client.query(
+    const result = await client.query(
       `SELECT
                         trip_id,
                         name,
@@ -76,7 +75,7 @@ export async function getTripData(id: number) {
     );
 
     return result.rows[0];
-  } catch (error: any) {
+  } catch {
     //Intentionally left blank
   } finally {
     client.release();

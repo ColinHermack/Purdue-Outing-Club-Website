@@ -62,7 +62,7 @@ export async function GET(): Promise<Response> {
 
     const tripLeaders: TripLeaderDTO[] = await getAllTripLeaders();
     return new Response(JSON.stringify(tripLeaders), { status: 200 });
-  } catch (error: any) {
+  } catch {
     return new Response("Internal Server Error", { status: 500 });
   }
 }
@@ -125,7 +125,7 @@ export async function POST(
       newTripLeader.memberId,
     );
     return new Response(JSON.stringify(createdTripLeader), { status: 200 });
-  } catch (error: any) {
+  } catch {
     return new Response("Internal Server Error", { status: 500 });
   }
 }
@@ -189,7 +189,7 @@ export async function PUT(
       updatedTripLeader.memberId,
     );
     return new Response(JSON.stringify(tripLeader), { status: 200 });
-  } catch (error: any) {
+  } catch {
     return new Response("Internal Server Error", { status: 500 });
   }
 }

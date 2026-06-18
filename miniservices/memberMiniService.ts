@@ -38,8 +38,6 @@ export async function verifyMembershipByEmail(email: string): Promise<boolean> {
     if (result.rows.length > 0) {
       return true;
     }
-  } catch (error: any) {
-    throw error;
   } finally {
     client.release();
   }
@@ -81,8 +79,6 @@ export async function getMemberById(id: number): Promise<MemberDTO | null> {
       };
     }
     return null;
-  } catch (error: any) {
-    throw error;
   } finally {
     client.release();
   }
@@ -153,8 +149,6 @@ export async function getMostTripsLed(): Promise<
         },
       });
     });
-  } catch (error: any) {
-    throw error;
   } finally {
     client.release();
   }
@@ -226,8 +220,6 @@ export async function getMostTripsAttended(): Promise<
         },
       });
     });
-  } catch (error: any) {
-    throw error;
   } finally {
     client.release();
   }
@@ -406,8 +398,54 @@ export async function getUserPosition(userID: number): Promise<string> {
         return "Member";
       }
     }
-  } catch (error: any) {
+  } catch {
     return "";
+  } finally {
+    client.release();
+  }
+}
+
+/**
+ * Gets the user specified by a purdue email address
+ * @param email The user's purdue email
+ * @returns A MemberDTO object 
+ */
+export async function getMemberByEmail(email: string): Promise<MemberDTO | null> {
+  const client = await pool.connect();
+
+  try {
+    const result = await client.query("SELECT * FROM member WHERE email=$1", [email])
+
+    if (result.rows.length === 0) {
+      return null;
+    }
+
+    let row = result.rows[0];
+
+    let member: MemberDTO =
+      {
+          id: row.member_id,
+          name: row.name,
+          pronouns: row.pronouns,
+          email: row.email,
+          phone: row.phone,
+          duesData: row.dues_data,
+          firstAidData: row.first_aid_data,
+          carData: row.car_data,
+          driverData: row.driver_data,
+          emergencyData: row.emergency_data,
+          policyAgreement: row.policy_agreement,
+          waiverAgreement: row.waiver_agreement,
+          schoolYear: row.school_year,
+          medicalData: row.medical_data,
+          tripCount: row.trip_count,
+          holds: row.holds,
+          signupCount: row.signup_count,
+          yearsActive: row.years_active,
+          campus: row.campus,
+      };
+
+    return member;
   } finally {
     client.release();
   }

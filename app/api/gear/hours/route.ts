@@ -21,7 +21,7 @@ export async function GET() {
   let gearHours: GearHoursDataT[];
   try {
     gearHours = await getGearHours(); // Get an array of gear officer data
-  } catch (error: any) {
+  } catch {
     return new Response("Error getting gear hours", { status: 500 });
   }
 

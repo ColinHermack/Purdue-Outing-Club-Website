@@ -16,6 +16,9 @@ export default defineConfig([
       "**/*.tsbuildinfo",
       "public/**",
       ".vercel/**",
+      "next.config.js",
+      "postcss.config.js",
+      "eslint.config.mts",
     ],
   },
   {
@@ -28,7 +31,10 @@ export default defineConfig([
   {
     // eslint-plugin-react v7 types predate ESLint v9's Plugin interface
     plugins: { react: fixupPluginRules(pluginReact as any) },
-    rules: pluginReact.configs.recommended.rules,
+    rules: {
+      ...pluginReact.configs.recommended.rules,
+      "react/react-in-jsx-scope": "off",
+    },
     languageOptions: {
       parserOptions: pluginReact.configs.recommended.parserOptions,
     },

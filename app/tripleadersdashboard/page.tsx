@@ -10,9 +10,10 @@
 import { useState, useEffect, useMemo } from "react";
 import type { Selection } from "@heroui/react";
 import TripLeaderDTO from "@/dtos/tripLeaderDto";
+import { SPORTS, PSEUDO_SPORTS } from "@/config/constants";
 import { redirect } from "next/navigation";
 
-import { Button, Modal, Table, TextField, Input, cn } from "@heroui/react";
+import { Button, Modal, Table, TextField, Input, cn, Checkbox, CheckboxGroup, Label } from "@heroui/react";
 
 type NestedRow = {
   children: NestedRow[];
@@ -29,6 +30,70 @@ export default function TripLeaderDashboardPage() {
   );
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [expandedKeys, setExpandedKeys] = useState<Selection>(() => new Set());
+  const [processValues, setProcessValues] = useState<string[]>([]);
+  const [sportValues, setSportValues] = useState<string[]>([]);
+  const [isSaving, setIsSaving] = useState(false);
+
+  useEffect(() => {
+    const p = selectedLeader?.process;
+
+    setProcessValues([
+      ...(p?.shadow ? ["shadowed"] : []),
+      ...(p?.approved ? ["approved"] : []),
+      ...(p?.certified ? ["certified"] : []),
+    ]);
+    setSportValues(selectedLeader?.sport ?? []);
+  }, [selectedLeader]);
+
+  const isDirty = useMemo(() => {
+    const p = selectedLeader?.process;
+    const sportsDirty =
+      [...sportValues].sort().join(",") !==
+      [...(selectedLeader?.sport ?? [])].sort().join(",");
+
+    return (
+      sportsDirty ||
+      processValues.includes("shadowed") !== (p?.shadow ?? false) ||
+      processValues.includes("approved") !== (p?.approved ?? false) ||
+      processValues.includes("certified") !== (p?.certified ?? false)
+    );
+  }, [processValues, sportValues, selectedLeader]);
+
+  const handleSave = async () => {
+    if (!selectedLeader?.member?.id) return;
+
+    setIsSaving(true);
+
+    const body = {
+      memberId: selectedLeader.member.id,
+      sport: sportValues,
+      process: {
+        shadow: processValues.includes("shadowed"),
+        approved: processValues.includes("approved"),
+        certified: processValues.includes("certified"),
+      },
+      gmail: selectedLeader.gmail
+    };
+
+    const response = await fetch("/api/protected/tripleaders", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+
+    setIsSaving(false);
+
+    if (!response.ok) return;
+
+    const updated: TripLeaderDTO = await response.json();
+
+    setTripLeaders((prev) =>
+      (prev ?? []).map((tl) =>
+        tl.member?.id === updated.member?.id ? updated : tl,
+      ),
+    );
+    setSelectedLeader(updated);
+  };
 
   const handleRowAction = (key: React.Key) => {
     const leader = (tripLeaders ?? []).find((tl) => tl.member?.name === key);
@@ -242,7 +307,7 @@ export default function TripLeaderDashboardPage() {
                   return (
                     searchTerm === "" ||
                     name.toLowerCase().includes(searchTerm) ||
-                    tripLeader.sport?.toLowerCase().includes(searchTerm) ||
+                    tripLeader.sport?.some(s => s.toLowerCase().includes(searchTerm)) ||
                     tripLeader.gmail?.toLowerCase().includes(searchTerm)
                   );
                 })
@@ -253,7 +318,7 @@ export default function TripLeaderDashboardPage() {
                     aria-label={`Trip leader: ${tripLeader.member?.name}`}
                   >
                     <Table.Cell>{tripLeader.member?.name}</Table.Cell>
-                    <Table.Cell>{tripLeader.sport}</Table.Cell>
+                    <Table.Cell>{tripLeader.sport?.join(', ')}</Table.Cell>
                     <Table.Cell>{tripLeader.gmail}</Table.Cell>
                     <Table.Cell>
                       <span
@@ -332,10 +397,67 @@ export default function TripLeaderDashboardPage() {
                       </Table.Content>
                     </Table.ScrollContainer>
                   </Table>
+                  <CheckboxGroup
+                    name="sports"
+                    onChange={setSportValues}
+                    value={sportValues}
+                  >
+                    <Label>Sports</Label>
+                    {SPORTS.filter(s => !PSEUDO_SPORTS.includes(s)).map((sport) => (
+                      <Checkbox key={sport} value={sport}>
+                        <Checkbox.Content>
+                          <Checkbox.Control>
+                            <Checkbox.Indicator>{() => null}</Checkbox.Indicator>
+                          </Checkbox.Control>
+                          {sport}
+                        </Checkbox.Content>
+                      </Checkbox>
+                    ))}
+                  </CheckboxGroup>
+                  <CheckboxGroup
+                    name="certification-process"
+                    onChange={setProcessValues}
+                    value={processValues}
+                  >
+                    <Label>Certification Process</Label>
+                    <Checkbox value="shadowed">
+                      <Checkbox.Content>
+                        <Checkbox.Control>
+                          <Checkbox.Indicator>{() => null}</Checkbox.Indicator>
+                        </Checkbox.Control>
+                        Shadowed a trip
+                      </Checkbox.Content>
+                    </Checkbox>
+                    <Checkbox value="approved">
+                      <Checkbox.Content>
+                        <Checkbox.Control>
+                          <Checkbox.Indicator>{() => null}</Checkbox.Indicator>
+                        </Checkbox.Control>
+                        Approved by secretary of sports and head officer
+                      </Checkbox.Content>
+                    </Checkbox>
+                    <Checkbox value="certified">
+                      <Checkbox.Content>
+                        <Checkbox.Control>
+                          <Checkbox.Indicator>{() => null}</Checkbox.Indicator>
+                        </Checkbox.Control>
+                        Completed trip leader training
+                      </Checkbox.Content>
+                    </Checkbox>
+                  </CheckboxGroup>
                 </div>
               </Modal.Body>
               <Modal.Footer>
                 <Modal.CloseTrigger />
+                <Button
+                  isDisabled={!isDirty}
+                  onPress={() => {
+                    handleSave();
+                    setIsModalOpen(false);
+                  }}
+                >
+                  Save
+                </Button>
               </Modal.Footer>
             </Modal.Dialog>
           </Modal.Container>

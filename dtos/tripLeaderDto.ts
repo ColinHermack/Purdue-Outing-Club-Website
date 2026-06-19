@@ -14,7 +14,7 @@ class TripLeaderProcessDTO {
 
 export default class TripLeaderDTO {
   member?: MemberDTO;
-  sport?: string;
+  sport?: string[];
   process?: TripLeaderProcessDTO;
   leadCount?: number;
   gmail?: string;

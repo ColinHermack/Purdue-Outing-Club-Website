@@ -77,6 +77,23 @@ function mapMemberRow(row: MemberRow): MemberDTO {
 }
 
 /**
+ * Returns a list of all members in the club.
+ * 
+ * @returns A list of MemberDTO objects
+ */
+export async function getMembers(): Promise<MemberDTO[]> {
+  const client = await pool.connect();
+
+  try {
+    const result = await client.query("SELECT * FROM member");
+
+    return result.rows;
+  } finally {
+    client.release();
+  }
+}
+
+/**
  * Checks whether a user exists in the database
  * @param email The user's email address
  * @returns A promise resolving to true if they exist, false otherwise

@@ -156,11 +156,6 @@ export async function getOfficerDataByPosition(
   let result: QueryResult | null = null;
   const client = await pool.connect();
 
-  // TODO: This query has several bugs to fix manually:
-  //  - JOIN uses `o.officer_id`, but the officer column is `member_id` (see models/officer.ts).
-  //  - WHERE references the table name `officer` instead of its alias `o` (this errors at runtime).
-  //  - The rows are returned raw (snake_case) instead of being mapped to OfficerDTO[]; map them
-  //    the same way getOfficerDataByEmail does before returning.
   try {
     result = await client.query(
       `SELECT m.member_id,
@@ -186,8 +181,8 @@ export async function getOfficerDataByPosition(
                     o.year,
                     o.officer_data
                 FROM officer AS o
-                JOIN member AS m ON m.member_id = o.officer_id
-                WHERE officer.position = $1`,
+                JOIN member AS m ON m.member_id = o.member_id
+                WHERE o.position = $1`,
       [position],
     );
   } finally {
@@ -198,7 +193,32 @@ export async function getOfficerDataByPosition(
     return null;
   }
 
-  return result.rows;
+  return result.rows.map((row: OfficerJoinRow) => ({
+    member: {
+      id: row.member_id,
+      name: row.name,
+      pronouns: row.pronouns,
+      email: row.email,
+      phone: row.phone,
+      duesData: row.dues_data,
+      firstAidData: row.first_aid_data,
+      carData: row.car_data,
+      driverData: row.driver_data,
+      emergencyData: row.emergency_data,
+      policyAgreement: row.policy_agreement,
+      waiverAgreement: row.waiver_agreement,
+      schoolYear: row.school_year,
+      medicalData: row.medical_data,
+      tripCount: row.trip_count,
+      holds: row.holds,
+      signupCount: row.signup_count,
+      yearsActive: row.years_active,
+      campus: row.campus,
+    },
+    position: row.position,
+    year: row.year,
+    officerData: row.officer_data,
+  }));
 }
 
 /**

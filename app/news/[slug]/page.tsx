@@ -5,7 +5,11 @@ import html from "remark-html";
 import { getPosts } from "@/app/news/postUtils";
 import { BASE_URL } from "@/config/constants";
 
-export default async function NewsPost({ params }: any) {
+export default async function NewsPost({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const paramsResponse = await params;
   const post = getPosts().find((post) => post.slug === paramsResponse.slug);
 

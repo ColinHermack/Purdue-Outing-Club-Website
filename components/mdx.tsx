@@ -8,10 +8,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import React from "react";
+import type { MDXComponents } from "mdx/types";
 
 interface ITablePropData {
   headers: string[];
-  rows: string[];
+  rows: string[][];
 }
 
 interface ITableProps {
@@ -32,9 +33,9 @@ function Table({ data }: ITableProps) {
   const headers = data.headers.map((header: string, index: number) => (
     <th key={index}>{header}</th>
   ));
-  const rows = data.rows.map((row: any, index: any) => (
+  const rows = data.rows.map((row: string[], index: number) => (
     <tr key={index}>
-      {row.map((cell: any, cellIndex: any) => (
+      {row.map((cell: string, cellIndex: number) => (
         <td key={cellIndex}>{cell}</td>
       ))}
     </tr>
@@ -76,11 +77,9 @@ function CustomLink(props: ICustomLinkProps) {
   }
 
   if (href.startsWith("#")) {
-    // eslint-disable-next-line jsx-a11y/anchor-has-content
     return <a {...props} />;
   }
 
-  // eslint-disable-next-line jsx-a11y/anchor-has-content
   return <a rel="noopener noreferrer" target="_blank" {...props} />;
 }
 
@@ -111,8 +110,8 @@ function slugify(str: string) {
     .trim() // Remove whitespace from both ends of a string
     .replace(/\s+/g, "-") // Replace spaces with -
     .replace(/&/g, "-and-") // Replace & with "and"
-    .replace(/[^\w\-]+/g, "") // Remove all non-word characters except for -
-    .replace(/\-\-+/g, "-"); // Replace multiple - with single -
+    .replace(/[^\w-]+/g, "") // Remove all non-word characters except for -
+    .replace(/--+/g, "-"); // Replace multiple - with single -
 }
 
 interface IHeaderProps {
@@ -166,7 +165,7 @@ const components = {
 
 interface ICustomMDXProps {
   source: string;
-  components?: any;
+  components?: MDXComponents;
 }
 
 /**

@@ -8,6 +8,8 @@
  */
 
 import { getServerSession } from "next-auth/next";
+import { NextRequest } from "next/server";
+
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 
 import OfficerDTO from "@/dtos/officerDto";
@@ -72,9 +74,7 @@ export async function GET(): Promise<Response> {
  *
  * @returns An HTTP response object
  */
-export async function POST(
-  newTripLeader: CreateTripLeaderDTO,
-): Promise<Response> {
+export async function POST(request: NextRequest): Promise<Response> {
   try {
     const session = await getServerSession(authOptions);
 
@@ -101,6 +101,14 @@ export async function POST(
 
     if (!userIsAuthorized) {
       return new Response("Forbidden", { status: 401 });
+    }
+
+    let newTripLeader: CreateTripLeaderDTO;
+
+    try {
+      newTripLeader = await request.json();
+    } catch {
+      return new Response("Invalid request body", { status: 400 });
     }
 
     if (newTripLeader.memberId == null) {
@@ -121,9 +129,13 @@ export async function POST(
       return new Response("Internal Server Error", { status: 500 });
     }
 
-    const createdTripLeader: TripLeaderDTO = await getTripLeader(
+    const createdTripLeader: TripLeaderDTO | null = await getTripLeader(
       newTripLeader.memberId,
     );
+    if (createdTripLeader === null) {
+      return new Response("Internal Server Error", { status: 500 });
+    }
+
     return new Response(JSON.stringify(createdTripLeader), { status: 200 });
   } catch {
     return new Response("Internal Server Error", { status: 500 });
@@ -135,9 +147,7 @@ export async function POST(
  *
  * @returns An HTTP response object
  */
-export async function PUT(
-  updatedTripLeader: UpdateTripLeaderDTO,
-): Promise<Response> {
+export async function PUT(request: NextRequest): Promise<Response> {
   try {
     const session = await getServerSession(authOptions);
 
@@ -164,6 +174,14 @@ export async function PUT(
 
     if (!userIsAuthorized) {
       return new Response("Forbidden", { status: 401 });
+    }
+
+    let updatedTripLeader: UpdateTripLeaderDTO;
+
+    try {
+      updatedTripLeader = await request.json();
+    } catch {
+      return new Response("Invalid request body", { status: 400 });
     }
 
     if (updatedTripLeader.memberId == null) {
@@ -185,9 +203,13 @@ export async function PUT(
       return new Response("Internal Server Error", { status: 500 });
     }
 
-    const tripLeader: TripLeaderDTO = await getTripLeader(
+    const tripLeader: TripLeaderDTO | null = await getTripLeader(
       updatedTripLeader.memberId,
     );
+    if (tripLeader === null) {
+      return new Response("Internal Server Error", { status: 500 });
+    }
+
     return new Response(JSON.stringify(tripLeader), { status: 200 });
   } catch {
     return new Response("Internal Server Error", { status: 500 });

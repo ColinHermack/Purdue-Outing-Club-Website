@@ -11,9 +11,10 @@ import { useState, useEffect } from "react";
 
 import { AccordionEntry } from "@/components/accordion-entry";
 import { SPORT_DESCRIPTIONS } from "@/config/constants";
+import NewsPreviewDTO from "@/dtos/newsPreviewDto";
 
 export default function Home() {
-  const [recentNews, setRecentNews] = useState([]);
+  const [recentNews, setRecentNews] = useState<NewsPreviewDTO[]>([]);
 
   useEffect(() => {
     async function fetchNews() {
@@ -70,7 +71,7 @@ export default function Home() {
       <h2 className="text-4xl m-10 font-bold">NEWS</h2>
       <div className="mb-10">
         {recentNews.length > 0 ? (
-          recentNews.map((post: any) => {
+          recentNews.map((post: NewsPreviewDTO) => {
             return (
               <Link
                 key={post.slug}

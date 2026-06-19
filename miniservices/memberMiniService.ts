@@ -6,21 +6,75 @@
 
 "use server";
 
-import MemberDTO from "@/dtos/memberDto";
-import { TripInfoT } from "@/config/types";
+import { Pool } from "pg";
 
-const { Pool, QueryResult } = require("pg");
+import MemberDTO from "@/dtos/memberDto";
 
 const pool = new Pool({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
+  port: process.env.DB_PORT ? Number(process.env.DB_PORT) : undefined,
   database: process.env.DB_DATABASE,
   ssl: {
     rejectUnauthorized: false,
   },
 });
+
+/**
+ * The shape of a `member` table row as returned by the database (snake_case columns).
+ */
+interface MemberRow {
+  member_id: number;
+  name: string;
+  pronouns: string;
+  email: string;
+  phone: string;
+  dues_data: MemberDTO["duesData"];
+  first_aid_data: MemberDTO["firstAidData"];
+  car_data: MemberDTO["carData"];
+  driver_data: MemberDTO["driverData"];
+  emergency_data: MemberDTO["emergencyData"];
+  policy_agreement: boolean;
+  waiver_agreement: boolean;
+  school_year: string;
+  medical_data: MemberDTO["medicalData"];
+  trip_count: number;
+  holds: string;
+  signup_count: number;
+  years_active: string;
+  campus: string;
+}
+
+/**
+ * Maps a raw `member` row from the database into a MemberDTO (snake_case -> camelCase).
+ *
+ * @param row A row from the member table.
+ * @returns The equivalent MemberDTO.
+ */
+function mapMemberRow(row: MemberRow): MemberDTO {
+  return {
+    id: row.member_id,
+    name: row.name,
+    pronouns: row.pronouns,
+    email: row.email,
+    phone: row.phone,
+    duesData: row.dues_data,
+    firstAidData: row.first_aid_data,
+    carData: row.car_data,
+    driverData: row.driver_data,
+    emergencyData: row.emergency_data,
+    policyAgreement: row.policy_agreement,
+    waiverAgreement: row.waiver_agreement,
+    schoolYear: row.school_year,
+    medicalData: row.medical_data,
+    tripCount: row.trip_count,
+    holds: row.holds,
+    signupCount: row.signup_count,
+    yearsActive: row.years_active,
+    campus: row.campus,
+  };
+}
 
 /**
  * Checks whether a user exists in the database
@@ -35,16 +89,17 @@ export async function verifyMembershipByEmail(email: string): Promise<boolean> {
       email,
     ]);
 
-    if (result.rows.length > 0) {
-      return true;
-    }
+    return result.rows.length > 0;
   } finally {
     client.release();
   }
-
-  return false;
 }
 
+/**
+ * Gets the member with the given id.
+ * @param id The member's id
+ * @returns A promise resolving to the MemberDTO, or null if no such member exists.
+ */
 export async function getMemberById(id: number): Promise<MemberDTO | null> {
   const client = await pool.connect();
 
@@ -54,31 +109,11 @@ export async function getMemberById(id: number): Promise<MemberDTO | null> {
       [id],
     );
 
-    if (result.rows.length > 0) {
-      const row = result.rows[0];
-      return {
-        id: row.member_id,
-        name: row.name,
-        pronouns: row.pronouns,
-        email: row.email,
-        phone: row.phone,
-        duesData: row.dues_data,
-        firstAidData: row.first_aid_data,
-        carData: row.car_data,
-        driverData: row.driver_data,
-        emergencyData: row.emergency_data,
-        policyAgreement: row.policy_agreement,
-        waiverAgreement: row.waiver_agreement,
-        schoolYear: row.school_year,
-        medicalData: row.medical_data,
-        tripCount: row.trip_count,
-        holds: row.holds,
-        signupCount: row.signup_count,
-        yearsActive: row.years_active,
-        campus: row.campus,
-      };
+    if (result.rows.length === 0) {
+      return null;
     }
-    return null;
+
+    return mapMemberRow(result.rows[0] as MemberRow);
   } finally {
     client.release();
   }
@@ -93,7 +128,6 @@ export async function getMostTripsLed(): Promise<
   { tripsLed: number; member: MemberDTO }[]
 > {
   const client = await pool.connect();
-  const retVal: { tripsLed: number; member: MemberDTO }[] = [];
 
   try {
     const result = await client.query(`
@@ -123,37 +157,13 @@ export async function getMostTripsLed(): Promise<
             ORDER BY trips_led DESC
             LIMIT 5;`);
 
-    result.rows.map((row: any) => {
-      retVal.push({
-        tripsLed: row.trips_led,
-        member: {
-          id: row.member_id,
-          name: row.name,
-          pronouns: row.pronouns,
-          email: row.email,
-          phone: row.phone,
-          duesData: row.dues_data,
-          firstAidData: row.first_aid_data,
-          carData: row.car_data,
-          driverData: row.driver_data,
-          emergencyData: row.emergency_data,
-          policyAgreement: row.policy_agreement,
-          waiverAgreement: row.waiver_agreement,
-          schoolYear: row.school_year,
-          medicalData: row.medical_data,
-          tripCount: row.trip_count,
-          holds: row.holds,
-          signupCount: row.signup_count,
-          yearsActive: row.years_active,
-          campus: row.campus,
-        },
-      });
-    });
+    return result.rows.map((row: MemberRow & { trips_led: number }) => ({
+      tripsLed: row.trips_led,
+      member: mapMemberRow(row),
+    }));
   } finally {
     client.release();
   }
-
-  return retVal;
 }
 
 /**
@@ -164,7 +174,6 @@ export async function getMostTripsAttended(): Promise<
   { tripsAttended: number; member: MemberDTO }[]
 > {
   const client = await pool.connect();
-  const retVal: { tripsAttended: number; member: MemberDTO }[] = [];
 
   try {
     const result = await client.query(`
@@ -194,212 +203,10 @@ export async function getMostTripsAttended(): Promise<
         ORDER BY trips_attended DESC
         LIMIT 5;`);
 
-    result.rows.map((row: any) => {
-      retVal.push({
-        tripsAttended: row.trips_attended,
-        member: {
-          id: row.member_id,
-          name: row.name,
-          pronouns: row.pronouns,
-          email: row.email,
-          phone: row.phone,
-          duesData: row.dues_data,
-          firstAidData: row.first_aid_data,
-          carData: row.car_data,
-          driverData: row.driver_data,
-          emergencyData: row.emergency_data,
-          policyAgreement: row.policy_agreement,
-          waiverAgreement: row.waiver_agreement,
-          schoolYear: row.school_year,
-          medicalData: row.medical_data,
-          tripCount: row.trip_count,
-          holds: row.holds,
-          signupCount: row.signup_count,
-          yearsActive: row.years_active,
-          campus: row.campus,
-        },
-      });
-    });
-  } finally {
-    client.release();
-  }
-
-  return retVal;
-}
-
-/**
- * Asynchronously queries the database in order to get the user id associated with the member with the
- * email address passed to it.
- *
- * @returns A promise that resolves to the id of the member with the email address, or -1 if it does not exist.
- */
-export async function getMemberId(email: string): Promise<number> {
-  let result: typeof QueryResult = null;
-  const client = await pool.connect();
-
-  try {
-    result = await client.query(
-      "SELECT member_id FROM member WHERE email = $1;",
-      [email],
-    );
-    if (result === null || result.rows.length === 0) {
-      return -1;
-    } else {
-      return result.rows[0].member_id;
-    }
-  } catch (error: any) {
-    return -1;
-  } finally {
-    client.release();
-  }
-}
-
-/**
- * Asynchronously queries the database and gets the user's full name based on their ID number.
- *
- * @param userID The user's ID number from the database.
- * @returns A promise which resolves to a string containing the user's full name if the user is found, otherwise it
- * resolves to an empty string
- */
-export async function getUserName(userID: number): Promise<string> {
-  const client = await pool.connect();
-
-  try {
-    const result: typeof QueryResult = await client.query(
-      "SELECT name FROM member WHERE member_id = $1",
-      [userID],
-    );
-
-    if (result === null || result.rows.length === 0) {
-      return "";
-    } else {
-      return result.rows[0].name;
-    }
-  } catch (error: any) {
-    return "";
-  } finally {
-    client.release();
-  }
-}
-
-/**
- * Queries the database asynchronously to get the number of trips that a member has signed up for.
- *
- * @param userID The ID of the member to get the number of trips from.
- * @returns A promise that resolves to the number of trips that the member is signed up for, or -1 if the query fails.
- */
-export async function getNumTripsTotal(userID: number): Promise<number> {
-  let result: typeof QueryResult = null;
-  const client = await pool.connect();
-
-  try {
-    result = await client.query(
-      "SELECT COUNT(*) FROM trip_roster WHERE member_id = $1;",
-      [userID],
-    );
-    if (result === null || result.rows.length === 0) {
-      return -1;
-    } else {
-      return result.rows[0].count;
-    }
-  } catch (error: any) {
-    return -1;
-  } finally {
-    client.release();
-  }
-}
-
-/**
- * Queries the database asynchronously to get the number of trips that a member has led.
- *
- * @param userID The ID of the member to get the number of trips from.
- * @returns A promise that resolves to the number of trips that the member has led, or -1 if the query fails.
- */
-export async function getNumTripsLed(userID: number): Promise<number> {
-  let result: typeof QueryResult = null;
-  const client = await pool.connect();
-
-  try {
-    result = await client.query(
-      "SELECT COUNT(*) FROM trip_roster WHERE member_id = $1 AND is_leader = true;",
-      [userID],
-    );
-    if (result === null || result.rows.length === 0) {
-      return -1;
-    } else {
-      return result.rows[0].count;
-    }
-  } catch (error: any) {
-    return -1;
-  } finally {
-    client.release();
-  }
-}
-
-/**
- * Queries the database asynchronously to get the trips that a member has signed up for.
- *
- * @param userID The ID of the member to get the trips from.
- * @returns A promise that resolves to an array of objects containing the trip's ID and name, or an empty array if the query fails.
- */
-export async function getTrips(userID: number): Promise<TripInfoT[]> {
-  let result: typeof QueryResult = null;
-  const client = await pool.connect();
-
-  try {
-    result = await client.query(
-      `
-            SELECT trip.trip_id, trip.name FROM trip_roster
-            JOIN trip ON trip.trip_id = trip_roster.trip_id
-            WHERE member_id=$1
-            ORDER BY trip_id;`,
-      [userID],
-    );
-    if (result === null || result.rows.length === 0) {
-      return [];
-    } else {
-      return result.rows;
-    }
-  } catch (error: any) {
-    return [];
-  } finally {
-    client.release();
-  }
-}
-
-/**
- * Asynchronously queries the database to get the user's position in the club based on their ID. The method for this is
- * as follows:
- * 1. Check if the user exists in the officers table, and get their officer position if they do.
- * 2. If the user doesn't exist in the officers table, check if they exist in the trip leaders table.
- * 3. If they don't exist in either of those, then they must be a general member.
- */
-
-export async function getUserPosition(userID: number): Promise<string> {
-  const client = await pool.connect();
-
-  try {
-    const result: typeof QueryResult = await client.query(
-      "SELECT * FROM officer WHERE member_id = $1",
-      [userID],
-    );
-
-    if (result !== null && result.rows.length !== 0) {
-      return "Officer";
-    } else {
-      const result = await client.query(
-        "SELECT * FROM trip_leader WHERE member_id = $1",
-        [userID],
-      );
-
-      if (result !== null && result.rows.length !== 0) {
-        return "Trip Leader";
-      } else {
-        return "Member";
-      }
-    }
-  } catch {
-    return "";
+    return result.rows.map((row: MemberRow & { trips_attended: number }) => ({
+      tripsAttended: row.trips_attended,
+      member: mapMemberRow(row),
+    }));
   } finally {
     client.release();
   }
@@ -408,44 +215,23 @@ export async function getUserPosition(userID: number): Promise<string> {
 /**
  * Gets the user specified by a purdue email address
  * @param email The user's purdue email
- * @returns A MemberDTO object 
+ * @returns A MemberDTO object, or null if no such member exists.
  */
-export async function getMemberByEmail(email: string): Promise<MemberDTO | null> {
+export async function getMemberByEmail(
+  email: string,
+): Promise<MemberDTO | null> {
   const client = await pool.connect();
 
   try {
-    const result = await client.query("SELECT * FROM member WHERE email=$1", [email])
+    const result = await client.query("SELECT * FROM member WHERE email=$1", [
+      email,
+    ]);
 
     if (result.rows.length === 0) {
       return null;
     }
 
-    let row = result.rows[0];
-
-    let member: MemberDTO =
-      {
-          id: row.member_id,
-          name: row.name,
-          pronouns: row.pronouns,
-          email: row.email,
-          phone: row.phone,
-          duesData: row.dues_data,
-          firstAidData: row.first_aid_data,
-          carData: row.car_data,
-          driverData: row.driver_data,
-          emergencyData: row.emergency_data,
-          policyAgreement: row.policy_agreement,
-          waiverAgreement: row.waiver_agreement,
-          schoolYear: row.school_year,
-          medicalData: row.medical_data,
-          tripCount: row.trip_count,
-          holds: row.holds,
-          signupCount: row.signup_count,
-          yearsActive: row.years_active,
-          campus: row.campus,
-      };
-
-    return member;
+    return mapMemberRow(result.rows[0] as MemberRow);
   } finally {
     client.release();
   }

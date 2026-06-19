@@ -17,15 +17,19 @@ import {
 } from "@heroui/react";
 import { FaMapMarkerAlt } from "react-icons/fa";
 
+import TripDTO from "@/dtos/tripDto";
+
 export default function TripsPage() {
-  const [trips, setTrips] = useState(null);
+  const [trips, setTrips] = useState<TripDTO[] | null>(null);
 
   useEffect(() => {
     fetch("/api/trips/open")
       .then((response) => response.json())
-      .then((data) => {
-        for (let i = 0; i < data.length; i++) {
-          data[i].startDate = new Date(data[i].startDate);
+      .then((data: TripDTO[]) => {
+        for (const trip of data) {
+          if (trip.startDate) {
+            trip.startDate = new Date(trip.startDate);
+          }
         }
         setTrips(data);
       });
@@ -104,7 +108,7 @@ export default function TripsPage() {
 }
 
 interface TripCardProps {
-  trips: any[];
+  trips: TripDTO[];
 }
 
 /**
@@ -124,14 +128,14 @@ interface TripCardProps {
 function TripCards(props: TripCardProps) {
   return props.trips.length > 0 ? (
     props.trips
-      .sort((a, b) => {
-        return a.startDate - b.startDate;
-      })
-      .map((trip: any) => (
+      .sort(
+        (a, b) => (a.startDate?.getTime() ?? 0) - (b.startDate?.getTime() ?? 0),
+      )
+      .map((trip: TripDTO) => (
         <Link
-          key={trip.trip_id}
+          key={trip.tripId}
           className="text-foreground no-underline hover:no-underline"
-          href={`/trips/${trip.trip_id}`}
+          href={`/trips/${trip.tripId}`}
         >
           <Card className="w-[400px] my-2">
             <CardHeader className="flex gap-3">
@@ -140,10 +144,10 @@ function TripCards(props: TripCardProps) {
                   {trip.name}
                 </p>
                 <p className="text-small text-default-500 text-left">
-                  {trip.startDate.toLocaleDateString().replace(/\//g, "-")}
+                  {trip.startDate?.toLocaleDateString().replace(/\//g, "-")}
                 </p>
                 <p className="text-small text-default-500 text-left">
-                  {trip.startDate.toLocaleTimeString()}
+                  {trip.startDate?.toLocaleTimeString()}
                 </p>
                 <p />
               </div>

@@ -38,5 +38,10 @@ export default defineConfig([
     languageOptions: {
       parserOptions: pluginReact.configs.recommended.parserOptions,
     },
+    settings: {
+      react: {
+        version: "detect",
+      },
+    },
   },
 ]);

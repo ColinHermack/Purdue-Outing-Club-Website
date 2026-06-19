@@ -5,6 +5,7 @@
  */
 
 import { getPosts } from "@/app/news/utils";
+import NewsPreviewDTO from "@/dtos/newsPreviewDto";
 
 /**
  * The actual route handler. Gets the 3 most recent news posts.
@@ -16,7 +17,7 @@ export async function GET() {
     const posts = getPosts();
     const recentPosts = posts.slice(0, 3); // Get first 3 posts
 
-    const json = recentPosts.map((post) => {
+    const json: NewsPreviewDTO[] = recentPosts.map((post) => {
       return {
         title: post.metadata.title,
         postedOn: post.metadata.postedOn,

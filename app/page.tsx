@@ -97,7 +97,7 @@ export default function Home() {
         allowsMultipleExpanded
         className="max-w-[1000px]"
       >
-        <AccordionEntry id="1" title="What is the Purdue Outing Club">
+        <AccordionEntry id="1" title="What is the Purdue Outing Club?">
           The Purdue Outing Club is pretty much involved with almost any
           activity that takes place in the outdoors. Rock climbing, whitewater
           kayaking, backpacking, hiking, mountaineering, and caving are our main

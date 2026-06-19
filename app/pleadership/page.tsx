@@ -8,7 +8,7 @@
 import { Separator, Card, Link, buttonVariants } from "@heroui/react";
 import { MdEmail } from "react-icons/md";
 
-import { getLeaderData} from "@/miniservices/officerMiniService";
+import { getLeaderData } from "@/miniservices/officerMiniService";
 import { BranchData, Officer } from "@/utils/leadership";
 
 export const metadata = {
@@ -40,9 +40,7 @@ function LeaderCard(props: { officer: Officer }) {
       {*/}
       <div className="pb-0 pt-2 px-4 flex-col justify-top items-center text-center">
         <p className="font-bold text-lg text-center">{props.officer.name}</p>
-        <p className="text-xs text-center">
-          {props.officer.pronouns}
-        </p>
+        <p className="text-xs text-center">{props.officer.pronouns}</p>
         <p className="text-sm font-bold text-center pt-2 uppercase text-amber-400">
           {props.officer.position}
         </p>
@@ -84,7 +82,10 @@ export default async function Pleadership() {
               <div className="w-full flex flex-wrap justify-center items-center">
                 {item.content.map((currOfficer) => {
                   return (
-                    <LeaderCard key={`${currOfficer.position}: ${currOfficer.name}`} officer={currOfficer} />
+                    <LeaderCard
+                      key={`${currOfficer.position}: ${currOfficer.name}`}
+                      officer={currOfficer}
+                    />
                   );
                 })}
               </div>

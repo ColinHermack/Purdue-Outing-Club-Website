@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { Separator, Link, buttonVariants } from "@heroui/react";
 import { FaInstagram } from "react-icons/fa";

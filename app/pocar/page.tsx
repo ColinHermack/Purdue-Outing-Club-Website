@@ -33,27 +33,33 @@ export default function PocarPage() {
       <p className="text-left w-3/4 mt-2 mb-2">
         <strong>Race Fees</strong>
       </p>
-      <p className="text-left w-3/4 my-2"><strong>Purdue Outing Club Members:</strong> $35</p>
-      <p className="text-left w-3/4 my-2"><strong>Collegiate:</strong> $70</p>
-      <p className="text-left w-3/4 my-2"><strong>Open:</strong> $80</p>
+      <p className="text-left w-3/4 my-2">
+        <strong>Purdue Outing Club Members:</strong> $35
+      </p>
+      <p className="text-left w-3/4 my-2">
+        <strong>Collegiate:</strong> $70
+      </p>
+      <p className="text-left w-3/4 my-2">
+        <strong>Open:</strong> $80
+      </p>
 
       <Link
         className={buttonVariants({ className: "mb-2" })}
-        href='/docs/pocar_instructions.pdf'
+        href="/docs/pocar_instructions.pdf"
       >
         Race Instructions
       </Link>
 
       <Link
         className={buttonVariants({ className: "my-4" })}
-        href='/docs/pocar_rules.pdf'
+        href="/docs/pocar_rules.pdf"
       >
         Race Rules
       </Link>
 
       <Link
         className={buttonVariants({ className: "mt-2" })}
-        href='/docs/pocar_emergency_procedures.pdf'
+        href="/docs/pocar_emergency_procedures.pdf"
       >
         Emergency Procedures
       </Link>
@@ -61,12 +67,21 @@ export default function PocarPage() {
       <Separator className="my-10" />
 
       <h2 className="font-bold text-center mb-10 text-xl">Racer Information</h2>
-      
-      <p className="text-left w-3/4 my-2"><strong>Check In:</strong> Opens at 8:30 AM, January 17, 2026</p>
-      <p className='text-left w-3/4 mt-2'><strong>Race Start (Open):</strong> 10:00 AM, January 17, 2026</p>
-      <p className='text-left w-3/4'><strong>Race Start (Collegiate):</strong> 10:30 AM, January 17, 2026</p>
 
-      <p className='text-left w-3/4 mb-2'>Teams who do not check in by the race start time for their division will be disqualified.</p>
+      <p className="text-left w-3/4 my-2">
+        <strong>Check In:</strong> Opens at 8:30 AM, January 17, 2026
+      </p>
+      <p className="text-left w-3/4 mt-2">
+        <strong>Race Start (Open):</strong> 10:00 AM, January 17, 2026
+      </p>
+      <p className="text-left w-3/4">
+        <strong>Race Start (Collegiate):</strong> 10:30 AM, January 17, 2026
+      </p>
+
+      <p className="text-left w-3/4 mb-2">
+        Teams who do not check in by the race start time for their division will
+        be disqualified.
+      </p>
 
       <Separator className="my-10" />
 
@@ -80,28 +95,29 @@ export default function PocarPage() {
 
       <Separator className="my-10" />
 
-      <h2 className="font-bold text-center mb-4 text-xl">
-        Register to Race
-      </h2>
-      <p className='mb-4'>All registration for racers will be through IMLeagues.</p>
-      <Link
-        target="_blank"
-        rel="noopener noreferrer"
-        className={buttonVariants()}
-        href='http://imleagues.com/Purdue_Outing_POCAR/Orienteering1'
-      >
-        Racer Registration
-      </Link>
-
-      <p className='my-4'>
-        If you want to race but do not have a team, or you need additional members for your team, you can find others
-        to race with on the team finder.
+      <h2 className="font-bold text-center mb-4 text-xl">Register to Race</h2>
+      <p className="mb-4">
+        All registration for racers will be through IMLeagues.
       </p>
       <Link
         target="_blank"
         rel="noopener noreferrer"
         className={buttonVariants()}
-        href='https://docs.google.com/spreadsheets/d/1YmNarc1XFBIcolYodnXX9OEf0FW12QcvbZ3mABi1adQ/edit?gid=0#gid=0'
+        href="http://imleagues.com/Purdue_Outing_POCAR/Orienteering1"
+      >
+        Racer Registration
+      </Link>
+
+      <p className="my-4">
+        If you want to race but do not have a team, or you need additional
+        members for your team, you can find others to race with on the team
+        finder.
+      </p>
+      <Link
+        target="_blank"
+        rel="noopener noreferrer"
+        className={buttonVariants()}
+        href="https://docs.google.com/spreadsheets/d/1YmNarc1XFBIcolYodnXX9OEf0FW12QcvbZ3mABi1adQ/edit?gid=0#gid=0"
       >
         Team Finder
       </Link>
@@ -111,20 +127,23 @@ export default function PocarPage() {
       <h2 className="font-bold text-center mb-10 text-xl">
         Register to Volunteer
       </h2>
-      <p className='mb-8'>Volunteers are required to register on both IMLeagues and through the Purdue Outing Club website.</p>
+      <p className="mb-8">
+        Volunteers are required to register on both IMLeagues and through the
+        Purdue Outing Club website.
+      </p>
       <Link
         target="_blank"
         rel="noopener noreferrer"
         className={buttonVariants()}
-        href='http://imleagues.com/Purdue_Outing_POCAR/Orienteering1'
+        href="http://imleagues.com/Purdue_Outing_POCAR/Orienteering1"
       >
         Volunteer Registration (IMLeagues)
       </Link>
 
       <Link
         className={buttonVariants({ className: "mt-4" })}
-        target='_blank'
-        href='/trips/231'
+        target="_blank"
+        href="/trips/231"
       >
         Volunteer Registration (POC)
       </Link>
@@ -172,7 +191,10 @@ export default function PocarPage() {
           come to participate. Alumni often travel many hours to compete. POCAR
           can get cold, rainy, muddy, dirty, exhausting, etc. Now get excited!
         </AccordionEntry>
-        <AccordionEntry id="2" title="Why is POCAR in the middle of the winter?">
+        <AccordionEntry
+          id="2"
+          title="Why is POCAR in the middle of the winter?"
+        >
           The first POCAR took place in January 2001 during Martin Luther King
           Jr. Day weekend, as have all subsequent POCARs. The strategy behind
           these sets of dates was to allow the racers and volunteers to have a

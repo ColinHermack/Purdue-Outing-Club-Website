@@ -21,7 +21,10 @@ import { TRIP_DIFFICULTY_DESCRIPTIONS } from "@/config/constants";
  * @param sport - The sport to which the difficulty number corresponds.
  * @returns The description of the difficulty level.
  */
-export function getTripDifficultyDescription(difficulty: number, sport: string): string {
+export function getTripDifficultyDescription(
+  difficulty: number,
+  sport: string,
+): string {
   if (!Object.keys(TRIP_DIFFICULTY_DESCRIPTIONS).includes(sport)) {
     return "";
   }

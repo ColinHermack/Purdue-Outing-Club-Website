@@ -132,8 +132,8 @@ export default function TripLeaderPage() {
           The first step to becoming a trip leader is to express interest in a
           sport by going on a trip with a sports officer. After that, you can
           apply to become a trip leader. If approved, you will need to complete
-          CPR training and trip leader training. More detailed steps can
-          be found in the trip leader overview.
+          CPR training and trip leader training. More detailed steps can be
+          found in the trip leader overview.
         </AccordionEntry>
         <AccordionEntry
           id="5"
@@ -146,7 +146,10 @@ export default function TripLeaderPage() {
           it is probably because you need to build more experience to show that
           you are able to lead trips smoothly and safely.
         </AccordionEntry>
-        <AccordionEntry id="6" title="Do I have to reapply to be a trip leader?">
+        <AccordionEntry
+          id="6"
+          title="Do I have to reapply to be a trip leader?"
+        >
           No. Unlike club leadership positions, a trip leader&#39;s tenure only
           ends if they quit, graduate, move on to a higher positions, or are
           removed by the admin board.

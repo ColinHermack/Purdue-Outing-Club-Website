@@ -6,18 +6,19 @@
 
 "use server";
 
+import { Pool, type QueryResult } from "pg";
+
 import { LEADERSHIP_CATEGORIES } from "@/config/constants";
 import OfficerDTO from "@/dtos/officerDto";
+import MemberDTO from "@/dtos/memberDto";
 import { GearHoursDataT } from "@/config/types";
 import { Officer, BranchData } from "@/utils/leadership";
-
-const { Pool, QueryResult } = require("pg");
 
 const pool = new Pool({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
+  port: process.env.DB_PORT ? Number(process.env.DB_PORT) : undefined,
   database: process.env.DB_DATABASE,
   ssl: {
     rejectUnauthorized: false,
@@ -25,11 +26,41 @@ const pool = new Pool({
 });
 
 /**
+ * The shape of an `officer` JOIN `member` row as returned by the database (snake_case columns).
+ */
+interface OfficerJoinRow {
+  member_id: number;
+  name: string;
+  pronouns: string;
+  email: string;
+  phone: string;
+  dues_data: MemberDTO["duesData"];
+  first_aid_data: MemberDTO["firstAidData"];
+  car_data: MemberDTO["carData"];
+  driver_data: MemberDTO["driverData"];
+  emergency_data: MemberDTO["emergencyData"];
+  policy_agreement: boolean;
+  waiver_agreement: boolean;
+  school_year: string;
+  medical_data: MemberDTO["medicalData"];
+  trip_count: number;
+  holds: string;
+  signup_count: number;
+  years_active: string;
+  campus: string;
+  position: string;
+  year: number;
+  officer_data: OfficerDTO["officerData"];
+}
+
+/**
  * Gets data for all officers.
  * @returns A promise resolving to a list of objects representing each category of officer.
  */
-export async function getAllOfficerData(): Promise<{ label: string; content: OfficerDTO[] }[]> {
-  let retVal: { label: string; content: OfficerDTO[] }[] =
+export async function getAllOfficerData(): Promise<
+  { label: string; content: OfficerDTO[] }[]
+> {
+  const retVal: { label: string; content: OfficerDTO[] }[] =
     LEADERSHIP_CATEGORIES.map((category) => {
       return {
         label: category.branch,
@@ -37,9 +68,12 @@ export async function getAllOfficerData(): Promise<{ label: string; content: Off
       };
     });
 
-  let result: typeof QueryResult = null;
+  let result: QueryResult | null = null;
   const client = await pool.connect();
 
+  // TODO: This JOIN uses `o.officer_id`, but the officer table column is `member_id` (see
+  // models/officer.ts). It is inconsistent with getOfficerDataByEmail (which joins on o.member_id)
+  // and likely returns no rows. Verify the schema and fix the JOIN to use o.member_id.
   try {
     result = await client.query(
       `SELECT m.member_id,
@@ -104,8 +138,6 @@ export async function getAllOfficerData(): Promise<{ label: string; content: Off
         }
       }
     }
-  } catch (error: any) {
-    throw error;
   } finally {
     client.release();
   }
@@ -121,9 +153,14 @@ export async function getAllOfficerData(): Promise<{ label: string; content: Off
 export async function getOfficerDataByPosition(
   position: string,
 ): Promise<OfficerDTO[] | null> {
-  let result: typeof QueryResult = null;
+  let result: QueryResult | null = null;
   const client = await pool.connect();
 
+  // TODO: This query has several bugs to fix manually:
+  //  - JOIN uses `o.officer_id`, but the officer column is `member_id` (see models/officer.ts).
+  //  - WHERE references the table name `officer` instead of its alias `o` (this errors at runtime).
+  //  - The rows are returned raw (snake_case) instead of being mapped to OfficerDTO[]; map them
+  //    the same way getOfficerDataByEmail does before returning.
   try {
     result = await client.query(
       `SELECT m.member_id,
@@ -153,8 +190,6 @@ export async function getOfficerDataByPosition(
                 WHERE officer.position = $1`,
       [position],
     );
-  } catch (error: any) {
-    throw error;
   } finally {
     client.release();
   }
@@ -174,7 +209,7 @@ export async function getOfficerDataByPosition(
 export async function getOfficerDataByEmail(
   email: string,
 ): Promise<OfficerDTO[] | null> {
-  let result: typeof QueryResult = null;
+  let result: QueryResult | null = null;
   const client = await pool.connect();
 
   try {
@@ -206,8 +241,6 @@ export async function getOfficerDataByEmail(
                 WHERE m.email = $1`,
       [email],
     );
-  } catch (error: any) {
-    throw error;
   } finally {
     client.release();
   }
@@ -216,7 +249,7 @@ export async function getOfficerDataByEmail(
     return null;
   }
 
-  return result.rows.map((row: any) => ({
+  return result.rows.map((row: OfficerJoinRow) => ({
     member: {
       id: row.member_id,
       name: row.name,
@@ -252,14 +285,12 @@ export async function getGearHours(): Promise<GearHoursDataT[]> {
   const client = await pool.connect();
 
   try {
-    let result = await client.query(`
+    const result = await client.query(`
             SELECT m.name, o.officer_data->'GearHours' AS gearHours FROM officer AS o
             JOIN member AS m ON m.member_id = o.member_id
             WHERE position LIKE '%Gear%';`);
 
     return result.rows;
-  } catch (error: any) {
-    throw error;
   } finally {
     client.release();
   }
@@ -274,7 +305,7 @@ export async function getGearHours(): Promise<GearHoursDataT[]> {
 export async function getLeaderDataByPosition(
   position: string,
 ): Promise<Officer | undefined> {
-  let result: typeof QueryResult = null;
+  let result: QueryResult | null = null;
   const client = await pool.connect();
 
   try {
@@ -290,8 +321,6 @@ export async function getLeaderDataByPosition(
             WHERE officer.position = $1;`,
       [position],
     );
-  } catch (error: any) {
-    //Intentionally left blank
   } finally {
     client.release();
   }
@@ -310,7 +339,7 @@ export async function getLeaderDataByPosition(
  *          Officer objects, containing the officer data for each officer in the branch.
  */
 export async function getLeaderData() {
-  let allData: BranchData[] = [
+  const allData: BranchData[] = [
     {
       label: "Executive",
       content: [],
@@ -373,7 +402,7 @@ export async function getLeaderData() {
     },
   ];
 
-  let result: typeof QueryResult = null;
+  let result: QueryResult | null = null;
   const client = await pool.connect();
 
   try {
@@ -387,10 +416,12 @@ export async function getLeaderData() {
             FROM officer
             JOIN member ON officer.member_id = member.member_id`,
     );
-  } catch (error: any) {
-    //Intentionally left blank
   } finally {
     client.release();
+  }
+
+  if (result === null) {
+    return allData;
   }
 
   for (let i = 0; i < LEADERSHIP_CATEGORIES.length; i++) {
@@ -405,4 +436,3 @@ export async function getLeaderData() {
 
   return allData;
 }
-

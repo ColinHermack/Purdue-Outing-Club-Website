@@ -8,10 +8,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import React from "react";
+import type { MDXComponents } from "mdx/types";
 
 interface ITablePropData {
   headers: string[];
-  rows: string[];
+  rows: string[][];
 }
 
 interface ITableProps {
@@ -29,12 +30,12 @@ interface ITableProps {
  */
 
 function Table({ data }: ITableProps) {
-  let headers = data.headers.map((header: string, index: number) => (
+  const headers = data.headers.map((header: string, index: number) => (
     <th key={index}>{header}</th>
   ));
-  let rows = data.rows.map((row: any, index: any) => (
+  const rows = data.rows.map((row: string[], index: number) => (
     <tr key={index}>
-      {row.map((cell: any, cellIndex: any) => (
+      {row.map((cell: string, cellIndex: number) => (
         <td key={cellIndex}>{cell}</td>
       ))}
     </tr>
@@ -69,18 +70,16 @@ interface ICustomLinkProps {
  * @returns A JSX element representing the link.
  */
 function CustomLink(props: ICustomLinkProps) {
-  let href = props.href;
+  const href = props.href;
 
   if (href.startsWith("/")) {
     return <Link {...props}>{props.children}</Link>;
   }
 
   if (href.startsWith("#")) {
-    // eslint-disable-next-line jsx-a11y/anchor-has-content
     return <a {...props} />;
   }
 
-  // eslint-disable-next-line jsx-a11y/anchor-has-content
   return <a rel="noopener noreferrer" target="_blank" {...props} />;
 }
 
@@ -111,8 +110,8 @@ function slugify(str: string) {
     .trim() // Remove whitespace from both ends of a string
     .replace(/\s+/g, "-") // Replace spaces with -
     .replace(/&/g, "-and-") // Replace & with "and"
-    .replace(/[^\w\-]+/g, "") // Remove all non-word characters except for -
-    .replace(/\-\-+/g, "-"); // Replace multiple - with single -
+    .replace(/[^\w-]+/g, "") // Remove all non-word characters except for -
+    .replace(/--+/g, "-"); // Replace multiple - with single -
 }
 
 interface IHeaderProps {
@@ -131,7 +130,7 @@ interface IHeaderProps {
  */
 function createHeading(level: number) {
   const Heading = ({ children }: IHeaderProps) => {
-    let slug = slugify(children);
+    const slug = slugify(children);
 
     return React.createElement(
       `h${level}`,
@@ -152,7 +151,7 @@ function createHeading(level: number) {
   return Heading;
 }
 
-let components = {
+const components = {
   h1: createHeading(1),
   h2: createHeading(2),
   h3: createHeading(3),
@@ -166,7 +165,7 @@ let components = {
 
 interface ICustomMDXProps {
   source: string;
-  components?: any;
+  components?: MDXComponents;
 }
 
 /**

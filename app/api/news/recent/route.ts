@@ -5,6 +5,7 @@
  */
 
 import { getPosts } from "@/app/news/utils";
+import NewsPreviewDTO from "@/dtos/newsPreviewDto";
 
 /**
  * The actual route handler. Gets the 3 most recent news posts.
@@ -13,10 +14,10 @@ import { getPosts } from "@/app/news/utils";
  */
 export async function GET() {
   try {
-    let posts = getPosts();
-    let recentPosts = posts.slice(0, 3); // Get first 3 posts
+    const posts = getPosts();
+    const recentPosts = posts.slice(0, 3); // Get first 3 posts
 
-    let json = recentPosts.map((post) => {
+    const json: NewsPreviewDTO[] = recentPosts.map((post) => {
       return {
         title: post.metadata.title,
         postedOn: post.metadata.postedOn,
@@ -31,7 +32,7 @@ export async function GET() {
         "Content-Type": "application/json",
       },
     }); // Send to the client with code 200 OK
-  } catch (error: any) {
+  } catch {
     return new Response("Internal Server Error", { status: 500 });
   }
 }

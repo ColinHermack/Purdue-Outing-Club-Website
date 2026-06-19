@@ -13,47 +13,46 @@ import { WEEKDAYS } from "@/config/constants";
 
 type GearHoursDataType = {
   name: string;
-  gearhours: {day: string, time: string}[];
-}
+  gearhours: { day: string; time: string }[];
+};
 
 type GearHourEntryType = {
   time: string;
   officer: string;
-}
+};
 
 type GearHoursByDayType = {
-  "Monday": GearHourEntryType[],
-  "Tuesday": GearHourEntryType[],
-  "Wednesday": GearHourEntryType[],
-  "Thursday": GearHourEntryType[],
-  "Friday": GearHourEntryType[]
-}
+  Monday: GearHourEntryType[];
+  Tuesday: GearHourEntryType[];
+  Wednesday: GearHourEntryType[];
+  Thursday: GearHourEntryType[];
+  Friday: GearHourEntryType[];
+};
 
 export default function GearClosetPage() {
   const [gearHoursByDay, setGearHoursByDay] = useState<GearHoursByDayType>();
 
   useEffect(() => {
-    try {
-      fetch("/api/gear/hours")
-        .then((response) => response.json())
-        .then((data) => {
-          const byDay: GearHoursByDayType = {
-            "Monday": [],
-            "Tuesday": [],
-            "Wednesday": [],
-            "Thursday": [],
-            "Friday": [],
-          };
-          data.forEach((officer: GearHoursDataType) => {
-            officer.gearhours.forEach((item: { day: string; time: string }) => {
-              byDay[item.day as keyof GearHoursByDayType].push({ time: item.time, officer: officer.name });
+    fetch("/api/gear/hours")
+      .then((response) => response.json())
+      .then((data) => {
+        const byDay: GearHoursByDayType = {
+          Monday: [],
+          Tuesday: [],
+          Wednesday: [],
+          Thursday: [],
+          Friday: [],
+        };
+        data.forEach((officer: GearHoursDataType) => {
+          officer.gearhours.forEach((item: { day: string; time: string }) => {
+            byDay[item.day as keyof GearHoursByDayType].push({
+              time: item.time,
+              officer: officer.name,
             });
           });
-          setGearHoursByDay(byDay);
         });
-    } catch (error) {
-      //Intentionally left blank
-    }
+        setGearHoursByDay(byDay);
+      });
   }, []);
 
   return (

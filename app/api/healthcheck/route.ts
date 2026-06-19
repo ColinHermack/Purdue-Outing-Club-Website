@@ -4,8 +4,6 @@
  * @author Colin Hermack
  */
 
-import { NextResponse } from "next/server";
-
 /**
  * Simple route to check if the API is online.
  *

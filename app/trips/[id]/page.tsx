@@ -13,7 +13,11 @@ import TripDifficultyCard from "./tripDifficultyIcon";
 import { SPORTS } from "@/config/constants";
 import { getTripData } from "@/miniservices/tripMiniService";
 
-export default async function TripPage({ params }: any) {
+export default async function TripPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const paramsLocal = await params;
   const id = paramsLocal.id;
   const tripData = await getTripData(id);
@@ -23,7 +27,7 @@ export default async function TripPage({ params }: any) {
   }
 
   return (
-    <div className='flex flex-col justify-top items-center w-full'>
+    <div className="flex flex-col justify-top items-center w-full">
       <div className="flex flex-col justify-top items-center max-w-[600px]">
         <h1 className="text-5xl text-amber-400 font-bold text-center max-w-full">
           {tripData.name}
@@ -40,17 +44,17 @@ export default async function TripPage({ params }: any) {
           <FaExternalLinkAlt />
         </Link>
         <TripDifficultyCard
-          difficulty={tripData.difficulty}
-          sport={tripData.sport}
+          difficulty={tripData.difficulty ?? 0}
+          sport={tripData.sport ?? ""}
         />
         <p className="mt-10 max-w-[600px]">{tripData.description}</p>
         {tripData.signup ? (
           <Link
             className={buttonVariants({ className: "my-10" })}
             href={
-              SPORTS.includes(tripData.sport)
-                ? `https://forms.office.com/Pages/ResponsePage.aspx?id=Ob0wQVN8nEGx5YdY1tY_IYsPEC-CwDJNo7LaWV5ygUJUOVgwNTlJTlJPVEc1T0JETEVUQjJCNzNGTy4u&r603986e16a1343eb98dfe6f6af3bb910=${tripData.trip_id}&r919debb6446f4715b466a83613dde11a=%22${tripData.sport}%22`
-                : `https://forms.office.com/Pages/ResponsePage.aspx?id=Ob0wQVN8nEGx5YdY1tY_IYsPEC-CwDJNo7LaWV5ygUJUOVgwNTlJTlJPVEc1T0JETEVUQjJCNzNGTy4u&r603986e16a1343eb98dfe6f6af3bb910=${tripData.trip_id}&r919debb6446f4715b466a83613dde11a=%22Miscellaneous%22`
+              SPORTS.includes(tripData.sport ?? "")
+                ? `https://forms.office.com/Pages/ResponsePage.aspx?id=Ob0wQVN8nEGx5YdY1tY_IYsPEC-CwDJNo7LaWV5ygUJUOVgwNTlJTlJPVEc1T0JETEVUQjJCNzNGTy4u&r603986e16a1343eb98dfe6f6af3bb910=${tripData.tripId}&r919debb6446f4715b466a83613dde11a=%22${tripData.sport}%22`
+                : `https://forms.office.com/Pages/ResponsePage.aspx?id=Ob0wQVN8nEGx5YdY1tY_IYsPEC-CwDJNo7LaWV5ygUJUOVgwNTlJTlJPVEc1T0JETEVUQjJCNzNGTy4u&r603986e16a1343eb98dfe6f6af3bb910=${tripData.tripId}&r919debb6446f4715b466a83613dde11a=%22Miscellaneous%22`
             }
           >
             Sign Up

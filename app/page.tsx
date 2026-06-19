@@ -1,13 +1,20 @@
 "use client";
 
-import { Accordion, Link, Spinner, Separator, buttonVariants } from "@heroui/react";
+import {
+  Accordion,
+  Link,
+  Spinner,
+  Separator,
+  buttonVariants,
+} from "@heroui/react";
 import { useState, useEffect } from "react";
 
 import { AccordionEntry } from "@/components/accordion-entry";
 import { SPORT_DESCRIPTIONS } from "@/config/constants";
+import NewsPreviewDTO from "@/dtos/newsPreviewDto";
 
 export default function Home() {
-  const [recentNews, setRecentNews] = useState([]);
+  const [recentNews, setRecentNews] = useState<NewsPreviewDTO[]>([]);
 
   useEffect(() => {
     async function fetchNews() {
@@ -64,7 +71,7 @@ export default function Home() {
       <h2 className="text-4xl m-10 font-bold">NEWS</h2>
       <div className="mb-10">
         {recentNews.length > 0 ? (
-          recentNews.map((post: any) => {
+          recentNews.map((post: NewsPreviewDTO) => {
             return (
               <Link
                 key={post.slug}
@@ -85,7 +92,11 @@ export default function Home() {
 
       <Separator className="my-5" />
 
-      <Accordion defaultExpandedKeys={["1"]} allowsMultipleExpanded className='max-w-[1000px]'>
+      <Accordion
+        defaultExpandedKeys={["1"]}
+        allowsMultipleExpanded
+        className="max-w-[1000px]"
+      >
         <AccordionEntry id="1" title="What is the Purdue Outing Club">
           The Purdue Outing Club is pretty much involved with almost any
           activity that takes place in the outdoors. Rock climbing, whitewater
@@ -125,7 +136,7 @@ export default function Home() {
       </Accordion>
 
       <h2 className="text-4xl m-10 font-bold">SPORTS</h2>
-      <Accordion allowsMultipleExpanded className='max-w-[1000px]'>
+      <Accordion allowsMultipleExpanded className="max-w-[1000px]">
         <AccordionEntry id="backpacking" title="Backpacking">
           {SPORT_DESCRIPTIONS.Backpacking}
         </AccordionEntry>

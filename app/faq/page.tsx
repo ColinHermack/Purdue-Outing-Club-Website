@@ -34,7 +34,10 @@ export default function FAQPage() {
           channel of the Slack before going. Gear hours may be cancelled if
           nobody expresses interest in going.
         </AccordionEntry>
-        <AccordionEntry id="2" title="How do I unsubscribe from the mailing list?">
+        <AccordionEntry
+          id="2"
+          title="How do I unsubscribe from the mailing list?"
+        >
           Send an email with body &#39;UNSUBSCRIBE poc&#39; to{" "}
           <Link
             className="text-amber-400"

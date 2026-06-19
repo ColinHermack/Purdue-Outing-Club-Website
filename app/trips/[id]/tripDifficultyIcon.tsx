@@ -7,7 +7,7 @@ interface TripDifficultyIconProps {
   sport: string;
 }
 
-function TripDifficultyIcon(props: {difficulty: number}) {
+function TripDifficultyIcon(props: { difficulty: number }) {
   switch (props.difficulty) {
     case 1:
       return <div className="text-4xl">🟢</div>;
@@ -26,7 +26,7 @@ function TripDifficultyIcon(props: {difficulty: number}) {
 }
 
 export default function TripDifficultyCard(props: TripDifficultyIconProps) {
-  let difficultyDescription = getTripDifficultyDescription(
+  const difficultyDescription = getTripDifficultyDescription(
     props.difficulty,
     props.sport,
   );
@@ -41,7 +41,7 @@ export default function TripDifficultyCard(props: TripDifficultyIconProps) {
       <p className="mt-4 font-bold">
         {DIFFICULTIES[props.difficulty - 1]} Difficulty
       </p>
-      <p className='mt-2 text-xs'>{difficultyDescription}</p>
+      <p className="mt-2 text-xs">{difficultyDescription}</p>
     </div>
   );
 }

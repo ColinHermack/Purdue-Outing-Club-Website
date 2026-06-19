@@ -13,12 +13,18 @@ import { getMostTripsLed } from "@/miniservices/memberMiniService";
  */
 export async function GET() {
   try {
-    const leaderboard: { tripsLed: number, member: MemberDTO }[] = await getMostTripsLed();
+    const leaderboard: { tripsLed: number; member: MemberDTO }[] =
+      await getMostTripsLed();
 
-    let retVal = leaderboard.map((item: { tripsLed: number, member: MemberDTO }) => ({ name: item.member.name, count: item.tripsLed }));
+    const retVal = leaderboard.map(
+      (item: { tripsLed: number; member: MemberDTO }) => ({
+        name: item.member.name,
+        count: item.tripsLed,
+      }),
+    );
 
     return new Response(JSON.stringify(retVal));
-  } catch (error: any) {
+  } catch {
     return new Response("Internal Server Error", { status: 500 });
   }
 }

@@ -36,6 +36,13 @@ export const SPORTS = [
   "Aproberfest",
 ];
 
+export const PSEUDO_SPORTS = [
+  'Labor Day',
+  'POCtoberfest',
+  'Spring Break',
+  'Aproberfest'
+];
+
 interface ITripDifficultyDescriptions {
   [key: string]: string[];
 }

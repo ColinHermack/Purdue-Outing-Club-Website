@@ -115,7 +115,7 @@ function mapTripLeaderRow(row: TripLeaderJoinRow): TripLeaderDTO {
       yearsActive: row.years_active,
       campus: row.campus,
     },
-    sport: row.sport,
+    sport: row.sport.split(', '),
     process: row.process,
     leadCount: row.lead_count,
     gmail: row.gmail,
@@ -233,14 +233,10 @@ export async function updateTripLeader(
   const client = await pool.connect();
 
   try {
-    // TODO: This statement is broken and needs to be fixed manually. The parameter placeholders are
-    // wrapped in single quotes (e.g. '$1'), so Postgres treats them as the literal strings "$1"
-    // rather than bound parameters, and the process object is built via string interpolation instead
-    // of a proper jsonb value. Rewrite using unquoted placeholders and jsonb_build_object.
     await client.query(
-      "UPDATE trip_leader SET sport = '$1', process = '{\"shadow\": $2, \"approved\": $3, \"certified\": $4}', gmail = '$5' WHERE member_id = $6;",
+      "UPDATE trip_leader SET sport = $1, process = jsonb_build_object('shadow', $2::boolean, 'approved', $3::boolean, 'certified', $4::boolean), gmail = $5 WHERE member_id = $6;",
       [
-        updatedTripLeader.sport?.concat(", "),
+        updatedTripLeader.sport?.join(", "),
         updatedTripLeader.process?.shadow,
         updatedTripLeader.process?.approved,
         updatedTripLeader.process?.certified,
@@ -250,9 +246,13 @@ export async function updateTripLeader(
     );
 
     return true;
+  } catch (error: unknown)  {
+    console.error(error);
+    return false;
   } finally {
     client.release();
   }
+
 }
 
 /**

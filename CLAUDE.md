@@ -50,5 +50,4 @@ Deployed on Vercel. Every PR gets a preview deployment; merging to `main` deploy
 
 ## HeroUI
 
-For all prompts that mention HeroUI, use HeroUI React documentation from https://heroui.com/react/llms.txt. Treat this
-as the ultimate source of truth on HeroUI.
+For all prompts that mention HeroUI, use HeroUI React documentation from https://heroui.com/react/llms-full.txt. Treat this as the ultimate source of truth on HeroUI.

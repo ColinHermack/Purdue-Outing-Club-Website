@@ -7,7 +7,7 @@
 import AzureADProvider from "next-auth/providers/azure-ad";
 import { NextAuthOptions } from "next-auth";
 
-import { verifyMembershipByEmail } from '@/miniservices/memberMiniService';
+import { getMemberId, getUserPosition, verifyMembershipByEmail } from '@/miniservices/memberMiniService';
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -20,10 +20,15 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async jwt({ token, account }) {
-      // Persist the access token to the token right after signin
       if (account) {
         token.accessToken = account.access_token;
         token.idToken = account.id_token;
+        if (typeof token.email === "string") {
+          const userId = await getMemberId(token.email);
+          if (userId !== -1) {
+            token.position = await getUserPosition(userId);
+          }
+        }
       }
 
       return token;

@@ -6,12 +6,15 @@ export default withAuth(
     const token = req.nextauth.token;
     const isAuthenticated = !!token;
 
-    // For example, check if the user's email is in your allowed list
-    // const isAuthorized = isAuthenticated &&
-    //   (await yourDatabaseCheck(token.email));
-
     if (!isAuthenticated) {
       return NextResponse.redirect(new URL("/auth/signin", req.url));
+    }
+
+    const isTripLeader =
+      token.position === "Trip Leader" || token.position === "Officer";
+
+    if (req.nextUrl.pathname.startsWith("/leadTrips") && !isTripLeader) {
+      return NextResponse.redirect(new URL("/tripleaders", req.url));
     }
 
     return NextResponse.next();
@@ -25,5 +28,5 @@ export default withAuth(
 
 // Specify which routes to protect
 export const config = {
-  matcher: ["/api/protected/:path*", "/dashboard"],
+  matcher: ["/api/protected/:path*", "/dashboard", "/leadTrips"],
 };

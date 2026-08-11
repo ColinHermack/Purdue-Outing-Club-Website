@@ -457,7 +457,6 @@ export async function getLeaderData() {
   return allData;
 }
 
-
 /**
  * Determines whether a user is an officer or not
  * 
@@ -465,7 +464,6 @@ export async function getLeaderData() {
  * @returns A promise resolving to true if the member is an officer, false otherwise
  */
 export async function verifyMemberIsOfficer(memberId: number): Promise<boolean> {
-  let result: QueryResult | null = null;
   const client = await pool.connect();
 
   try {

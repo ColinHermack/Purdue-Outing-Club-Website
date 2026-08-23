@@ -43,3 +43,6 @@ next-env.d.ts
 .vscode
 
 certificates
+
+CLAUDE.md
+AGENTS.md

@@ -121,6 +121,7 @@ export async function POST(request: NextRequest): Promise<Response> {
     if (member == null) {
       return new Response(
         `No member with id ${newTripLeader.memberId} exists.`,
+        { status: 404 },
       );
     }
 

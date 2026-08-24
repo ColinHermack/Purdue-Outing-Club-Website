@@ -14,7 +14,7 @@ import BasicMemberDTO from "@/dtos/basicMemberDto";
 import { SPORTS, PSEUDO_SPORTS } from "@/config/constants";
 import { redirect } from "next/navigation";
 
-import { Button, Modal, Table, TextField, Input, cn, Checkbox, CheckboxGroup, Label, Form, ListBox, Surface } from "@heroui/react";
+import { Button, Modal, Table, TextField, Input, cn, Checkbox, CheckboxGroup, Label, ComboBox, ListBox, ListBoxItem, Spinner } from "@heroui/react";
 
 type NestedRow = {
   children: NestedRow[];
@@ -33,8 +33,13 @@ export default function TripLeaderDashboardPage() {
   const [expandedKeys, setExpandedKeys] = useState<Selection>(() => new Set());
   const [processValues, setProcessValues] = useState<string[]>([]);
   const [sportValues, setSportValues] = useState<string[]>([]);
-  const [clubMembers, setClubMembers] = useState<BasicMemberDTO[]>([]);
-  const [memberNameFilter, setMemberNameFilter] = useState<string>("");
+  const [allMembers, setAllMembers] = useState<BasicMemberDTO[] | null>(null);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [newMemberId, setNewMemberId] = useState<number | null>(null);
+  const [newSportValues, setNewSportValues] = useState<string[]>([]);
+  const [newProcessValues, setNewProcessValues] = useState<string[]>([]);
+  const [newGmail, setNewGmail] = useState("");
+  const [isCreating, setIsCreating] = useState(false);
 
   useEffect(() => {
     const p = selectedLeader?.process;
@@ -46,14 +51,6 @@ export default function TripLeaderDashboardPage() {
     ]);
     setSportValues(selectedLeader?.sport ?? []);
   }, [selectedLeader]);
-
-  useEffect(() => {
-    fetch('/api/protected/members')
-      .then(response => response.json())
-      .then(data => {
-        setClubMembers(data);
-      });
-  }, [])
 
   const isDirty = useMemo(() => {
     const p = selectedLeader?.process;
@@ -99,6 +96,50 @@ export default function TripLeaderDashboardPage() {
       ),
     );
     setSelectedLeader(updated);
+  };
+
+  const availableMembers = useMemo(
+    () =>
+      (allMembers ?? []).filter(
+        (m) => !(tripLeaders ?? []).some((tl) => tl.member?.id === m.id),
+      ),
+    [allMembers, tripLeaders],
+  );
+
+  const handleCreate = async () => {
+    if (newMemberId == null) return;
+
+    setIsCreating(true);
+
+    const body = {
+      memberId: newMemberId,
+      sport: newSportValues,
+      process: {
+        shadow: newProcessValues.includes("shadowed"),
+        approved: newProcessValues.includes("approved"),
+        certified: newProcessValues.includes("certified"),
+      },
+      gmail: newGmail || undefined,
+    };
+
+    const response = await fetch("/api/protected/tripleaders", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+
+    setIsCreating(false);
+
+    if (!response.ok) return;
+
+    const created: TripLeaderDTO = await response.json();
+
+    setTripLeaders((prev) => [...(prev ?? []), created]);
+    setNewMemberId(null);
+    setNewSportValues([]);
+    setNewProcessValues([]);
+    setNewGmail("");
+    setIsAddModalOpen(false);
   };
 
   const handleRowAction = (key: React.Key) => {
@@ -263,13 +304,21 @@ export default function TripLeaderDashboardPage() {
       });
   }, []);
 
+  useEffect(() => {
+    fetch("/api/protected/members")
+      .then((response) => response.json())
+      .then((data) => {
+        setAllMembers(data);
+      });
+  }, []);
+
   return (
     <div className="flex flex-col justify-top items-center w-full">
       <title>Trip Leader Dashboard - Purdue Outing Club</title>
       <h1 className="text-5xl text-amber-400 font-bold text-center">
         Trip Leaders Dashboard
       </h1>
-      <div className="flex flex-row justify-apart align-center mt-12 w-7/8">
+      <div className="flex flex-row justify-apart align-center mt-12 w-7/8 gap-4">
         <TextField
           aria-label="Search trip leaders"
           onChange={setSearchTerm}
@@ -277,132 +326,94 @@ export default function TripLeaderDashboardPage() {
         >
           <Input placeholder="Search" />
         </TextField>
-        <Modal>
-          <Button className='rounded-xl ml-4'>Add Trip Leader</Button>
-          <Modal.Backdrop>
-            <Modal.Container size='cover'>
-              <Modal.Dialog>
-                <Modal.CloseTrigger onPress={() => {setMemberNameFilter("")}}/> 
-                <Modal.Header>
-                  Add New Trip Leader
-                </Modal.Header>
-                <Modal.Body className='mt-4 px-4'>
-                  <Form>
-                    <TextField
-                      isRequired
-                      name='name'
-                      type='text'
-                      variant='secondary'
+        <Button onPress={() => setIsAddModalOpen(true)}>
+          Add Trip Leader
+        </Button>
+      </div>
+      {tripLeaders === null ? (
+        <Spinner aria-label="Loading trip leaders" className="my-12" />
+      ) : (
+        <div className="w-7/8 mt-4 overflow-x-auto">
+          <Table>
+            <Table.Content
+              aria-label="Trip leaders"
+              className="table-fixed min-w-[58rem] w-full"
+              onRowAction={handleRowAction}
+            >
+              <Table.Header>
+                <Table.Column isRowHeader className="w-44 whitespace-nowrap">
+                  Name
+                </Table.Column>
+                <Table.Column>Sports</Table.Column>
+                <Table.Column className="w-56 whitespace-nowrap">
+                  Gmail
+                </Table.Column>
+                <Table.Column className="w-36 whitespace-nowrap">
+                  Shadowed trip?
+                </Table.Column>
+                <Table.Column className="w-28 whitespace-nowrap">
+                  Approved?
+                </Table.Column>
+                <Table.Column className="w-28 whitespace-nowrap">
+                  Certified?
+                </Table.Column>
+              </Table.Header>
+              <Table.Body>
+                {tripLeaders
+                  .filter((tripLeader: TripLeaderDTO) => {
+                    const name = tripLeader.member?.name;
+
+                    if (!name) return false;
+
+                    return (
+                      searchTerm === "" ||
+                      name.toLowerCase().includes(searchTerm) ||
+                      tripLeader.sport?.some(s => s.toLowerCase().includes(searchTerm)) ||
+                      tripLeader.gmail?.toLowerCase().includes(searchTerm)
+                    );
+                  })
+                  .map((tripLeader: TripLeaderDTO) => (
+                    <Table.Row
+                      key={tripLeader.member?.name}
+                      id={tripLeader.member?.name}
+                      aria-label={`Trip leader: ${tripLeader.member?.name}`}
                     >
-                      <Label>Trip Leader Name</Label>
-                      <Input onChange={(e) => setMemberNameFilter(e.target.value)} value={memberNameFilter}/>
-                    </TextField>
-                    {
-                      memberNameFilter.length > 3 ?
-                        <ListBox
-                          aria-label="Member name suggestions"
-                          className="mt-2"
-                          items={clubMembers.filter(cm => cm.name?.toLowerCase().includes(memberNameFilter.toLowerCase()))}
-                          onAction={() => {}}  // TODO: Figure out what the hell this is supposed to be doing
+                      <Table.Cell>{tripLeader.member?.name}</Table.Cell>
+                      <Table.Cell>{tripLeader.sport?.join(', ')}</Table.Cell>
+                      <Table.Cell>{tripLeader.gmail}</Table.Cell>
+                      <Table.Cell>
+                        <span
+                          role="img"
+                          aria-label={tripLeader.process?.shadow ? "Yes" : "No"}
                         >
-                          {(cm) => (
-                            <ListBox.Item key={cm.id} textValue={cm.name} onPress={() => {
-                              console.log(cm.name);
-                            }}>
-                              {cm.name}
-                            </ListBox.Item>
-                          )}
-                        </ListBox>
-                      : <></>
-                    }
-                  </Form>
-                </Modal.Body>
-                <Modal.Footer />
-              </Modal.Dialog>
-            </Modal.Container>
-          </Modal.Backdrop>
-        </Modal>
-      </div>
-      <div className="w-7/8 mt-4 overflow-x-auto">
-        <Table>
-          <Table.Content
-            aria-label="Trip leaders"
-            className="table-fixed min-w-[58rem] w-full"
-            onRowAction={handleRowAction}
-          >
-            <Table.Header>
-              <Table.Column isRowHeader className="w-44 whitespace-nowrap">
-                Name
-              </Table.Column>
-              <Table.Column>Sports</Table.Column>
-              <Table.Column className="w-56 whitespace-nowrap">
-                Gmail
-              </Table.Column>
-              <Table.Column className="w-36 whitespace-nowrap">
-                Shadowed trip?
-              </Table.Column>
-              <Table.Column className="w-28 whitespace-nowrap">
-                Approved?
-              </Table.Column>
-              <Table.Column className="w-28 whitespace-nowrap">
-                Certified?
-              </Table.Column>
-            </Table.Header>
-            <Table.Body>
-              {(tripLeaders ?? [])
-                .filter((tripLeader: TripLeaderDTO) => {
-                  const name = tripLeader.member?.name;
-
-                  if (!name) return false;
-
-                  return (
-                    searchTerm === "" ||
-                    name.toLowerCase().includes(searchTerm) ||
-                    tripLeader.sport?.some(s => s.toLowerCase().includes(searchTerm)) ||
-                    tripLeader.gmail?.toLowerCase().includes(searchTerm)
-                  );
-                })
-                .map((tripLeader: TripLeaderDTO) => (
-                  <Table.Row
-                    key={tripLeader.member?.name}
-                    id={tripLeader.member?.name}
-                    aria-label={`Trip leader: ${tripLeader.member?.name}`}
-                  >
-                    <Table.Cell>{tripLeader.member?.name}</Table.Cell>
-                    <Table.Cell>{tripLeader.sport?.join(', ')}</Table.Cell>
-                    <Table.Cell>{tripLeader.gmail}</Table.Cell>
-                    <Table.Cell>
-                      <span
-                        role="img"
-                        aria-label={tripLeader.process?.shadow ? "Yes" : "No"}
-                      >
-                        {tripLeader.process?.shadow ? "🟢" : "🛑"}
-                      </span>
-                    </Table.Cell>
-                    <Table.Cell>
-                      <span
-                        role="img"
-                        aria-label={tripLeader.process?.approved ? "Yes" : "No"}
-                      >
-                        {tripLeader.process?.approved ? "🟢" : "🛑"}
-                      </span>
-                    </Table.Cell>
-                    <Table.Cell>
-                      <span
-                        role="img"
-                        aria-label={
-                          tripLeader.process?.certified ? "Yes" : "No"
-                        }
-                      >
-                        {tripLeader.process?.certified ? "🟢" : "🛑"}
-                      </span>
-                    </Table.Cell>
-                  </Table.Row>
-                ))}
-            </Table.Body>
-          </Table.Content>
-        </Table>
-      </div>
+                          {tripLeader.process?.shadow ? "🟢" : "🛑"}
+                        </span>
+                      </Table.Cell>
+                      <Table.Cell>
+                        <span
+                          role="img"
+                          aria-label={tripLeader.process?.approved ? "Yes" : "No"}
+                        >
+                          {tripLeader.process?.approved ? "🟢" : "🛑"}
+                        </span>
+                      </Table.Cell>
+                      <Table.Cell>
+                        <span
+                          role="img"
+                          aria-label={
+                            tripLeader.process?.certified ? "Yes" : "No"
+                          }
+                        >
+                          {tripLeader.process?.certified ? "🟢" : "🛑"}
+                        </span>
+                      </Table.Cell>
+                    </Table.Row>
+                  ))}
+              </Table.Body>
+            </Table.Content>
+          </Table>
+        </div>
+      )}
       <Modal isOpen={isModalOpen} onOpenChange={setIsModalOpen}>
         <Modal.Backdrop isDismissable>
           <Modal.Container scroll="inside" size="lg">
@@ -508,6 +519,111 @@ export default function TripLeaderDashboardPage() {
                   }}
                 >
                   Save
+                </Button>
+              </Modal.Footer>
+            </Modal.Dialog>
+          </Modal.Container>
+        </Modal.Backdrop>
+      </Modal>
+      <Modal isOpen={isAddModalOpen} onOpenChange={setIsAddModalOpen}>
+        <Modal.Backdrop isDismissable>
+          <Modal.Container scroll="inside" size="lg">
+            <Modal.Dialog>
+              <Modal.Header>
+                <Modal.Heading>Add Trip Leader</Modal.Heading>
+              </Modal.Header>
+              <Modal.Body>
+                <div className="flex flex-col gap-4">
+                  <ComboBox
+                    selectedKey={newMemberId}
+                    onSelectionChange={(key) =>
+                      setNewMemberId(key === null ? null : Number(key))
+                    }
+                  >
+                    <Label>Member</Label>
+                    <ComboBox.InputGroup>
+                      <Input placeholder="Search members" />
+                      <ComboBox.Trigger />
+                    </ComboBox.InputGroup>
+                    <ComboBox.Popover>
+                      <ListBox>
+                        {availableMembers.map((member) => (
+                          <ListBoxItem
+                            key={member.id}
+                            id={member.id}
+                            textValue={member.name}
+                          >
+                            {member.name}
+                          </ListBoxItem>
+                        ))}
+                      </ListBox>
+                    </ComboBox.Popover>
+                  </ComboBox>
+                  <CheckboxGroup
+                    name="new-sports"
+                    onChange={setNewSportValues}
+                    value={newSportValues}
+                  >
+                    <Label>Sports</Label>
+                    {SPORTS.filter(s => !PSEUDO_SPORTS.includes(s)).map((sport) => (
+                      <Checkbox key={sport} value={sport}>
+                        <Checkbox.Content>
+                          <Checkbox.Control>
+                            <Checkbox.Indicator>{() => null}</Checkbox.Indicator>
+                          </Checkbox.Control>
+                          {sport}
+                        </Checkbox.Content>
+                      </Checkbox>
+                    ))}
+                  </CheckboxGroup>
+                  <CheckboxGroup
+                    name="new-certification-process"
+                    onChange={setNewProcessValues}
+                    value={newProcessValues}
+                  >
+                    <Label>Certification Process</Label>
+                    <Checkbox value="shadowed">
+                      <Checkbox.Content>
+                        <Checkbox.Control>
+                          <Checkbox.Indicator>{() => null}</Checkbox.Indicator>
+                        </Checkbox.Control>
+                        Shadowed a trip
+                      </Checkbox.Content>
+                    </Checkbox>
+                    <Checkbox value="approved">
+                      <Checkbox.Content>
+                        <Checkbox.Control>
+                          <Checkbox.Indicator>{() => null}</Checkbox.Indicator>
+                        </Checkbox.Control>
+                        Approved by secretary of sports and head officer
+                      </Checkbox.Content>
+                    </Checkbox>
+                    <Checkbox value="certified">
+                      <Checkbox.Content>
+                        <Checkbox.Control>
+                          <Checkbox.Indicator>{() => null}</Checkbox.Indicator>
+                        </Checkbox.Control>
+                        Completed trip leader training
+                      </Checkbox.Content>
+                    </Checkbox>
+                  </CheckboxGroup>
+                  <TextField
+                    aria-label="Gmail address"
+                    onChange={setNewGmail}
+                    value={newGmail}
+                  >
+                    <Label>Gmail (optional)</Label>
+                    <Input placeholder="name@gmail.com" className='mt-2'/>
+                  </TextField>
+                </div>
+              </Modal.Body>
+              <Modal.Footer>
+                <Modal.CloseTrigger />
+                <Button
+                  isDisabled={newMemberId == null || isCreating}
+                  onPress={handleCreate}
+                >
+                  Add
                 </Button>
               </Modal.Footer>
             </Modal.Dialog>

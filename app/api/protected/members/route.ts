@@ -49,7 +49,7 @@ export async function GET(): Promise<Response> {
             return {
                 id: member.id,
                 name: member.name,
-                emai: member.email
+                email: member.email
             }
         })
 

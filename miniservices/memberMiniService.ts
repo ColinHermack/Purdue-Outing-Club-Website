@@ -87,7 +87,7 @@ export async function getMembers(): Promise<MemberDTO[]> {
   try {
     const result = await client.query("SELECT * FROM member");
 
-    return result.rows;
+    return result.rows.map((row: MemberRow) => mapMemberRow(row));
   } finally {
     client.release();
   }

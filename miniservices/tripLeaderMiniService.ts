@@ -266,15 +266,11 @@ export async function createTripLeader(
   const client = await pool.connect();
 
   try {
-    // TODO: This statement is broken and needs to be fixed manually. The parameter placeholders are
-    // wrapped in single quotes (e.g. '$2'), so Postgres treats them as literal strings rather than
-    // bound parameters, and the process object is built via string interpolation instead of a proper
-    // jsonb value. Rewrite using unquoted placeholders and jsonb_build_object.
     await client.query(
-      "INSERT INTO trip_leader VALUES ($1, '$2', '{\"shadow\": $3, \"approved\": $4, \"certified\": $5}', 0, '$6');",
+      "INSERT INTO trip_leader (member_id, sport, process, lead_count, gmail) VALUES ($1, $2, jsonb_build_object('shadow', $3::boolean, 'approved', $4::boolean, 'certified', $5::boolean), 0, $6);",
       [
         newTripLeader.memberId,
-        newTripLeader.sport?.concat(", "),
+        newTripLeader.sport?.join(", "),
         newTripLeader.process?.shadow,
         newTripLeader.process?.approved,
         newTripLeader.process?.certified,
@@ -283,6 +279,9 @@ export async function createTripLeader(
     );
 
     return true;
+  } catch (error: unknown) {
+    console.error(error);
+    return false;
   } finally {
     client.release();
   }

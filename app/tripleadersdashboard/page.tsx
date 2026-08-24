@@ -14,11 +14,7 @@ import BasicMemberDTO from "@/dtos/basicMemberDto";
 import { SPORTS, PSEUDO_SPORTS } from "@/config/constants";
 import { redirect } from "next/navigation";
 
-<<<<<<< HEAD
 import { Button, Modal, Table, TextField, Input, cn, Checkbox, CheckboxGroup, Label, ComboBox, ListBox, ListBoxItem, Spinner } from "@heroui/react";
-=======
-import { Button, Modal, Table, TextField, Input, cn, Checkbox, CheckboxGroup, Label, Form, ListBox, Surface } from "@heroui/react";
->>>>>>> main
 
 type NestedRow = {
   children: NestedRow[];
@@ -37,7 +33,6 @@ export default function TripLeaderDashboardPage() {
   const [expandedKeys, setExpandedKeys] = useState<Selection>(() => new Set());
   const [processValues, setProcessValues] = useState<string[]>([]);
   const [sportValues, setSportValues] = useState<string[]>([]);
-<<<<<<< HEAD
   const [isSaving, setIsSaving] = useState(false);
   const [allMembers, setAllMembers] = useState<BasicMemberDTO[] | null>(null);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -46,10 +41,6 @@ export default function TripLeaderDashboardPage() {
   const [newProcessValues, setNewProcessValues] = useState<string[]>([]);
   const [newGmail, setNewGmail] = useState("");
   const [isCreating, setIsCreating] = useState(false);
-=======
-  const [clubMembers, setClubMembers] = useState<BasicMemberDTO[]>([]);
-  const [memberNameFilter, setMemberNameFilter] = useState<string>("");
->>>>>>> main
 
   useEffect(() => {
     const p = selectedLeader?.process;
@@ -61,14 +52,6 @@ export default function TripLeaderDashboardPage() {
     ]);
     setSportValues(selectedLeader?.sport ?? []);
   }, [selectedLeader]);
-
-  useEffect(() => {
-    fetch('/api/protected/members')
-      .then(response => response.json())
-      .then(data => {
-        setClubMembers(data);
-      });
-  }, [])
 
   const isDirty = useMemo(() => {
     const p = selectedLeader?.process;
@@ -344,57 +327,9 @@ export default function TripLeaderDashboardPage() {
         >
           <Input placeholder="Search" />
         </TextField>
-<<<<<<< HEAD
         <Button onPress={() => setIsAddModalOpen(true)}>
           Add Trip Leader
         </Button>
-=======
-        <Modal>
-          <Button className='rounded-xl ml-4'>Add Trip Leader</Button>
-          <Modal.Backdrop>
-            <Modal.Container size='cover'>
-              <Modal.Dialog>
-                <Modal.CloseTrigger onPress={() => {setMemberNameFilter("")}}/> 
-                <Modal.Header>
-                  Add New Trip Leader
-                </Modal.Header>
-                <Modal.Body className='mt-4 px-4'>
-                  <Form>
-                    <TextField
-                      isRequired
-                      name='name'
-                      type='text'
-                      variant='secondary'
-                    >
-                      <Label>Trip Leader Name</Label>
-                      <Input onChange={(e) => setMemberNameFilter(e.target.value)} value={memberNameFilter}/>
-                    </TextField>
-                    {
-                      memberNameFilter.length > 3 ?
-                        <ListBox
-                          aria-label="Member name suggestions"
-                          className="mt-2"
-                          items={clubMembers.filter(cm => cm.name?.toLowerCase().includes(memberNameFilter.toLowerCase()))}
-                          onAction={() => {}}  // TODO: Figure out what the hell this is supposed to be doing
-                        >
-                          {(cm) => (
-                            <ListBox.Item key={cm.id} textValue={cm.name} onPress={() => {
-                              console.log(cm.name);
-                            }}>
-                              {cm.name}
-                            </ListBox.Item>
-                          )}
-                        </ListBox>
-                      : <></>
-                    }
-                  </Form>
-                </Modal.Body>
-                <Modal.Footer />
-              </Modal.Dialog>
-            </Modal.Container>
-          </Modal.Backdrop>
-        </Modal>
->>>>>>> main
       </div>
       {tripLeaders === null ? (
         <Spinner aria-label="Loading trip leaders" className="my-12" />

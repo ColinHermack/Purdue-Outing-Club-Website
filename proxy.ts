@@ -29,5 +29,10 @@ export default withAuth(
 
 // Specify which routes to protect
 export const config = {
-  matcher: ["/api/protected/:path*", "/dashboard", "/tripleadersdashboard"],
+  matcher: [
+    "/api/protected/:path*",
+    "/dashboard",
+    "/tripleadersdashboard",
+    "/memberdirectory",
+  ],
 };

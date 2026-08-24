@@ -50,7 +50,7 @@
 | Colin Hermack       | chermack@purdue.edu | Chief Angler                                     |  ✅                |
 | Colin Hermack       | chermack@purdue.edu | Webmaster                                        |  ✅                |
 | Khushi Gupta        | gupt1131@purdue.edu | Data Analyst                                     | ✅                |
-| Magnus Batts        | mbatts@purdue.edu   | Canoeing Officer                                 |                  |
+| Magnus Batts        | mbatts@purdue.edu   | Canoeing Officer                                 | ✅                |
 | Elly Chinitz        | echinitz@purdue.edu | Climbing Officer                                 | ✅                 |
 | Sid Bobba           | bobba0@purdue.edu   | Secretary of Sports                              |  ✅                |
 | Andy Vogts          | avogts@purdue.edu   | Backpacking Officer                              |                  |

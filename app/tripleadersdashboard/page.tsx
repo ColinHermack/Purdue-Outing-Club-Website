@@ -33,7 +33,6 @@ export default function TripLeaderDashboardPage() {
   const [expandedKeys, setExpandedKeys] = useState<Selection>(() => new Set());
   const [processValues, setProcessValues] = useState<string[]>([]);
   const [sportValues, setSportValues] = useState<string[]>([]);
-  const [isSaving, setIsSaving] = useState(false);
   const [allMembers, setAllMembers] = useState<BasicMemberDTO[] | null>(null);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [newMemberId, setNewMemberId] = useState<number | null>(null);

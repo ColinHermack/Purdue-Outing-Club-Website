@@ -45,7 +45,7 @@ export default function DriverPage() {
         registration form to let the data analyst know that you are driver
         certified.
       </p>
-      <img alt="" className="my-8" height={400} src={"/driver_email.png"} />
+      <img alt="" className="my-8 max-w-sm" height={400} src={"/driver_email.png"} />
       <Link
         className={buttonVariants()}
         href={"https://forms.cloud.microsoft/r/4uJRfr4dRV"}

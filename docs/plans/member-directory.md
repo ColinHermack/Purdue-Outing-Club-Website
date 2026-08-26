@@ -33,7 +33,7 @@ The existing `all_members` and `active_members` DB views already cast `(dues_dat
 
 ### 1. `dtos/memberDirectoryEntryDto.ts` (new)
 
-Flat DTO, no nesting. Deliberately omits `phone`, `emergency_data`, `medical_data` — this endpoint must never serialize them.
+Flat DTO, no nesting. Deliberately omits `emergency_data` and `medical_data` — this endpoint must never serialize them.
 
 ```ts
 export default class MemberDirectoryEntryDTO {
@@ -41,7 +41,10 @@ export default class MemberDirectoryEntryDTO {
   name?: string;
   pronouns?: string;
   email?: string;
+  phone?: string | null;
   isActive?: boolean;
+  policyAgreement?: boolean;
+  waiverAgreement?: boolean;
   duesStatus?: "paid" | "expired" | "none";
   firstAidType?: string | null; // null = no active certification
   carCapacity?: string | null;
@@ -117,10 +120,10 @@ Client component modeled on `app/tripleadersdashboard/page.tsx`, which is the re
 - Inline `<title>Member Directory - Purdue Outing Club</title>` (client component, so no `metadata` export).
 - Search: `TextField` + `Input` driving a `searchTerm` string, filtered inline over name and email. **Lowercase `searchTerm` before comparing** — `tripleadersdashboard/page.tsx` omits this and its search silently fails on any capital letter; do not copy that bug.
 - Active-only filter: a HeroUI `Checkbox` beside the search field (the verbose v3 `Checkbox.Content > Checkbox.Control > Checkbox.Indicator` structure is already used in `tripleadersdashboard/page.tsx`). Checked → `.filter(m => m.isActive)`.
-- `Table > Table.Content > Table.Header/Table.Column` and `Table.Body > Table.Row > Table.Cell`, wrapped in `<div className="... overflow-x-auto">` with a `min-w-` on `Table.Content` — eight columns need horizontal scroll on mobile.
-- Columns: Name (`isRowHeader`), Pronouns, Email, Dues, First Aid, Car Capacity, Hitch, Driver.
+- `Table > Table.ScrollContainer > Table.Content > Table.Header/Table.Column` and `Table.Body > Table.Row > Table.Cell`, with `min-w-[92rem]` on `Table.Content` — eleven columns overflow on anything but a wide desktop. `Table.ScrollContainer` (already used at `app/tripleadersdashboard/page.tsx:445`) is HeroUI's own `overflow-x: auto` wrapper; pass `data-scrollbar="thin"` so the scrollbar is a persistent themed one rather than the OS overlay bar that hides until you scroll.
+- Columns: Name (`isRowHeader`), Pronouns, Email, Phone, Dues, Policy, Waiver, First Aid, Car Seats, Hitch, Driver.
 - **Key rows by `member.id`**, not by name. The trip leaders dashboard keys by name and looks rows back up by name, which collides on duplicate names — with 1596 members that will happen.
-- Rendering: `duesStatus` as readable text ("Paid" / "Expired" / "No dues data"); `firstAidType ?? "None"`; `carCapacity ?? "—"`; `carHitch` and `driverCertified` as the repo's emoji-with-aria-label pattern:
+- Rendering: `duesStatus` as readable text ("Paid" / "Expired" / "No dues data"); `firstAidType ?? "None"`; `phone ?? "—"`; `carCapacity ?? "—"`; `policyAgreement`, `waiverAgreement`, `carHitch` and `driverCertified` as the repo's emoji-with-aria-label pattern:
   ```tsx
   <span aria-label={m.driverCertified ? "Yes" : "No"} role="img">
     {m.driverCertified ? "🟢" : "🛑"}
@@ -152,9 +155,11 @@ Two details that are easy to get wrong:
 - **Reset to page 1 whenever `searchTerm` or `activeOnly` changes.** Otherwise a search that narrows to 3 results while sitting on page 12 renders an empty table. Either `useEffect(() => setPage(1), [searchTerm, activeOnly])`, or call `setPage(1)` in the same handlers that set those.
 - **Clamp `page` to `pageCount`** when deriving `visible`, so the two never disagree.
 
-Render the page-number list with an ellipsis rather than 32 numbered buttons: first page, last page, and a window around the current page. Show `Pagination.Summary` with the filtered count ("Showing 1–50 of 1596") so the active filter's effect is visible.
+Render the page-number list with an ellipsis rather than 32 numbered buttons: first page, last page, and a window around the current page. Show `Pagination.Summary` with the filtered count ("Showing 1–50 of 1595") so the active filter's effect is visible.
 
 Hide the whole `Pagination` block when `pageCount === 1`.
+
+**Centering.** HeroUI's `.pagination` class is `display: flex; width: 100%` with `justify-content: space-between`, which pins the summary to the far left and the page buttons to the far right of the viewport. Pass `className="my-8 w-7/8 justify-center"` to constrain it to the table's width and center the summary and controls as one group. This override is reliable: `@heroui/styles` imports its component CSS into `layer(components)` and declares `@layer theme, base, components, utilities`, so Tailwind's utilities layer wins over the component rule regardless of specificity.
 
 ## Not doing
 
@@ -180,4 +185,5 @@ Hide the whole `Pagination` block when `pageCount === 1`.
 5. Pagination specifically: 50 rows on page 1 and the summary reads "Showing 1–50 of 1596"; Previous is disabled on page 1 and Next on the last page; navigate to a high page, then type a search that matches only a few members and confirm the view snaps back to page 1 with results visible (not an empty table); with the active filter on, the pagination control disappears once the result fits one page.
 6. Sign in as a member who is **not** a trip leader and visit the same URL — should redirect to `/`. Hitting `/api/protected/memberdirectory` directly should return 401.
 7. Signed out, visit `/memberdirectory` — `proxy.ts` should redirect to `/auth/signin`.
-8. Confirm the response body contains no `phone`, `emergencyData`, or `medicalData` keys.
+8. Confirm the response body contains no `emergencyData` or `medicalData` keys.
+9. Resize the browser narrow enough to overflow the table and confirm a horizontal scrollbar appears inside the table rather than the page scrolling sideways, and that the pagination summary and controls stay centered under the table.

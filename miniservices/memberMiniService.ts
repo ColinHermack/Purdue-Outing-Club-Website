@@ -56,7 +56,10 @@ interface MemberDirectoryRow {
   name: string;
   pronouns: string;
   email: string;
+  phone: string | null;
   is_active: boolean;
+  policy_agreement: boolean;
+  waiver_agreement: boolean;
   dues_status: DuesStatus;
   first_aid_type: string | null;
   car_capacity: string | null;
@@ -131,6 +134,9 @@ export async function getMemberDirectory(): Promise<MemberDirectoryEntryDTO[]> {
                 name,
                 pronouns,
                 email,
+                phone,
+                COALESCE(policy_agreement, false) AS policy_agreement,
+                COALESCE(waiver_agreement, false) AS waiver_agreement,
                 COALESCE(
                     (dues_data ->> 'Expires')::date > CURRENT_DATE
                         AND waiver_agreement = true
@@ -159,7 +165,10 @@ export async function getMemberDirectory(): Promise<MemberDirectoryEntryDTO[]> {
       name: row.name,
       pronouns: row.pronouns,
       email: row.email,
+      phone: row.phone,
       isActive: row.is_active,
+      policyAgreement: row.policy_agreement,
+      waiverAgreement: row.waiver_agreement,
       duesStatus: row.dues_status,
       firstAidType: row.first_aid_type,
       carCapacity: row.car_capacity,

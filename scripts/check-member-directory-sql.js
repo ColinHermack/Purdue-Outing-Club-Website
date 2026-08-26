@@ -36,15 +36,20 @@ const pool = new Pool({
       count(first_aid_type)::int AS first_aid,
       count(*) FILTER (WHERE driver_certified)::int AS drivers,
       count(*) FILTER (WHERE dues_status = 'paid')::int AS dues_paid,
+      count(*) FILTER (WHERE policy_agreement)::int AS policy,
+      count(*) FILTER (WHERE waiver_agreement)::int AS waiver,
       count(*) FILTER (WHERE dues_status NOT IN ('paid', 'expired', 'none'))::int AS bad_dues,
-      count(*) FILTER (WHERE is_active IS NULL OR driver_certified IS NULL OR car_hitch IS NULL)::int AS nulls
+      count(*) FILTER (WHERE is_active IS NULL OR driver_certified IS NULL OR car_hitch IS NULL
+        OR policy_agreement IS NULL OR waiver_agreement IS NULL)::int AS nulls
     FROM (${sql}) q`);
 
   const view = await pool.query(`
     SELECT count(*)::int AS total,
       count(*) FILTER (WHERE "Active" LIKE 'Yes%')::int AS active,
       count("First Aid")::int AS first_aid,
-      count("Driver")::int AS drivers
+      count("Driver")::int AS drivers,
+      count(*) FILTER (WHERE "Policy" = 'true')::int AS policy,
+      count(*) FILTER (WHERE "Waiver" = 'true')::int AS waiver
     FROM all_members`);
 
   const a = mine.rows[0];
@@ -61,6 +66,8 @@ const pool = new Pool({
     problems.push(`first aid ${a.first_aid} != ${b.first_aid}`);
   if (a.drivers !== b.drivers)
     problems.push(`drivers ${a.drivers} != ${b.drivers}`);
+  if (a.policy !== b.policy) problems.push(`policy ${a.policy} != ${b.policy}`);
+  if (a.waiver !== b.waiver) problems.push(`waiver ${a.waiver} != ${b.waiver}`);
   if (a.bad_dues !== 0) problems.push(`${a.bad_dues} rows with unknown dues status`);
   if (a.nulls !== 0) problems.push(`${a.nulls} rows with a null boolean`);
   if (a.dues_paid < a.active)

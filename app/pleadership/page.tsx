@@ -5,6 +5,8 @@
  * @author Colin Hermack
  */
 
+import Image from "next/image";
+
 import { Separator, Card, Link, buttonVariants } from "@heroui/react";
 import { MdEmail } from "react-icons/md";
 
@@ -20,13 +22,10 @@ function LeaderCard(props: { officer: Officer }) {
   return (
     <Card
       key={props.officer.name}
-      className="py-4 m-4 w-54 h-54 flex flex-col justify-between items-center"
+      className="py-4 m-4 w-[232px] flex flex-col justify-between items-center"
     >
-      {/*}
-      TODO: Uncomment images at the end of the summer
-      <div className="relative w-[200px] h-[200px]">
-        {
-          props.officer.officerData.ImagePath != null ? 
+      <div className="relative w-[200px] h-[200px] shrink-0">
+        {props.officer.officerData.ImagePath ? (
           <Image
             alt={props.officer.name}
             className="rounded-xl object-cover w-[200px] h-[200px]"
@@ -34,10 +33,15 @@ function LeaderCard(props: { officer: Officer }) {
             sizes="200px"
             src={`/leadership/${props.officer.officerData.ImagePath}`}
           />
-          : null
-        }
+        ) : (
+          <div className="w-full h-full rounded-xl bg-default-200 flex items-center justify-center text-3xl font-bold text-default-500">
+            {props.officer.name
+              .split(" ")
+              .map((word) => word[0])
+              .join("")}
+          </div>
+        )}
       </div>
-      {*/}
       <div className="pb-0 pt-2 px-4 flex-col justify-top items-center text-center">
         <p className="font-bold text-lg text-center">{props.officer.name}</p>
         <p className="text-xs text-center">{props.officer.pronouns}</p>

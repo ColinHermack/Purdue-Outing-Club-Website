@@ -9,9 +9,10 @@
  */
 
 import {
-  Checkbox,
   Input,
+  ListBox,
   Pagination,
+  Select,
   Spinner,
   Table,
   TextField,
@@ -28,7 +29,7 @@ const PAGE_SIZE = 50;
 const DUES_LABELS: Record<DuesStatus, string> = {
   paid: "Paid",
   expired: "Expired",
-  none: "No dues data",
+  none: "—",
 };
 
 /**
@@ -111,18 +112,29 @@ export default function MemberDirectoryPage() {
         >
           <Input placeholder="Search by name or email" />
         </TextField>
-        <Checkbox
-          aria-label="Show active members only"
-          isSelected={activeOnly}
-          onChange={setActiveOnly}
+        <Select
+          aria-label="Filter members"
+          className="w-48 shrink-0"
+          value={activeOnly ? "active" : "all"}
+          onChange={(value) => setActiveOnly(value === "active")}
         >
-          <Checkbox.Content>
-            <Checkbox.Control>
-              <Checkbox.Indicator>{() => null}</Checkbox.Indicator>
-            </Checkbox.Control>
-            <span className="whitespace-nowrap">Active only</span>
-          </Checkbox.Content>
-        </Checkbox>
+          <Select.Trigger>
+            <Select.Value />
+            <Select.Indicator />
+          </Select.Trigger>
+          <Select.Popover>
+            <ListBox>
+              <ListBox.Item id="all" textValue="All Members">
+                All Members
+                <ListBox.ItemIndicator />
+              </ListBox.Item>
+              <ListBox.Item id="active" textValue="Active Only">
+                Active Only
+                <ListBox.ItemIndicator />
+              </ListBox.Item>
+            </ListBox>
+          </Select.Popover>
+        </Select>
       </div>
       {members === null ? (
         <Spinner aria-label="Loading members" className="my-12" />
@@ -201,7 +213,7 @@ export default function MemberDirectoryPage() {
                           {member.waiverAgreement ? "🟢" : "🛑"}
                         </span>
                       </Table.Cell>
-                      <Table.Cell>{member.firstAidType ?? "None"}</Table.Cell>
+                      <Table.Cell>{member.firstAidType ?? "—"}</Table.Cell>
                       <Table.Cell>{member.carCapacity ?? "—"}</Table.Cell>
                       <Table.Cell>
                         <span

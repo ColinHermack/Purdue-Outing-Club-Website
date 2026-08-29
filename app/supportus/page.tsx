@@ -35,7 +35,7 @@ export default async function Page() {
         who want to participate.
       </p>
       <p className="my-4 text-center max-w-[800px]">
-        To reflect this, our dues are $30 per academic year to gain access to
+        To reflect this, our dues are $45 per academic year to gain access to
         over $100,000 worth of gear, and an amazing team of officers who plan
         our trips.
       </p>

@@ -103,12 +103,13 @@ export const LEADERSHIP_CATEGORIES = [
       "Secretary of Sports",
       "Secretary of Operations",
       "Secretary of Outreach",
-      "Health & Safety",
+      "Health & Safety Officer",
     ],
   },
   {
     branch: "Operations",
-    positions: ["Treasurer", "Webmaster", "Data Analyst"],
+    // Treasurer temporarily hidden from the pleadership page.
+    positions: [/* "Treasurer", */ "Webmaster", "Data Analyst"],
   },
   {
     branch: "Outreach",
@@ -118,7 +119,7 @@ export const LEADERSHIP_CATEGORIES = [
       "Diversity & Community Outreach",
       "Social Media Coordinator",
       "Social Events Coordinator",
-      "Graduate and Nontraditional Student Coordinator",
+      "Graduate & Nontraditional Member Coordinator",
       "Club Goober",
     ],
   },

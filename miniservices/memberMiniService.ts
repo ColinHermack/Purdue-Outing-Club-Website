@@ -8,6 +8,7 @@
 
 import { Pool } from "pg";
 
+import MemberDirectoryEntryDTO, { DuesStatus } from "@/dtos/memberDirectoryEntryDto";
 import MemberDTO from "@/dtos/memberDto";
 
 const pool = new Pool({
@@ -44,6 +45,26 @@ interface MemberRow {
   signup_count: number;
   years_active: string;
   campus: string;
+}
+
+/**
+ * The shape of a member directory row as returned by the database. The status fields are derived
+ * in SQL rather than stored, so they have no counterpart on the member table itself.
+ */
+interface MemberDirectoryRow {
+  member_id: number;
+  name: string;
+  pronouns: string;
+  email: string;
+  phone: string | null;
+  is_active: boolean;
+  policy_agreement: boolean;
+  waiver_agreement: boolean;
+  dues_status: DuesStatus;
+  first_aid_type: string | null;
+  car_capacity: string | null;
+  car_hitch: boolean;
+  driver_certified: boolean;
 }
 
 /**
@@ -88,6 +109,72 @@ export async function getMembers(): Promise<MemberDTO[]> {
     const result = await client.query("SELECT * FROM member");
 
     return result.rows.map((row: MemberRow) => mapMemberRow(row));
+  } finally {
+    client.release();
+  }
+}
+
+/**
+ * Returns every member alongside the trip-planning fields the member directory displays.
+ *
+ * All status derivation happens in SQL so the date comparisons run against the database's
+ * CURRENT_DATE rather than the client's clock, and so the "active" rule stays identical to the
+ * one already encoded in the all_members view (dues unexpired, both agreements signed, no holds).
+ * The club's own poc@purdue.edu account is excluded, as both the active_members and all_members
+ * views do, since it is a service account rather than a person.
+ *
+ * @returns A promise resolving to a list of MemberDirectoryEntryDTO objects, sorted by name.
+ */
+export async function getMemberDirectory(): Promise<MemberDirectoryEntryDTO[]> {
+  const client = await pool.connect();
+
+  try {
+    const result = await client.query(`
+            SELECT member_id,
+                name,
+                pronouns,
+                email,
+                phone,
+                COALESCE(policy_agreement, false) AS policy_agreement,
+                COALESCE(waiver_agreement, false) AS waiver_agreement,
+                COALESCE(
+                    (dues_data ->> 'Expires')::date > CURRENT_DATE
+                        AND waiver_agreement = true
+                        AND policy_agreement = true
+                        AND holds IS NULL,
+                    false
+                ) AS is_active,
+                CASE
+                    WHEN dues_data IS NULL THEN 'none'
+                    WHEN (dues_data ->> 'Expires')::date > CURRENT_DATE THEN 'paid'
+                    ELSE 'expired'
+                END AS dues_status,
+                CASE
+                    WHEN (first_aid_data ->> 'Expires')::date > CURRENT_DATE
+                        THEN first_aid_data ->> 'Type'
+                END AS first_aid_type,
+                car_data ->> 'Capacity' AS car_capacity,
+                COALESCE((car_data ->> 'Hitch')::boolean, false) AS car_hitch,
+                COALESCE((driver_data ->> 'Expires')::date > CURRENT_DATE, false) AS driver_certified
+            FROM member
+            WHERE email <> 'poc@purdue.edu'
+            ORDER BY name;`);
+
+    return result.rows.map((row: MemberDirectoryRow) => ({
+      id: row.member_id,
+      name: row.name,
+      pronouns: row.pronouns,
+      email: row.email,
+      phone: row.phone,
+      isActive: row.is_active,
+      policyAgreement: row.policy_agreement,
+      waiverAgreement: row.waiver_agreement,
+      duesStatus: row.dues_status,
+      firstAidType: row.first_aid_type,
+      carCapacity: row.car_capacity,
+      carHitch: row.car_hitch,
+      driverCertified: row.driver_certified,
+    }));
   } finally {
     client.release();
   }

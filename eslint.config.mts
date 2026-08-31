@@ -19,6 +19,8 @@ export default defineConfig([
       "next.config.js",
       "postcss.config.js",
       "eslint.config.mts",
+      // Node maintenance scripts, not app code: CommonJS, and node globals rather than browser.
+      "scripts/**",
     ],
   },
   {

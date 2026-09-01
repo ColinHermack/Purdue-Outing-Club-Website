@@ -109,7 +109,7 @@ export const LEADERSHIP_CATEGORIES = [
   {
     branch: "Operations",
     // Treasurer temporarily hidden from the pleadership page.
-    positions: [/* "Treasurer", */ "Webmaster", "Data Analyst"],
+    positions: ["Treasurer", "Webmaster", "Data Analyst"],
   },
   {
     branch: "Outreach",

@@ -465,11 +465,10 @@ export async function getLeaderData() {
  * @returns A promise resolving to true if the member is an officer, false otherwise
  */
 export async function verifyMemberIsOfficer(memberId: number): Promise<boolean> {
-  let result: QueryResult | null = null;
   const client = await pool.connect();
 
   try {
-    let result: QueryResult | null = await client.query("SELECT * FROM officer WHERE member_id=$1", [memberId]);
+    const result: QueryResult = await client.query("SELECT * FROM officer WHERE member_id=$1", [memberId]);
 
     return result.rows.length > 0;
   } finally {

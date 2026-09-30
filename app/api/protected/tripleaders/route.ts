@@ -195,6 +195,7 @@ export async function PUT(request: NextRequest): Promise<Response> {
     if (member == null) {
       return new Response(
         `No member with id ${updatedTripLeader.memberId} exists.`,
+        { status: 404 },
       );
     }
 

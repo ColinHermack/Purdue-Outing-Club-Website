@@ -1,0 +1,23 @@
+# Throwaway Postgres for the integration tests and the CI build. Matches the production major
+# version. SSL is enabled because every miniservice pool connects with `ssl` set.
+services:
+  postgres:
+    image: postgres:14
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: poc_test
+    command:
+      - -c
+      - ssl=on
+      - -c
+      - ssl_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem
+      - -c
+      - ssl_key_file=/etc/ssl/private/ssl-cert-snakeoil.key
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d poc_test"]
+      interval: 2s
+      timeout: 5s
+      retries: 15

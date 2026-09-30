@@ -6,7 +6,11 @@
     "dev": "next dev --experimental-https",
     "build": "next build",
     "start": "next start",
-    "lint": "npx prettier . --write; eslint . --ext .ts,.tsx -c eslint.config.mts --fix"
+    "lint": "npx prettier . --write; eslint . --ext .ts,.tsx -c eslint.config.mts --fix",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --project unit",
+    "test:integration": "vitest run --project integration",
+    "test:db": "docker compose -f docker-compose.test.yml up -d --wait"
   },
   "dependencies": {
     "@azure/msal-browser": "^4.5.1",
@@ -58,6 +62,7 @@
     "prettier": "3.8.4",
     "tailwind-variants": "0.1.20",
     "tailwindcss": "^4.3.1",
-    "typescript": "^5.1.0"
+    "typescript": "^5.1.0",
+    "vitest": "^4.1.11"
   }
 }

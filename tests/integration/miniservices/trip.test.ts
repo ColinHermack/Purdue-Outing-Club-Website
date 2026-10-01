@@ -39,9 +39,7 @@ describe("tripMiniService against the test DB", () => {
   );
 
   it("getTripsByMemberId returns the member's trips in id order", async () => {
-    expect((await getTripsByMemberId(1)).map((t) => t.tripId)).toEqual([
-      2, 3, 4,
-    ]);
+    expect((await getTripsByMemberId(1)).map((t) => t.tripId)).toEqual([2, 3]);
     expect(await getTripsByMemberId(6)).toEqual([]);
   });
 });

@@ -25,7 +25,7 @@ describe("memberMiniService against the test DB", () => {
   });
 
   it("the trip_roster triggers keep trip_count in sync", async () => {
-    expect((await getMemberById(2))?.tripCount).toBe(4);
+    expect((await getMemberById(2))?.tripCount).toBe(3);
     expect((await getMemberById(6))?.tripCount).toBe(0);
   });
 
@@ -114,11 +114,15 @@ describe("memberMiniService against the test DB", () => {
       ["Alice Anderson", 2],
       ["Carol Clark", 1],
     ]);
-    expect(attended).toEqual([
-      ["Bob Brown", 4],
-      ["Alice Anderson", 3],
-      ["Erin Evans", 2],
-      ["Carol Clark", 1],
-    ]);
+    // Alice and Erin tie at 2, and the query has no tiebreaker, so their order is unspecified.
+    expect(attended).toHaveLength(4);
+    expect(attended[0]).toEqual(["Bob Brown", 3]);
+    expect(attended.slice(1, 3)).toEqual(
+      expect.arrayContaining([
+        ["Alice Anderson", 2],
+        ["Erin Evans", 2],
+      ]),
+    );
+    expect(attended[3]).toEqual(["Carol Clark", 1]);
   });
 });

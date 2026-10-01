@@ -72,13 +72,12 @@ VALUES
   (2, 'Smokies Backpacking', CURRENT_DATE - 60, CURRENT_DATE - 55, 'Break', 'Backpacking',
    'Great Smoky Mountains, TN', 'Five days on the AT.', false, 3),
   (3, 'Mammoth Cave', CURRENT_DATE - 30, CURRENT_DATE - 29, 'Weekend', 'Caving',
-   'Mammoth Cave, KY', 'Wild cave tour.', false, 1)
+   'Mammoth Cave, KY', 'Wild cave tour.', false, 1);
 
 SELECT setval('trip_trip_id_seq', (SELECT max(trip_id) FROM trip));
 
--- Resulting trip_count: Bob 4, Alice 3, Erin 2, Carol 1. lead_count: Alice 2, Carol 1.
+-- Resulting trip_count: Bob 3, Alice 2, Erin 2, Carol 1. lead_count: Alice 2, Carol 1.
 INSERT INTO trip_roster (trip_id, member_id, is_leader) VALUES
   (1, 2, false), (1, 5, false),
   (2, 1, true), (2, 2, false), (2, 5, false),
-  (3, 1, true), (3, 3, true), (3, 2, false),
-  (4, 1, false), (4, 2, false);
+  (3, 1, true), (3, 3, true), (3, 2, false);

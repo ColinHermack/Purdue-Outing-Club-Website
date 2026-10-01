@@ -72,9 +72,7 @@ VALUES
   (2, 'Smokies Backpacking', CURRENT_DATE - 60, CURRENT_DATE - 55, 'Break', 'Backpacking',
    'Great Smoky Mountains, TN', 'Five days on the AT.', false, 3),
   (3, 'Mammoth Cave', CURRENT_DATE - 30, CURRENT_DATE - 29, 'Weekend', 'Caving',
-   'Mammoth Cave, KY', 'Wild cave tour.', false, 1),
-  (4, 'Weekly Meeting', CURRENT_DATE - 7, CURRENT_DATE - 7, 'Weekly', 'Meeting',
-   'WALC', NULL, false, NULL);
+   'Mammoth Cave, KY', 'Wild cave tour.', false, 1)
 
 SELECT setval('trip_trip_id_seq', (SELECT max(trip_id) FROM trip));
 

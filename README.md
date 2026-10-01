@@ -125,7 +125,7 @@ Then update `seed.sql` and the tests for the new columns.
 4. Integration tests against a Postgres container
 5. `npm run build`, pointed at the seeded test database, because some pages query the database while building
 
-CI uses placeholder credentials only, so no repository secrets are needed. A pull request must pass CI before
+The test database uses passwordless `trust` auth and CI sets no auth credentials, so no repository secrets are needed. A pull request must pass CI before
 review.
 
 ## Deployment Information

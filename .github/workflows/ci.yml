@@ -14,18 +14,13 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     env:
-      # The seeded test database from docker-compose.test.yml. `next build` prerenders pages that
-      # query it. None of these are real secrets.
+      # The seeded test database from docker-compose.test.yml (trust auth, no password). `next build`
+      # prerenders pages that query it.
       DB_HOST: localhost
       DB_PORT: "5433"
       DB_USER: postgres
-      DB_PASSWORD: postgres
       DB_DATABASE: poc_test
       NEXTAUTH_URL: http://localhost:3000
-      NEXTAUTH_SECRET: ci-only-not-a-secret
-      AZURE_AD_CLIENT_ID: ci
-      AZURE_AD_CLIENT_SECRET: ci
-      AZURE_AD_TENANT_ID: ci
       NEXT_TELEMETRY_DISABLED: "1"
     steps:
       - uses: actions/checkout@v5

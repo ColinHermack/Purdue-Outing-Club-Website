@@ -31,7 +31,6 @@ export default defineConfig({
             DB_HOST: "localhost",
             DB_PORT: "5433",
             DB_USER: "postgres",
-            DB_PASSWORD: "postgres",
             DB_DATABASE: "poc_test",
           },
         },

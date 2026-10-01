@@ -5,15 +5,23 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 - `npm run dev` — Next.js dev server with HTTPS (`--experimental-https`). Serves on `https://localhost:3000/`; the HTTPS URL is required because `NEXTAUTH_URL` and the Azure AD redirect URI are both registered as HTTPS.
-- `npm run build` — production build. README instructs contributors to run this locally before opening a PR.
-- `npm run start` — run the built app.
-- Lint: `npx eslint . --ext .ts,.tsx -c .eslintrc.json --fix`. Note the `lint` key in `package.json` is currently misspelled (wrapped in backticks), so `npm run lint` does not resolve — invoke ESLint directly until that's fixed.
+- `npm run build`: production build. Needs a reachable DB, because some pages (`/pleadership`, `/sponsorship`, `/diversity`, `/supportus`, `/trips/[id]`) query it while prerendering.
+- `npm run start`: run the built app.
+- Lint: `npx eslint .` (flat config in `eslint.config.mts`). `npm run lint` also runs `prettier --write` and `eslint --fix`, so it rewrites files; CI uses plain `npx eslint .`.
+- `npm run typecheck`: `tsc --noEmit`.
+- `npm test`: Vitest unit suite (`tests/unit/`). Everything mocked, no DB or `.env` needed.
+- `npm run test:db` then `npm run test:integration`: Vitest integration suite (`tests/integration/`) against Postgres 14 in Docker (`docker-compose.test.yml`, port 5433, SSL on because every miniservice pool forces SSL). Schema comes from `tests/integration/schema.sql` (a `pg_dump --schema-only` of prod), fixtures from `seed.sql` (fake data only, dates relative to `CURRENT_DATE`). Tests that write call `resetDb()` from `tests/integration/db.ts` in `beforeEach`.
+- CI (`.github/workflows/ci.yml`) runs lint, typecheck, unit, integration, then build against the seeded test DB on every PR.
 
-There is no test runner configured in this repo.
+### Testing conventions
+
+- Unit test paths mirror source paths under `tests/unit/`. Reuse the fakes in `tests/unit/helpers.ts` (`pgModule`/`pgClient` for mocking `pg`, `session()`, `jsonRequest()`, `memberRow()`); `mockReset` is on, so set mock return values inside each test.
+- Route handler tests mock `next-auth/next` and the miniservices, then call the exported `GET`/`POST`/`PUT` directly. Integration tests mock only `next-auth/next`.
+- New miniservice SQL gets an integration test; new route auth/validation branches get unit tests.
 
 ## Architecture
 
-This is a Next.js 14 App Router project (in `app/`) using TypeScript, HeroUI v3 (recently migrated from v2 — see commit `8f6ff3c`), Tailwind, and `next-themes`. The path alias `@/*` maps to the repo root.
+This is a Next.js 16 App Router project (in `app/`) using TypeScript, HeroUI v3 (recently migrated from v2 — see commit `8f6ff3c`), Tailwind, and `next-themes`. The path alias `@/*` maps to the repo root.
 
 ### Request layers
 

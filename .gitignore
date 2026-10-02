@@ -43,3 +43,5 @@ next-env.d.ts
 .vscode
 
 certificates
+# real receipts used for manual testing of /api/automation/dues (contain member data)
+receipt.pdf

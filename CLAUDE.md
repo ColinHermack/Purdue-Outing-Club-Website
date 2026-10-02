@@ -50,7 +50,7 @@ The code is intentionally split into four layers; new database-backed features s
 
 ## Environment
 
-A `.env` at the repo root is required (not committed). Keys used by the app: `AZURE_AD_CLIENT_ID`, `AZURE_AD_CLIENT_SECRET`, `AZURE_AD_TENANT_ID`, `NEXTAUTH_URL`, `NEXTAUTH_SECRET`, and `DB_USER` / `DB_PASSWORD` / `DB_HOST` / `DB_PORT` / `DB_DATABASE`. New contributors get these from the webmaster.
+A `.env` at the repo root is required (not committed). Keys used by the app: `AZURE_AD_CLIENT_ID`, `AZURE_AD_CLIENT_SECRET`, `AZURE_AD_TENANT_ID`, `NEXTAUTH_URL`, `NEXTAUTH_SECRET`, and `DB_USER` / `DB_PASSWORD` / `DB_HOST` / `DB_PORT` / `DB_DATABASE`. `DUES_API_KEY` is the bearer token for the machine-only `/api/automation/dues` route (called by the treasurer's Power Automate flow); generate it with `openssl rand -base64 48` and set the same value in Vercel and the flow. The route fails closed (401) when it is unset or shorter than 32 characters. New contributors get these from the webmaster.
 
 ## Deployment
 

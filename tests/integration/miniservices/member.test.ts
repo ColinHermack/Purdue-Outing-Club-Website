@@ -1,4 +1,6 @@
-import { describe, expect, it } from "vitest";
+import { afterAll, beforeEach, describe, expect, it } from "vitest";
+
+import { connectTestDb, resetDb } from "../db";
 
 import {
   getMemberByEmail,
@@ -7,6 +9,7 @@ import {
   getMembers,
   getMostTripsAttended,
   getMostTripsLed,
+  recordDuesByEmail,
   verifyMembershipByEmail,
 } from "@/miniservices/memberMiniService";
 
@@ -124,5 +127,145 @@ describe("memberMiniService against the test DB", () => {
       ]),
     );
     expect(attended[3]).toEqual(["Carol Clark", 1]);
+  });
+});
+
+describe("recordDuesByEmail against the test DB", () => {
+  beforeEach(async () => {
+    await resetDb();
+  });
+
+  // Later files in the suite read the seed data without resetting.
+  afterAll(async () => {
+    await resetDb();
+  });
+
+  const membersWithEmail = async (email: string) =>
+    (await getMembers()).filter((m) => m.email === email);
+
+  it("sets dues for a member who never paid", async () => {
+    expect(
+      await recordDuesByEmail(
+        "carol@purdue.edu",
+        "Ignored",
+        "Annual",
+        "2099-08-31",
+      ),
+    ).toEqual({ expires: "2099-08-31", created: false });
+    expect(await getMemberById(3)).toMatchObject({
+      name: "Carol Clark",
+      duesData: { Type: "Annual", Expires: "2099-08-31", Paid: true },
+    });
+  });
+
+  it("replaces expired dues", async () => {
+    await recordDuesByEmail("bob@purdue.edu", "Bob", "Fall", "2099-01-31");
+
+    expect((await getMemberById(2))?.duesData).toEqual({
+      Type: "Fall",
+      Expires: "2099-01-31",
+      Paid: true,
+    });
+  });
+
+  it("keeps an existing later expiration", async () => {
+    const before = (await getMemberById(1))?.duesData;
+    const yesterday = new Date(Date.now() - 86_400_000)
+      .toISOString()
+      .slice(0, 10);
+
+    expect(
+      await recordDuesByEmail("alice@purdue.edu", "Alice", "Spring", yesterday),
+    ).toEqual({
+      expires: (before as { Expires: string }).Expires,
+      created: false,
+    });
+    expect((await getMemberById(1))?.duesData).toEqual(before);
+  });
+
+  it("matches email case-insensitively instead of creating a duplicate", async () => {
+    expect(
+      await recordDuesByEmail(
+        "Carol@Purdue.EDU",
+        "Carol",
+        "Annual",
+        "2099-08-31",
+      ),
+    ).toEqual({ expires: "2099-08-31", created: false });
+    expect(await getMembers()).toHaveLength(7);
+  });
+
+  it("creates a member with dues for an unknown email", async () => {
+    expect(
+      await recordDuesByEmail(
+        "New.Person@Purdue.edu",
+        "New Person",
+        "Annual",
+        "2099-08-31",
+      ),
+    ).toEqual({ expires: "2099-08-31", created: true });
+
+    const created = await getMemberByEmail("new.person@purdue.edu");
+
+    expect(created).toMatchObject({
+      name: "New Person",
+      email: "new.person@purdue.edu",
+      duesData: { Type: "Annual", Expires: "2099-08-31", Paid: true },
+      tripCount: 0,
+      signupCount: 0,
+    });
+    expect(await verifyMembershipByEmail("new.person@purdue.edu")).toBe(true);
+  });
+
+  it("creates a member even when member_id_seq is behind the existing ids", async () => {
+    // Other tools insert members with explicit ids, leaving the sequence behind (as in dev).
+    const db = await connectTestDb();
+
+    try {
+      await db.query("SELECT setval('member_id_seq', 1)");
+    } finally {
+      await db.end();
+    }
+
+    expect(
+      await recordDuesByEmail(
+        "late@purdue.edu",
+        "Late Seq",
+        "Annual",
+        "2099-08-31",
+      ),
+    ).toEqual({ expires: "2099-08-31", created: true });
+    expect((await getMemberByEmail("late@purdue.edu"))?.id).toBe(8);
+  });
+
+  it("waits for a concurrent payment for the same new email instead of creating a duplicate", async () => {
+    // Play the other payment by hand: hold the email's lock with its new row not yet committed.
+    const other = await connectTestDb();
+
+    try {
+      await other.query("BEGIN");
+      await other.query("SELECT pg_advisory_xact_lock(hashtext($1))", [
+        "racer@purdue.edu",
+      ]);
+      await other.query(
+        "INSERT INTO member (name, email) VALUES ('Racer', 'racer@purdue.edu')",
+      );
+
+      const pending = recordDuesByEmail(
+        "racer@purdue.edu",
+        "Racer",
+        "Fall",
+        "2099-01-31",
+      );
+
+      // Without the lock the call would finish now, unable to see the uncommitted row, and insert.
+      await new Promise((resolve) => setTimeout(resolve, 200));
+      await other.query("COMMIT");
+
+      expect(await pending).toEqual({ expires: "2099-01-31", created: false });
+      expect(await membersWithEmail("racer@purdue.edu")).toHaveLength(1);
+    } finally {
+      await other.end();
+    }
   });
 });

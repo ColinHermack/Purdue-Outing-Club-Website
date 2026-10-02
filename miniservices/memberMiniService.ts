@@ -317,6 +317,77 @@ export async function getMostTripsAttended(): Promise<
 }
 
 /**
+ * Records a dues payment for the member with the given email (case-insensitive), creating the
+ * member if no one has that email yet. An existing expiration later than `expires` is kept, so a
+ * late or duplicate receipt never shortens dues.
+ *
+ * `member.email` has no unique constraint, so the lookup and insert run in one transaction holding
+ * an advisory lock on the email. Two simultaneous payments for a new email then create one row.
+ * New ids come from member_id_seq after resyncing it to max(member_id), because other tools that
+ * create members set member_id themselves and leave the sequence behind.
+ *
+ * @param email The member's email address. New members are stored with it lowercased.
+ * @param name The name to give a newly created member. Ignored for existing members.
+ * @param type The dues type to record, "Annual", "Fall" or "Spring".
+ * @param expires The new expiration date as YYYY-MM-DD.
+ * @returns The member's resulting expiration date, and whether a new member was created.
+ */
+export async function recordDuesByEmail(
+  email: string,
+  name: string,
+  type: "Annual" | "Fall" | "Spring",
+  expires: string,
+): Promise<{ expires: string; created: boolean }> {
+  const client = await pool.connect();
+
+  try {
+    await client.query("BEGIN");
+    await client.query("SELECT pg_advisory_xact_lock(hashtext(lower($1)))", [
+      email,
+    ]);
+
+    const updated = await client.query(
+      `UPDATE member
+            SET dues_data = CASE
+                WHEN (dues_data ->> 'Expires')::date >= $3::date THEN dues_data
+                ELSE json_build_object('Type', $2::text, 'Expires', $3::text, 'Paid', true)
+            END
+            WHERE lower(email) = lower($1)
+            RETURNING dues_data ->> 'Expires' AS expires;`,
+      [email, type, expires],
+    );
+
+    let created = false;
+
+    if (updated.rows.length === 0) {
+      // Other tools insert members with explicit ids and never advance member_id_seq, so catch
+      // it up first. The global lock stops two inserts from syncing to the same max.
+      await client.query(
+        "SELECT pg_advisory_xact_lock(hashtext('member_id_seq'))",
+      );
+      await client.query(
+        "SELECT setval('member_id_seq', (SELECT max(member_id) FROM member))",
+      );
+      await client.query(
+        `INSERT INTO member (name, email, dues_data)
+            VALUES ($1, lower($2), json_build_object('Type', $3::text, 'Expires', $4::text, 'Paid', true));`,
+        [name, email, type, expires],
+      );
+      created = true;
+    }
+
+    await client.query("COMMIT");
+
+    return { expires: created ? expires : updated.rows[0].expires, created };
+  } catch (error) {
+    await client.query("ROLLBACK");
+    throw error;
+  } finally {
+    client.release();
+  }
+}
+
+/**
  * Gets the user specified by a purdue email address
  * @param email The user's purdue email
  * @returns A MemberDTO object, or null if no such member exists.

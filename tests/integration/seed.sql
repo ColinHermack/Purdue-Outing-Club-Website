@@ -21,7 +21,7 @@ VALUES
 
   -- Expired dues, expired first aid, car without hitch, expired license.
   (2, 'Bob Brown', 'he/him', 'bob@purdue.edu', '765-555-0002',
-   json_build_object('Type', 'Semester', 'Expires', (CURRENT_DATE - 30)::text, 'Paid', true),
+   json_build_object('Type', 'Fall', 'Expires', (CURRENT_DATE - 30)::text, 'Paid', true),
    json_build_object('Type', 'CPR', 'Expires', (CURRENT_DATE - 1)::text, 'Verified', true),
    json_build_object('Model', 'Honda Civic', 'Nickname', 'Zippy', 'Color', 'Red', 'Capacity', '4', 'Hitch', false),
    json_build_object('License', 'Y456', 'State', 'IN', 'Expires', (CURRENT_DATE - 10)::text, 'Verified', true),

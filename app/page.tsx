@@ -99,15 +99,9 @@ export default function Home() {
       >
         <AccordionEntry id="1" title="What is the Purdue Outing Club?">
           The Purdue Outing Club is pretty much involved with almost any
-          activity that takes place in the outdoors. Rock climbing, whitewater
-          kayaking, backpacking, hiking, mountaineering, and caving are our main
-          activities, but trips are certainly not limited to that. The Outing
-          Club functions as a place for people who enjoy the outdoors to meet
-          each other and have fun. The club is very informal and anyone is
-          welcome at anytime. At our meetings, we go over any business we need
-          to take care of, then talk about past trips - usually ones that went
-          out the previous weekend. We talk about new trips that are going to be
-          going out during the coming weekend, or anytime in the future.
+          activity that takes place in the outdoors. Backpacking, climbing, canoeing, whitewater kayaking, caving
+          fishing, and winter sports are what we offer. Each sport has officers in the club who can offer guidance
+          to beginners.
         </AccordionEntry>
         <AccordionEntry id="2" title="Do I need experience?">
           Nope! The Purdue Outing Club is geared towards beginners discovering
@@ -119,7 +113,7 @@ export default function Home() {
           page for more information.
         </AccordionEntry>
         <AccordionEntry id="4" title="How much does it cost?">
-          The club dues are $25 for one semester or $30 for the entire year.
+          The club dues are $30 for one semester or $45 for the entire year.
           With a paid membership, you can join any official Outing Club trip
           with gear rental included! The only additional costs are for gas and
           sometimes park fees, as well as any food you may choose to purchase on
@@ -148,6 +142,9 @@ export default function Home() {
         </AccordionEntry>
         <AccordionEntry id="climbing" title="Climbing">
           {SPORT_DESCRIPTIONS.Climbing}
+        </AccordionEntry>
+        <AccordionEntry id="fishing" title="Fishing">
+          {SPORT_DESCRIPTIONS.Fishing}
         </AccordionEntry>
         <AccordionEntry id="biking" title="Mountain Biking">
           {SPORT_DESCRIPTIONS.Biking}

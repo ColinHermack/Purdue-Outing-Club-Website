@@ -183,34 +183,23 @@ export const SPORT_DESCRIPTIONS: { [key: string]: string } = {
           his or her gear into a backpack. This gear may include food, water,
           and shelter, or the means to obtain them, and often little else. Since
           each item must be carried, weight is a very important factor in
-          equipment and supply choices and options.Backpacking trips may consist
+          equipment and supply choices and options. Backpacking trips may consist
           of just an overnight stay, a weekend (one or two nights), or an
-          extended length, as in long-distance expeditions of a weeks or months,
-          sometimes aided by planned food and supply drops. A backpacking trip
-          without an overnight stay is considered a day hike.`,
+          extended length.`,
   Canoeing: `Canoeing is an activity which involves paddling a canoe with a
-          single-bladed paddle. A few of the recreational forms of canoeing are
-          canoe camping and canoe racing. Other forms include a wide range of
-          canoeing on lakes, rivers, oceans, ponds and streams. The Purdue
-          Outing Club offers canoeing day trips and multi-day canoepacking
-          trips.`,
-  Caving: `Caving is the exploration of underground caverns. It can include
-          walking, crawling, rappelling, and climbing. The enjoyment comes from
-          getting away from this wonder of concrete and red brick, challenging
-          yourself physically and mentally, seeing the beauty of the formations,
-          and generally getting really dirty. You may have heard caving referred
+          single-bladed paddle. The Purdue Outing Club offers canoeing day trips 
+          and multi-day canoepacking trips.`,
+  Caving: `Caving is the exploration of underground caverns in search of cool rock formations
+          or underground creatures. You may have heard caving referred
           to as spelunking. Many cavers prefer to say 'caving' instead
           of 'spelunking'; however, it's the same thing.`,
   Climbing: `Rock climbing is a sport in which participants climb up or across
           natural rock formations or artificial rock walls. The goal is to reach
-          the summit of a formation or the endpoint of a pre-defined route
-          without falling. Rock climbing is a physically and mentally demanding
+          the summit of a formation or the endpoint of a pre-defined route.
+          Rock climbing is a physically and mentally demanding
           sport, one that often tests a climber's strength, endurance,
-          agility and balance along with his mental control. It can be a
-          dangerous sport and knowledge of proper climbing techniques and usage
-          of specialized climbing equipment is crucial for the safe completion
-          of routes.`,
-  Biking: `Mountain biking (abbr. MTB) is a sport of riding bicycles off-road,
+          agility and balance along with his mental control.`,
+  Biking: `Mountain biking is a sport of riding bicycles off-road,
           often over rough terrain, usually using specially designed mountain
           bikes. Mountain bikes share similarities with other bikes but
           incorporate features designed to enhance durability and performance in
@@ -229,4 +218,6 @@ export const SPORT_DESCRIPTIONS: { [key: string]: string } = {
           heavy snow, or otherwise inclement weather. The Purdue Outing Club
           generally offers snowshoeing, cross-country skiing, and winter
           backpacking.`,
+  Fishing: `Fishing is the practice of catching fish either for food or with the intent of releasing
+            them back into the wild. The Purdue Outing Club offers catch-and-release fishing trips.`
 };

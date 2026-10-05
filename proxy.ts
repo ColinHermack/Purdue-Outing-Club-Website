@@ -34,5 +34,6 @@ export const config = {
     "/dashboard",
     "/tripleadersdashboard",
     "/memberdirectory",
+    "/memberexport",
   ],
 };

@@ -46,6 +46,7 @@ The code is intentionally split into four layers; new database-backed features s
 
 - DB columns are `snake_case`; DTOs and models are `camelCase`. Do the conversion in the miniservice's `result.rows.map(...)` — don't leak `snake_case` into DTOs (recent commit `226826f` was specifically a cleanup of this).
 - Miniservices use `"use server"` and must not be imported into client components.
+- New or changed `app/api` routes need a matching entry in `public/openapi.json` (rendered by Scalar at `/api/docs`). `tests/unit/openapi.test.ts` fails CI when routes and spec drift.
 - ESLint enforces `import/order` (with a specific group order), `react/jsx-sort-props`, `padding-line-between-statements` (blank line before `return`, blank line after `const`/`let`/`var` blocks), and warns on `no-console`. Prettier is wired through ESLint.
 
 ## Environment
@@ -59,3 +60,6 @@ Deployed on Vercel. Every PR gets a preview deployment; merging to `main` deploy
 ## HeroUI
 
 For all prompts that mention HeroUI, use HeroUI React documentation from https://heroui.com/react/llms-full.txt. Treat this as the ultimate source of truth on HeroUI.
+
+## Scalar UI
+Use the Scalar MCP server for Scalar UI documentation

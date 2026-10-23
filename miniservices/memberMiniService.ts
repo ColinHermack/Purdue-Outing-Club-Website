@@ -318,8 +318,9 @@ export async function getMostTripsAttended(): Promise<
 
 /**
  * Records a dues payment for the member with the given email (case-insensitive), creating the
- * member if no one has that email yet. An existing expiration later than `expires` is kept, so a
- * late or duplicate receipt never shortens dues.
+ * member if no one has that email yet. `Paid` is set to today's date (database clock, YYYY-MM-DD).
+ * An existing expiration later than `expires` is kept untouched, so a late or duplicate receipt
+ * never shortens dues or moves the original `Paid` date.
  *
  * `member.email` has no unique constraint, so the lookup and insert run in one transaction holding
  * an advisory lock on the email. Two simultaneous payments for a new email then create one row.
@@ -350,7 +351,7 @@ export async function recordDuesByEmail(
       `UPDATE member
             SET dues_data = CASE
                 WHEN (dues_data ->> 'Expires')::date >= $3::date THEN dues_data
-                ELSE json_build_object('Type', $2::text, 'Expires', $3::text, 'Paid', true)
+                ELSE json_build_object('Type', $2::text, 'Expires', $3::text, 'Paid', CURRENT_DATE::text)
             END
             WHERE lower(email) = lower($1)
             RETURNING dues_data ->> 'Expires' AS expires;`,
@@ -370,7 +371,7 @@ export async function recordDuesByEmail(
       );
       await client.query(
         `INSERT INTO member (name, email, dues_data)
-            VALUES ($1, lower($2), json_build_object('Type', $3::text, 'Expires', $4::text, 'Paid', true));`,
+            VALUES ($1, lower($2), json_build_object('Type', $3::text, 'Expires', $4::text, 'Paid', CURRENT_DATE::text));`,
         [name, email, type, expires],
       );
       created = true;

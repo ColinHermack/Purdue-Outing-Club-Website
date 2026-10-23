@@ -131,6 +131,9 @@ describe("memberMiniService against the test DB", () => {
 });
 
 describe("recordDuesByEmail against the test DB", () => {
+  // recordDuesByEmail stamps Paid with the DB's CURRENT_DATE; the test DB runs in UTC.
+  const today = new Date().toISOString().slice(0, 10);
+
   beforeEach(async () => {
     await resetDb();
   });
@@ -154,7 +157,7 @@ describe("recordDuesByEmail against the test DB", () => {
     ).toEqual({ expires: "2099-08-31", created: false });
     expect(await getMemberById(3)).toMatchObject({
       name: "Carol Clark",
-      duesData: { Type: "Annual", Expires: "2099-08-31", Paid: true },
+      duesData: { Type: "Annual", Expires: "2099-08-31", Paid: today },
     });
   });
 
@@ -164,7 +167,7 @@ describe("recordDuesByEmail against the test DB", () => {
     expect((await getMemberById(2))?.duesData).toEqual({
       Type: "Fall",
       Expires: "2099-01-31",
-      Paid: true,
+      Paid: today,
     });
   });
 
@@ -210,7 +213,7 @@ describe("recordDuesByEmail against the test DB", () => {
     expect(created).toMatchObject({
       name: "New Person",
       email: "new.person@purdue.edu",
-      duesData: { Type: "Annual", Expires: "2099-08-31", Paid: true },
+      duesData: { Type: "Annual", Expires: "2099-08-31", Paid: today },
       tripCount: 0,
       signupCount: 0,
     });

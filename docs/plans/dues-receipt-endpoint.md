@@ -14,7 +14,7 @@ Step 0 of implementation: copy this plan to `docs/plans/dues-receipt-endpoint.md
 
 ## Existing facts
 
-- `dues_data` is a `json` column with keys `Type` (`"Annual"` / `"Fall"` / `"Spring"`, confirmed by the user), `Expires` (date string), `Paid` (bool) (`docs/plans/member-directory.md`, `tests/integration/seed.sql`). Active = `Expires > CURRENT_DATE`.
+- `dues_data` is a `json` column with keys `Type` (`"Annual"` / `"Fall"` / `"Spring"`, confirmed by the user), `Expires` (date string), `Paid` (date the receipt was recorded, `YYYY-MM-DD`; older rows may hold `true`) (`docs/plans/member-directory.md`, `tests/integration/seed.sql`). Active = `Expires > CURRENT_DATE`.
 - `proxy.ts` matcher gates `/api/protected/*` with NextAuth and redirects to sign-in, so the new route must live **outside** `/api/protected`.
 - Route/miniservice/test patterns: `app/api/protected/tripleaders/route.ts`, `miniservices/memberMiniService.ts`, `tests/unit/helpers.ts`.
 
@@ -34,7 +34,7 @@ Returns the resulting `Expires`, or `null` if no member matches. Never shortens 
 UPDATE member
 SET dues_data = CASE
     WHEN (dues_data ->> 'Expires')::date >= $3::date THEN dues_data
-    ELSE json_build_object('Type', $2::text, 'Expires', $3::text, 'Paid', true)
+    ELSE json_build_object('Type', $2::text, 'Expires', $3::text, 'Paid', CURRENT_DATE::text)
 END
 WHERE lower(email) = lower($1)
 RETURNING dues_data ->> 'Expires' AS expires;

@@ -1,0 +1,1225 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Purdue Outing Club API",
+    "version": "1.0.0",
+    "description": "Route handlers under `app/api`. Protected routes use the NextAuth session cookie: sign in on the site in this browser, and same-origin requests from this page send it automatically.\n\nNote: several protected routes return 403 for a missing session and 401 for a missing role (reversed from the usual meaning). Documented as implemented."
+  },
+  "servers": [
+    {
+      "url": "/",
+      "description": "Current deployment"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Public",
+      "description": "No authentication."
+    },
+    {
+      "name": "Members",
+      "description": "Any signed-in member."
+    },
+    {
+      "name": "Officers",
+      "description": "Signed-in officers with specific positions."
+    },
+    {
+      "name": "Automation",
+      "description": "Machine-only, bearer token."
+    }
+  ],
+  "paths": {
+    "/api/healthcheck": {
+      "get": {
+        "tags": ["Public"],
+        "summary": "Check the API is online",
+        "responses": {
+          "200": {
+            "description": "`API is online.`",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/gear/hours": {
+      "get": {
+        "tags": ["Public"],
+        "summary": "Gear closet hours per gear officer",
+        "responses": {
+          "200": {
+            "description": "Gear officers and their hours.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GearHours"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/leaderboard/led": {
+      "get": {
+        "tags": ["Public"],
+        "summary": "Top 5 members by trips led",
+        "description": "Body is JSON but sent without a JSON content type.",
+        "responses": {
+          "200": {
+            "description": "Leaderboard.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LeaderboardEntry"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/leaderboard/total": {
+      "get": {
+        "tags": ["Public"],
+        "summary": "Top 5 members by trips attended",
+        "description": "Body is JSON but sent without a JSON content type.",
+        "responses": {
+          "200": {
+            "description": "Leaderboard.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LeaderboardEntry"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/news/recent": {
+      "get": {
+        "tags": ["Public"],
+        "summary": "Three most recent news posts",
+        "responses": {
+          "200": {
+            "description": "News previews, newest first.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NewsPreviewDTO"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/trips/open": {
+      "get": {
+        "tags": ["Public"],
+        "summary": "Trips open for signup",
+        "description": "Only `tripId`, `name`, `startDate`, `sport` and `location` are set. Returns `[]` if the query fails.",
+        "responses": {
+          "200": {
+            "description": "Open trips.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TripDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/azure-signout": {
+      "get": {
+        "tags": ["Public"],
+        "summary": "End the Microsoft SSO session",
+        "description": "Redirects to the Azure AD logout endpoint, which then returns to `NEXTAUTH_URL`. Call after NextAuth sign-out.",
+        "responses": {
+          "307": {
+            "description": "Redirect to `login.microsoftonline.com/.../logout`."
+          }
+        }
+      }
+    },
+    "/api/protected/user": {
+      "get": {
+        "tags": ["Members"],
+        "summary": "Current member's profile",
+        "description": "Requests without a session never reach the handler: `proxy.ts` answers 307 to the NextAuth sign-in page (`/api/auth/signin`).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The signed-in member.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberDTO"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "No session email (`Unauthorized`).",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No member with the session email.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/protected/user/trips": {
+      "get": {
+        "tags": ["Members"],
+        "summary": "Trips the current member attended",
+        "description": "Requests without a session never reach the handler: `proxy.ts` answers 307 to the NextAuth sign-in page (`/api/auth/signin`).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Attended trips.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TripDTO"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "No session email (`Unauthorized`).",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No member with the session email.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/protected/membership": {
+      "get": {
+        "tags": ["Members"],
+        "summary": "Verify the session belongs to a member",
+        "description": "Requests without a session never reach the handler: `proxy.ts` answers 307 to the NextAuth sign-in page (`/api/auth/signin`).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Member verified.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Membership verified"
+                    },
+                    "user": {
+                      "type": "string",
+                      "format": "email"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No session.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Session email is not a member.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/protected/memberdirectory": {
+      "get": {
+        "tags": ["Members"],
+        "summary": "Member directory (trip leaders only)",
+        "description": "Caller must be a trip leader. Requests without a session never reach the handler: `proxy.ts` answers 307 to the NextAuth sign-in page (`/api/auth/signin`).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Every member's directory entry.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MemberDirectoryEntryDTO"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Caller is not a trip leader.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "No session email (`Unauthorized`).",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No member with the session email.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/protected/members": {
+      "get": {
+        "tags": ["Officers"],
+        "summary": "Basic info for every member",
+        "description": "Caller must be an officer (any position). Requests without a session never reach the handler: `proxy.ts` answers 307 to the NextAuth sign-in page (`/api/auth/signin`).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Every member.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BasicMemberDTO"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No member with the session email, or caller is not an officer.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "No session email (`Unauthorized`).",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/protected/tripleaders": {
+      "get": {
+        "tags": ["Officers"],
+        "summary": "List trip leaders",
+        "description": "Caller must hold a position in `GET_TRIP_LEADERS_AUTHORIZED_POSITIONS` (`config/permissions.ts`). Requests without a session never reach the handler: `proxy.ts` answers 307 to the NextAuth sign-in page (`/api/auth/signin`).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Every trip leader.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TripLeaderDTO"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Caller is not an authorized officer (`Forbidden`).",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "No session email (`Unauthorized`).",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Officers"],
+        "summary": "Make a member a trip leader",
+        "description": "Creates a trip leader row for `memberId`. Caller must hold a position in `GET_TRIP_LEADERS_AUTHORIZED_POSITIONS` (`config/permissions.ts`). Requests without a session never reach the handler: `proxy.ts` answers 307 to the NextAuth sign-in page (`/api/auth/signin`).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TripLeaderInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The trip leader after the write.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TripLeaderDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Body is not JSON, or `memberId` is missing.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Caller is not an authorized officer (`Forbidden`).",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "No session email (`Unauthorized`).",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No member with that `memberId`.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Officers"],
+        "summary": "Update a trip leader",
+        "description": "Updates the trip leader row for `memberId`. Caller must hold a position in `GET_TRIP_LEADERS_AUTHORIZED_POSITIONS` (`config/permissions.ts`). Requests without a session never reach the handler: `proxy.ts` answers 307 to the NextAuth sign-in page (`/api/auth/signin`).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TripLeaderInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The trip leader after the write.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TripLeaderDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Body is not JSON, or `memberId` is missing.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Caller is not an authorized officer (`Forbidden`).",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "No session email (`Unauthorized`).",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No member with that `memberId`.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/protected/memberexport": {
+      "get": {
+        "tags": ["Officers"],
+        "summary": "Download members as CSV",
+        "description": "Name and email of every member, sorted by name, as a `members-YYYY-MM-DD.csv` attachment. Caller must hold a position in `EXPORT_MEMBERS_AUTHORIZED_POSITIONS` (`config/permissions.ts`). Requests without a session never reach the handler: `proxy.ts` answers 307 to the NextAuth sign-in page (`/api/auth/signin`).",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "CSV with header `Name,Email`.",
+            "content": {
+              "text/csv": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Caller is not an authorized officer (`Forbidden`).",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "No session email (`Unauthorized`).",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/automation/dues": {
+      "post": {
+        "tags": ["Automation"],
+        "summary": "Record dues from a TooCool receipt",
+        "description": "Called by the treasurer's Power Automate flow. Accepts only the `DUES_API_KEY` bearer token, never a session. Creates the member, named from the receipt, when no member has that email.",
+        "security": [
+          {
+            "duesApiKey": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email", "receipt"],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "receipt": {
+                    "type": "string",
+                    "contentEncoding": "base64",
+                    "description": "Base64-encoded receipt PDF."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Dues recorded for an existing member.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DuesResult"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Member created and dues recorded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DuesResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Body is not JSON, a field is missing, or the receipt is not a readable PDF.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or wrong bearer token, or `DUES_API_KEY` unset/too short.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Receipt is not for club dues.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "session": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "__Secure-next-auth.session-token",
+        "description": "NextAuth session cookie. Sign in on the site first; the browser sends it on same-origin requests."
+      },
+      "duesApiKey": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "`DUES_API_KEY`."
+      }
+    },
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string"
+          }
+        }
+      },
+      "GearHours": {
+        "type": "object",
+        "required": ["name", "hours"],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "hours": {
+            "type": "string"
+          }
+        }
+      },
+      "LeaderboardEntry": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "count": {
+            "type": "integer"
+          }
+        }
+      },
+      "NewsPreviewDTO": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "postedOn": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          }
+        }
+      },
+      "TripDTO": {
+        "type": "object",
+        "properties": {
+          "tripId": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "category": {
+            "type": "string"
+          },
+          "sport": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "logs": {
+            "type": "object"
+          },
+          "signup": {
+            "type": "boolean"
+          },
+          "difficulty": {
+            "type": "integer"
+          }
+        }
+      },
+      "BasicMemberDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          }
+        }
+      },
+      "FirstAidData": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "expires": {
+            "type": "string"
+          },
+          "verified": {
+            "type": "boolean"
+          }
+        }
+      },
+      "EmergencyData": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "relation": {
+            "type": "string"
+          }
+        }
+      },
+      "MedicalData": {
+        "type": "object",
+        "properties": {
+          "allergies": {
+            "type": "string"
+          },
+          "conditions": {
+            "type": "string"
+          },
+          "medications": {
+            "type": "string"
+          }
+        }
+      },
+      "MemberDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "pronouns": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "duesData": {
+            "type": "object"
+          },
+          "firstAidData": {
+            "$ref": "#/components/schemas/FirstAidData"
+          },
+          "carData": {
+            "type": "object"
+          },
+          "driverData": {
+            "type": "object"
+          },
+          "emergencyData": {
+            "$ref": "#/components/schemas/EmergencyData"
+          },
+          "policyAgreement": {
+            "type": "boolean"
+          },
+          "waiverAgreement": {
+            "type": "boolean"
+          },
+          "schoolYear": {
+            "type": "string"
+          },
+          "medicalData": {
+            "$ref": "#/components/schemas/MedicalData"
+          },
+          "tripCount": {
+            "type": "integer"
+          },
+          "holds": {
+            "type": "string"
+          },
+          "signupCount": {
+            "type": "integer"
+          },
+          "yearsActive": {
+            "type": "string"
+          },
+          "campus": {
+            "type": "string"
+          }
+        }
+      },
+      "MemberDirectoryEntryDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "pronouns": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "phone": {
+            "type": ["string", "null"]
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "policyAgreement": {
+            "type": "boolean"
+          },
+          "waiverAgreement": {
+            "type": "boolean"
+          },
+          "duesStatus": {
+            "type": "string",
+            "enum": ["paid", "expired", "none"]
+          },
+          "firstAidType": {
+            "type": ["string", "null"]
+          },
+          "carCapacity": {
+            "type": ["string", "null"]
+          },
+          "carHitch": {
+            "type": "boolean"
+          },
+          "driverCertified": {
+            "type": "boolean"
+          }
+        }
+      },
+      "TripLeaderProcess": {
+        "type": "object",
+        "properties": {
+          "shadow": {
+            "type": "boolean"
+          },
+          "approved": {
+            "type": "boolean"
+          },
+          "certified": {
+            "type": "boolean"
+          }
+        }
+      },
+      "TripLeaderDTO": {
+        "type": "object",
+        "properties": {
+          "member": {
+            "$ref": "#/components/schemas/MemberDTO"
+          },
+          "sport": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "process": {
+            "$ref": "#/components/schemas/TripLeaderProcess"
+          },
+          "leadCount": {
+            "type": "integer"
+          },
+          "gmail": {
+            "type": "string"
+          }
+        }
+      },
+      "TripLeaderInput": {
+        "type": "object",
+        "description": "`CreateTripLeaderDTO` / `UpdateTripLeaderDTO` (same shape).",
+        "required": ["memberId"],
+        "properties": {
+          "memberId": {
+            "type": "integer"
+          },
+          "sport": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "process": {
+            "$ref": "#/components/schemas/TripLeaderProcess"
+          },
+          "gmail": {
+            "type": "string"
+          }
+        }
+      },
+      "DuesResult": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["annual", "fall", "spring"]
+          },
+          "expires": {
+            "type": "string"
+          },
+          "created": {
+            "type": "boolean",
+            "description": "True when this call created the member."
+          }
+        }
+      }
+    }
+  }
+}

@@ -12,7 +12,9 @@ import type { Selection } from "@heroui/react";
 import TripLeaderDTO from "@/dtos/tripLeaderDto";
 import BasicMemberDTO from "@/dtos/basicMemberDto";
 import { SPORTS, PSEUDO_SPORTS } from "@/config/constants";
-import { redirect } from "next/navigation";
+import { GET_TRIP_LEADERS_AUTHORIZED_POSITIONS } from "@/config/permissions";
+import PageMessage from "@/components/PageMessage";
+import { protectedFetch, type ProtectedResult } from "@/utils/protectedFetch";
 
 import { Button, Modal, Table, TextField, Input, cn, Checkbox, CheckboxGroup, Label, ComboBox, ListBox, ListBoxItem, Spinner } from "@heroui/react";
 
@@ -22,6 +24,18 @@ type NestedRow = {
   id: string;
   value: string;
 };
+
+/**
+ * Explains why saving a trip leader failed.
+ *
+ * @param result The failed request result.
+ * @returns The message to show in the modal.
+ */
+function saveErrorMessage(result: ProtectedResult<unknown>): string {
+  return result.status === "forbidden"
+    ? "You don't have permission to change trip leaders."
+    : "Couldn't save. Please try again.";
+}
 
 export default function TripLeaderDashboardPage() {
   const [tripLeaders, setTripLeaders] = useState<TripLeaderDTO[] | null>(null);
@@ -40,6 +54,12 @@ export default function TripLeaderDashboardPage() {
   const [newProcessValues, setNewProcessValues] = useState<string[]>([]);
   const [newGmail, setNewGmail] = useState("");
   const [isCreating, setIsCreating] = useState(false);
+  const [loadStatus, setLoadStatus] = useState<"loading" | "forbidden" | "error">(
+    "loading",
+  );
+  const [membersFailed, setMembersFailed] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
+  const [createError, setCreateError] = useState<string | null>(null);
 
   useEffect(() => {
     const p = selectedLeader?.process;
@@ -80,15 +100,22 @@ export default function TripLeaderDashboardPage() {
       gmail: selectedLeader.gmail
     };
 
-    const response = await fetch("/api/protected/tripleaders", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    });
+    const result = await protectedFetch<TripLeaderDTO>(
+      "/api/protected/tripleaders",
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      },
+    );
 
-    if (!response.ok) return;
+    if (result.status !== "ok") {
+      setSaveError(saveErrorMessage(result));
 
-    const updated: TripLeaderDTO = await response.json();
+      return;
+    }
+
+    const updated = result.data;
 
     setTripLeaders((prev) =>
       (prev ?? []).map((tl) =>
@@ -96,6 +123,7 @@ export default function TripLeaderDashboardPage() {
       ),
     );
     setSelectedLeader(updated);
+    setIsModalOpen(false);
   };
 
   const availableMembers = useMemo(
@@ -110,6 +138,7 @@ export default function TripLeaderDashboardPage() {
     if (newMemberId == null) return;
 
     setIsCreating(true);
+    setCreateError(null);
 
     const body = {
       memberId: newMemberId,
@@ -122,17 +151,24 @@ export default function TripLeaderDashboardPage() {
       gmail: newGmail || undefined,
     };
 
-    const response = await fetch("/api/protected/tripleaders", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    });
+    const result = await protectedFetch<TripLeaderDTO>(
+      "/api/protected/tripleaders",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      },
+    );
 
     setIsCreating(false);
 
-    if (!response.ok) return;
+    if (result.status !== "ok") {
+      setCreateError(saveErrorMessage(result));
 
-    const created: TripLeaderDTO = await response.json();
+      return;
+    }
+
+    const created = result.data;
 
     setTripLeaders((prev) => [...(prev ?? []), created]);
     setNewMemberId(null);
@@ -147,6 +183,7 @@ export default function TripLeaderDashboardPage() {
 
     if (leader) {
       setSelectedLeader(leader);
+      setSaveError(null);
       setExpandedKeys(new Set());
       setIsModalOpen(true);
     }
@@ -292,25 +329,46 @@ export default function TripLeaderDashboardPage() {
   );
 
   useEffect(() => {
-    fetch("/api/protected/tripleaders")
-      .then((response) => {
-        if (response.status === 401 || response.status === 403) {
-          redirect("/");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setTripLeaders(data);
-      });
+    protectedFetch<TripLeaderDTO[]>("/api/protected/tripleaders").then(
+      (result) => {
+        if (result.status === "ok") setTripLeaders(result.data);
+        else setLoadStatus(result.status);
+      },
+    );
+
+    protectedFetch<BasicMemberDTO[]>("/api/protected/members").then(
+      (result) => {
+        if (result.status === "ok") setAllMembers(result.data);
+        else setMembersFailed(true);
+      },
+    );
   }, []);
 
-  useEffect(() => {
-    fetch("/api/protected/members")
-      .then((response) => response.json())
-      .then((data) => {
-        setAllMembers(data);
-      });
-  }, []);
+  if (loadStatus === "forbidden") {
+    return (
+      <PageMessage title="No Access">
+        <title>Trip Leader Dashboard - Purdue Outing Club</title>
+        <p>
+          The trip leader dashboard is limited to these officers:{" "}
+          {GET_TRIP_LEADERS_AUTHORIZED_POSITIONS.join(", ")}.
+        </p>
+      </PageMessage>
+    );
+  }
+
+  if (loadStatus === "error") {
+    return (
+      <PageMessage
+        action={
+          <Button onPress={() => window.location.reload()}>Try Again</Button>
+        }
+        title="Something Went Wrong"
+      >
+        <title>Trip Leader Dashboard - Purdue Outing Club</title>
+        <p>We couldn&#39;t load the trip leaders.</p>
+      </PageMessage>
+    );
+  }
 
   return (
     <div className="flex flex-col justify-top items-center w-full">
@@ -326,7 +384,12 @@ export default function TripLeaderDashboardPage() {
         >
           <Input placeholder="Search" />
         </TextField>
-        <Button onPress={() => setIsAddModalOpen(true)}>
+        <Button
+          onPress={() => {
+            setCreateError(null);
+            setIsAddModalOpen(true);
+          }}
+        >
           Add Trip Leader
         </Button>
       </div>
@@ -510,14 +573,11 @@ export default function TripLeaderDashboardPage() {
                 </div>
               </Modal.Body>
               <Modal.Footer>
+                {saveError && (
+                  <p className="text-sm text-danger mr-auto">{saveError}</p>
+                )}
                 <Modal.CloseTrigger />
-                <Button
-                  isDisabled={!isDirty}
-                  onPress={() => {
-                    handleSave();
-                    setIsModalOpen(false);
-                  }}
-                >
+                <Button isDisabled={!isDirty} onPress={handleSave}>
                   Save
                 </Button>
               </Modal.Footer>
@@ -534,6 +594,12 @@ export default function TripLeaderDashboardPage() {
               </Modal.Header>
               <Modal.Body>
                 <div className="flex flex-col gap-4">
+                  {membersFailed && (
+                    <p className="text-sm text-danger">
+                      Couldn&#39;t load the member list. Reload the page to try
+                      again.
+                    </p>
+                  )}
                   <ComboBox
                     selectedKey={newMemberId}
                     onSelectionChange={(key) =>
@@ -618,6 +684,9 @@ export default function TripLeaderDashboardPage() {
                 </div>
               </Modal.Body>
               <Modal.Footer>
+                {createError && (
+                  <p className="text-sm text-danger mr-auto">{createError}</p>
+                )}
                 <Modal.CloseTrigger />
                 <Button
                   isDisabled={newMemberId == null || isCreating}

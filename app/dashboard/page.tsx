@@ -9,24 +9,44 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Card, Separator, Link, buttonVariants } from "@heroui/react";
+import { Button, Card, Separator, Link, buttonVariants } from "@heroui/react";
 
+import PageMessage from "@/components/PageMessage";
 import MemberDTO from "@/dtos/memberDto";
 import TripDTO from "@/dtos/tripDto";
+import { protectedFetch } from "@/utils/protectedFetch";
 
 export default function DashBoardPage() {
   const [user, setUser] = useState<MemberDTO | null>(null);
-  const [trips, setTrips] = useState<TripDTO[]>([]);
+  const [userFailed, setUserFailed] = useState(false);
+  const [trips, setTrips] = useState<TripDTO[] | null>(null);
+  const [tripsFailed, setTripsFailed] = useState(false);
 
   useEffect(() => {
-    fetch("/api/protected/user")
-      .then((response) => (response.ok ? response.json() : null))
-      .then((data: MemberDTO | null) => setUser(data));
+    protectedFetch<MemberDTO>("/api/protected/user").then((result) => {
+      if (result.status === "ok") setUser(result.data);
+      else setUserFailed(true);
+    });
 
-    fetch("/api/protected/user/trips")
-      .then((response) => (response.ok ? response.json() : []))
-      .then((data: TripDTO[]) => setTrips(data));
+    protectedFetch<TripDTO[]>("/api/protected/user/trips").then((result) => {
+      if (result.status === "ok") setTrips(result.data);
+      else setTripsFailed(true);
+    });
   }, []);
+
+  if (userFailed) {
+    return (
+      <PageMessage
+        action={
+          <Button onPress={() => window.location.reload()}>Try Again</Button>
+        }
+        title="Something Went Wrong"
+      >
+        <title>My Dashboard - Purdue Outing Club</title>
+        <p>We couldn&#39;t load your member profile.</p>
+      </PageMessage>
+    );
+  }
 
   return (
     <div className="flex flex-col justify-top items-center">
@@ -56,7 +76,13 @@ export default function DashBoardPage() {
             </Card.Header>
             <Separator />
             <Card.Content>
-              {trips.length > 0 ? (
+              {tripsFailed ? (
+                <p className="text-md text-left">
+                  Couldn&#39;t load your trips.
+                </p>
+              ) : trips === null ? (
+                <p className="text-md text-left">Loading...</p>
+              ) : trips.length > 0 ? (
                 trips.map((trip: TripDTO) => (
                   <Link
                     key={trip.tripId}

@@ -9,6 +9,7 @@
  */
 
 import {
+  Button,
   Input,
   ListBox,
   Pagination,
@@ -17,12 +18,13 @@ import {
   Table,
   TextField,
 } from "@heroui/react";
-import { redirect } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
+import PageMessage from "@/components/PageMessage";
 import MemberDirectoryEntryDTO, {
   DuesStatus,
 } from "@/dtos/memberDirectoryEntryDto";
+import { protectedFetch } from "@/utils/protectedFetch";
 
 const PAGE_SIZE = 50;
 
@@ -58,19 +60,17 @@ export default function MemberDirectoryPage() {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [activeOnly, setActiveOnly] = useState<boolean>(false);
   const [page, setPage] = useState<number>(1);
+  const [loadStatus, setLoadStatus] = useState<
+    "loading" | "forbidden" | "error"
+  >("loading");
 
   useEffect(() => {
-    fetch("/api/protected/memberdirectory")
-      .then((response) => {
-        if (response.status === 401 || response.status === 403) {
-          redirect("/");
-        }
-
-        return response.json();
-      })
-      .then((data) => {
-        setMembers(data);
-      });
+    protectedFetch<MemberDirectoryEntryDTO[]>(
+      "/api/protected/memberdirectory",
+    ).then((result) => {
+      if (result.status === "ok") setMembers(result.data);
+      else setLoadStatus(result.status);
+    });
   }, []);
 
   const filtered = useMemo(() => {
@@ -97,6 +97,29 @@ export default function MemberDirectoryPage() {
   useEffect(() => {
     setPage(1);
   }, [searchTerm, activeOnly]);
+
+  if (loadStatus === "forbidden") {
+    return (
+      <PageMessage title="No Access">
+        <title>Member Directory - Purdue Outing Club</title>
+        <p>The member directory is limited to trip leaders.</p>
+      </PageMessage>
+    );
+  }
+
+  if (loadStatus === "error") {
+    return (
+      <PageMessage
+        action={
+          <Button onPress={() => window.location.reload()}>Try Again</Button>
+        }
+        title="Something Went Wrong"
+      >
+        <title>Member Directory - Purdue Outing Club</title>
+        <p>We couldn&#39;t load the member directory.</p>
+      </PageMessage>
+    );
+  }
 
   return (
     <div className="flex flex-col justify-top items-center w-full">

@@ -28,19 +28,19 @@ export async function GET(): Promise<Response> {
             session.user === undefined ||
             typeof session.user.email !== "string"
         ) {
-            return new Response("Unauthorized", { status: 403 });
+            return new Response("Unauthorized", { status: 401 });
         }
 
         const requestingMember: MemberDTO | null = await getMemberByEmail(session.user.email);
         if (requestingMember == null || requestingMember.id == undefined) {
-            return new Response(`No member with email ${session.user.email} exists.`, { status: 401 });
+            return new Response(`No member with email ${session.user.email} exists.`, { status: 403 });
         }
 
         
 
         const requestingMemberIsOfficer: boolean = await verifyMemberIsOfficer(requestingMember.id);
         if (!requestingMemberIsOfficer) {
-            return new Response("You must be an officer to view this resource.", { status: 401 });
+            return new Response("You must be an officer to view this resource.", { status: 403 });
         }
 
         const members: MemberDTO[] = await getMembers();

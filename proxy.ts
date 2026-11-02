@@ -1,29 +1,24 @@
 import { withAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
 
+/**
+ * Pages without a session are redirected to sign-in by withAuth. API routes are let through to the function below so
+ * that client fetches get a 401 they can act on, instead of a redirect to an HTML page they cannot parse.
+ */
 export default withAuth(
   function proxy(req) {
-    const token = req.nextauth.token;
-    const isAuthenticated = !!token;
-
-    // For example, check if the user's email is in your allowed list
-    // const isAuthorized = isAuthenticated &&
-    //   (await yourDatabaseCheck(token.email));
-
-    if (!isAuthenticated) {
-      const signInUrl = new URL("/auth/signin", req.url);
-
-      signInUrl.searchParams.set("callbackUrl", req.nextUrl.pathname);
-
-      return NextResponse.redirect(signInUrl);
+    if (!req.nextauth.token) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     return NextResponse.next();
   },
   {
     callbacks: {
-      authorized: ({ token }) => !!token,
+      authorized: ({ token, req }) =>
+        !!token || req.nextUrl.pathname.startsWith("/api/"),
     },
+    pages: { signIn: "/auth/signin" },
   },
 );
 

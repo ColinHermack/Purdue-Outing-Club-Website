@@ -23,7 +23,7 @@ describe("member routes against the test DB", () => {
     expect(await response.json()).toHaveLength(6);
 
     signInAs("frank@purdue.edu");
-    expect((await getMemberDirectory()).status).toBe(401);
+    expect((await getMemberDirectory()).status).toBe(403);
 
     signInAs("stranger@purdue.edu");
     expect((await getMemberDirectory()).status).toBe(404);
@@ -40,7 +40,7 @@ describe("member routes against the test DB", () => {
     expect(Object.keys(members[0]).sort()).toEqual(["email", "id", "name"]);
 
     signInAs("carol@purdue.edu");
-    expect((await getMembers()).status).toBe(401);
+    expect((await getMembers()).status).toBe(403);
   });
 
   it("user returns the signed-in member", async () => {

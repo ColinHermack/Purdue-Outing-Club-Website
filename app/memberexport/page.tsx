@@ -6,9 +6,9 @@
 
 import { buttonVariants } from "@heroui/react";
 import { getServerSession } from "next-auth/next";
-import { redirect } from "next/navigation";
 
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
+import PageMessage from "@/components/PageMessage";
 import { EXPORT_MEMBERS_AUTHORIZED_POSITIONS } from "@/config/permissions";
 import { getOfficerDataByEmail } from "@/miniservices/officerMiniService";
 
@@ -23,7 +23,15 @@ export default async function MemberExportPage() {
   );
 
   if (!isAuthorized) {
-    redirect("/");
+    return (
+      <PageMessage title="No Access">
+        <title>Member Export - Purdue Outing Club</title>
+        <p>
+          Member export is limited to these officers:{" "}
+          {EXPORT_MEMBERS_AUTHORIZED_POSITIONS.join(", ")}.
+        </p>
+      </PageMessage>
+    );
   }
 
   return (

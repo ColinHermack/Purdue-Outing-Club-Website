@@ -28,7 +28,7 @@ export async function GET(): Promise<Response> {
       session.user === undefined ||
       typeof session.user.email !== "string"
     ) {
-      return new Response("Unauthorized", { status: 403 });
+      return new Response("Unauthorized", { status: 401 });
     }
 
     const member: MemberDTO | null = await getMemberByEmail(session.user.email);
@@ -44,7 +44,7 @@ export async function GET(): Promise<Response> {
 
     if (tripLeader === null) {
       return new Response("You must be a trip leader to view this resource.", {
-        status: 401,
+        status: 403,
       });
     }
 

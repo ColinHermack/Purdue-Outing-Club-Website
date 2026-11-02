@@ -16,10 +16,10 @@ describe.each([
   ["/api/protected/user", getUser],
   ["/api/protected/user/trips", getUserTrips],
 ])("GET %s", (_, GET) => {
-  it("returns 403 with no session", async () => {
+  it("returns 401 with no session", async () => {
     vi.mocked(getServerSession).mockResolvedValue(null);
 
-    expect((await GET()).status).toBe(403);
+    expect((await GET()).status).toBe(401);
   });
 
   it("returns 404 when the email is not a member", async () => {

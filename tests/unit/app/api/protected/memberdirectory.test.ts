@@ -15,10 +15,10 @@ vi.mock("@/miniservices/memberMiniService");
 vi.mock("@/miniservices/tripLeaderMiniService");
 
 describe("GET /api/protected/memberdirectory", () => {
-  it("returns 403 with no session", async () => {
+  it("returns 401 with no session", async () => {
     vi.mocked(getServerSession).mockResolvedValue(null);
 
-    expect((await GET()).status).toBe(403);
+    expect((await GET()).status).toBe(401);
   });
 
   it("returns 404 when the email is not a member", async () => {
@@ -28,12 +28,12 @@ describe("GET /api/protected/memberdirectory", () => {
     expect((await GET()).status).toBe(404);
   });
 
-  it("returns 401 for a member who is not a trip leader", async () => {
+  it("returns 403 for a member who is not a trip leader", async () => {
     vi.mocked(getServerSession).mockResolvedValue(session());
     vi.mocked(getMemberByEmail).mockResolvedValue({ id: 2 });
     vi.mocked(getTripLeader).mockResolvedValue(null);
 
-    expect((await GET()).status).toBe(401);
+    expect((await GET()).status).toBe(403);
     expect(getMemberDirectory).not.toHaveBeenCalled();
   });
 

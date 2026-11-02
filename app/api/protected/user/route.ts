@@ -21,7 +21,7 @@ export async function GET(): Promise<Response> {
       session.user === undefined ||
       typeof session.user.email !== "string"
     ) {
-      return new Response("Unauthorized", { status: 403 });
+      return new Response("Unauthorized", { status: 401 });
     }
 
     const email: string = session.user.email;

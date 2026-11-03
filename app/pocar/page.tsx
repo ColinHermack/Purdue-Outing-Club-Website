@@ -1,8 +1,7 @@
 "use client";
 
 /**
- * This page contains information about the 2025 POCAR race. It will need to be updated soon with information about the
- * 2026 race.
+ * This page contains information about the 2027 POCAR race.
  *
  * @author Colin Hermack
  */
@@ -15,19 +14,19 @@ import { AccordionEntry } from "@/components/accordion-entry";
 export default function PocarPage() {
   return (
     <div className="flex flex-col justify-top items-center">
-      <title>POCAR 2026 - Purdue Outing Club</title>
+      <title>POCAR 2027 - Purdue Outing Club</title>
       <h1 className="text-5xl text-amber-400 font-bold text-center mb-10">
-        POCAR 2026
+        POCAR 2027
       </h1>
 
       <h2 className="font-bold text-center mb-10 text-xl">
         General Race Information
       </h2>
       <p className="text-left w-3/4 my-2">
-        <strong>Location:</strong> Yellowwood State Forest
+        <strong>Location:</strong> Brown County State Park
       </p>
       <p className="text-left w-3/4 my-2">
-        <strong>Date:</strong> January 16-19, 2026
+        <strong>Date:</strong> January 15-18, 2027
       </p>
 
       <p className="text-left w-3/4 mt-2 mb-2">
@@ -37,29 +36,29 @@ export default function PocarPage() {
         <strong>Purdue Outing Club Members:</strong> $35
       </p>
       <p className="text-left w-3/4 my-2">
-        <strong>Collegiate:</strong> $70
+        <strong>Collegiate (Non-Members):</strong> $70
       </p>
       <p className="text-left w-3/4 my-2">
-        <strong>Open:</strong> $80
+        <strong>Open:</strong> $85
       </p>
 
       <Link
         className={buttonVariants({ className: "mb-2" })}
-        href="/docs/pocar_instructions.pdf"
+        href="/docs/POCAR%202027%20Race%20Instructions.pdf"
       >
         Race Instructions
       </Link>
 
       <Link
         className={buttonVariants({ className: "my-4" })}
-        href="/docs/pocar_rules.pdf"
+        href="/docs/POCAR%202027%20Race%20Rules.pdf"
       >
         Race Rules
       </Link>
 
       <Link
         className={buttonVariants({ className: "mt-2" })}
-        href="/docs/pocar_emergency_procedures.pdf"
+        href="/docs/EAP%20(Updated%202026-27).pdf"
       >
         Emergency Procedures
       </Link>
@@ -69,14 +68,22 @@ export default function PocarPage() {
       <h2 className="font-bold text-center mb-10 text-xl">Racer Information</h2>
 
       <p className="text-left w-3/4 my-2">
-        <strong>Check In:</strong> Opens at 8:30 AM, January 17, 2026
+        <strong>Check In:</strong> Opens at 8:00 AM, January 16, 2027
       </p>
       <p className="text-left w-3/4 mt-2">
-        <strong>Race Start (Open):</strong> 10:00 AM, January 17, 2026
+        <strong>
+          Check In Closes and Pre-Race Meeting:
+        </strong>{" "}
+        9:30 AM, January 16, 2027
       </p>
       <p className="text-left w-3/4">
-        <strong>Race Start (Collegiate):</strong> 10:30 AM, January 17, 2026
+        <strong>Race Start (Open):</strong> 10:00 AM, January 16, 2027
       </p>
+      <p className="text-left w-3/4">
+        <strong>Race Start (Collegiate):</strong> 10:30 AM, January 16, 2027
+      </p>
+
+      <br />
 
       <p className="text-left w-3/4 mb-2">
         Teams who do not check in by the race start time for their division will
@@ -89,96 +96,45 @@ export default function PocarPage() {
         Volunteer Information
       </h2>
       <p className="text-left w-3/4 my-2">
-        Volunteering begins on January 16, 2026 and will last until January 19,
-        2026. There will be a mandatory volunteer meeting before the race.
+        Volunteering begins on January 15, 2027 and will last until January 18,
+        2027. There will be a mandatory volunteer meeting before the race.
       </p>
+
+      <p className='text-left w-3/4 my-2 mb-4'>
+        Volunteering is open to current Purdue Outing Club members.
+      </p>
+
+      <Link
+        className={buttonVariants({ className: "mt-2" })}
+        href="/trips/313"
+      >
+        Register to Volunteer
+      </Link>
 
       <Separator className="my-10" />
 
       <h2 className="font-bold text-center mb-4 text-xl">Register to Race</h2>
-      <p className="mb-4">
-        All registration for racers will be through IMLeagues.
-      </p>
-      <Link
-        target="_blank"
-        rel="noopener noreferrer"
-        className={buttonVariants()}
-        href="http://imleagues.com/Purdue_Outing_POCAR/Orienteering1"
-      >
-        Racer Registration
-      </Link>
-
-      <p className="my-4">
-        If you want to race but do not have a team, or you need additional
-        members for your team, you can find others to race with on the team
-        finder.
-      </p>
-      <Link
-        target="_blank"
-        rel="noopener noreferrer"
-        className={buttonVariants()}
-        href="https://docs.google.com/spreadsheets/d/1YmNarc1XFBIcolYodnXX9OEf0FW12QcvbZ3mABi1adQ/edit?gid=0#gid=0"
-      >
-        Team Finder
-      </Link>
-
-      <Separator className="my-10" />
-
-      <h2 className="font-bold text-center mb-10 text-xl">
-        Register to Volunteer
-      </h2>
       <p className="mb-8">
-        Volunteers are required to register on both IMLeagues and through the
-        Purdue Outing Club website.
+        Racer registration will open on November 10, 2026.
       </p>
-      <Link
-        target="_blank"
-        rel="noopener noreferrer"
-        className={buttonVariants()}
-        href="http://imleagues.com/Purdue_Outing_POCAR/Orienteering1"
-      >
-        Volunteer Registration (IMLeagues)
-      </Link>
-
-      <Link
-        className={buttonVariants({ className: "mt-4" })}
-        target="_blank"
-        href="/trips/231"
-      >
-        Volunteer Registration (POC)
-      </Link>
-
-      {/*}
-      <Separator className="my-10" />
-
-      <h2 className="font-bold text-center text-xl">More Information</h2>
-      <Link
-        className={buttonVariants({ className: "mt-10 font-bold" })}
-        href="/docs/pocar_emergency_procedures.pdf"
-        target="_blank"
-        variant="flat"
-      >
-        Emergency Procedures
-      </Link>
-      <Link
-        className={buttonVariants({ className: "mt-10 font-bold" })}
-        href="/docs/pocar_rules.pdf"
-        target="_blank"
-        variant="flat"
-      >
-        Rules
-      </Link>
-      <Link
-        className={buttonVariants({ className: "mt-10 font-bold" })}
-        href="/docs/pocar_instructions.pdf"
-        target="_blank"
-        variant="flat"
-      >
-        Instructions
-      </Link>
-      {*/}
 
       <Separator className="my-10" />
+
+      <iframe
+        className="w-3/4 md:w-1/3 h-[300px] mt-10 rounded-lg mb-2"
+        src="https://www.youtube.com/embed/ad_B4YuUdD8"
+        title="pocar video"
+      >
+        Loading...
+      </iframe>
+
+      <iframe
+        className='w-3/4 md:w-1/3 h-[300px] mt-2 rounded-lg mb-10'
+        src='https://www.youtube.com/embed/QOmJkC4KiEA'
+        title='pocar news report'
+      >  
+      </iframe>
+
       <h2 className="font-bold text-center text-xl">FAQ</h2>
 
       <Accordion defaultExpandedKeys={["1"]} allowsMultipleExpanded>
@@ -242,14 +198,6 @@ export default function PocarPage() {
           is strictly prohibited.
         </AccordionEntry>
       </Accordion>
-
-      <iframe
-        className="w-3/4 md:w-1/3 h-[300px] mt-10 rounded-lg"
-        src="https://www.youtube.com/embed/ad_B4YuUdD8"
-        title="pocar video"
-      >
-        Loading...
-      </iframe>
     </div>
   );
 }

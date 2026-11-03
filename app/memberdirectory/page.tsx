@@ -121,6 +121,16 @@ export default function MemberDirectoryPage() {
     );
   }
 
+  // Show only a spinner until the data arrives, so users without access never see the page layout.
+  if (members === null) {
+    return (
+      <div className="flex justify-center w-full">
+        <title>Member Directory - Purdue Outing Club</title>
+        <Spinner aria-label="Loading members" className="my-12" />
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col justify-top items-center w-full">
       <title>Member Directory - Purdue Outing Club</title>
@@ -159,110 +169,106 @@ export default function MemberDirectoryPage() {
           </Select.Popover>
         </Select>
       </div>
-      {members === null ? (
-        <Spinner aria-label="Loading members" className="my-12" />
-      ) : (
-        <div className="w-7/8 mt-4">
-          <Table>
-            <Table.ScrollContainer data-scrollbar="thin">
-              <Table.Content
-                aria-label="Club members"
-                className="table-fixed min-w-[92rem] w-full"
-              >
-                <Table.Header>
-                  <Table.Column isRowHeader className="w-48 whitespace-nowrap">
-                    Name
-                  </Table.Column>
-                  <Table.Column className="w-32 whitespace-nowrap">
-                    Pronouns
-                  </Table.Column>
-                  <Table.Column className="w-56 whitespace-nowrap">
-                    Email
-                  </Table.Column>
-                  <Table.Column className="w-36 whitespace-nowrap">
-                    Phone
-                  </Table.Column>
-                  <Table.Column className="w-32 whitespace-nowrap">
-                    Dues
-                  </Table.Column>
-                  <Table.Column className="w-24 whitespace-nowrap">
-                    Policy?
-                  </Table.Column>
-                  <Table.Column className="w-24 whitespace-nowrap">
-                    Waiver?
-                  </Table.Column>
-                  <Table.Column className="w-36 whitespace-nowrap">
-                    First Aid
-                  </Table.Column>
-                  <Table.Column className="w-28 whitespace-nowrap">
-                    Car Seats
-                  </Table.Column>
-                  <Table.Column className="w-24 whitespace-nowrap">
-                    Hitch?
-                  </Table.Column>
-                  <Table.Column className="w-24 whitespace-nowrap">
-                    Driver?
-                  </Table.Column>
-                </Table.Header>
-                <Table.Body>
-                  {visible.map((member: MemberDirectoryEntryDTO) => (
-                    <Table.Row
-                      key={member.id}
-                      aria-label={`Member: ${member.name}`}
-                      id={member.id}
-                    >
-                      <Table.Cell>{member.name}</Table.Cell>
-                      <Table.Cell>{member.pronouns ?? "—"}</Table.Cell>
-                      <Table.Cell>{member.email}</Table.Cell>
-                      <Table.Cell>{member.phone ?? "—"}</Table.Cell>
-                      <Table.Cell>
-                        {member.duesStatus
-                          ? DUES_LABELS[member.duesStatus]
-                          : DUES_LABELS.none}
-                      </Table.Cell>
-                      <Table.Cell>
-                        <span
-                          aria-label={member.policyAgreement ? "Yes" : "No"}
-                          role="img"
-                        >
-                          {member.policyAgreement ? "🟢" : "🛑"}
-                        </span>
-                      </Table.Cell>
-                      <Table.Cell>
-                        <span
-                          aria-label={member.waiverAgreement ? "Yes" : "No"}
-                          role="img"
-                        >
-                          {member.waiverAgreement ? "🟢" : "🛑"}
-                        </span>
-                      </Table.Cell>
-                      <Table.Cell>{member.firstAidType ?? "—"}</Table.Cell>
-                      <Table.Cell>{member.carCapacity ?? "—"}</Table.Cell>
-                      <Table.Cell>
-                        <span
-                          aria-label={member.carHitch ? "Yes" : "No"}
-                          role="img"
-                        >
-                          {member.carHitch ? "🟢" : "🛑"}
-                        </span>
-                      </Table.Cell>
-                      <Table.Cell>
-                        <span
-                          aria-label={member.driverCertified ? "Yes" : "No"}
-                          role="img"
-                        >
-                          {member.driverCertified ? "🟢" : "🛑"}
-                        </span>
-                      </Table.Cell>
-                    </Table.Row>
-                  ))}
-                </Table.Body>
-              </Table.Content>
-            </Table.ScrollContainer>
-          </Table>
-        </div>
-      )}
-      {members !== null && pageCount > 1 && (
+      <div className="w-7/8 mt-4">
+        <Table>
+          <Table.ScrollContainer data-scrollbar="thin">
+            <Table.Content
+              aria-label="Club members"
+              className="table-fixed min-w-[92rem] w-full"
+            >
+              <Table.Header>
+                <Table.Column isRowHeader className="w-48 whitespace-nowrap">
+                  Name
+                </Table.Column>
+                <Table.Column className="w-32 whitespace-nowrap">
+                  Pronouns
+                </Table.Column>
+                <Table.Column className="w-56 whitespace-nowrap">
+                  Email
+                </Table.Column>
+                <Table.Column className="w-36 whitespace-nowrap">
+                  Phone
+                </Table.Column>
+                <Table.Column className="w-32 whitespace-nowrap">
+                  Dues
+                </Table.Column>
+                <Table.Column className="w-24 whitespace-nowrap">
+                  Policy?
+                </Table.Column>
+                <Table.Column className="w-24 whitespace-nowrap">
+                  Waiver?
+                </Table.Column>
+                <Table.Column className="w-36 whitespace-nowrap">
+                  First Aid
+                </Table.Column>
+                <Table.Column className="w-28 whitespace-nowrap">
+                  Car Seats
+                </Table.Column>
+                <Table.Column className="w-24 whitespace-nowrap">
+                  Hitch?
+                </Table.Column>
+                <Table.Column className="w-24 whitespace-nowrap">
+                  Driver?
+                </Table.Column>
+              </Table.Header>
+              <Table.Body>
+                {visible.map((member: MemberDirectoryEntryDTO) => (
+                  <Table.Row
+                    key={member.id}
+                    aria-label={`Member: ${member.name}`}
+                    id={member.id}
+                  >
+                    <Table.Cell>{member.name}</Table.Cell>
+                    <Table.Cell>{member.pronouns ?? "—"}</Table.Cell>
+                    <Table.Cell>{member.email}</Table.Cell>
+                    <Table.Cell>{member.phone ?? "—"}</Table.Cell>
+                    <Table.Cell>
+                      {member.duesStatus
+                        ? DUES_LABELS[member.duesStatus]
+                        : DUES_LABELS.none}
+                    </Table.Cell>
+                    <Table.Cell>
+                      <span
+                        aria-label={member.policyAgreement ? "Yes" : "No"}
+                        role="img"
+                      >
+                        {member.policyAgreement ? "🟢" : "🛑"}
+                      </span>
+                    </Table.Cell>
+                    <Table.Cell>
+                      <span
+                        aria-label={member.waiverAgreement ? "Yes" : "No"}
+                        role="img"
+                      >
+                        {member.waiverAgreement ? "🟢" : "🛑"}
+                      </span>
+                    </Table.Cell>
+                    <Table.Cell>{member.firstAidType ?? "—"}</Table.Cell>
+                    <Table.Cell>{member.carCapacity ?? "—"}</Table.Cell>
+                    <Table.Cell>
+                      <span
+                        aria-label={member.carHitch ? "Yes" : "No"}
+                        role="img"
+                      >
+                        {member.carHitch ? "🟢" : "🛑"}
+                      </span>
+                    </Table.Cell>
+                    <Table.Cell>
+                      <span
+                        aria-label={member.driverCertified ? "Yes" : "No"}
+                        role="img"
+                      >
+                        {member.driverCertified ? "🟢" : "🛑"}
+                      </span>
+                    </Table.Cell>
+                  </Table.Row>
+                ))}
+              </Table.Body>
+            </Table.Content>
+          </Table.ScrollContainer>
+        </Table>
+      </div>
+      {pageCount > 1 && (
         <Pagination
           aria-label="Member directory pages"
           className="my-8 w-7/8 justify-center"

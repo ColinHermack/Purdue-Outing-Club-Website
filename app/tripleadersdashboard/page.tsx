@@ -370,6 +370,16 @@ export default function TripLeaderDashboardPage() {
     );
   }
 
+  // Show only a spinner until the data arrives, so users without access never see the page layout.
+  if (tripLeaders === null) {
+    return (
+      <div className="flex justify-center w-full">
+        <title>Trip Leader Dashboard - Purdue Outing Club</title>
+        <Spinner aria-label="Loading trip leaders" className="my-12" />
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col justify-top items-center w-full">
       <title>Trip Leader Dashboard - Purdue Outing Club</title>
@@ -393,90 +403,86 @@ export default function TripLeaderDashboardPage() {
           Add Trip Leader
         </Button>
       </div>
-      {tripLeaders === null ? (
-        <Spinner aria-label="Loading trip leaders" className="my-12" />
-      ) : (
-        <div className="w-7/8 mt-4 overflow-x-auto">
-          <Table>
-            <Table.Content
-              aria-label="Trip leaders"
-              className="table-fixed min-w-[58rem] w-full"
-              onRowAction={handleRowAction}
-            >
-              <Table.Header>
-                <Table.Column isRowHeader className="w-44 whitespace-nowrap">
-                  Name
-                </Table.Column>
-                <Table.Column>Sports</Table.Column>
-                <Table.Column className="w-56 whitespace-nowrap">
-                  Gmail
-                </Table.Column>
-                <Table.Column className="w-36 whitespace-nowrap">
-                  Shadowed trip?
-                </Table.Column>
-                <Table.Column className="w-28 whitespace-nowrap">
-                  Approved?
-                </Table.Column>
-                <Table.Column className="w-28 whitespace-nowrap">
-                  Certified?
-                </Table.Column>
-              </Table.Header>
-              <Table.Body>
-                {tripLeaders
-                  .filter((tripLeader: TripLeaderDTO) => {
-                    const name = tripLeader.member?.name;
+      <div className="w-7/8 mt-4 overflow-x-auto">
+        <Table>
+          <Table.Content
+            aria-label="Trip leaders"
+            className="table-fixed min-w-[58rem] w-full"
+            onRowAction={handleRowAction}
+          >
+            <Table.Header>
+              <Table.Column isRowHeader className="w-44 whitespace-nowrap">
+                Name
+              </Table.Column>
+              <Table.Column>Sports</Table.Column>
+              <Table.Column className="w-56 whitespace-nowrap">
+                Gmail
+              </Table.Column>
+              <Table.Column className="w-36 whitespace-nowrap">
+                Shadowed trip?
+              </Table.Column>
+              <Table.Column className="w-28 whitespace-nowrap">
+                Approved?
+              </Table.Column>
+              <Table.Column className="w-28 whitespace-nowrap">
+                Certified?
+              </Table.Column>
+            </Table.Header>
+            <Table.Body>
+              {tripLeaders
+                .filter((tripLeader: TripLeaderDTO) => {
+                  const name = tripLeader.member?.name;
 
-                    if (!name) return false;
+                  if (!name) return false;
 
-                    return (
-                      searchTerm === "" ||
-                      name.toLowerCase().includes(searchTerm) ||
-                      tripLeader.sport?.some(s => s.toLowerCase().includes(searchTerm)) ||
-                      tripLeader.gmail?.toLowerCase().includes(searchTerm)
-                    );
-                  })
-                  .map((tripLeader: TripLeaderDTO) => (
-                    <Table.Row
-                      key={tripLeader.member?.name}
-                      id={tripLeader.member?.name}
-                      aria-label={`Trip leader: ${tripLeader.member?.name}`}
-                    >
-                      <Table.Cell>{tripLeader.member?.name}</Table.Cell>
-                      <Table.Cell>{tripLeader.sport?.join(', ')}</Table.Cell>
-                      <Table.Cell>{tripLeader.gmail}</Table.Cell>
-                      <Table.Cell>
-                        <span
-                          role="img"
-                          aria-label={tripLeader.process?.shadow ? "Yes" : "No"}
-                        >
-                          {tripLeader.process?.shadow ? "🟢" : "🛑"}
-                        </span>
-                      </Table.Cell>
-                      <Table.Cell>
-                        <span
-                          role="img"
-                          aria-label={tripLeader.process?.approved ? "Yes" : "No"}
-                        >
-                          {tripLeader.process?.approved ? "🟢" : "🛑"}
-                        </span>
-                      </Table.Cell>
-                      <Table.Cell>
-                        <span
-                          role="img"
-                          aria-label={
-                            tripLeader.process?.certified ? "Yes" : "No"
-                          }
-                        >
-                          {tripLeader.process?.certified ? "🟢" : "🛑"}
-                        </span>
-                      </Table.Cell>
-                    </Table.Row>
-                  ))}
-              </Table.Body>
-            </Table.Content>
-          </Table>
-        </div>
-      )}
+                  return (
+                    searchTerm === "" ||
+                    name.toLowerCase().includes(searchTerm) ||
+                    tripLeader.sport?.some(s => s.toLowerCase().includes(searchTerm)) ||
+                    tripLeader.gmail?.toLowerCase().includes(searchTerm)
+                  );
+                })
+                .map((tripLeader: TripLeaderDTO) => (
+                  <Table.Row
+                    key={tripLeader.member?.name}
+                    id={tripLeader.member?.name}
+                    aria-label={`Trip leader: ${tripLeader.member?.name}`}
+                  >
+                    <Table.Cell>{tripLeader.member?.name}</Table.Cell>
+                    <Table.Cell>{tripLeader.sport?.join(', ')}</Table.Cell>
+                    <Table.Cell>{tripLeader.gmail}</Table.Cell>
+                    <Table.Cell>
+                      <span
+                        role="img"
+                        aria-label={tripLeader.process?.shadow ? "Yes" : "No"}
+                      >
+                        {tripLeader.process?.shadow ? "🟢" : "🛑"}
+                      </span>
+                    </Table.Cell>
+                    <Table.Cell>
+                      <span
+                        role="img"
+                        aria-label={tripLeader.process?.approved ? "Yes" : "No"}
+                      >
+                        {tripLeader.process?.approved ? "🟢" : "🛑"}
+                      </span>
+                    </Table.Cell>
+                    <Table.Cell>
+                      <span
+                        role="img"
+                        aria-label={
+                          tripLeader.process?.certified ? "Yes" : "No"
+                        }
+                      >
+                        {tripLeader.process?.certified ? "🟢" : "🛑"}
+                      </span>
+                    </Table.Cell>
+                  </Table.Row>
+                ))}
+            </Table.Body>
+          </Table.Content>
+        </Table>
+      </div>
       <Modal isOpen={isModalOpen} onOpenChange={setIsModalOpen}>
         <Modal.Backdrop isDismissable>
           <Modal.Container scroll="inside" size="lg">

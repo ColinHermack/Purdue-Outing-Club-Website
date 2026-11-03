@@ -67,16 +67,16 @@ describe("/api/protected/tripleaders against the test DB", () => {
     });
   });
 
-  it("an officer without an authorized position gets 401", async () => {
+  it("an officer without an authorized position gets 403", async () => {
     signInAs("bob@purdue.edu");
 
-    expect((await GET()).status).toBe(401);
+    expect((await GET()).status).toBe(403);
   });
 
-  it("a member who is not an officer gets 401", async () => {
+  it("a member who is not an officer gets 403", async () => {
     signInAs("carol@purdue.edu");
 
-    expect((await GET()).status).toBe(401);
+    expect((await GET()).status).toBe(403);
   });
 
   it.each(["POST", "PUT"])(

@@ -12,25 +12,25 @@ vi.mock("@/miniservices/memberMiniService");
 vi.mock("@/miniservices/officerMiniService");
 
 describe("GET /api/protected/members", () => {
-  it("returns 403 with no session", async () => {
+  it("returns 401 with no session", async () => {
     vi.mocked(getServerSession).mockResolvedValue(null);
+
+    expect((await GET()).status).toBe(401);
+  });
+
+  it("returns 403 when the email is not a member", async () => {
+    vi.mocked(getServerSession).mockResolvedValue(session());
+    vi.mocked(getMemberByEmail).mockResolvedValue(null);
 
     expect((await GET()).status).toBe(403);
   });
 
-  it("returns 401 when the email is not a member", async () => {
-    vi.mocked(getServerSession).mockResolvedValue(session());
-    vi.mocked(getMemberByEmail).mockResolvedValue(null);
-
-    expect((await GET()).status).toBe(401);
-  });
-
-  it("returns 401 for a member who is not an officer", async () => {
+  it("returns 403 for a member who is not an officer", async () => {
     vi.mocked(getServerSession).mockResolvedValue(session());
     vi.mocked(getMemberByEmail).mockResolvedValue({ id: 2 });
     vi.mocked(verifyMemberIsOfficer).mockResolvedValue(false);
 
-    expect((await GET()).status).toBe(401);
+    expect((await GET()).status).toBe(403);
     expect(verifyMemberIsOfficer).toHaveBeenCalledWith(2);
   });
 

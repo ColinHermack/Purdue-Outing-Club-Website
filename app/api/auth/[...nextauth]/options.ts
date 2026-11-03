@@ -48,7 +48,8 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: "/auth/signin",
     signOut: "/auth/signout",
-    error: "/auth/error",
+    // The sign-in page shows the error instead of retrying, which would loop through Microsoft.
+    error: "/auth/signin",
   },
   session: {
     strategy: "jwt",

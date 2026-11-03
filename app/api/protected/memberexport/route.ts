@@ -48,14 +48,14 @@ export async function GET(): Promise<Response> {
       session.user === undefined ||
       typeof session.user.email !== "string"
     ) {
-      return new Response("Unauthorized", { status: 403 });
+      return new Response("Unauthorized", { status: 401 });
     }
 
     const userOfficerPositions: OfficerDTO[] | null =
       await getOfficerDataByEmail(session.user.email);
 
     if (userOfficerPositions === null) {
-      return new Response("Forbidden", { status: 401 });
+      return new Response("Forbidden", { status: 403 });
     }
 
     const userIsAuthorized: boolean = userOfficerPositions.some(
@@ -65,7 +65,7 @@ export async function GET(): Promise<Response> {
     );
 
     if (!userIsAuthorized) {
-      return new Response("Forbidden", { status: 401 });
+      return new Response("Forbidden", { status: 403 });
     }
 
     const members: MemberDTO[] = await getMembers();

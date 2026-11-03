@@ -37,29 +37,29 @@ describe.each([
   ["POST", () => POST(jsonRequest(body))],
   ["PUT", () => PUT(jsonRequest(body, "PUT"))],
 ])("%s /api/protected/tripleaders authorization", (_, call) => {
-  it("returns 403 with no session", async () => {
+  it("returns 401 with no session", async () => {
     vi.mocked(getServerSession).mockResolvedValue(null);
 
-    expect((await call()).status).toBe(403);
+    expect((await call()).status).toBe(401);
   });
 
-  it("returns 403 when the session has no email", async () => {
+  it("returns 401 when the session has no email", async () => {
     vi.mocked(getServerSession).mockResolvedValue(session(null));
 
-    expect((await call()).status).toBe(403);
+    expect((await call()).status).toBe(401);
   });
 
-  it("returns 401 for a non-officer", async () => {
+  it("returns 403 for a non-officer", async () => {
     vi.mocked(getServerSession).mockResolvedValue(session());
     vi.mocked(getOfficerDataByEmail).mockResolvedValue(null);
 
-    expect((await call()).status).toBe(401);
+    expect((await call()).status).toBe(403);
   });
 
-  it("returns 401 for an officer without an authorized position", async () => {
+  it("returns 403 for an officer without an authorized position", async () => {
     signInAs("Club Goober");
 
-    expect((await call()).status).toBe(401);
+    expect((await call()).status).toBe(403);
   });
 
   it("returns 500 when a lookup throws", async () => {

@@ -212,7 +212,7 @@
       "get": {
         "tags": ["Members"],
         "summary": "Current member's profile",
-        "description": "Requests without a session never reach the handler: `proxy.ts` answers 307 to the NextAuth sign-in page (`/api/auth/signin`).",
+        "description": "Requests without a session never reach the handler: `proxy.ts` answers 401 with JSON `{\"error\": \"Unauthorized\"}`.",
         "security": [
           {
             "session": []
@@ -229,9 +229,19 @@
               }
             }
           },
-          "403": {
-            "description": "No session email (`Unauthorized`).",
+          "401": {
+            "description": "No session (`proxy.ts`, JSON) or no session email (handler, `Unauthorized`).",
             "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
               "text/plain": {
                 "schema": {
                   "type": "string"
@@ -266,7 +276,7 @@
       "get": {
         "tags": ["Members"],
         "summary": "Trips the current member attended",
-        "description": "Requests without a session never reach the handler: `proxy.ts` answers 307 to the NextAuth sign-in page (`/api/auth/signin`).",
+        "description": "Requests without a session never reach the handler: `proxy.ts` answers 401 with JSON `{\"error\": \"Unauthorized\"}`.",
         "security": [
           {
             "session": []
@@ -286,9 +296,19 @@
               }
             }
           },
-          "403": {
-            "description": "No session email (`Unauthorized`).",
+          "401": {
+            "description": "No session (`proxy.ts`, JSON) or no session email (handler, `Unauthorized`).",
             "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
               "text/plain": {
                 "schema": {
                   "type": "string"
@@ -323,7 +343,7 @@
       "get": {
         "tags": ["Members"],
         "summary": "Verify the session belongs to a member",
-        "description": "Requests without a session never reach the handler: `proxy.ts` answers 307 to the NextAuth sign-in page (`/api/auth/signin`).",
+        "description": "Requests without a session never reach the handler: `proxy.ts` answers 401 with JSON `{\"error\": \"Unauthorized\"}`.",
         "security": [
           {
             "session": []
@@ -377,7 +397,7 @@
       "get": {
         "tags": ["Members"],
         "summary": "Member directory (trip leaders only)",
-        "description": "Caller must be a trip leader. Requests without a session never reach the handler: `proxy.ts` answers 307 to the NextAuth sign-in page (`/api/auth/signin`).",
+        "description": "Caller must be a trip leader. Requests without a session never reach the handler: `proxy.ts` answers 401 with JSON `{\"error\": \"Unauthorized\"}`.",
         "security": [
           {
             "session": []
@@ -398,8 +418,18 @@
             }
           },
           "401": {
-            "description": "Caller is not a trip leader.",
+            "description": "No session (`proxy.ts`, JSON) or no session email (handler, `Unauthorized`).",
             "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
               "text/plain": {
                 "schema": {
                   "type": "string"
@@ -408,7 +438,7 @@
             }
           },
           "403": {
-            "description": "No session email (`Unauthorized`).",
+            "description": "Caller is not a trip leader.",
             "content": {
               "text/plain": {
                 "schema": {
@@ -444,7 +474,7 @@
       "get": {
         "tags": ["Officers"],
         "summary": "Basic info for every member",
-        "description": "Caller must be an officer (any position). Requests without a session never reach the handler: `proxy.ts` answers 307 to the NextAuth sign-in page (`/api/auth/signin`).",
+        "description": "Caller must be an officer (any position). Requests without a session never reach the handler: `proxy.ts` answers 401 with JSON `{\"error\": \"Unauthorized\"}`.",
         "security": [
           {
             "session": []
@@ -465,8 +495,18 @@
             }
           },
           "401": {
-            "description": "No member with the session email, or caller is not an officer.",
+            "description": "No session (`proxy.ts`, JSON) or no session email (handler, `Unauthorized`).",
             "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
               "text/plain": {
                 "schema": {
                   "type": "string"
@@ -475,7 +515,7 @@
             }
           },
           "403": {
-            "description": "No session email (`Unauthorized`).",
+            "description": "No member with the session email, or caller is not an officer.",
             "content": {
               "text/plain": {
                 "schema": {
@@ -501,7 +541,7 @@
       "get": {
         "tags": ["Officers"],
         "summary": "List trip leaders",
-        "description": "Caller must hold a position in `GET_TRIP_LEADERS_AUTHORIZED_POSITIONS` (`config/permissions.ts`). Requests without a session never reach the handler: `proxy.ts` answers 307 to the NextAuth sign-in page (`/api/auth/signin`).",
+        "description": "Caller must hold a position in `GET_TRIP_LEADERS_AUTHORIZED_POSITIONS` (`config/permissions.ts`). Requests without a session never reach the handler: `proxy.ts` answers 401 with JSON `{\"error\": \"Unauthorized\"}`.",
         "security": [
           {
             "session": []
@@ -522,8 +562,18 @@
             }
           },
           "401": {
-            "description": "Caller is not an authorized officer (`Forbidden`).",
+            "description": "No session (`proxy.ts`, JSON) or no session email (handler, `Unauthorized`).",
             "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
               "text/plain": {
                 "schema": {
                   "type": "string"
@@ -532,7 +582,7 @@
             }
           },
           "403": {
-            "description": "No session email (`Unauthorized`).",
+            "description": "Caller is not an authorized officer (`Forbidden`).",
             "content": {
               "text/plain": {
                 "schema": {
@@ -556,7 +606,7 @@
       "post": {
         "tags": ["Officers"],
         "summary": "Make a member a trip leader",
-        "description": "Creates a trip leader row for `memberId`. Caller must hold a position in `GET_TRIP_LEADERS_AUTHORIZED_POSITIONS` (`config/permissions.ts`). Requests without a session never reach the handler: `proxy.ts` answers 307 to the NextAuth sign-in page (`/api/auth/signin`).",
+        "description": "Creates a trip leader row for `memberId`. Caller must hold a position in `GET_TRIP_LEADERS_AUTHORIZED_POSITIONS` (`config/permissions.ts`). Requests without a session never reach the handler: `proxy.ts` answers 401 with JSON `{\"error\": \"Unauthorized\"}`.",
         "security": [
           {
             "session": []
@@ -594,8 +644,18 @@
             }
           },
           "401": {
-            "description": "Caller is not an authorized officer (`Forbidden`).",
+            "description": "No session (`proxy.ts`, JSON) or no session email (handler, `Unauthorized`).",
             "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
               "text/plain": {
                 "schema": {
                   "type": "string"
@@ -604,7 +664,7 @@
             }
           },
           "403": {
-            "description": "No session email (`Unauthorized`).",
+            "description": "Caller is not an authorized officer (`Forbidden`).",
             "content": {
               "text/plain": {
                 "schema": {
@@ -638,7 +698,7 @@
       "put": {
         "tags": ["Officers"],
         "summary": "Update a trip leader",
-        "description": "Updates the trip leader row for `memberId`. Caller must hold a position in `GET_TRIP_LEADERS_AUTHORIZED_POSITIONS` (`config/permissions.ts`). Requests without a session never reach the handler: `proxy.ts` answers 307 to the NextAuth sign-in page (`/api/auth/signin`).",
+        "description": "Updates the trip leader row for `memberId`. Caller must hold a position in `GET_TRIP_LEADERS_AUTHORIZED_POSITIONS` (`config/permissions.ts`). Requests without a session never reach the handler: `proxy.ts` answers 401 with JSON `{\"error\": \"Unauthorized\"}`.",
         "security": [
           {
             "session": []
@@ -676,8 +736,18 @@
             }
           },
           "401": {
-            "description": "Caller is not an authorized officer (`Forbidden`).",
+            "description": "No session (`proxy.ts`, JSON) or no session email (handler, `Unauthorized`).",
             "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
               "text/plain": {
                 "schema": {
                   "type": "string"
@@ -686,7 +756,7 @@
             }
           },
           "403": {
-            "description": "No session email (`Unauthorized`).",
+            "description": "Caller is not an authorized officer (`Forbidden`).",
             "content": {
               "text/plain": {
                 "schema": {
@@ -722,7 +792,7 @@
       "get": {
         "tags": ["Officers"],
         "summary": "Download members as CSV",
-        "description": "Name and email of every member, sorted by name, as a `members-YYYY-MM-DD.csv` attachment. Caller must hold a position in `EXPORT_MEMBERS_AUTHORIZED_POSITIONS` (`config/permissions.ts`). Requests without a session never reach the handler: `proxy.ts` answers 307 to the NextAuth sign-in page (`/api/auth/signin`).",
+        "description": "Name and email of every member, sorted by name, as a `members-YYYY-MM-DD.csv` attachment. Caller must hold a position in `EXPORT_MEMBERS_AUTHORIZED_POSITIONS` (`config/permissions.ts`). Requests without a session never reach the handler: `proxy.ts` answers 401 with JSON `{\"error\": \"Unauthorized\"}`.",
         "security": [
           {
             "session": []
@@ -740,8 +810,18 @@
             }
           },
           "401": {
-            "description": "Caller is not an authorized officer (`Forbidden`).",
+            "description": "No session (`proxy.ts`, JSON) or no session email (handler, `Unauthorized`).",
             "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
               "text/plain": {
                 "schema": {
                   "type": "string"
@@ -750,7 +830,7 @@
             }
           },
           "403": {
-            "description": "No session email (`Unauthorized`).",
+            "description": "Caller is not an authorized officer (`Forbidden`).",
             "content": {
               "text/plain": {
                 "schema": {

@@ -13,8 +13,6 @@
     "test:db": "docker compose -f docker-compose.test.yml up -d --wait"
   },
   "dependencies": {
-    "@azure/msal-browser": "^4.5.1",
-    "@azure/msal-node": "^5.4.2",
     "@heroui/react": "^3.2.1",
     "@heroui/styles": "^3.2.1",
     "@heroui/system": "^2.4.28",
@@ -26,10 +24,9 @@
     "@vercel/speed-insights": "^1.1.0",
     "clsx": "2.1.1",
     "fs": "^0.0.1-security",
-    "gray-matter": "^4.0.3",
     "intl-messageformat": "^10.5.0",
     "motion": "^12.40.0",
-    "next": "^16.2.12",
+    "next": "^16.4.4",
     "next-absolute-url": "^1.2.2",
     "next-auth": "^4.24.11",
     "next-mdx-remote": "^6.0.0",
@@ -43,15 +40,9 @@
     "typescript-eslint": "^8.61.1",
     "unpdf": "^1.8.1"
   },
-  "overrides": {
-    "next": {
-      "postcss": "^8.5.14",
-      "sharp": "^0.35.3"
-    }
-  },
   "devDependencies": {
     "@eslint/compat": "^2.1.0",
-    "@next/eslint-plugin-next": "^16.2.5",
+    "@next/eslint-plugin-next": "^16.4.4",
     "@types/node": "20.5.7",
     "@types/pg": "^8.20.0",
     "@types/react": "^19.2.17",
@@ -65,6 +56,6 @@
     "tailwind-variants": "0.1.20",
     "tailwindcss": "^4.3.1",
     "typescript": "^5.1.0",
-    "vitest": "^4.1.11"
+    "vitest": "^4.1.12"
   }
 }

@@ -21,7 +21,7 @@ export default function PageMessage({
       <div className="text-center max-w-[600px]">{children}</div>
       <div className="flex flex-row flex-wrap justify-center gap-4">
         {action}
-        <Link className={buttonVariants({ variant: "secondary" })} href="/">
+        <Link className={buttonVariants()} href="/">
           Return Home
         </Link>
       </div>

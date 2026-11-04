@@ -4,7 +4,7 @@
 @source "../app/**/*.{js,ts,jsx,tsx}";
 
 /*
- * Dark mode is class-based: next-themes is configured with `attribute: "class"`
+ * Dark mode is class-based: next-themes follows the OS color scheme and sets the `.dark` class
  * (see app/layout.tsx), so the `dark:` variant must follow the `.dark` class
  * rather than the OS `prefers-color-scheme`. (Replaces the old
  * `darkMode: "class"` from the now-unused tailwind.config.js.)

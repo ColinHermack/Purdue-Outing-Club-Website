@@ -40,7 +40,7 @@ The code is intentionally split into four layers; new database-backed features s
 
 ### App layout
 
-`app/layout.tsx` wraps every page in `AuthProvider` → `Providers` (HeroUI + next-themes, light by default) → `Navbar` / `Footer`. Most user-facing routes are public marketing/informational pages (`/calendar`, `/trips`, `/pleadership`, `/faq`, `/gearcloset`, etc., all enumerated in `config/site.ts`); the authenticated surface is `/dashboard` and `/tripleadersdashboard`, backed by `/api/protected/*`.
+`app/layout.tsx` wraps every page in `AuthProvider` → `Providers` (HeroUI + next-themes, follows system color scheme) → `Navbar` / `Footer`. Most user-facing routes are public marketing/informational pages (`/calendar`, `/trips`, `/pleadership`, `/faq`, `/gearcloset`, etc., all enumerated in `config/site.ts`); the authenticated surface is `/dashboard` and `/tripleadersdashboard`, backed by `/api/protected/*`.
 
 ## Conventions worth preserving
 

@@ -45,7 +45,14 @@ export default function RootLayout({
         )}
       >
         <AuthProvider>
-          <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
+          <Providers
+            themeProps={{
+              attribute: "class",
+              defaultTheme: "system",
+              enableSystem: true,
+              storageKey: "theme-system",
+            }}
+          >
             <div className="relative flex flex-col h-screen">
               <Navbar />
               <main className="container mx-auto max-w-7xl pt-8 px-6 flex-grow">

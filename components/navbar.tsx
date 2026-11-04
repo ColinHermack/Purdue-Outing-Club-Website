@@ -15,8 +15,6 @@ import NextLink from "next/link";
 import { redirect } from "next/navigation";
 import { useState } from "react";
 
-import { ThemeSwitch } from "./theme-switch";
-
 import { siteConfig } from "@/config/site";
 import { Logo } from "@/components/logos";
 
@@ -82,7 +80,6 @@ export const Navbar = () => {
           </div>
 
           <div className="hidden lg:flex justify-right items-center mr-4">
-            <ThemeSwitch className="mr-8" />
             <Button
               variant="primary"
               onClick={() => {
@@ -95,7 +92,6 @@ export const Navbar = () => {
           </div>
 
           <div className="lg:hidden flex flex-row gap-2">
-            <ThemeSwitch className="mr-8" />
             <button
               aria-label={isMenuOpen ? "Close menu" : "Open menu"}
               type="button"

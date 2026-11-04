@@ -2,6 +2,8 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+ALWAYS ask questions when a prompt is unclear or there is uncertainty.
+
 ## Commands
 
 - `npm run dev` — Next.js dev server with HTTPS (`--experimental-https`). Serves on `https://localhost:3000/`; the HTTPS URL is required because `NEXTAUTH_URL` and the Azure AD redirect URI are both registered as HTTPS.

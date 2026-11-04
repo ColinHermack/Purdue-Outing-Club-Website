@@ -3,6 +3,7 @@ import { describe, expect, it, vi } from "vitest";
 
 import { GET as getMemberDirectory } from "@/app/api/protected/memberdirectory/route";
 import { GET as getMembers } from "@/app/api/protected/members/route";
+import { GET as getAccess } from "@/app/api/protected/user/access/route";
 import { GET as getUser } from "@/app/api/protected/user/route";
 import { GET as getUserTrips } from "@/app/api/protected/user/trips/route";
 
@@ -68,5 +69,25 @@ describe("member routes against the test DB", () => {
     expect(
       (await response.json()).map((t: { name: string }) => t.name),
     ).toEqual(["Red River Gorge Climbing", "Smokies Backpacking"]);
+  });
+
+  it("sign-in is limited to officers and trip leaders", async () => {
+    // The club account is the only seeded member with neither an officer nor a trip leader row.
+    signInAs("poc@purdue.edu");
+    expect((await getUser()).status).toBe(403);
+    expect((await getUserTrips()).status).toBe(403);
+    expect((await getAccess()).status).toBe(403);
+  });
+
+  it("user/access lists the tools each role unlocks", async () => {
+    signInAs("alice@purdue.edu");
+    expect(await (await getAccess()).json()).toMatchObject({
+      tools: ["tripLeaderDashboard", "memberDirectory", "memberExport"],
+    });
+
+    signInAs("carol@purdue.edu");
+    expect(await (await getAccess()).json()).toMatchObject({
+      tools: ["memberDirectory"],
+    });
   });
 });

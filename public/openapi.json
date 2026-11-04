@@ -249,6 +249,16 @@
               }
             }
           },
+          "403": {
+            "description": "Signed in, but not a trip leader or officer. Sign-in is currently limited to those roles.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
           "404": {
             "description": "No member with the session email.",
             "content": {
@@ -316,8 +326,101 @@
               }
             }
           },
+          "403": {
+            "description": "Signed in, but not a trip leader or officer. Sign-in is currently limited to those roles.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
           "404": {
             "description": "No member with the session email.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/protected/user/access": {
+      "get": {
+        "tags": ["Members"],
+        "summary": "Club tools available to the current member",
+        "description": "Used by the navbar account menu. Requests without a session never reach the handler: `proxy.ts` answers 401 with JSON `{\"error\": \"Unauthorized\"}`.",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Name, email and the tool ids the member's roles unlock.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "tools": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "enum": [
+                          "tripLeaderDashboard",
+                          "memberDirectory",
+                          "memberExport"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No session (`proxy.ts`, JSON) or no session email (handler, `Unauthorized`).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Signed in, but not a trip leader or officer.",
             "content": {
               "text/plain": {
                 "schema": {

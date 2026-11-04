@@ -12,6 +12,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import MemberDTO from "@/dtos/memberDto";
 import TripDTO from "@/dtos/tripDto";
 import { getMemberByEmail } from "@/miniservices/memberMiniService";
+import { canSignIn, getMemberAccess } from "@/utils/memberAccess";
 import { getTripsByMemberId } from "@/miniservices/tripMiniService";
 
 export async function GET(): Promise<Response> {
@@ -33,6 +34,10 @@ export async function GET(): Promise<Response> {
         `No club member exists with email ${session.user.email}.`,
         { status: 404 },
       );
+    }
+
+    if (!canSignIn(await getMemberAccess(session.user.email))) {
+      return new Response("Forbidden", { status: 403 });
     }
 
     const trips: TripDTO[] = await getTripsByMemberId(member.id);

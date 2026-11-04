@@ -16,7 +16,7 @@ import PageMessage from "@/components/PageMessage";
 
 /**
  * Explains a NextAuth error code. AccessDenied comes from the signIn callback rejecting an email that is not in the
- * member table.
+ * member table or belongs to someone who is neither a trip leader nor an officer.
  *
  * @param error The NextAuth error code from the query string.
  * @returns The message to show.
@@ -26,9 +26,9 @@ function errorMessage(error: string): React.ReactNode {
     return (
       <>
         <p>
-          The Microsoft account you signed in with isn&#39;t on the club&#39;s
-          member list. Make sure you sign in with the Purdue account you used to
-          join.
+          Sign-in is currently limited to club trip leaders and officers, and
+          the Microsoft account you used isn&#39;t one of them. Make sure you
+          sign in with the Purdue account you used to join.
         </p>
         <p className="mt-4">
           Not a member yet? See <Link href="/join">how to join</Link>. If you

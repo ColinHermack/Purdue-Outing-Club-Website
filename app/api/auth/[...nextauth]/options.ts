@@ -7,7 +7,7 @@
 import AzureADProvider from "next-auth/providers/azure-ad";
 import { NextAuthOptions } from "next-auth";
 
-import { verifyMembershipByEmail } from "@/miniservices/memberMiniService";
+import { canSignIn, getMemberAccess } from "@/utils/memberAccess";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -34,12 +34,11 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
     async signIn({ user }) {
-      // Check if this user's email exists in your database
+      // Sign-in is limited to officers and trip leaders for now
       try {
         const email: string = user.email ? user.email : "";
-        const userExists = await verifyMembershipByEmail(email);
-        if (userExists) return true;
-        return false;
+
+        return canSignIn(await getMemberAccess(email));
       } catch {
         return false;
       }

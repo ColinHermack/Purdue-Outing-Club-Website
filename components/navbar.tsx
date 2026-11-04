@@ -15,7 +15,10 @@ import NextLink from "next/link";
 import { redirect } from "next/navigation";
 import { useState } from "react";
 
-import { siteConfig } from "@/config/site";
+import { AccountMenu } from "@/components/AccountMenu";
+import { useAccount } from "@/components/useAccount";
+import { accountTools, siteConfig } from "@/config/site";
+import { initials } from "@/utils/initials";
 import { Logo } from "@/components/logos";
 
 /**
@@ -53,6 +56,7 @@ const bottomBarVariants: Variants = {
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const account = useAccount();
 
   return (
     <nav className="sticky top-0 z-40 w-full bg-background/70 backdrop-blur-lg pt-4 p-2 flex flex-col justify-top items-left">
@@ -80,18 +84,31 @@ export const Navbar = () => {
           </div>
 
           <div className="hidden lg:flex justify-right items-center mr-4">
-            <Button
-              variant="primary"
-              onClick={() => {
-                redirect("/join");
-              }}
-              className="font-bold"
-            >
-              Join
-            </Button>
+            {account ? (
+              <AccountMenu account={account} />
+            ) : (
+              <Button
+                variant="primary"
+                onClick={() => {
+                  redirect("/join");
+                }}
+                className="font-bold"
+              >
+                Join
+              </Button>
+            )}
           </div>
 
-          <div className="lg:hidden flex flex-row gap-2">
+          <div className="lg:hidden flex flex-row items-center gap-2">
+            {account ? (
+              <NextLink
+                aria-label={`My Dashboard, signed in as ${account.name}`}
+                className="size-8 rounded-full bg-amber-400 text-black text-xs font-bold flex items-center justify-center"
+                href="/dashboard"
+              >
+                {initials(account.name)}
+              </NextLink>
+            ) : null}
             <button
               aria-label={isMenuOpen ? "Close menu" : "Open menu"}
               type="button"
@@ -160,17 +177,51 @@ export const Navbar = () => {
                   {item.label}
                 </Link>
               ))}
-              <Button
-                key="join"
-                className="font-semibold text-2xl m-2"
-                variant="primary"
-                onPress={() => {
-                  setIsMenuOpen(false);
-                  redirect("/join");
-                }}
-              >
-                Join
-              </Button>
+              {account ? (
+                <>
+                  <hr className="border-border mx-2" />
+                  <div className="flex flex-col m-2">
+                    <span className="font-semibold">{account.name}</span>
+                    <span className="text-sm text-muted">{account.email}</span>
+                  </div>
+                  <Link
+                    className="text-2xl font-semibold m-2 text-foreground"
+                    href="/dashboard"
+                    onPress={() => setIsMenuOpen(false)}
+                  >
+                    My Dashboard
+                  </Link>
+                  {account.tools.map((id) => (
+                    <Link
+                      key={id}
+                      className="text-2xl font-semibold m-2 text-foreground"
+                      href={accountTools[id].href}
+                      onPress={() => setIsMenuOpen(false)}
+                    >
+                      {accountTools[id].label}
+                    </Link>
+                  ))}
+                  <Link
+                    className="text-2xl font-semibold m-2 text-foreground"
+                    href="/auth/signout"
+                    onPress={() => setIsMenuOpen(false)}
+                  >
+                    Sign out
+                  </Link>
+                </>
+              ) : (
+                <Button
+                  key="join"
+                  className="font-semibold text-2xl m-2"
+                  variant="primary"
+                  onPress={() => {
+                    setIsMenuOpen(false);
+                    redirect("/join");
+                  }}
+                >
+                  Join
+                </Button>
+              )}
             </div>
           </motion.div>
         ) : null}

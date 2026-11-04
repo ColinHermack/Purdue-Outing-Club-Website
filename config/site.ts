@@ -6,6 +6,24 @@
 
 export type SiteConfig = typeof siteConfig;
 
+export type AccountToolId =
+  | "tripLeaderDashboard"
+  | "memberDirectory"
+  | "memberExport";
+
+/** Account menu tools. Which ones a member sees comes from `/api/protected/user/access`. */
+export const accountTools: Record<
+  AccountToolId,
+  { label: string; href: string }
+> = {
+  tripLeaderDashboard: {
+    label: "Trip Leader Dashboard",
+    href: "/tripleadersdashboard",
+  },
+  memberDirectory: { label: "Member Directory", href: "/memberdirectory" },
+  memberExport: { label: "Member Export", href: "/memberexport" },
+};
+
 export const siteConfig = {
   name: "Purdue Outing Club",
   description: "The official website of the Purdue Outing Club",

@@ -6,7 +6,6 @@
  * @author Colin Hermack
  */
 
-import React from "react";
 import { Separator, Link, Accordion, buttonVariants } from "@heroui/react";
 
 import { AccordionEntry } from "@/components/accordion-entry";

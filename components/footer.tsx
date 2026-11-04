@@ -17,6 +17,7 @@ import {
 } from "react-icons/fa";
 
 import { Logo } from "@/components/logos";
+import { SignInLink } from "@/components/SignInLink";
 import { siteConfig } from "@/config/site";
 
 const socialMediaIcons = [
@@ -94,7 +95,10 @@ export const Footer = () => {
           <Logo />
         </Link>
       </div>
-      <div className="mt-4 mb-8 text-xs">© 2024 Purdue Outing Club</div>
+      <div className="mt-4 mb-8 text-xs flex items-center">
+        <SignInLink />
+        <span>© 2024 Purdue Outing Club</span>
+      </div>
     </footer>
   );
 };

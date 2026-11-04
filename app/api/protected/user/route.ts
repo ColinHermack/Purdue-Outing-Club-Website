@@ -11,6 +11,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 
 import MemberDTO from "@/dtos/memberDto";
 import { getMemberByEmail } from "@/miniservices/memberMiniService";
+import { canSignIn, getMemberAccess } from "@/utils/memberAccess";
 
 export async function GET(): Promise<Response> {
   try {
@@ -31,6 +32,10 @@ export async function GET(): Promise<Response> {
       return new Response(`No club member exists with email ${email}.`, {
         status: 404,
       });
+    }
+
+    if (!canSignIn(await getMemberAccess(session.user.email))) {
+      return new Response("Forbidden", { status: 403 });
     }
 
     return new Response(JSON.stringify(member), { status: 200 });

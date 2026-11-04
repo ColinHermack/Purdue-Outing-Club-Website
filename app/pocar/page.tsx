@@ -6,7 +6,6 @@
  * @author Colin Hermack
  */
 
-import React from "react";
 import { Separator, Link, Accordion, buttonVariants } from "@heroui/react";
 
 import { AccordionEntry } from "@/components/accordion-entry";
@@ -63,6 +62,11 @@ export default function PocarPage() {
         Emergency Procedures
       </Link>
 
+      <p className='mt-8 w-3/4 italic'>
+        Note that POC semester dues are $30, so Purdue students who are not POC members can save money by paying club dues <a href='/join' className='text-amber-400'>here</a>,
+        then paying the member rate for registration.
+      </p>
+
       <Separator className="my-10" />
 
       <h2 className="font-bold text-center mb-10 text-xl">Racer Information</h2>
@@ -117,6 +121,17 @@ export default function PocarPage() {
       <p className="mb-8">
         Racer registration will open on November 10, 2026.
       </p>
+
+      <p className='mb-4'>
+        In the meantime, you can connect with other racers and find a team using the team finder.
+      </p>
+
+      <Link
+        className={buttonVariants({ className: "mt-2" })}
+        href="https://docs.google.com/spreadsheets/d/1ezqu6IEfXCB-isGod58h4CeEFiIJBstTMueGqcuxDiQ/edit?usp=sharing"
+      >
+        Team Finder
+      </Link>
 
       <Separator className="my-10" />
 

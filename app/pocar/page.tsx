@@ -118,12 +118,44 @@ export default function PocarPage() {
       <Separator className="my-10" />
 
       <h2 className="font-bold text-center mb-4 text-xl">Register to Race</h2>
-      <p className="mb-8">
-        Racer registration will open on November 10, 2026.
+      <p className="mb-8 w-3/4 text-left">
+        Race registration is open now and will remain open through December 14, 2027. Follow these steps to register:
+      </p>
+
+      <ol className='mb-8 w-3/4 text-left'>
+        <li>
+          1. Log in to{" "}
+          <Link
+            className="text-amber-400"
+            href="https://www.imleagues.com/login"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            IMLeagues
+          </Link>{" "}
+          with your purdue email account if you are a Purdue student, or create an account if you are not a Purdue student.
+        </li>
+        <li>2. Once you log in, click <strong>Add Network</strong> at the top of the page. Search for POCAR and add it.</li>
+        <li>
+          3. Click <strong>Registration</strong>, and sign up for the division that your team will compete in. The team
+          member that created the team can then invite the other team members.
+        </li>
+      </ol>
+
+      <p className='mb-8 w-3/4 text-left'>
+        If you have questions, send an email to the coordinators {" "}
+        <Link 
+          className='text-amber-400' 
+          href='mailto:pocarcoordinators@gmail.com'
+          rel='noopener noreferrer'
+          target='_blank'>
+            here
+          </Link>
+          .
       </p>
 
       <p className='mb-4'>
-        In the meantime, you can connect with other racers and find a team using the team finder.
+        Connect with other racers and find a team using the team finder.
       </p>
 
       <Link

@@ -135,7 +135,7 @@ export default function PocarPage() {
           </Link>{" "}
           with your purdue email account if you are a Purdue student, or create an account if you are not a Purdue student.
         </li>
-        <li>2. Once you log in, click <strong>Add Network</strong> at the top of the page. Search for POCAR and add it.</li>
+        <li>2. Once you log in, click <strong>Purdue University</strong>, then click <strong>Add Network</strong> at the top of the page. Search for POCAR and add it.</li>
         <li>
           3. Click <strong>Registration</strong>, and sign up for the division that your team will compete in. The team
           member that created the team can then invite the other team members.

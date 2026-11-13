@@ -10,6 +10,9 @@ import {
   getMostTripsAttended,
   getMostTripsLed,
   recordDuesByEmail,
+  removeCarByEmail,
+  updateCarByEmail,
+  updateEmergencyContactByEmail,
   verifyMembershipByEmail,
 } from "@/miniservices/memberMiniService";
 
@@ -22,7 +25,7 @@ describe("memberMiniService against the test DB", () => {
     expect(alice).toMatchObject({
       id: 1,
       name: "Alice Anderson",
-      carData: { Model: "Subaru Outback", Capacity: "5", Hitch: true },
+      carData: { model: "Subaru Outback", capacity: "5", hitch: true },
       policyAgreement: true,
     });
   });
@@ -270,5 +273,78 @@ describe("recordDuesByEmail against the test DB", () => {
     } finally {
       await other.end();
     }
+  });
+});
+
+describe("car and emergency contact writes against the test DB", () => {
+  beforeEach(async () => {
+    await resetDb();
+  });
+
+  // Later files in the suite read the seed data without resetting.
+  afterAll(async () => {
+    await resetDb();
+  });
+
+  const car = { nickname: "", model: "2019 Subaru Outback", seats: 7, hitch: false };
+
+  it("updateCarByEmail merges into the stored car, keeping Color", async () => {
+    expect(await updateCarByEmail("alice@purdue.edu", car)).toEqual({
+      model: "2019 Subaru Outback",
+      nickname: null,
+      color: "Blue",
+      capacity: "7",
+      hitch: false,
+    });
+    expect((await getMemberById(1))?.carData?.capacity).toBe("7");
+  });
+
+  it("updateCarByEmail adds a car for a member without one", async () => {
+    await updateCarByEmail("carol@purdue.edu", { ...car, nickname: "Van" });
+
+    expect((await getMemberById(3))?.carData).toMatchObject({
+      nickname: "Van",
+      capacity: "7",
+    });
+  });
+
+  it("removeCarByEmail clears the car", async () => {
+    expect(await removeCarByEmail("alice@purdue.edu")).toBe(true);
+    expect((await getMemberById(1))?.carData).toBeUndefined();
+  });
+
+  it("writes return null or false for an unknown email", async () => {
+    expect(await updateCarByEmail("stranger@purdue.edu", car)).toBeNull();
+    expect(await removeCarByEmail("stranger@purdue.edu")).toBe(false);
+  });
+
+  it("updateEmergencyContactByEmail replaces fields and stores an empty email as null", async () => {
+    await updateEmergencyContactByEmail("alice@purdue.edu", {
+      name: "Jordan Anderson",
+      relation: "Sibling",
+      phone: "7655550142",
+      email: "",
+    });
+
+    expect((await getMemberById(1))?.emergencyData).toEqual({
+      name: "Jordan Anderson",
+      relation: "Sibling",
+      phone: "7655550142",
+      email: null,
+    });
+  });
+
+  it("updateEmergencyContactByEmail adds a contact for a member without one", async () => {
+    await updateEmergencyContactByEmail("bob@purdue.edu", {
+      name: "Sam Brown",
+      relation: "",
+      phone: "7655550199",
+      email: "sam@example.com",
+    });
+
+    expect((await getMemberById(2))?.emergencyData).toMatchObject({
+      name: "Sam Brown",
+      email: "sam@example.com",
+    });
   });
 });

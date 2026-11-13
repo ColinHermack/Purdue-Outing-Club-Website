@@ -7,7 +7,7 @@
  * @author Colin Hermack
  */
 
-import { Dropdown, Label, Separator } from "@heroui/react";
+import { Dropdown, Header, Label, Separator } from "@heroui/react";
 import { useRouter } from "next/navigation";
 
 import type { Account } from "@/components/useAccount";
@@ -43,9 +43,9 @@ export function AccountMenu({ account }: { account: Account }) {
           </Dropdown.Item>
           {account.tools.length > 0 ? (
             <Dropdown.Section>
-              <span className="px-3 pt-2 text-xs font-semibold text-muted">
+              <Header className="px-3 pt-2 text-xs font-semibold text-muted">
                 Club tools
-              </span>
+              </Header>
               {account.tools.map((id) => (
                 <Dropdown.Item
                   key={id}

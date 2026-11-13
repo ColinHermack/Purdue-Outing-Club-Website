@@ -442,6 +442,259 @@
         }
       }
     },
+    "/api/protected/user/car": {
+      "put": {
+        "tags": ["Members"],
+        "summary": "Save current member's car",
+        "description": "Adds or replaces the signed-in member's car. Fields are merged into the stored `car_data`, so keys the form does not edit (such as `Color`) are kept. Requests without a session never reach the handler: `proxy.ts` answers 401 with JSON `{\"error\": \"Unauthorized\"}`.",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CarInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The saved car.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CarData"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Body is not JSON, or a field is invalid (seats must be an integer from 2 to 15).",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No session (`proxy.ts`, JSON) or no session email (handler, `Unauthorized`).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Signed in, but not a trip leader or officer. Sign-in is currently limited to those roles.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No member with the session email.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Members"],
+        "summary": "Remove current member's car",
+        "description": "Clears the signed-in member's car. Requests without a session never reach the handler: `proxy.ts` answers 401 with JSON `{\"error\": \"Unauthorized\"}`.",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Car removed."
+          },
+          "401": {
+            "description": "No session (`proxy.ts`, JSON) or no session email (handler, `Unauthorized`).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Signed in, but not a trip leader or officer. Sign-in is currently limited to those roles.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No member with the session email.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/protected/user/emergencycontact": {
+      "put": {
+        "tags": ["Members"],
+        "summary": "Save current member's emergency contact",
+        "description": "Adds or replaces the signed-in member's emergency contact. The phone is stored as 10 digits. Requests without a session never reach the handler: `proxy.ts` answers 401 with JSON `{\"error\": \"Unauthorized\"}`.",
+        "security": [
+          {
+            "session": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmergencyContactInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The saved contact.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmergencyData"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Body is not JSON, or a field is invalid (name required, phone 10 digits, email valid when given).",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No session (`proxy.ts`, JSON) or no session email (handler, `Unauthorized`).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Signed in, but not a trip leader or officer. Sign-in is currently limited to those roles.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No member with the session email.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/protected/membership": {
       "get": {
         "tags": ["Members"],
@@ -1241,7 +1494,7 @@
             "$ref": "#/components/schemas/FirstAidData"
           },
           "carData": {
-            "type": "object"
+            "$ref": "#/components/schemas/CarData"
           },
           "driverData": {
             "type": "object"
@@ -1400,6 +1653,72 @@
           "created": {
             "type": "boolean",
             "description": "True when this call created the member."
+          }
+        }
+      },
+      "CarData": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "type": "string"
+          },
+          "nickname": {
+            "type": "string"
+          },
+          "color": {
+            "type": "string"
+          },
+          "capacity": {
+            "type": "string",
+            "description": "Seats including the driver."
+          },
+          "hitch": {
+            "type": "boolean"
+          }
+        }
+      },
+      "CarInput": {
+        "type": "object",
+        "required": ["seats"],
+        "properties": {
+          "nickname": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "model": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "seats": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 15,
+            "description": "Seats including the driver."
+          },
+          "hitch": {
+            "type": "boolean"
+          }
+        }
+      },
+      "EmergencyContactInput": {
+        "type": "object",
+        "required": ["name", "phone"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "relation": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "phone": {
+            "type": "string",
+            "description": "10 digits; other characters are stripped."
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
           }
         }
       }

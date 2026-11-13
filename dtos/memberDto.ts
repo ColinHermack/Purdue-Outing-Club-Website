@@ -10,11 +10,19 @@ class FirstAidDataDTO {
   verified?: boolean;
 }
 
-class EmergencyDataDTO {
+export class EmergencyDataDTO {
   name?: string;
   email?: string;
   phone?: string;
   relation?: string;
+}
+
+export class CarDataDTO {
+  model?: string;
+  nickname?: string;
+  color?: string;
+  capacity?: string;
+  hitch?: boolean;
 }
 
 class MedicalDataDTO {
@@ -31,7 +39,7 @@ export default class MemberDTO {
   phone?: string;
   duesData?: object;
   firstAidData?: FirstAidDataDTO;
-  carData?: object;
+  carData?: CarDataDTO;
   driverData?: object;
   emergencyData?: EmergencyDataDTO;
   policyAgreement?: boolean;

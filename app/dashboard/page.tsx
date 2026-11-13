@@ -1,6 +1,6 @@
 /**
  * The signed-in member's dashboard: their trips, trip readiness (dues, waiver, policy), first aid, driver
- * certification and emergency contact. Everything here is informational. This is the first step of the rollout of user
+ * certification, car and emergency contact. The car and emergency contact are editable; the rest is informational. This is the first step of the rollout of user
  * sign-in, currently open to trip leaders and officers.
  *
  * @author Colin Hermack
@@ -8,8 +8,11 @@
 
 "use client";
 
-import { Button, Card, Link, Pagination } from "@heroui/react";
+import { Button, Card, Link, Pagination, Spinner } from "@heroui/react";
 import { useEffect, useMemo, useState } from "react";
+
+import { CarCard, EmergencyContactCard } from "./EditableCards";
+import { Badge, SideCard, Tone, TONE_CLASSES } from "./SideCard";
 
 import PageMessage from "@/components/PageMessage";
 import MemberDTO from "@/dtos/memberDto";
@@ -23,24 +26,6 @@ import { buildPageItems } from "@/utils/pagination";
 import { protectedFetch } from "@/utils/protectedFetch";
 
 const TRIPS_PER_PAGE = 5;
-
-type Tone = "ok" | "bad" | "neutral";
-
-const TONE_CLASSES: Record<Tone, string> = {
-  ok: "bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300",
-  bad: "bg-orange-100 text-orange-800 dark:bg-orange-900/40 dark:text-orange-300",
-  neutral: "bg-default text-muted",
-};
-
-function Badge({ tone, children }: { tone: Tone; children: React.ReactNode }) {
-  return (
-    <span
-      className={`h-[26px] px-2.5 rounded-full text-xs font-semibold inline-flex items-center ${TONE_CLASSES[tone]}`}
-    >
-      {children}
-    </span>
-  );
-}
 
 function ReadinessRow({
   label,
@@ -66,28 +51,6 @@ function ReadinessRow({
         {value ? <span className="text-[13px] text-muted">{value}</span> : null}
       </div>
     </div>
-  );
-}
-
-function SideCard({
-  title,
-  badge,
-  children,
-}: {
-  title: string;
-  badge?: React.ReactNode;
-  children: React.ReactNode;
-}) {
-  return (
-    <Card className="w-full">
-      <Card.Content className="flex flex-col gap-1.5">
-        <div className="flex items-center justify-between gap-2 mb-1">
-          <h2 className="text-lg font-bold">{title}</h2>
-          {badge}
-        </div>
-        {children}
-      </Card.Content>
-    </Card>
   );
 }
 
@@ -166,6 +129,15 @@ export default function DashBoardPage() {
     );
   }
 
+  if (user === null) {
+    return (
+      <div className="flex justify-center py-24">
+        <title>My Dashboard - Purdue Outing Club</title>
+        <Spinner aria-label="Loading dashboard" size="lg" />
+      </div>
+    );
+  }
+
   const pageCount = Math.max(1, Math.ceil(sortedTrips.length / TRIPS_PER_PAGE));
   const currentPage = Math.min(page, pageCount);
   const firstIndex = (currentPage - 1) * TRIPS_PER_PAGE;
@@ -189,14 +161,10 @@ export default function DashBoardPage() {
       <title>My Dashboard - Purdue Outing Club</title>
 
       <header className="flex flex-col gap-1">
-        <h1 className="text-3xl font-bold">
-          {user ? user.name : "Loading..."}
-        </h1>
-        {user ? (
-          <p className="text-sm text-muted">
-            {[user.email, user.schoolYear].filter(Boolean).join(" · ")}
-          </p>
-        ) : null}
+        <h1 className="text-3xl font-bold">{user.name}</h1>
+        <p className="text-sm text-muted">
+          {[user.email, user.schoolYear].filter(Boolean).join(" · ")}
+        </p>
       </header>
 
       {banner ? (
@@ -218,7 +186,7 @@ export default function DashBoardPage() {
             {tripsFailed ? (
               <p>Couldn&#39;t load your trips.</p>
             ) : trips === null ? (
-              <p>Loading...</p>
+              <Spinner aria-label="Loading trips" className="self-center" />
             ) : visible.length === 0 ? (
               <p>No trips to display.</p>
             ) : (
@@ -226,7 +194,7 @@ export default function DashBoardPage() {
                 {visible.map((trip) => (
                   <Link
                     key={trip.tripId}
-                    className="py-3 px-2 flex flex-col gap-0.5 no-underline"
+                    className="py-3 px-2 flex flex-col items-start gap-0.5 no-underline"
                     href={`/trips/${trip.tripId}`}
                   >
                     <span className="font-semibold">{trip.name}</span>
@@ -315,7 +283,7 @@ export default function DashBoardPage() {
               </SideCard>
 
               <SideCard
-                badge={
+                aside={
                   <Badge tone={firstAid === "valid" ? "ok" : "neutral"}>
                     {firstAid === "valid"
                       ? "Valid"
@@ -346,7 +314,7 @@ export default function DashBoardPage() {
               </SideCard>
 
               <SideCard
-                badge={
+                aside={
                   <Badge tone={driver === "valid" ? "ok" : "neutral"}>
                     {driver === "valid" ? "Certified" : "Not certified"}
                   </Badge>
@@ -360,24 +328,15 @@ export default function DashBoardPage() {
                 </span>
               </SideCard>
 
-              <SideCard title="Emergency contact">
-                {user.emergencyData?.name ? (
-                  <>
-                    <span className="font-semibold">
-                      {user.emergencyData.name}
-                    </span>
-                    <span className="text-sm text-muted">
-                      {[user.emergencyData.relation, user.emergencyData.phone]
-                        .filter(Boolean)
-                        .join(" · ")}
-                    </span>
-                  </>
-                ) : (
-                  <span className="text-sm text-muted">
-                    No emergency contact on file.
-                  </span>
-                )}
-              </SideCard>
+              <CarCard
+                car={user.carData}
+                onSaved={(carData) => setUser({ ...user, carData })}
+              />
+
+              <EmergencyContactCard
+                contact={user.emergencyData}
+                onSaved={(emergencyData) => setUser({ ...user, emergencyData })}
+              />
             </>
           ) : null}
         </div>

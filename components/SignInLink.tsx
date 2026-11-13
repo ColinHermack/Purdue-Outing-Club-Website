@@ -15,7 +15,7 @@ export function SignInLink() {
   if (status !== "unauthenticated") return null;
 
   return (
-    <Link className="mr-4" href="/auth/signin">
+    <Link className="mr-4 mb-6" href="/auth/signin">
       Trip Leader Sign In
     </Link>
   );

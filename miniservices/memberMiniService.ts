@@ -9,7 +9,8 @@
 import { Pool } from "pg";
 
 import MemberDirectoryEntryDTO, { DuesStatus } from "@/dtos/memberDirectoryEntryDto";
-import MemberDTO from "@/dtos/memberDto";
+import MemberDTO, { CarDataDTO, EmergencyDataDTO } from "@/dtos/memberDto";
+import type { CarInput, EmergencyContactInput } from "@/utils/memberForms";
 
 const pool = new Pool({
   user: process.env.DB_USER,
@@ -22,6 +23,42 @@ const pool = new Pool({
   },
 });
 
+/** The `car_data` json column. Capacity is stored as a string. */
+interface CarRow {
+  Model?: string;
+  Nickname?: string;
+  Color?: string;
+  Capacity?: string;
+  Hitch?: boolean;
+}
+
+/** The `emergency_data` json column. */
+interface EmergencyRow {
+  Name?: string;
+  Email?: string;
+  Phone?: string;
+  Relation?: string;
+}
+
+function mapCar(car: CarRow): CarDataDTO {
+  return {
+    model: car.Model,
+    nickname: car.Nickname,
+    color: car.Color,
+    capacity: car.Capacity,
+    hitch: car.Hitch,
+  };
+}
+
+function mapEmergency(contact: EmergencyRow): EmergencyDataDTO {
+  return {
+    name: contact.Name,
+    email: contact.Email,
+    phone: contact.Phone,
+    relation: contact.Relation,
+  };
+}
+
 /**
  * The shape of a `member` table row as returned by the database (snake_case columns).
  */
@@ -32,14 +69,18 @@ interface MemberRow {
   email: string;
   phone: string;
   dues_data: MemberDTO["duesData"];
-  first_aid_data: MemberDTO["firstAidData"];
-  car_data: MemberDTO["carData"];
+  first_aid_data: { Type?: string; Expires?: string; Verified?: boolean } | null;
+  car_data: CarRow | null;
   driver_data: MemberDTO["driverData"];
-  emergency_data: MemberDTO["emergencyData"];
+  emergency_data: EmergencyRow | null;
   policy_agreement: boolean;
   waiver_agreement: boolean;
   school_year: string;
-  medical_data: MemberDTO["medicalData"];
+  medical_data: {
+    Allergies?: string;
+    Conditions?: string;
+    Medications?: string;
+  } | null;
   trip_count: number;
   holds: string;
   signup_count: number;
@@ -81,14 +122,28 @@ function mapMemberRow(row: MemberRow): MemberDTO {
     email: row.email,
     phone: row.phone,
     duesData: row.dues_data,
-    firstAidData: row.first_aid_data,
-    carData: row.car_data,
+    firstAidData: row.first_aid_data
+      ? {
+          type: row.first_aid_data.Type,
+          expires: row.first_aid_data.Expires,
+          verified: row.first_aid_data.Verified,
+        }
+      : undefined,
+    carData: row.car_data ? mapCar(row.car_data) : undefined,
     driverData: row.driver_data,
-    emergencyData: row.emergency_data,
+    emergencyData: row.emergency_data
+      ? mapEmergency(row.emergency_data)
+      : undefined,
     policyAgreement: row.policy_agreement,
     waiverAgreement: row.waiver_agreement,
     schoolYear: row.school_year,
-    medicalData: row.medical_data,
+    medicalData: row.medical_data
+      ? {
+          allergies: row.medical_data.Allergies,
+          conditions: row.medical_data.Conditions,
+          medications: row.medical_data.Medications,
+        }
+      : undefined,
     tripCount: row.trip_count,
     holds: row.holds,
     signupCount: row.signup_count,
@@ -408,6 +463,95 @@ export async function getMemberByEmail(
     }
 
     return mapMemberRow(result.rows[0] as MemberRow);
+  } finally {
+    client.release();
+  }
+}
+
+/**
+ * Saves the car of the member with the given email. The new fields are merged into the stored json, so keys the
+ * dashboard does not edit (such as `Color`) survive. Empty nickname or model are stored as null.
+ *
+ * @param email The member's email address.
+ * @param car The validated car (see `parseCar`).
+ * @returns The saved car, or null if no member has that email.
+ */
+export async function updateCarByEmail(
+  email: string,
+  car: CarInput,
+): Promise<CarDataDTO | null> {
+  const client = await pool.connect();
+
+  try {
+    const result = await client.query(
+      `UPDATE member
+            SET car_data = (COALESCE(car_data::jsonb, '{}'::jsonb) || jsonb_build_object(
+                'Nickname', NULLIF($2::text, ''),
+                'Model', NULLIF($3::text, ''),
+                'Capacity', $4::text,
+                'Hitch', $5::boolean))::json
+            WHERE email = $1
+            RETURNING car_data;`,
+      [email, car.nickname, car.model, String(car.seats), car.hitch],
+    );
+
+    return result.rows.length ? mapCar(result.rows[0].car_data) : null;
+  } finally {
+    client.release();
+  }
+}
+
+/**
+ * Clears the car of the member with the given email.
+ *
+ * @param email The member's email address.
+ * @returns True if a member with that email exists.
+ */
+export async function removeCarByEmail(email: string): Promise<boolean> {
+  const client = await pool.connect();
+
+  try {
+    const result = await client.query(
+      "UPDATE member SET car_data = NULL WHERE email = $1 RETURNING member_id",
+      [email],
+    );
+
+    return result.rows.length > 0;
+  } finally {
+    client.release();
+  }
+}
+
+/**
+ * Saves the emergency contact of the member with the given email, merged into the stored json like
+ * `updateCarByEmail`. Empty relation or email are stored as null.
+ *
+ * @param email The member's email address.
+ * @param contact The validated contact (see `parseEmergencyContact`).
+ * @returns The saved contact, or null if no member has that email.
+ */
+export async function updateEmergencyContactByEmail(
+  email: string,
+  contact: EmergencyContactInput,
+): Promise<EmergencyDataDTO | null> {
+  const client = await pool.connect();
+
+  try {
+    const result = await client.query(
+      `UPDATE member
+            SET emergency_data = (COALESCE(emergency_data::jsonb, '{}'::jsonb) || jsonb_build_object(
+                'Name', $2::text,
+                'Relation', NULLIF($3::text, ''),
+                'Phone', $4::text,
+                'Email', NULLIF($5::text, '')))::json
+            WHERE email = $1
+            RETURNING emergency_data;`,
+      [email, contact.name, contact.relation, contact.phone, contact.email],
+    );
+
+    return result.rows.length
+      ? mapEmergency(result.rows[0].emergency_data)
+      : null;
   } finally {
     client.release();
   }

@@ -9,6 +9,9 @@ import {
   getMembers,
   getMostTripsAttended,
   getMostTripsLed,
+  removeCarByEmail,
+  updateCarByEmail,
+  updateEmergencyContactByEmail,
   verifyMembershipByEmail,
 } from "@/miniservices/memberMiniService";
 
@@ -32,14 +35,33 @@ describe("memberMiniService", () => {
         email: row.email,
         phone: row.phone,
         duesData: row.dues_data,
-        firstAidData: row.first_aid_data,
-        carData: row.car_data,
+        firstAidData: {
+          type: "WFA",
+          expires: "2099-01-01",
+          verified: true,
+        },
+        carData: {
+          model: "Outback",
+          nickname: undefined,
+          color: undefined,
+          capacity: "5",
+          hitch: true,
+        },
         driverData: row.driver_data,
-        emergencyData: row.emergency_data,
+        emergencyData: {
+          name: "Pat",
+          email: "pat@example.com",
+          phone: "765-555-1001",
+          relation: "Parent",
+        },
         policyAgreement: row.policy_agreement,
         waiverAgreement: row.waiver_agreement,
         schoolYear: row.school_year,
-        medicalData: row.medical_data,
+        medicalData: {
+          allergies: "None",
+          conditions: "None",
+          medications: "None",
+        },
         tripCount: row.trip_count,
         holds: row.holds,
         signupCount: row.signup_count,
@@ -146,5 +168,46 @@ describe("memberMiniService", () => {
 
     await expect(getMembers()).rejects.toThrow("connection lost");
     expect(pgClient.release).toHaveBeenCalledTimes(1);
+  });
+
+  it("updateCarByEmail passes seats as a string and maps the saved car", async () => {
+    queryReturns([{ car_data: { Model: "Outback", Capacity: "5", Hitch: true, Color: "Blue" } }]);
+
+    expect(
+      await updateCarByEmail("alice@purdue.edu", {
+        nickname: "",
+        model: "Outback",
+        seats: 5,
+        hitch: true,
+      }),
+    ).toEqual({ model: "Outback", capacity: "5", hitch: true, color: "Blue" });
+    expect(pgClient.query.mock.calls[0][1]).toEqual([
+      "alice@purdue.edu",
+      "",
+      "Outback",
+      "5",
+      true,
+    ]);
+  });
+
+  it("car and emergency contact writes return null or false for an unknown email", async () => {
+    const contact = { name: "Pat", relation: "", phone: "7655550142", email: "" };
+
+    expect(await updateCarByEmail("x@purdue.edu", { nickname: "", model: "", seats: 2, hitch: false })).toBeNull();
+    expect(await removeCarByEmail("x@purdue.edu")).toBe(false);
+    expect(await updateEmergencyContactByEmail("x@purdue.edu", contact)).toBeNull();
+  });
+
+  it("updateEmergencyContactByEmail maps the saved contact", async () => {
+    queryReturns([{ emergency_data: { Name: "Pat", Phone: "7655550142", Relation: null, Email: null } }]);
+
+    expect(
+      await updateEmergencyContactByEmail("alice@purdue.edu", {
+        name: "Pat",
+        relation: "",
+        phone: "7655550142",
+        email: "",
+      }),
+    ).toMatchObject({ name: "Pat", phone: "7655550142" });
   });
 });

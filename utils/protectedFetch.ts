@@ -37,7 +37,10 @@ export async function protectedFetch<T>(
 
     if (!response.ok) return { status: "error" };
 
-    return { status: "ok", data: (await response.json()) as T };
+    // 204 No Content (e.g. a DELETE) has no body to parse.
+    const data = response.status === 204 ? null : await response.json();
+
+    return { status: "ok", data: data as T };
   } catch {
     return { status: "error" };
   }

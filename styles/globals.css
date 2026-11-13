@@ -63,6 +63,19 @@
   }
 }
 
+/*
+ * HeroUI draws the ListBox checkmark with a stroke-dash offset trick (shown at offset 44, "hidden" at 66). Safari
+ * sometimes paints fragments of it, leaving stray marks in Select popovers. Draw it solid and hide it outright when the
+ * item is not selected (`data-visible` is only set on selected items).
+ */
+[data-slot="list-box-item-indicator--checkmark"] {
+  stroke-dasharray: none;
+}
+
+[data-slot="list-box-item-indicator"]:not([data-visible]) {
+  visibility: hidden;
+}
+
 body {
   overflow-x: hidden;
 }

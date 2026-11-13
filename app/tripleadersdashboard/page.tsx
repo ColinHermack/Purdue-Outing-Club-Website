@@ -14,6 +14,7 @@ import BasicMemberDTO from "@/dtos/basicMemberDto";
 import { SPORTS, PSEUDO_SPORTS } from "@/config/constants";
 import { GET_TRIP_LEADERS_AUTHORIZED_POSITIONS } from "@/config/permissions";
 import PageMessage from "@/components/PageMessage";
+import { formatPhone } from "@/utils/memberForms";
 import { protectedFetch, type ProtectedResult } from "@/utils/protectedFetch";
 
 import { Button, Modal, Table, TextField, Input, cn, Checkbox, CheckboxGroup, Label, ComboBox, ListBox, ListBoxItem, Spinner } from "@heroui/react";
@@ -245,7 +246,7 @@ export default function TripLeaderDashboardPage() {
           {
             id: "emergency-phone",
             field: "Phone",
-            value: m?.emergencyData?.phone ?? "—",
+            value: m?.emergencyData?.phone ? formatPhone(m.emergencyData.phone) : "—",
             children: [],
           },
           {

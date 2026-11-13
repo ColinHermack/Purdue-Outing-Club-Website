@@ -95,7 +95,7 @@ export const Footer = () => {
           <Logo />
         </Link>
       </div>
-      <div className="mt-4 mb-8 text-xs flex items-center">
+      <div className="mt-4 mb-8 text-xs flex flex-col justify-top items-center">
         <SignInLink />
         <span>© 2024 Purdue Outing Club</span>
       </div>

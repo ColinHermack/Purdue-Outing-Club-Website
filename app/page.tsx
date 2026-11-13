@@ -48,15 +48,18 @@ export default function Home() {
           alt="A picture from an Outing Club trip to Indiana Dunes."
           className="my-5 sm:m-5 rounded-lg h-[200px] w-auto"
           height={200}
-          src="/beach.jpg"
+          src="/bike_kayaking.jpg"
         />
       </div>
-      <p className="m-10 text-center max-w-[600px]">
-        The Purdue Outing Club is involved with any activity that takes place in
-        the outdoors. It is a place for people who enjoy the outdoors to meet
-        each other and have fun. The club is open to Purdue University students
-        as members, but we often communicate with alumni and outdoor
-        professionals across the country.
+      <p className="mt-10 mb-6 text-center max-w-[600px]">
+        The Purdue Outing Club fosters a welcoming community that inspires adventure, personal growth, and environmental
+        stewardship by making outdoor recreation accessible to students of all experience levels. Through shared 
+        excursions, education, and leadership, we support members in building lasting friendships and a lifelong 
+        appreciation for the outdoors.
+      </p>
+      <p className='mb-10 text-center max-w-[600px]'>
+        The club is open to Purdue students and faculty as members, but we often communicate with alumni and 
+        outdoor professionals worldwide.
       </p>
       <iframe
         className="mb-10 rounded-lg"

@@ -1,133 +1,95 @@
 # Purdue Outing Club Website
 
-This is a full-stack web application used for the management of Purdue Outing Club trip and member data. Some of the functions of this website are the following.
+The website for the [Purdue Outing Club](https://www.purdueoutingclub.com): public pages about trips, leadership,
+gear, POCAR, and joining the club, plus a signed-in area where members see their trips and officers manage trip
+leaders and member data.
 
-## Technologies Used
+It is a Next.js app deployed on Vercel, backed by a PostgreSQL database that Power Automate flows also update. If you
+are new to the project, read this page, then [docs/architecture.md](docs/architecture.md), then
+[docs/systems/overview.md](docs/systems/overview.md).
 
-- [Next.js 16](https://nextjs.org/docs/getting-started)
-- [HeroUI v3](https://heroui.com/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [Tailwind Variants](https://tailwind-variants.org)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Framer Motion](https://www.framer.com/motion/)
-- [next-themes](https://github.com/pacocoursey/next-themes)
-- [Google Calendar](calendar.google.com)
+## Technologies
 
-## How to Contribute
+- [Next.js 16](https://nextjs.org/docs) (App Router) and [TypeScript](https://www.typescriptlang.org/)
+- [HeroUI v3](https://heroui.com/react) components and [Tailwind CSS](https://tailwindcss.com/)
+- [NextAuth](https://next-auth.js.org/) with Microsoft (Azure AD) sign-in
+- [PostgreSQL](https://www.postgresql.org/) through [`pg`](https://node-postgres.com/)
+- [Vitest](https://vitest.dev/) for tests, [Scalar](https://scalar.com/) for API docs at `/api/docs`
+- Hosting on [Vercel](https://vercel.com/), automation with Microsoft Power Automate
 
-### Clone the GitHub repository
+## Quick start
 
-Begin by cloning the GitHub repository into a local directory.
+You need Node.js 22, npm, and (for integration tests) Docker.
 
 ```bash
 git clone https://github.com/ColinHermack/Purdue-Outing-Club-Website.git
 ```
 
-### Create environment variables
-
-Get the environment variables from the webmaster and create a .env file in the root of the project.
-
-### Install dependencies
-
-Run the following command to install NPM packages:
-
 ```bash
-npm install
+cd Purdue-Outing-Club-Website && npm install
 ```
 
-### Choose an issue to work on
-
-Choose an issue from the `Issues` tab on GitHub or the project on GitHub to work on. The issues are the same whether you find them in the issues tab or the project.
-
-### Create a feature branch
+Create a `.env` file at the repo root with the values from the webmaster. The keys are listed in
+[docs/systems/vercel.md](docs/systems/vercel.md#environment-variables).
 
 ```bash
-git branch myfeaturebranch
+npm run dev
 ```
 
-### Run the checks locally before creating a pull request
+Open <https://localhost:3000>. The dev server uses HTTPS (accept the self-signed certificate) because Microsoft
+sign-in only redirects to HTTPS URLs.
 
-Run the same checks CI runs (see [Testing](#testing) below):
+> **Your local site uses the production database.** There is no separate development database. Read freely, but be
+> careful with anything that writes.
 
-```bash
-npx eslint .
-npm run typecheck
-npm test
-npm run test:db && npm run test:integration
-npm run build
-```
+## Commands
 
-### Create a pull request on GitHub
+| Command | What it does |
+| --- | --- |
+| `npm run dev` | Dev server at `https://localhost:3000` |
+| `npm run build` | Production build (needs a reachable database) |
+| `npm run start` | Run the production build |
+| `npx eslint .` | Lint (what CI runs) |
+| `npm run lint` | Format with Prettier and auto-fix lint issues (rewrites files) |
+| `npm run typecheck` | TypeScript check |
+| `npm test` | Unit tests, no database needed |
+| `npm run test:db` then `npm run test:integration` | Integration tests against a Postgres container |
 
-Create a pull request to merge your feature branch with main. The CI checks must pass, it will have to successfully
-deploy, and it must be reviewed by the webmaster before merging.
+Details on the tests are in [tests/README.md](tests/README.md).
 
-## Testing
+## How to contribute
 
-Tests use [Vitest](https://vitest.dev/) and live in `tests/`, split into two suites.
+1. Pick an issue from the GitHub **Issues** tab or project board.
+2. Create a branch: `git checkout -b my-feature`.
+3. Make the change. If it touches the database, the API, or an outside system, read the matching guide in
+   [docs/](docs/README.md) first.
+4. Run the same checks as CI:
 
-### Unit tests (`tests/unit/`)
+   ```bash
+   npx eslint . && npm run typecheck && npm test
+   ```
 
-Fast tests with every external dependency mocked: the database (`pg`), the NextAuth session, and the miniservices
-when testing route handlers. They never touch a real database and don't need a `.env` file. The folder layout mirrors
-the source tree (for example, `tests/unit/app/api/protected/tripleaders.test.ts` tests
-`app/api/protected/tripleaders/route.ts`). Shared fakes live in `tests/unit/helpers.ts`.
+   ```bash
+   npm run test:db && npm run test:integration && npm run build
+   ```
 
-```bash
-npm test
-```
+5. Push and open a pull request into `main`. CI runs, and Vercel builds a preview and comments its link on the PR.
+6. The webmaster reviews. Once CI passes and the PR is approved, merge it; Vercel deploys to production
+   automatically.
 
-### Integration tests (`tests/integration/`)
+## Documentation map
 
-These run the real miniservices and route handlers against a throwaway Postgres database, so they catch broken SQL,
-schema drift and mapping bugs that mocks can't. Only the NextAuth session is mocked, since Microsoft sign-in can't
-run in a test.
+| Where | What |
+| --- | --- |
+| [docs/README.md](docs/README.md) | Index of all guides |
+| [docs/architecture.md](docs/architecture.md) | How the code is organized, request flow, sign-in and permissions |
+| [docs/systems/](docs/systems/overview.md) | Vercel, database, Power Automate, Azure AD, domain and outside links |
+| [docs/runbooks.md](docs/runbooks.md) | Step-by-step tasks (new page, new API route, news post, officer turnover, secrets, outages) |
+| [docs/handoff.md](docs/handoff.md) | Checklist for handing the site to a new webmaster |
+| [docs/plans/](docs/plans/) | Historical design plans (not kept current) |
+| `README.md` in each folder | What that folder contains and its conventions |
+| [CLAUDE.md](CLAUDE.md) | Short project summary for AI coding assistants |
 
-Integration tests need [Docker](https://www.docker.com/products/docker-desktop/). Start the test database, then run
-the suite:
+## Contact
 
-```bash
-npm run test:db
-npm run test:integration
-```
-
-`npm run test:db` starts Postgres 14 (the production version) on port 5433 using `docker-compose.test.yml`. Before
-the suite runs, it rebuilds the schema and loads the fixtures. Tests that write data reset the database first. Stop it
-with `docker compose -f docker-compose.test.yml down`.
-
-The suite is hard-coded to `localhost` in `vitest.config.mts` and refuses to run against any other host, because it
-wipes every table.
-
-- **`tests/integration/schema.sql`** is a schema-only dump of the production database (no rows).
-- **`tests/integration/seed.sql`** holds the fixture rows. **Only put fake data here, never real member
-  information.** Write dates relative to `CURRENT_DATE` (for example, `(CURRENT_DATE + 180)::text`) so fixtures
-  never expire.
-
-#### Updating the schema after a database change
-
-If you change the production schema, regenerate `schema.sql` with the database credentials from `.env`. It dumps
-structure only, never data:
-
-```bash
-pg_dump --schema-only --no-owner --no-privileges --schema=public \
-  -h <DB_HOST> -p <DB_PORT> -U <DB_USER> -d <DB_DATABASE> > tests/integration/schema.sql
-```
-
-Then update `seed.sql` and the tests for the new columns.
-
-### Continuous integration
-
-`.github/workflows/ci.yml` runs on every pull request and on every push to `main`. It runs, in order:
-
-1. ESLint (`npx eslint .`)
-2. Typecheck (`npm run typecheck`)
-3. Unit tests
-4. Integration tests against a Postgres container
-5. `npm run build`, pointed at the seeded test database, because some pages query the database while building
-
-The test database uses passwordless `trust` auth and CI sets no auth credentials, so no repository secrets are needed. A pull request must pass CI before
-review.
-
-## Deployment Information
-
-This app is deployed on Vercel and deploys a preview whenever a pull request is created, and deploys to production once the PR is approved and completed.
+The webmaster owns this repository (see [CODEOWNERS](CODEOWNERS)) and reviews every pull request.

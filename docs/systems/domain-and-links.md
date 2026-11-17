@@ -3,7 +3,9 @@
 ## Domain
 
 `purdueoutingclub.com` is registered at **Squarespace** (Squarespace Domains, which took over Google Domains).
-TODO(handoff): record which login owns the domain, the renewal date, and whether auto-renew is on.
+The domain is owned by the club Gmail account (`purdueouting@gmail.com`), the same account that owns the Vercel team.
+**Auto-renew is off, and the domain expires on 27 March 2027.** Renew it (or turn on auto-renew) in Squarespace
+Domains before then, or the whole site and Microsoft sign-in go offline.
 
 DNS is managed in Squarespace and points at Vercel. Vercel serves `www.purdueoutingclub.com` and redirects the apex
 `purdueoutingclub.com` to it with a 308. The DNS records Vercel expects are shown in Vercel under

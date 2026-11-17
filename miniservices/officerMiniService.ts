@@ -4,6 +4,9 @@
  * The officer table is edited by hand each year (docs/runbooks.md#yearly-officer-turnover). Several pages that use
  * these functions are prerendered at build time, so officer changes appear on the site after the next deploy.
  *
+ * Power Automate also reads this table: the first aid and driver certification flows email the "Health & Safety
+ * Officer" and "Data Analyst" for approval, so keep those position titles exactly as they are.
+ *
  * @author Colin Hermack
  */
 

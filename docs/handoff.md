@@ -14,7 +14,7 @@ Use this checklist when the webmaster changes. Work through it together with the
 | 5   | **Club Gmail account**                 | Access to the Gmail account that owns the Vercel team and the club Google Calendar.                                                                                                                                                                                                                                                       |      |
 | 6   | **Vercel**                             | Sign in as the club account (team `purdue-outing-clubs-projects`). Optionally invite the new webmaster's own Vercel account as a team member so they can view previews.                                                                                                                                                                   |      |
 | 7   | **AWS Lightsail**                      | Sign in to the AWS account and confirm the database is visible.                                                                                                                                                                                                                                                                           |      |
-| 8   | **Squarespace domain**                 | Access to the Squarespace login that owns `purdueoutingclub.com`; confirm auto-renew and the payment method.                                                                                                                                                                                                                              |      |
+| 8   | **Squarespace domain**                 | The domain is in the club Gmail account's Squarespace login. Confirm auto-renew and the payment method.                                                                                                                                                                                                                                   |      |
 | 9   | **Power Automate**                     | Sign in as `poc@purdue.edu`, open each flow in [power-automate.md](systems/power-automate.md), and confirm the last runs succeeded.                                                                                                                                                                                                       |      |
 | 10  | **`.env` file**                        | Hand over the values securely (password manager share, not email or Slack). Keys are listed in [vercel.md](systems/vercel.md#environment-variables).                                                                                                                                                                                      |      |
 | 11  | **Photo script inbox**                 | `GMAIL_USER` / `GMAIL_APP_PASSWORD` for `scripts/fetch_poc_photos.py` point at the outgoing webmaster's inbox. The new webmaster should use their own inbox and app password.                                                                                                                                                             |      |
@@ -34,11 +34,18 @@ Use this checklist when the webmaster changes. Work through it together with the
 
 Things found while writing these docs that a new owner should know about:
 
+- **Domain expires 27 March 2027 with auto-renew off.** Renew it or turn on auto-renew in Squarespace before then.
+- **Azure production secret expires 2 November 2027.** See [azure-ad.md](systems/azure-ad.md#rotating-the-client-secret).
 - **Single points of failure.** Almost everything depends on `poc@purdue.edu` and the club Gmail account. If either
   is locked out, the site can't be changed or its integrations repaired. Keep recovery options current on both.
 - **No staging database.** Local development and preview deployments write to production data.
-- **Azure client secret expires.** When it does, nobody can sign in until it is rotated.
-- **Flows write directly to the database.** Schema changes can silently break the DocuSign and Forms flows.
+- **Flows write directly to the database.** Schema changes break the connector-based flows; the only signal is a
+  failure email to `poc@purdue.edu`, and failed updates are not retried.
+- **No database backups.** The Lightsail instance has no automatic snapshots. Turn on automatic snapshots in the
+  Lightsail console (instance > Snapshots), and take a manual one before any risky change.
+- **Sign-in cannot be tested on previews.** Only production and `localhost` are registered in Azure.
+- **Waiver depends on the advisor.** The DocuSign PowerForm is owned by the faculty advisor; a new advisor must
+  recreate it and the link on `/join` must be updated.
 - **TooCool receipt format.** The dues endpoint reads receipt text. A TooCool layout change stops dues updates.
 - **Unused code.** `getAllOfficerData()` in `miniservices/officerMiniService.ts` is not called anywhere and joins on
   a column (`o.officer_id`) that does not exist. Delete it or fix it before using it.

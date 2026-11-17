@@ -1,8 +1,8 @@
 /**
  * Handles all database communication related to members generally.
  *
- * The member table is shared with systems outside this repo: Power Automate flows write name, policy_agreement and
- * waiver_agreement directly, and other tools insert rows. Before changing a column name or type, check the writer table
+ * The member table is shared with systems outside this repo: Power Automate flows insert rows and write most profile
+ * columns (name, agreements, contact, car, emergency, medical, first aid and driver data) directly. Before changing a column name or type, check the writer table
  * in docs/systems/database.md and update those flows too.
  *
  * @author Colin Hermack

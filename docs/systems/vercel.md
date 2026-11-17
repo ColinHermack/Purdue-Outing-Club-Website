@@ -36,8 +36,9 @@ flowchart LR
 - **Production deployment**: merging to `main` builds and promotes automatically.
 - The build runs `next build`, which queries the database for a few pages (see
   [architecture.md](../architecture.md#rendering-and-the-build)). If the database is unreachable, the build fails.
-- Signing in on a preview: `NEXTAUTH_URL` is the same value for every environment, so the Microsoft login returns you
-  to that URL rather than to the preview. TODO(handoff): confirm whether sign-in is expected to work on previews.
+- **Sign-in does not work on previews.** `NEXTAUTH_URL` is the same value for every environment and each preview URL is
+  different and not registered in Azure ([azure-ad.md](azure-ad.md#settings-the-site-depends-on)). Test signed-in
+  pages locally or on production.
 
 ## Environment variables
 

@@ -4,17 +4,25 @@ Several [Power Automate](https://make.powerautomate.com) cloud flows keep member
 typing into the database. **All of them are owned by the `poc@purdue.edu` Microsoft account**, and none of them live
 in this repo. Sign in to Power Automate as `poc@purdue.edu` and open **My flows** to see or edit them.
 
-> **Warning:** two of these flows write straight to Postgres through the PostgreSQL connector. If you rename, retype,
-> or remove a `member` column they use (`name`, `email`, `policy_agreement`, `waiver_agreement`), the flow starts
-> failing and nobody is told unless someone checks its run history. Check [database.md](database.md#who-writes-what)
+> **Warning:** most of these flows write straight to Postgres through the PostgreSQL connector. If you rename,
+> retype, or remove a `member` column they use, the flow starts failing. The only alert is Power Automate's failure
+> email to `poc@purdue.edu`; nothing retries or fixes the record. Check [database.md](database.md#who-writes-what)
 > before any schema change.
 
-| Flow                                                                    | Trigger                                               | Writes                                     | How it reaches the database                       |
-| ----------------------------------------------------------------------- | ----------------------------------------------------- | ------------------------------------------ | ------------------------------------------------- |
-| [Dues - TooCool](#dues---toocool)                                       | TooCool receipt email to `poc@purdue.edu`             | `member.dues_data` (and new `member` rows) | HTTP call to the website's `/api/automation/dues` |
-| [DocuSign - Club Sports Waiver](#docusign---club-sports-waiver)         | Signed waiver email from DocuSign to `poc@purdue.edu` | `member.waiver_agreement = true`           | PostgreSQL connector                              |
-| [Forms - Info and Policy Agreement](#forms---info-and-policy-agreement) | New Microsoft Forms response                          | `member.name`, `member.policy_agreement`   | PostgreSQL connector                              |
-| [Trip and roster flows](#trip-and-roster-flows)                         | Not yet documented                                    | `trip`, `trip_roster`                      | Not yet documented                                |
+**When any flow fails**, Power Automate emails `poc@purdue.edu` and nothing else happens: the member's row is simply
+not updated. Someone has to read that email, fix the cause, and resubmit the run (see
+[Checking that flows are healthy](#checking-that-flows-are-healthy)).
+
+**Matching and new members:** every member flow below finds the member by email. If no `member` row has that email,
+the Dues, DocuSign and Forms flows **create a new row**; otherwise they update the existing one.
+
+| Flow                                                                      | Trigger                                                | Writes                                                                                                                                       | How it reaches the database                       |
+| ------------------------------------------------------------------------- | ------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| [Dues - TooCool](#dues---toocool)                                         | TooCool receipt email to `poc@purdue.edu`              | `member.dues_data` (and new `member` rows)                                                                                                   | HTTP call to the website's `/api/automation/dues` |
+| [DocuSign - Club Sports Waiver](#docusign---club-sports-waiver)           | Signed waiver email from DocuSign to `poc@purdue.edu`  | `member.waiver_agreement = true` (and new rows)                                                                                              | PostgreSQL connector                              |
+| [Forms - Info and Policy Agreement](#forms---info-and-policy-agreement)   | New Microsoft Forms response                           | `member.name`, `policy_agreement`, `phone`, `pronouns`, `school_year`, `campus`, `car_data`, `emergency_data`, `medical_data` (and new rows) | PostgreSQL connector                              |
+| [First aid and driver certification](#first-aid-and-driver-certification) | New response on the first aid or driver Microsoft Form | `member.first_aid_data`, `member.driver_data`                                                                                                | PostgreSQL connector                              |
+| [Trip and roster flows](#trip-and-roster-flows)                           | Not yet documented                                     | `trip`, `trip_roster`                                                                                                                        | Not yet documented                                |
 
 ## Dues - TooCool
 
@@ -46,8 +54,8 @@ Content-Type: application/json
 { "email": "member@purdue.edu", "receipt": "<base64 of the receipt PDF>" }
 ```
 
-TODO(handoff): confirm which email address the flow sends as `email` (the TooCool customer email on the receipt, or
-the sender of the email).
+The flow takes the member's email from the **body of the TooCool receipt email** and sends it as `email`. The
+website then matches it case-insensitively against `member.email`.
 
 ### Responses
 
@@ -87,7 +95,8 @@ curl -k -X POST https://localhost:3000/api/automation/dues \
 
 Remember that local and preview deployments write to the **production database**.
 
-TODO(handoff): what the flow does when the website returns an error (retry policy, alert email, nothing).
+If the website returns an error, the run fails and Power Automate emails `poc@purdue.edu`. There is no automatic
+retry; fix the cause and resubmit the run.
 
 ## DocuSign - Club Sports Waiver
 
@@ -95,20 +104,40 @@ Every member must sign Purdue's club sports waiver through a DocuSign PowerForm 
 copy is emailed to `poc@purdue.edu`, this flow finds the member and sets `member.waiver_agreement` to `true` using the
 Power Automate **PostgreSQL connector**.
 
-- Matching: TODO(handoff): which field the flow matches on (email in the DocuSign envelope?) and what happens when no
-  member matches.
-- Failure behavior: TODO(handoff).
+- Matching: the flow reads the member's email from the body of the DocuSign email. If no member has that email, it
+  creates a new `member` row.
+- Failure behavior: failure email to `poc@purdue.edu`, nothing else.
+- The PowerForm itself belongs to the club's faculty advisor (Jillian Carr as of November 2026), because only faculty
+  and IT staff can create PowerForms. If the waiver link on `/join` needs to change, ask the advisor.
 - In the `all_members` view, a missing waiver shows as `CSW`.
 
 ## Forms - Info and Policy Agreement
 
-The info and policy agreement is a Microsoft Form (step 2 on `/join`). Each response updates the member's `name` and
-sets `policy_agreement` to `true` through the PostgreSQL connector.
+The info and policy agreement is a Microsoft Form (step 2 on `/join`). Each response sets the member's `name` and
+`policy_agreement = true`, and fills in the rest of their profile: `phone`, `pronouns`, `school_year`, `campus`,
+`car_data`, `emergency_data` and `medical_data`. It writes through the PostgreSQL connector.
 
-- Insert or update: TODO(handoff): does the flow create a new `member` row when the email is new, or only update
-  existing rows? If it inserts, it sets `member_id` itself (see the note in `recordDuesByEmail`).
-- Matching: TODO(handoff): confirm it matches on the respondent's Purdue email.
+- Matching: the respondent's Purdue Microsoft login (the form requires signing in).
+- Insert or update: creates a new `member` row when no member has that email, otherwise updates the existing row.
+  Because flows insert rows themselves, `member_id_seq` can fall behind; `recordDuesByEmail` resyncs it before its own
+  inserts.
+- Failure behavior: failure email to `poc@purdue.edu`, nothing else.
 - In the `all_members` view, a missing agreement shows as `IPA`.
+
+## First aid and driver certification
+
+Members upload a first aid certification (form linked at the bottom of `/join`) and submit driver certification
+details (form linked from `/drivers`). Each form has its own flow that writes `member.first_aid_data` or
+`member.driver_data` through the PostgreSQL connector.
+
+- Shapes the flows must write are in [database.md](database.md#member). `first_aid_data.Verified` feeds the
+  `trip_leader.process.certified` trigger, and expired `driver_data` is marked unverified by a trigger.
+- Matching: the respondent's Purdue Microsoft login.
+- **Approval step:** before writing anything, the flow looks up an officer in the database and emails them for
+  approval. First aid goes to the **Health & Safety Officer**, driver certification to the **Data Analyst**. The
+  member's row is updated only after that officer approves. The flow finds them by `officer.position`, so renaming
+  either position, or leaving it empty after turnover, stalls every submission.
+- Failure behavior: failure email to `poc@purdue.edu`, nothing else.
 
 ## Trip and roster flows
 
@@ -121,4 +150,4 @@ the flows above.
 1. Sign in to Power Automate as `poc@purdue.edu`.
 2. Open each flow and look at **28-day run history**. Failed runs show the failing step and its input.
 3. Check that the PostgreSQL **connection** (Data > Connections) is still authenticated, especially after changing
-   `DB_PASSWORD`. A password change breaks the DocuSign and Forms flows until the connection is updated.
+   `DB_PASSWORD`. A password change breaks every connector-based flow until the connection is updated.

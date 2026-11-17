@@ -15,7 +15,6 @@
   "dependencies": {
     "@heroui/react": "^3.2.1",
     "@heroui/styles": "^3.2.1",
-    "@heroui/system": "^2.4.28",
     "@react-aria/ssr": "3.10.1",
     "@react-aria/visually-hidden": "3.9.1",
     "@scalar/nextjs-api-reference": "^0.12.11",

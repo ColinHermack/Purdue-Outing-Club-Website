@@ -1,6 +1,9 @@
 /**
  * Handles all database communication related to officers.
  *
+ * The officer table is edited by hand each year (docs/runbooks.md#yearly-officer-turnover). Several pages that use
+ * these functions are prerendered at build time, so officer changes appear on the site after the next deploy.
+ *
  * @author Colin Hermack
  */
 
@@ -14,6 +17,10 @@ import MemberDTO from "@/dtos/memberDto";
 import { GearHoursDataT } from "@/config/types";
 import { Officer, BranchData } from "@/utils/leadership";
 
+/**
+ * Connection pool for this module, configured from the DB_* environment variables (see docs/systems/vercel.md). The
+ * connection uses SSL but does not verify the server certificate (rejectUnauthorized: false).
+ */
 const pool = new Pool({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
@@ -55,6 +62,10 @@ interface OfficerJoinRow {
 
 /**
  * Gets data for all officers.
+ *
+ * Not called anywhere at the moment, and the JOIN below uses o.officer_id, which is not a column of officer
+ * (it should be o.member_id). Fix the join before using this function.
+ *
  * @returns A promise resolving to a list of objects representing each category of officer.
  */
 export async function getAllOfficerData(): Promise<

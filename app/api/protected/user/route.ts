@@ -12,6 +12,12 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import MemberDTO from "@/dtos/memberDto";
 import { getMemberByEmail } from "@/miniservices/memberMiniService";
 
+/**
+ * GET /api/protected/user
+ *
+ * @returns 200 with the signed-in member's MemberDTO, 401 with no session, 404 if the session email has no member
+ * row, 500 on a database error.
+ */
 export async function GET(): Promise<Response> {
   try {
     const session = await getServerSession(authOptions);

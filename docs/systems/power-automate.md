@@ -9,12 +9,12 @@ in this repo. Sign in to Power Automate as `poc@purdue.edu` and open **My flows*
 > failing and nobody is told unless someone checks its run history. Check [database.md](database.md#who-writes-what)
 > before any schema change.
 
-| Flow | Trigger | Writes | How it reaches the database |
-| --- | --- | --- | --- |
-| [Dues - TooCool](#dues---toocool) | TooCool receipt email to `poc@purdue.edu` | `member.dues_data` (and new `member` rows) | HTTP call to the website's `/api/automation/dues` |
-| [DocuSign - Club Sports Waiver](#docusign---club-sports-waiver) | Signed waiver email from DocuSign to `poc@purdue.edu` | `member.waiver_agreement = true` | PostgreSQL connector |
-| [Forms - Info and Policy Agreement](#forms---info-and-policy-agreement) | New Microsoft Forms response | `member.name`, `member.policy_agreement` | PostgreSQL connector |
-| [Trip and roster flows](#trip-and-roster-flows) | Not yet documented | `trip`, `trip_roster` | Not yet documented |
+| Flow                                                                    | Trigger                                               | Writes                                     | How it reaches the database                       |
+| ----------------------------------------------------------------------- | ----------------------------------------------------- | ------------------------------------------ | ------------------------------------------------- |
+| [Dues - TooCool](#dues---toocool)                                       | TooCool receipt email to `poc@purdue.edu`             | `member.dues_data` (and new `member` rows) | HTTP call to the website's `/api/automation/dues` |
+| [DocuSign - Club Sports Waiver](#docusign---club-sports-waiver)         | Signed waiver email from DocuSign to `poc@purdue.edu` | `member.waiver_agreement = true`           | PostgreSQL connector                              |
+| [Forms - Info and Policy Agreement](#forms---info-and-policy-agreement) | New Microsoft Forms response                          | `member.name`, `member.policy_agreement`   | PostgreSQL connector                              |
+| [Trip and roster flows](#trip-and-roster-flows)                         | Not yet documented                                    | `trip`, `trip_roster`                      | Not yet documented                                |
 
 ## Dues - TooCool
 
@@ -51,14 +51,14 @@ the sender of the email).
 
 ### Responses
 
-| Status | Meaning | What to do |
-| --- | --- | --- |
-| `200` | Existing member updated. Body: `{ email, type, expires, created: false }` | Nothing. |
-| `201` | No member had that email, so one was created, named from the receipt. | Check the new member's name looks right. |
-| `400` | Missing `email`/`receipt`, not a PDF, or unreadable PDF. | Look at the failed run's input. |
-| `401` | Wrong or missing API key, or `DUES_API_KEY` unset/shorter than 32 characters in Vercel. | Make the flow's key and Vercel's match. |
-| `422` | The PDF is a TooCool receipt but not for club dues (for example merch). | Expected for non-dues purchases. |
-| `500` | Database or server error. | Check Vercel runtime logs for `/api/automation/dues`. |
+| Status | Meaning                                                                                 | What to do                                            |
+| ------ | --------------------------------------------------------------------------------------- | ----------------------------------------------------- |
+| `200`  | Existing member updated. Body: `{ email, type, expires, created: false }`               | Nothing.                                              |
+| `201`  | No member had that email, so one was created, named from the receipt.                   | Check the new member's name looks right.              |
+| `400`  | Missing `email`/`receipt`, not a PDF, or unreadable PDF.                                | Look at the failed run's input.                       |
+| `401`  | Wrong or missing API key, or `DUES_API_KEY` unset/shorter than 32 characters in Vercel. | Make the flow's key and Vercel's match.               |
+| `422`  | The PDF is a TooCool receipt but not for club dues (for example merch).                 | Expected for non-dues purchases.                      |
+| `500`  | Database or server error.                                                               | Check Vercel runtime logs for `/api/automation/dues`. |
 
 Rules the website applies (code in `app/api/automation/dues/route.ts` and `utils/duesReceipt.ts`):
 

@@ -1,3 +1,11 @@
+/**
+ * Root layout wrapped around every page. Order matters: AuthProvider (NextAuth session for useSession) wraps Providers
+ * (HeroUI and next-themes), which wrap the navbar, page content and footer. Vercel Analytics and Speed Insights are
+ * mounted here and report to the Vercel project dashboard.
+ *
+ * @author Colin Hermack
+ */
+
 import "@/styles/globals.css";
 import { Metadata, Viewport } from "next";
 import clsx from "clsx";
@@ -12,6 +20,7 @@ import { fontSans } from "@/config/fonts";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 
+/** Default <title> and description. Pages set their own title, shown as "<page> - Purdue Outing Club". */
 export const metadata: Metadata = {
   title: {
     default: siteConfig.name,
@@ -46,6 +55,8 @@ export default function RootLayout({
       >
         <AuthProvider>
           <Providers
+            // Always follow the system light/dark setting. The site once had a theme toggle that saved "theme" in
+            // localStorage; this new key ignores those old saved choices, and nothing writes to it.
             themeProps={{
               attribute: "class",
               defaultTheme: "system",

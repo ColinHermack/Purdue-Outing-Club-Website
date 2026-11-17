@@ -1,6 +1,11 @@
 /**
  * Configuration file for Microsoft authentication.
  *
+ * Uses the Azure AD app registration owned by poc@purdue.edu (docs/systems/azure-ad.md). Microsoft only redirects
+ * back to URIs registered on that app, so NEXTAUTH_URL for each environment must have
+ * <NEXTAUTH_URL>/api/auth/callback/azure-ad in the app's redirect URI list. When AZURE_AD_CLIENT_SECRET expires,
+ * every sign-in fails until a new secret is created in Azure and set in Vercel.
+ *
  * @author Colin Hermack
  */
 
@@ -34,7 +39,8 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
     async signIn({ user }) {
-      // Check if this user's email exists in your database
+      // Only people with a row in the member table may sign in. Rows are created by the dues endpoint and other
+      // tools (docs/systems/database.md#who-writes-what), so a new member can sign in once one of those has run.
       try {
         const email: string = user.email ? user.email : "";
         const userExists = await verifyMembershipByEmail(email);

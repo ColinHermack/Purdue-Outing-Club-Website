@@ -18,22 +18,22 @@ the domain ([azure-ad.md](azure-ad.md)).
 Much of the site links out to forms and services. When an officer sends you a new form link, this table tells you
 which file to edit. Each change is a normal pull request.
 
-| What | File |
-| --- | --- |
-| Navbar and footer links (merch store, alumni site, reimbursement form, social links) | `config/site.ts` |
-| Pay dues (TooCool), dues waiver form, info and policy agreement form, club sports waiver (DocuSign), Slack invite, first aid certification form, mailing list | `app/join/page.tsx` |
-| Driver certification (SambaSafety enrollment, driver form) | `app/drivers/page.tsx` |
-| Trip sign-up form (Microsoft Forms, pre-filled with trip id and sport) | `app/trips/[id]/page.tsx` |
-| Club calendar (Google Calendar embed of the club Gmail calendar) | `app/calendar/page.tsx` |
-| Trip leader Google Classroom and trip leader application form | `app/tripleaders/page.tsx` |
-| Climbing team links | `app/climbingteam/page.tsx` |
-| POCAR race info, IMLeagues, videos | `app/pocar/page.tsx` |
-| Safety concern report form | `app/safetyconcernreport/page.tsx` |
-| Donation and giving links, Linktree | `app/supportus/page.tsx` |
-| Sponsor links, REI list | `app/sponsorship/page.tsx` |
-| Gear closet video | `app/gearcloset/page.tsx` |
-| Home page video | `app/page.tsx` |
-| PDFs (constitution, EAP, POCAR rules, trip leader overview...) | files in `public/docs/` |
+| What                                                                                                                                                          | File                               |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------- |
+| Navbar and footer links (merch store, alumni site, reimbursement form, social links)                                                                          | `config/site.ts`                   |
+| Pay dues (TooCool), dues waiver form, info and policy agreement form, club sports waiver (DocuSign), Slack invite, first aid certification form, mailing list | `app/join/page.tsx`                |
+| Driver certification (SambaSafety enrollment, driver form)                                                                                                    | `app/drivers/page.tsx`             |
+| Trip sign-up form (Microsoft Forms, pre-filled with trip id and sport)                                                                                        | `app/trips/[id]/page.tsx`          |
+| Club calendar (Google Calendar embed of the club Gmail calendar)                                                                                              | `app/calendar/page.tsx`            |
+| Trip leader Google Classroom and trip leader application form                                                                                                 | `app/tripleaders/page.tsx`         |
+| Climbing team links                                                                                                                                           | `app/climbingteam/page.tsx`        |
+| POCAR race info, IMLeagues, videos                                                                                                                            | `app/pocar/page.tsx`               |
+| Safety concern report form                                                                                                                                    | `app/safetyconcernreport/page.tsx` |
+| Donation and giving links, Linktree                                                                                                                           | `app/supportus/page.tsx`           |
+| Sponsor links, REI list                                                                                                                                       | `app/sponsorship/page.tsx`         |
+| Gear closet video                                                                                                                                             | `app/gearcloset/page.tsx`          |
+| Home page video                                                                                                                                               | `app/page.tsx`                     |
+| PDFs (constitution, EAP, POCAR rules, trip leader overview...)                                                                                                | files in `public/docs/`            |
 
 The trip sign-up link in `app/trips/[id]/page.tsx` passes the trip id and sport into specific question ids of the
 Microsoft Form (`r603986e...` and `r919debb...`). If that form is rebuilt, those ids change and the pre-fill stops

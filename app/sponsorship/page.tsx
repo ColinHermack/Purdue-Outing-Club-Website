@@ -1,5 +1,7 @@
 /**
  * This page contains information for prospective corporate sponsors of the club.
+ * It is a server component that reads the officer table while the site is built, so officer changes appear after the
+ * next deploy, and the build needs a reachable database.
  *
  * @author Colin Hermack
  */

@@ -14,14 +14,14 @@ TODO(handoff): record the app registration's display name here so it is easy to 
 
 ## Settings the site depends on
 
-| Azure setting | Must match | Used in |
-| --- | --- | --- |
-| Application (client) ID | `AZURE_AD_CLIENT_ID` | `app/api/auth/[...nextauth]/options.ts` |
-| Directory (tenant) ID | `AZURE_AD_TENANT_ID` (Purdue's tenant) | `options.ts`, `app/api/azure-signout/route.ts` |
-| Client secret value | `AZURE_AD_CLIENT_SECRET` | `options.ts` |
-| Redirect URIs (Authentication > Web) | `<NEXTAUTH_URL>/api/auth/callback/azure-ad` for each place you sign in | NextAuth callback |
-| Front-channel / post-logout URL | `NEXTAUTH_URL` | `/api/azure-signout` |
-| API permissions | `openid`, `profile`, `email`, `User.Read` (delegated) | `options.ts` scope |
+| Azure setting                        | Must match                                                             | Used in                                        |
+| ------------------------------------ | ---------------------------------------------------------------------- | ---------------------------------------------- |
+| Application (client) ID              | `AZURE_AD_CLIENT_ID`                                                   | `app/api/auth/[...nextauth]/options.ts`        |
+| Directory (tenant) ID                | `AZURE_AD_TENANT_ID` (Purdue's tenant)                                 | `options.ts`, `app/api/azure-signout/route.ts` |
+| Client secret value                  | `AZURE_AD_CLIENT_SECRET`                                               | `options.ts`                                   |
+| Redirect URIs (Authentication > Web) | `<NEXTAUTH_URL>/api/auth/callback/azure-ad` for each place you sign in | NextAuth callback                              |
+| Front-channel / post-logout URL      | `NEXTAUTH_URL`                                                         | `/api/azure-signout`                           |
+| API permissions                      | `openid`, `profile`, `email`, `User.Read` (delegated)                  | `options.ts` scope                             |
 
 Redirect URIs needed:
 

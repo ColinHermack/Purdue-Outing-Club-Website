@@ -1,3 +1,10 @@
+/**
+ * Difficulty badge on a trip page: ski-trail style symbol (green circle, blue square, black diamond, double black) plus
+ * the label from DIFFICULTIES and the sport-specific description from utils/difficulty.ts.
+ *
+ * @author Colin Hermack
+ */
+
 import { getTripDifficultyDescription } from "@/utils/difficulty";
 
 import { DIFFICULTIES } from "@/config/constants";
@@ -25,6 +32,7 @@ function TripDifficultyIcon(props: { difficulty: number }) {
   }
 }
 
+/** Renders nothing when the trip has no difficulty set (0 or null). */
 export default function TripDifficultyCard(props: TripDifficultyIconProps) {
   const difficultyDescription = getTripDifficultyDescription(
     props.difficulty,

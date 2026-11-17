@@ -107,13 +107,13 @@ Find the file in [domain-and-links.md](systems/domain-and-links.md#links-and-emb
 
 ## Rotate a secret
 
-| Secret | Steps |
-| --- | --- |
-| `AZURE_AD_CLIENT_SECRET` | [azure-ad.md](systems/azure-ad.md#rotating-the-client-secret) |
-| `DUES_API_KEY` | [power-automate.md](systems/power-automate.md#rotating-the-api-key) |
-| `NEXTAUTH_SECRET` | `openssl rand -base64 32`, update in Vercel (all environments), redeploy. Everyone is signed out. |
-| `DB_PASSWORD` | Change it in Lightsail, then update Vercel (redeploy), every local `.env`, and the Power Automate PostgreSQL connection. |
-| `GMAIL_APP_PASSWORD` | Revoke and recreate at <https://myaccount.google.com/apppasswords>; only used by the photo script. |
+| Secret                   | Steps                                                                                                                    |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
+| `AZURE_AD_CLIENT_SECRET` | [azure-ad.md](systems/azure-ad.md#rotating-the-client-secret)                                                            |
+| `DUES_API_KEY`           | [power-automate.md](systems/power-automate.md#rotating-the-api-key)                                                      |
+| `NEXTAUTH_SECRET`        | `openssl rand -base64 32`, update in Vercel (all environments), redeploy. Everyone is signed out.                        |
+| `DB_PASSWORD`            | Change it in Lightsail, then update Vercel (redeploy), every local `.env`, and the Power Automate PostgreSQL connection. |
+| `GMAIL_APP_PASSWORD`     | Revoke and recreate at <https://myaccount.google.com/apppasswords>; only used by the photo script.                       |
 
 ## Production is broken
 

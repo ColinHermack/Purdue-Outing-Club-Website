@@ -49,12 +49,12 @@ docker compose -f docker-compose.test.yml down
 The suite is hard-coded to `localhost` in `vitest.config.mts` and refuses to run against any other host, because it
 wipes every table.
 
-| File | Purpose |
-| --- | --- |
-| `schema.sql` | Schema-only dump of the production database (no rows). |
-| `seed.sql` | Fixture rows. **Only fake data, never real member information.** Write dates relative to `CURRENT_DATE` (for example `(CURRENT_DATE + 180)::text`) so fixtures never expire. |
-| `db.ts` | `resetDb()` and the test pool. |
-| `globalSetup.ts` | Loads `schema.sql` and `seed.sql` before the run. |
+| File             | Purpose                                                                                                                                                                      |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `schema.sql`     | Schema-only dump of the production database (no rows).                                                                                                                       |
+| `seed.sql`       | Fixture rows. **Only fake data, never real member information.** Write dates relative to `CURRENT_DATE` (for example `(CURRENT_DATE + 180)::text`) so fixtures never expire. |
+| `db.ts`          | `resetDb()` and the test pool.                                                                                                                                               |
+| `globalSetup.ts` | Loads `schema.sql` and `seed.sql` before the run.                                                                                                                            |
 
 ### Updating the schema after a database change
 

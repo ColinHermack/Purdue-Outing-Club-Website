@@ -5,15 +5,15 @@ hand: opening a pull request makes a preview, and merging to `main` updates prod
 
 ## Where to find it
 
-| Thing | Value |
-| --- | --- |
-| Team | `purdue-outing-clubs-projects` |
-| Team owner | "Purdue Outing Club" Vercel user, signed in with the club Gmail account. It is the only team member. |
-| Project | `outing-club-website-v2` |
-| Framework preset | Next.js, Node.js 22.x |
-| Production domain | `www.purdueoutingclub.com` |
-| Apex domain | `purdueoutingclub.com` permanently redirects (308) to `www` |
-| Vercel URL | `outing-club-website-v2.vercel.app` |
+| Thing             | Value                                                                                                |
+| ----------------- | ---------------------------------------------------------------------------------------------------- |
+| Team              | `purdue-outing-clubs-projects`                                                                       |
+| Team owner        | "Purdue Outing Club" Vercel user, signed in with the club Gmail account. It is the only team member. |
+| Project           | `outing-club-website-v2`                                                                             |
+| Framework preset  | Next.js, Node.js 22.x                                                                                |
+| Production domain | `www.purdueoutingclub.com`                                                                           |
+| Apex domain       | `purdueoutingclub.com` permanently redirects (308) to `www`                                          |
+| Vercel URL        | `outing-club-website-v2.vercel.app`                                                                  |
 
 The domain itself is registered at Squarespace; see [domain-and-links.md](domain-and-links.md).
 
@@ -29,7 +29,7 @@ flowchart LR
 ```
 
 - **Preview deployments**: every push to a PR branch builds a preview. Vercel posts the link on the PR. Previews use
-  the *Preview* environment variables, which point at the **production database** (there is no separate staging
+  the _Preview_ environment variables, which point at the **production database** (there is no separate staging
   database), so anything you do on a preview, such as editing a trip leader, changes real data.
 - **Vercel Authentication** is on for all previews and for the production `*.vercel.app` deployment URLs. Only
   members of the Vercel team can open them. The custom domain `www.purdueoutingclub.com` is public.
@@ -44,16 +44,16 @@ flowchart LR
 Set in **Project > Settings > Environment Variables**. Local development reads the same keys from `.env` at the repo
 root. Values are never committed; get them from the current webmaster.
 
-| Key | Environments | Purpose | Where the value comes from | Rotate when |
-| --- | --- | --- | --- | --- |
-| `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USER` | All | Postgres connection used by every miniservice | AWS Lightsail database page | Database moves |
-| `DB_PASSWORD` | All | Postgres password | AWS Lightsail database page | Someone with access leaves |
-| `AZURE_AD_CLIENT_ID` | All | Identifies the Microsoft sign-in app | Azure Portal app registration | App re-created |
-| `AZURE_AD_TENANT_ID` | All | Purdue's Microsoft tenant | Azure Portal app registration | Never |
-| `AZURE_AD_CLIENT_SECRET` | All (Sensitive) | Proves the site is the sign-in app | Azure Portal, Certificates and secrets | **Before it expires** ([azure-ad.md](azure-ad.md#rotating-the-client-secret)) |
-| `NEXTAUTH_URL` | All | Public URL of the site, used for sign-in callbacks | `https://www.purdueoutingclub.com` in Vercel, `https://localhost:3000` locally | Domain changes |
-| `NEXTAUTH_SECRET` | All | Signs the session cookies | `openssl rand -base64 32` | Suspected leak (signs everyone out) |
-| `DUES_API_KEY` | Production, Preview (Sensitive) | Bearer token the Dues flow sends to `/api/automation/dues` | `openssl rand -base64 48` | Suspected leak; update the flow at the same time ([power-automate.md](power-automate.md#dues---toocool)) |
+| Key                                            | Environments                    | Purpose                                                    | Where the value comes from                                                     | Rotate when                                                                                              |
+| ---------------------------------------------- | ------------------------------- | ---------------------------------------------------------- | ------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------- |
+| `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USER` | All                             | Postgres connection used by every miniservice              | AWS Lightsail database page                                                    | Database moves                                                                                           |
+| `DB_PASSWORD`                                  | All                             | Postgres password                                          | AWS Lightsail database page                                                    | Someone with access leaves                                                                               |
+| `AZURE_AD_CLIENT_ID`                           | All                             | Identifies the Microsoft sign-in app                       | Azure Portal app registration                                                  | App re-created                                                                                           |
+| `AZURE_AD_TENANT_ID`                           | All                             | Purdue's Microsoft tenant                                  | Azure Portal app registration                                                  | Never                                                                                                    |
+| `AZURE_AD_CLIENT_SECRET`                       | All (Sensitive)                 | Proves the site is the sign-in app                         | Azure Portal, Certificates and secrets                                         | **Before it expires** ([azure-ad.md](azure-ad.md#rotating-the-client-secret))                            |
+| `NEXTAUTH_URL`                                 | All                             | Public URL of the site, used for sign-in callbacks         | `https://www.purdueoutingclub.com` in Vercel, `https://localhost:3000` locally | Domain changes                                                                                           |
+| `NEXTAUTH_SECRET`                              | All                             | Signs the session cookies                                  | `openssl rand -base64 32`                                                      | Suspected leak (signs everyone out)                                                                      |
+| `DUES_API_KEY`                                 | Production, Preview (Sensitive) | Bearer token the Dues flow sends to `/api/automation/dues` | `openssl rand -base64 48`                                                      | Suspected leak; update the flow at the same time ([power-automate.md](power-automate.md#dues---toocool)) |
 
 After changing a variable, **redeploy** (Deployments > latest production > Redeploy). Running deployments keep the
 old value.

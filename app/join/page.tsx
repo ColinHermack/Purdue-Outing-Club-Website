@@ -1,6 +1,11 @@
 /**
  * This page contains information on how to join the Purdue Outing Club.
  *
+ * Each step links to an outside service that, through a Power Automate flow, updates the member's row:
+ * TooCool dues (member.dues_data via /api/automation/dues), the Microsoft Forms info and policy agreement
+ * (member.policy_agreement), and the DocuSign club sports waiver (member.waiver_agreement). A member counts as active
+ * only once all three are done. See docs/systems/power-automate.md before changing these links.
+ *
  * @author Colin Hermack
  */
 

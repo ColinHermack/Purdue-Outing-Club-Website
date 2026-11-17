@@ -13,12 +13,12 @@ Rules:
 
 ## Files
 
-| File | Tables | Used by |
-| --- | --- | --- |
-| `memberMiniService.ts` | `member`, `trip_roster` | Sign-in check, dashboard, directory, export, leaderboards, dues endpoint |
-| `officerMiniService.ts` | `officer`, `member` | Role checks, `/pleadership`, `/supportus`, `/sponsorship`, `/diversity`, gear hours |
-| `tripLeaderMiniService.ts` | `trip_leader`, `member` | Trip leader dashboard, member directory access |
-| `tripMiniService.ts` | `trip`, `trip_roster` | `/trips`, `/trips/[id]`, dashboard |
+| File                       | Tables                  | Used by                                                                             |
+| -------------------------- | ----------------------- | ----------------------------------------------------------------------------------- |
+| `memberMiniService.ts`     | `member`, `trip_roster` | Sign-in check, dashboard, directory, export, leaderboards, dues endpoint            |
+| `officerMiniService.ts`    | `officer`, `member`     | Role checks, `/pleadership`, `/supportus`, `/sponsorship`, `/diversity`, gear hours |
+| `tripLeaderMiniService.ts` | `trip_leader`, `member` | Trip leader dashboard, member directory access                                      |
+| `tripMiniService.ts`       | `trip`, `trip_roster`   | `/trips`, `/trips/[id]`, dashboard                                                  |
 
 ## Watch out for
 

@@ -1,5 +1,6 @@
 /**
- * Handles all database communication related to trips.
+ * Handles all database communication related to trips. Read-only: trip and trip_roster rows are created by Power
+ * Automate flows outside this repo (docs/systems/power-automate.md#trip-and-roster-flows).
  *
  * @author Eli Orlov
  */
@@ -10,6 +11,10 @@ import { Pool } from "pg";
 
 import TripDTO from "@/dtos/tripDto";
 
+/**
+ * Connection pool for this module, configured from the DB_* environment variables (see docs/systems/vercel.md). The
+ * connection uses SSL but does not verify the server certificate (rejectUnauthorized: false).
+ */
 const pool = new Pool({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,

@@ -1,6 +1,10 @@
 /**
  * Handles all database communication related to members generally.
  *
+ * The member table is shared with systems outside this repo: Power Automate flows write name, policy_agreement and
+ * waiver_agreement directly, and other tools insert rows. Before changing a column name or type, check the writer table
+ * in docs/systems/database.md and update those flows too.
+ *
  * @author Colin Hermack
  */
 
@@ -11,6 +15,10 @@ import { Pool } from "pg";
 import MemberDirectoryEntryDTO, { DuesStatus } from "@/dtos/memberDirectoryEntryDto";
 import MemberDTO from "@/dtos/memberDto";
 
+/**
+ * Connection pool for this module, configured from the DB_* environment variables (see docs/systems/vercel.md). The
+ * connection uses SSL but does not verify the server certificate (rejectUnauthorized: false).
+ */
 const pool = new Pool({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,

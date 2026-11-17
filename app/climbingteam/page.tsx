@@ -1,3 +1,9 @@
+/**
+ * Static page about the Purdue Climbing Team, with photos from public/climbingteam/ and its interest form.
+ *
+ * @author Colin Hermack
+ */
+
 "use client";
 
 import { Separator, Link, buttonVariants } from "@heroui/react";

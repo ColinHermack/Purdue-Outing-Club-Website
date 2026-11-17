@@ -9,21 +9,21 @@ visitor's system setting through `next-themes`.
 
 ## Folder map
 
-| Folder | What lives there | More detail |
-| --- | --- | --- |
-| `app/` | Every page (`page.tsx`) and API route (`route.ts`). The folder path is the URL. | [app/README.md](../app/README.md) |
-| `app/api/` | JSON API route handlers. | [app/api/README.md](../app/api/README.md) |
-| `miniservices/` | Server-only modules that run SQL against Postgres. | [miniservices/README.md](../miniservices/README.md) |
-| `dtos/` | Shapes of data sent from the server to the browser. | [dtos/README.md](../dtos/README.md) |
-| `models/` | Shapes of database rows. | [models/README.md](../models/README.md) |
-| `components/` | Shared React components (navbar, footer, MDX renderer...). | [components/README.md](../components/README.md) |
-| `config/` | Site navigation, constants, role permissions, fonts. | [config/README.md](../config/README.md) |
-| `utils/` | Small helpers (dues receipt parsing, protected fetch, difficulty text). | [utils/README.md](../utils/README.md) |
-| `newsposts/` | News articles as `.mdx` files. | [newsposts/README.md](../newsposts/README.md) |
-| `public/` | Static files served as-is: images, PDFs, `openapi.json`. | [public/README.md](../public/README.md) |
-| `scripts/` | One-off maintenance scripts, not part of the app. | [scripts/README.md](../scripts/README.md) |
-| `tests/` | Vitest unit and integration tests. | [tests/README.md](../tests/README.md) |
-| `proxy.ts` | Middleware that requires a session for protected routes. | [Authentication](#authentication-and-authorization) |
+| Folder          | What lives there                                                                | More detail                                         |
+| --------------- | ------------------------------------------------------------------------------- | --------------------------------------------------- |
+| `app/`          | Every page (`page.tsx`) and API route (`route.ts`). The folder path is the URL. | [app/README.md](../app/README.md)                   |
+| `app/api/`      | JSON API route handlers.                                                        | [app/api/README.md](../app/api/README.md)           |
+| `miniservices/` | Server-only modules that run SQL against Postgres.                              | [miniservices/README.md](../miniservices/README.md) |
+| `dtos/`         | Shapes of data sent from the server to the browser.                             | [dtos/README.md](../dtos/README.md)                 |
+| `models/`       | Shapes of database rows.                                                        | [models/README.md](../models/README.md)             |
+| `components/`   | Shared React components (navbar, footer, MDX renderer...).                      | [components/README.md](../components/README.md)     |
+| `config/`       | Site navigation, constants, role permissions, fonts.                            | [config/README.md](../config/README.md)             |
+| `utils/`        | Small helpers (dues receipt parsing, protected fetch, difficulty text).         | [utils/README.md](../utils/README.md)               |
+| `newsposts/`    | News articles as `.mdx` files.                                                  | [newsposts/README.md](../newsposts/README.md)       |
+| `public/`       | Static files served as-is: images, PDFs, `openapi.json`.                        | [public/README.md](../public/README.md)             |
+| `scripts/`      | One-off maintenance scripts, not part of the app.                               | [scripts/README.md](../scripts/README.md)           |
+| `tests/`        | Vitest unit and integration tests.                                              | [tests/README.md](../tests/README.md)               |
+| `proxy.ts`      | Middleware that requires a session for protected routes.                        | [Authentication](#authentication-and-authorization) |
 
 The `@/` import prefix means "repo root", so `@/miniservices/tripMiniService` is `miniservices/tripMiniService.ts`.
 
@@ -105,11 +105,11 @@ Key pieces:
 
 ### The three kinds of API route
 
-| Kind | Example | How it is protected |
-| --- | --- | --- |
-| Public | `/api/trips/open`, `/api/news/recent` | Nothing. Anyone can call it. Never return private member data. |
-| Session (+ role) | `/api/protected/tripleaders` | `proxy.ts` requires a session; the route checks the role with `config/permissions.ts` or another rule (officer, trip leader). |
-| Machine (API key) | `/api/automation/dues` | `Authorization: Bearer <DUES_API_KEY>`. Must stay **outside** `/api/protected` so `proxy.ts` does not demand a browser session. Used by Power Automate. |
+| Kind              | Example                               | How it is protected                                                                                                                                     |
+| ----------------- | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Public            | `/api/trips/open`, `/api/news/recent` | Nothing. Anyone can call it. Never return private member data.                                                                                          |
+| Session (+ role)  | `/api/protected/tripleaders`          | `proxy.ts` requires a session; the route checks the role with `config/permissions.ts` or another rule (officer, trip leader).                           |
+| Machine (API key) | `/api/automation/dues`                | `Authorization: Bearer <DUES_API_KEY>`. Must stay **outside** `/api/protected` so `proxy.ts` does not demand a browser session. Used by Power Automate. |
 
 The full list, with which rule each protected route applies, is in [app/api/README.md](../app/api/README.md). The
 interactive reference is at `/api/docs`, generated from `public/openapi.json`.

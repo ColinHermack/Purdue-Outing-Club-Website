@@ -1,3 +1,10 @@
+/**
+ * Renders one news post from newsposts/<slug>.mdx. Despite the extension, the body is converted with remark-html as
+ * plain Markdown, so JSX in a post does not render. Also emits schema.org BlogPosting data for search engines.
+ *
+ * @author Colin Hermack
+ */
+
 import { notFound } from "next/navigation";
 import { remark } from "remark";
 import html from "remark-html";

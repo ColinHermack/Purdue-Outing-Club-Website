@@ -44,16 +44,16 @@ sign-in only redirects to HTTPS URLs.
 
 ## Commands
 
-| Command | What it does |
-| --- | --- |
-| `npm run dev` | Dev server at `https://localhost:3000` |
-| `npm run build` | Production build (needs a reachable database) |
-| `npm run start` | Run the production build |
-| `npx eslint .` | Lint (what CI runs) |
-| `npm run lint` | Format with Prettier and auto-fix lint issues (rewrites files) |
-| `npm run typecheck` | TypeScript check |
-| `npm test` | Unit tests, no database needed |
-| `npm run test:db` then `npm run test:integration` | Integration tests against a Postgres container |
+| Command                                           | What it does                                                   |
+| ------------------------------------------------- | -------------------------------------------------------------- |
+| `npm run dev`                                     | Dev server at `https://localhost:3000`                         |
+| `npm run build`                                   | Production build (needs a reachable database)                  |
+| `npm run start`                                   | Run the production build                                       |
+| `npx eslint .`                                    | Lint (what CI runs)                                            |
+| `npm run lint`                                    | Format with Prettier and auto-fix lint issues (rewrites files) |
+| `npm run typecheck`                               | TypeScript check                                               |
+| `npm test`                                        | Unit tests, no database needed                                 |
+| `npm run test:db` then `npm run test:integration` | Integration tests against a Postgres container                 |
 
 Details on the tests are in [tests/README.md](tests/README.md).
 
@@ -79,16 +79,16 @@ Details on the tests are in [tests/README.md](tests/README.md).
 
 ## Documentation map
 
-| Where | What |
-| --- | --- |
-| [docs/README.md](docs/README.md) | Index of all guides |
-| [docs/architecture.md](docs/architecture.md) | How the code is organized, request flow, sign-in and permissions |
-| [docs/systems/](docs/systems/overview.md) | Vercel, database, Power Automate, Azure AD, domain and outside links |
-| [docs/runbooks.md](docs/runbooks.md) | Step-by-step tasks (new page, new API route, news post, officer turnover, secrets, outages) |
-| [docs/handoff.md](docs/handoff.md) | Checklist for handing the site to a new webmaster |
-| [docs/plans/](docs/plans/) | Historical design plans (not kept current) |
-| `README.md` in each folder | What that folder contains and its conventions |
-| [CLAUDE.md](CLAUDE.md) | Short project summary for AI coding assistants |
+| Where                                        | What                                                                                        |
+| -------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| [docs/README.md](docs/README.md)             | Index of all guides                                                                         |
+| [docs/architecture.md](docs/architecture.md) | How the code is organized, request flow, sign-in and permissions                            |
+| [docs/systems/](docs/systems/overview.md)    | Vercel, database, Power Automate, Azure AD, domain and outside links                        |
+| [docs/runbooks.md](docs/runbooks.md)         | Step-by-step tasks (new page, new API route, news post, officer turnover, secrets, outages) |
+| [docs/handoff.md](docs/handoff.md)           | Checklist for handing the site to a new webmaster                                           |
+| [docs/plans/](docs/plans/)                   | Historical design plans (not kept current)                                                  |
+| `README.md` in each folder                   | What that folder contains and its conventions                                               |
+| [CLAUDE.md](CLAUDE.md)                       | Short project summary for AI coding assistants                                              |
 
 ## Contact
 

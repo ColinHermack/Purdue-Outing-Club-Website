@@ -1,3 +1,9 @@
+/**
+ * Next.js error boundary shown when a page throws while rendering. "Try again" re-renders the page.
+ *
+ * @author Colin Hermack
+ */
+
 "use client";
 
 import { useEffect } from "react";
@@ -10,8 +16,7 @@ export default function Error({
   reset: () => void;
 }) {
   useEffect(() => {
-    // Log the error to an error reporting service
-
+    // Shows up in the browser console only. There is no error reporting service; server errors are in Vercel logs.
     console.error(error);
   }, [error]);
 

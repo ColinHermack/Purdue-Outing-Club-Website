@@ -1,3 +1,10 @@
+/**
+ * Reads news posts from newsposts/*.mdx for GET /api/news/recent. app/news/postUtils.tsx has a similar reader that
+ * also renders the news lists; keep the frontmatter parsing in both in step.
+ *
+ * @author Colin Hermack
+ */
+
 import fs from "fs";
 import path from "path";
 
@@ -11,6 +18,10 @@ type Metadata = {
   deployment?: string;
 };
 
+/**
+ * Splits a post into its frontmatter and body. The parser is deliberately simple: one `key: value` per line between
+ * the first pair of `---` lines, with surrounding quotes removed. It throws if a post has no frontmatter.
+ */
 function parseFrontmatter(fileContent: string) {
   const frontmatterRegex = /---\s*([\s\S]*?)\s*---/;
   const match = frontmatterRegex.exec(fileContent);
@@ -64,6 +75,7 @@ function getMDXData(dir: string) {
   return postsData;
 }
 
+/** Returns every post in newsposts/, newest first by `postedOn`. Reads the file system on each call. */
 export function getPosts() {
   return getMDXData(path.join(process.cwd(), "newsposts"));
 }

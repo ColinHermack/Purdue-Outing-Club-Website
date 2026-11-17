@@ -1,3 +1,10 @@
+/**
+ * Home page: hero, club video, sport descriptions (config/constants.ts SPORT_DESCRIPTIONS), and the three latest news
+ * posts from GET /api/news/recent.
+ *
+ * @author Colin Hermack
+ */
+
 "use client";
 
 import {

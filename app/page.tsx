@@ -1,6 +1,6 @@
 /**
- * Home page: hero, club video, sport descriptions (config/constants.ts SPORT_DESCRIPTIONS), and the three latest news
- * posts from GET /api/news/recent.
+ * Home page: club name, three trip photos and an intro paragraph, club video, the three latest news posts from
+ * GET /api/news/recent, an FAQ, and sport descriptions (config/constants.ts SPORT_DESCRIPTIONS).
  *
  * @author Colin Hermack
  */

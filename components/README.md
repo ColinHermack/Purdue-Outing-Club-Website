@@ -1,7 +1,8 @@
 # `components/`
 
-React components shared by more than one page. Page-specific components stay next to their page (for example
-`app/trips/[id]/tripDifficultyIcon.tsx`).
+React components shared by more than one page. A component used by only one page does not go here; put it in the
+same folder as that page's `page.tsx` (for example `app/trips/[id]/tripDifficultyIcon.tsx` sits beside
+`app/trips/[id]/page.tsx`).
 
 | File                  | Component                                                                                                       | Used by                                                                                 |
 | --------------------- | --------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
@@ -13,5 +14,7 @@ React components shared by more than one page. Page-specific components stay nex
 | `logos.tsx`           | `Logo`, `LargeLogo`: the club logo.                                                                             | Navbar, footer                                                                          |
 | `mdx.tsx`             | `CustomMDX`: MDX renderer with styled headings, links, images, tables, code.                                    | Not used yet. News posts are rendered with `remark-html` in `app/news/[slug]/page.tsx`. |
 
-Use HeroUI v3 components (`@heroui/react`) as building blocks. The HeroUI docs at
-<https://heroui.com/react/llms-full.txt> are the reference.
+Use HeroUI v3 components (`@heroui/react`) as building blocks. HeroUI documentation:
+
+- Human-readable docs: <https://heroui.com/en/docs/react/getting-started>
+- Single-file version for AI tools: <https://heroui.com/react/llms-full.txt>

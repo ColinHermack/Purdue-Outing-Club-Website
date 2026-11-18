@@ -39,8 +39,9 @@ npm run dev
 Open <https://localhost:3000>. The dev server uses HTTPS (accept the self-signed certificate) because Microsoft
 sign-in only redirects to HTTPS URLs.
 
-> **Your local site uses the production database.** There is no separate development database. Read freely, but be
-> careful with anything that writes.
+> **Your local site uses the staging database**, because the `.env` from the webmaster points there. Vercel preview
+> deployments use the **production** database, so be careful with anything that writes on a preview. See
+> [docs/systems/database.md](docs/systems/database.md#connecting).
 
 ## Commands
 

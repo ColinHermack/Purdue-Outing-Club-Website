@@ -93,7 +93,7 @@ curl -k -X POST https://localhost:3000/api/automation/dues \
   -d "{\"email\":\"test@purdue.edu\",\"receipt\":\"$(base64 -i receipt.pdf)\"}"
 ```
 
-Remember that local and preview deployments write to the **production database**.
+Local development writes to the **staging** database; a preview deployment writes to the **production** database.
 
 If the website returns an error, the run fails and Power Automate emails `poc@purdue.edu`. There is no automatic
 retry; fix the cause and resubmit the run.

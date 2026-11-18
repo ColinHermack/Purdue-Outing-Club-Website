@@ -19,7 +19,8 @@ Step-by-step instructions for the tasks that come up most. Every code change goe
 
 1. Create `app/<url>/page.tsx`. The folder name is the URL (`app/gearcloset/page.tsx` is `/gearcloset`).
 2. Copy the structure of a similar page. Use HeroUI components (`@heroui/react`) and Tailwind classes; the HeroUI v3
-   docs are at <https://heroui.com/react/llms-full.txt>.
+   docs are at <https://heroui.com/en/docs/react/getting-started> (single-file version for AI tools:
+   <https://heroui.com/react/llms-full.txt>).
 3. Only add `"use client"` if the page needs browser state or effects. Client pages fetch data from `/api/...`;
    server pages may call a miniservice directly.
 4. To show it in the navbar or footer, add an entry to `navItems` or `footerItems` in `config/site.ts`.
@@ -109,13 +110,13 @@ Find the file in [domain-and-links.md](systems/domain-and-links.md#links-and-emb
 
 ## Rotate a secret
 
-| Secret                   | Steps                                                                                                                    |
-| ------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
-| `AZURE_AD_CLIENT_SECRET` | [azure-ad.md](systems/azure-ad.md#rotating-the-client-secret)                                                            |
-| `DUES_API_KEY`           | [power-automate.md](systems/power-automate.md#rotating-the-api-key)                                                      |
-| `NEXTAUTH_SECRET`        | `openssl rand -base64 32`, update in Vercel (all environments), redeploy. Everyone is signed out.                        |
-| `DB_PASSWORD`            | Change it in Lightsail, then update Vercel (redeploy), every local `.env`, and the Power Automate PostgreSQL connection. |
-| `GMAIL_APP_PASSWORD`     | Revoke and recreate at <https://myaccount.google.com/apppasswords>; only used by the photo script.                       |
+| Secret                   | Steps                                                                                                                                                                                       |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `AZURE_AD_CLIENT_SECRET` | [azure-ad.md](systems/azure-ad.md#rotating-the-client-secret)                                                                                                                               |
+| `DUES_API_KEY`           | [power-automate.md](systems/power-automate.md#rotating-the-api-key)                                                                                                                         |
+| `NEXTAUTH_SECRET`        | `openssl rand -base64 32`, update in Vercel (all environments), redeploy. Everyone is signed out.                                                                                           |
+| `DB_PASSWORD`            | Production: change it in Lightsail, then update Vercel (redeploy) and the Power Automate PostgreSQL connection. Staging: change it on the staging database, then update every local `.env`. |
+| `GMAIL_APP_PASSWORD`     | Revoke and recreate at <https://myaccount.google.com/apppasswords>; only used by the photo script.                                                                                          |
 
 ## Production is broken
 

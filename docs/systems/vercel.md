@@ -29,8 +29,8 @@ flowchart LR
 ```
 
 - **Preview deployments**: every push to a PR branch builds a preview. Vercel posts the link on the PR. Previews use
-  the _Preview_ environment variables, which point at the **production database** (there is no separate staging
-  database), so anything you do on a preview, such as editing a trip leader, changes real data.
+  the same database variables as production, so they point at the **production database** (only local development
+  uses staging). Anything you do on a preview, such as editing a trip leader, changes real data.
 - **Vercel Authentication** is on for all previews and for the production `*.vercel.app` deployment URLs. Only
   members of the Vercel team can open them. The custom domain `www.purdueoutingclub.com` is public.
 - **Production deployment**: merging to `main` builds and promotes automatically.

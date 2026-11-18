@@ -9,10 +9,8 @@
  *
  * Data: loads every trip leader (GET /api/protected/tripleaders) and every member's id/name/email
  * (GET /api/protected/members, used to pick who to add). Saving an existing leader sends PUT, adding one sends POST.
- * These write straight to the production trip_leader table, including from local dev and preview deployments.
- *
- * Layout: search box and "Add" button, a table of leaders, an edit modal (click a row) with the member's
- * details as an expandable tree plus sport and process checkboxes, and an add modal.
+ * These write straight to the trip_leader table of whichever database the deployment uses: production for Vercel
+ * previews and production, staging for local dev.
  *
  * @author Colin Hermack
  */
@@ -74,8 +72,9 @@ export default function TripLeaderDashboardPage() {
 
   // Copy the selected leader's process flags and sports into the checkbox state whenever a different row is opened.
   // The checkbox values are "shadowed", "approved", "certified"; they map to process.shadow/approved/certified.
-  // Note: process.certified is also overwritten by a database trigger whenever the member's first_aid_data.Verified
-  // changes, so a manual change here can be undone by the next first aid update.
+  // Note: process.certified is also overwritten by a database trigger (update_certified_trigger, see
+  // tests/integration/schema.sql). Every update of the member's first_aid_data copies first_aid_data.Verified into
+  // process.certified, so a manual change here can be undone by the next first aid update.
   useEffect(() => {
     const p = selectedLeader?.process;
 

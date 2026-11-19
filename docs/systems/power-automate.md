@@ -333,8 +333,8 @@ Members sign up for a trip with a Microsoft Form (linked from each trip page, pr
    for the Indianapolis campus), gear needed, experience, previous trips, car, first aid, driver and medical notes.
 5. Adds 1 to `member.signup_count` and emails the member that their request reached the trip leader.
 
-This flow does **not** write `trip_roster`. Trip leaders pick their roster from the sheet; how rosters get into
-`trip_roster` is not handled by any flow.
+This flow does **not** write `trip_roster`. Trip leaders pick their roster from the sheet, and officers then enter
+it into `trip_roster` by hand (see [database.md](database.md#who-writes-what)).
 
 ### Google sheet mirrors
 

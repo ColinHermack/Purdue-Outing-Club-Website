@@ -1,20 +1,30 @@
 # Database
 
 All club data lives in one production **PostgreSQL 14** database, a **Lightsail managed database** on AWS. A separate
-staging database is used for local development (see below). The AWS account is tied to the
-`poc@purdue.edu` Microsoft account. The website, several Power Automate flows, and officers editing by hand all write
+staging database is used for local development (see below). The AWS account (sign-in name `outingclub`) is tied to
+the `poc@purdue.edu` Microsoft account. The website, several Power Automate flows, and officers editing by hand all write
 to it, so a change here can break something outside this repo.
 
 ## Connecting
 
-- The database is a **Lightsail managed database**, so AWS runs the server. There is no machine to log in to;
-  settings, the master password, and networking are managed from the database's page in the Lightsail console
+- Both databases are **Lightsail managed databases**, so AWS runs the server. There is no machine to log in to;
+  settings, the master password, and networking are managed from each database's page in the Lightsail console
   (Databases tab).
+
+  | Lightsail name       | Role       | Engine           | Plan                         | Location                  |
+  | -------------------- | ---------- | ---------------- | ---------------------------- | ------------------------- |
+  | `Database-Version14` | Production | PostgreSQL 14.22 | 1 GB RAM, 2 vCPUs, 40 GB SSD | Ohio, Zone A (us-east-2a) |
+  | `Dev-Database`       | Staging    | PostgreSQL 14.22 | 1 GB RAM, 2 vCPUs, 40 GB SSD | Ohio, Zone A (us-east-2a) |
+
+  The endpoint (host name) and port (5432) are on each database's Connect tab. The master user name and password are
+  there too; treat them as secrets.
+
 - Credentials are the `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USER`, `DB_PASSWORD` values. The `.env` file from the
   webmaster points at the **staging** database; the production values are only in Vercel.
 - Connections must use **SSL**. The app sets `ssl: { rejectUnauthorized: false }` in every miniservice pool.
-- Vercel and Power Automate connect over the public internet, so the database's **public mode** (Networking tab in
-  the Lightsail console) must stay on.
+- Vercel and Power Automate connect over the public internet, so **public mode** (Networking tab in the Lightsail
+  console) is on for both databases and must stay on. Lightsail shows a warning icon on that tab because anyone with
+  the user name and password can connect; that is expected, and it is why the password must stay secret.
 - Any Postgres client works. Examples:
 
   ```bash
@@ -35,7 +45,12 @@ to it, so a change here can break something outside this repo.
 
   Writes from a preview deployment change real data. Writes from local development only touch staging.
 
-- Backups: take a manual snapshot in the Lightsail console (the database's Snapshots tab) before any schema change.
+- Backups (Snapshots & restore tab of each database):
+  - **Automatic:** Lightsail keeps one week of backups in five-minute increments. **Emergency restore** creates a
+    _new_ database from any point in that week; it does not overwrite the existing one. Point the `DB_*` values at
+    the new database afterwards (or rename and swap).
+  - **Manual snapshots** are kept until deleted. Production has end-of-semester snapshots named like
+    `2024FallEndOfSemester` and `2026SpringEndOfSemester`. Take one before any schema change.
 
 ## Who writes what
 

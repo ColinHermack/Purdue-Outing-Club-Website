@@ -42,7 +42,8 @@ Things found while writing these docs that a new owner should know about:
   deployment changes real data.
 - **Flows write directly to the database.** Schema changes break the connector-based flows; the only signal is a
   failure email to `poc@purdue.edu`, and failed updates are not retried.
-- **No automatic database backups.** Take a manual snapshot in the Lightsail console before any risky change.
+- **Automatic database backups only go back one week.** A problem noticed later can only be undone from a manual
+  snapshot. Take one before any risky change; see [database.md](systems/database.md#connecting).
 - **Sign-in cannot be tested on previews.** Only production and `localhost` are registered in Azure.
 - **Waiver depends on the advisor.** The DocuSign PowerForm is owned by the faculty advisor; a new advisor must
   recreate it and the link on `/join` must be updated.

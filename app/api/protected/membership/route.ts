@@ -12,6 +12,11 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 
 import { verifyMembershipByEmail } from "@/miniservices/memberMiniService";
 
+/**
+ * GET /api/protected/membership
+ *
+ * @returns 200 `{ message, user }` if the session email is in the member table, 401 with no session, 403 otherwise.
+ */
 export async function GET() {
   const session = await getServerSession(authOptions);
 

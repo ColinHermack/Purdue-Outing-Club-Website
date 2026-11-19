@@ -1,5 +1,7 @@
 /**
  * This page contains the relevant information for those wishing to make a donation to the endowment.
+ * It is a server component that reads the officer table while the site is built, so officer changes appear after the
+ * next deploy, and the build needs a reachable database.
  *
  * @author Colin Hermack
  */

@@ -1,3 +1,10 @@
+/**
+ * Static instructions for becoming a certified driver: the Purdue SambaSafety enrollment, then the club's driver form.
+ * Both links are outside services; update them here when Purdue risk management changes them.
+ *
+ * @author Colin Hermack
+ */
+
 "use client";
 import { Link, buttonVariants } from "@heroui/react";
 

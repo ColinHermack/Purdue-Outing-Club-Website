@@ -1,3 +1,9 @@
+/**
+ * Centers a single news article in a narrow column.
+ *
+ * @author Colin Hermack
+ */
+
 import React from "react";
 
 export default function NewsLayout({

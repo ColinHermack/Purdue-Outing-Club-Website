@@ -4,8 +4,10 @@
  * @author Colin Hermack
  */
 
+/** Canonical site URL, used in structured data on news posts. Not used for auth (that is NEXTAUTH_URL). */
 export const BASE_URL = "https://purdueoutingclub.com";
 
+/** Days the gear closet can be open, in display order on /gearcloset. */
 export const WEEKDAYS = [
   "Monday",
   "Tuesday",
@@ -14,6 +16,7 @@ export const WEEKDAYS = [
   "Friday",
 ] as const;
 
+/** Trip difficulty labels. A trip's `difficulty` column (1 to 4) indexes into this list, starting at 1. */
 export const DIFFICULTIES = [
   "Beginner",
   "Intermediate",
@@ -21,6 +24,11 @@ export const DIFFICULTIES = [
   "Expert",
 ] as const;
 
+/**
+ * Every value the `trip.sport` column can hold. Real sports also drive the trip sign-up form pre-fill
+ * (app/trips/[id]/page.tsx) and the trip leader sport picker. Keep in step with the trip sign-up form and the
+ * flows that create trips.
+ */
 export const SPORTS = [
   "Backpacking",
   "Canoeing",
@@ -36,6 +44,7 @@ export const SPORTS = [
   "Aproberfest",
 ];
 
+/** Club events stored as a "sport" on trips. Excluded wherever a real sport is expected (trip leader sports). */
 export const PSEUDO_SPORTS = [
   'Labor Day',
   'POCtoberfest',
@@ -47,6 +56,10 @@ interface ITripDifficultyDescriptions {
   [key: string]: string[];
 }
 
+/**
+ * What each difficulty level means for each sport, read by utils/difficulty.ts. Index 0 is difficulty 1. A sport
+ * may list fewer levels than DIFFICULTIES.
+ */
 export const TRIP_DIFFICULTY_DESCRIPTIONS: ITripDifficultyDescriptions = {
   Backpacking: [
     "No previous experience required. May entail mostly flat trails, shorter distances, and instruction from trip leaders.",
@@ -92,6 +105,11 @@ export const TRIP_DIFFICULTY_DESCRIPTIONS: ITripDifficultyDescriptions = {
   ],
 };
 
+/**
+ * How /pleadership groups officers. Each branch lists `officer.position` titles in display order; officers whose title
+ * is not listed anywhere do not appear on the page. Titles must match the database exactly. Add a new position here
+ * when the club creates one.
+ */
 export const LEADERSHIP_CATEGORIES = [
   {
     branch: "Executive",
@@ -178,6 +196,7 @@ export const LEADERSHIP_CATEGORIES = [
   },
 ];
 
+/** Blurb for each sport on the home page. */
 export const SPORT_DESCRIPTIONS: { [key: string]: string } = {
   Backpacking: `Backpacking is an outdoor activity wherein a participant packs all of
           his or her gear into a backpack. This gear may include food, water,

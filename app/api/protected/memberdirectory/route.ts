@@ -19,6 +19,12 @@ import {
 } from "@/miniservices/memberMiniService";
 import { getTripLeader } from "@/miniservices/tripLeaderMiniService";
 
+/**
+ * GET /api/protected/memberdirectory
+ *
+ * @returns 200 with every MemberDirectoryEntryDTO, 401 with no session, 404 if the session email has no member row,
+ * 403 if the member is not in the trip_leader table, 500 on a database error.
+ */
 export async function GET(): Promise<Response> {
   try {
     const session = await getServerSession(authOptions);

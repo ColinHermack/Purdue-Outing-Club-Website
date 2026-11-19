@@ -7,6 +7,7 @@
 import * as React from "react";
 import Image from "next/image";
 
+/** Small round logo used in the navbar and footer. */
 export const Logo = (): React.JSX.Element => {
   return (
     <div className="bg-amber-400 w-12 h-12 flex justify-center items-center rounded-full mr-2">
@@ -15,6 +16,7 @@ export const Logo = (): React.JSX.Element => {
   );
 };
 
+/** Large round logo for hero sections. */
 export const LargeLogo = (): React.JSX.Element => {
   return (
     <div className="bg-amber-400 w-fit h-fit flex justify-center items-center rounded-full">

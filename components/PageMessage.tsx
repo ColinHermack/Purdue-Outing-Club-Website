@@ -6,6 +6,11 @@
 
 import { Link, buttonVariants } from "@heroui/react";
 
+/**
+ * @param title Large heading, for example "No Access".
+ * @param children The explanation shown under the heading.
+ * @param action Optional extra button shown before the "Return Home" button (for example "Sign in").
+ */
 export default function PageMessage({
   title,
   children,

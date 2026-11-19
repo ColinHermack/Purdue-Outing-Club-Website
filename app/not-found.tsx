@@ -1,3 +1,9 @@
+/**
+ * 404 page, shown for unknown URLs and when a page calls notFound() or redirects to /404 (for example a bad trip id).
+ *
+ * @author Colin Hermack
+ */
+
 import { Link, buttonVariants } from "@heroui/react";
 
 export default function NotFound() {

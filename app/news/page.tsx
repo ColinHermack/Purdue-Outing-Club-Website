@@ -1,3 +1,9 @@
+/**
+ * The /news index: every post in newsposts/, newest first.
+ *
+ * @author Colin Hermack
+ */
+
 import React from "react";
 
 import { NewsArticles } from "./postUtils";

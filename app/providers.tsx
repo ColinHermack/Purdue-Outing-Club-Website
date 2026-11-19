@@ -1,3 +1,10 @@
+/**
+ * Client-side providers used by the root layout: HeroUI (given the Next.js router so its Link components navigate
+ * without a full page load) and next-themes for light/dark mode.
+ *
+ * @author Colin Hermack
+ */
+
 "use client";
 
 import * as React from "react";

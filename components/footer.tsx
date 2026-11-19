@@ -19,6 +19,7 @@ import {
 import { Logo } from "@/components/logos";
 import { siteConfig } from "@/config/site";
 
+/** Icons for siteConfig.links, matched by position. Keep the order the same as config/site.ts. */
 const socialMediaIcons = [
   <FaInstagram key={0} />,
   <FaYoutube key={1} />,

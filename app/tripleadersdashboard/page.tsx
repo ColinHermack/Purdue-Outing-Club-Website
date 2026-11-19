@@ -4,6 +4,14 @@
  * A dashboard page which will be accessible to authorized users and allow management of existing trip leaders
  * and addition of new trip leaders.
  *
+ * Access: proxy.ts requires a session, and /api/protected/tripleaders only answers officers whose position is in
+ * GET_TRIP_LEADERS_AUTHORIZED_POSITIONS (config/permissions.ts). The page shows a "No Access" message on 403.
+ *
+ * Data: loads every trip leader (GET /api/protected/tripleaders) and every member's id/name/email
+ * (GET /api/protected/members, used to pick who to add). Saving an existing leader sends PUT, adding one sends POST.
+ * These write straight to the trip_leader table of whichever database the deployment uses: production for Vercel
+ * previews and production, staging for local dev.
+ *
  * @author Colin Hermack
  */
 
@@ -18,6 +26,7 @@ import { protectedFetch, type ProtectedResult } from "@/utils/protectedFetch";
 
 import { Button, Modal, Table, TextField, Input, cn, Checkbox, CheckboxGroup, Label, ComboBox, ListBox, ListBoxItem, Spinner } from "@heroui/react";
 
+/** One row of the expandable member-details tree in the edit modal (for example First Aid > Type). */
 type NestedRow = {
   children: NestedRow[];
   field: string;
@@ -61,6 +70,11 @@ export default function TripLeaderDashboardPage() {
   const [saveError, setSaveError] = useState<string | null>(null);
   const [createError, setCreateError] = useState<string | null>(null);
 
+  // Copy the selected leader's process flags and sports into the checkbox state whenever a different row is opened.
+  // The checkbox values are "shadowed", "approved", "certified"; they map to process.shadow/approved/certified.
+  // Note: process.certified is also overwritten by a database trigger (update_certified_trigger, see
+  // tests/integration/schema.sql). Every update of the member's first_aid_data copies first_aid_data.Verified into
+  // process.certified, so a manual change here can be undone by the next first aid update.
   useEffect(() => {
     const p = selectedLeader?.process;
 
@@ -72,6 +86,7 @@ export default function TripLeaderDashboardPage() {
     setSportValues(selectedLeader?.sport ?? []);
   }, [selectedLeader]);
 
+  // True when the checkboxes differ from the saved leader, which enables the Save button.
   const isDirty = useMemo(() => {
     const p = selectedLeader?.process;
     const sportsDirty =
@@ -86,6 +101,7 @@ export default function TripLeaderDashboardPage() {
     );
   }, [processValues, sportValues, selectedLeader]);
 
+  // PUT the edited leader. On success the table row is replaced with the server's copy and the modal closes.
   const handleSave = async () => {
     if (!selectedLeader?.member?.id) return;
 
@@ -126,6 +142,7 @@ export default function TripLeaderDashboardPage() {
     setIsModalOpen(false);
   };
 
+  // Members who are not trip leaders yet: the choices in the add modal.
   const availableMembers = useMemo(
     () =>
       (allMembers ?? []).filter(
@@ -134,6 +151,7 @@ export default function TripLeaderDashboardPage() {
     [allMembers, tripLeaders],
   );
 
+  // POST a new trip leader. Only members who are not leaders yet can be picked (see availableMembers).
   const handleCreate = async () => {
     if (newMemberId == null) return;
 
@@ -178,6 +196,7 @@ export default function TripLeaderDashboardPage() {
     setIsAddModalOpen(false);
   };
 
+  // Rows are keyed by member name, so clicking a row finds the leader by name and opens the edit modal.
   const handleRowAction = (key: React.Key) => {
     const leader = (tripLeaders ?? []).find((tl) => tl.member?.name === key);
 
@@ -189,6 +208,7 @@ export default function TripLeaderDashboardPage() {
     }
   };
 
+  // Builds the read-only member details tree (first aid, driver, car, emergency contact...) for the edit modal.
   const nestedData = useMemo((): NestedRow[] => {
     if (!selectedLeader) return [];
 
@@ -284,6 +304,7 @@ export default function TripLeaderDashboardPage() {
     ];
   }, [selectedLeader]);
 
+  // Renders one tree row, recursing into its children. The chevron button toggles expansion.
   const renderExpandableRow = (item: NestedRow) => (
     <Table.Row id={item.id} textValue={item.field}>
       <Table.Cell textValue={item.field}>
@@ -328,6 +349,7 @@ export default function TripLeaderDashboardPage() {
     </Table.Row>
   );
 
+  // Initial load. A failed member list only disables adding; a failed leader list shows the error or no-access page.
   useEffect(() => {
     protectedFetch<TripLeaderDTO[]>("/api/protected/tripleaders").then(
       (result) => {
@@ -483,6 +505,7 @@ export default function TripLeaderDashboardPage() {
           </Table.Content>
         </Table>
       </div>
+      {/* Edit modal: member details, sports, and process checkboxes for the selected leader. */}
       <Modal isOpen={isModalOpen} onOpenChange={setIsModalOpen}>
         <Modal.Backdrop isDismissable>
           <Modal.Container scroll="inside" size="lg">
@@ -591,6 +614,7 @@ export default function TripLeaderDashboardPage() {
           </Modal.Container>
         </Modal.Backdrop>
       </Modal>
+      {/* Add modal: pick a member who is not a leader yet, their sports, process flags and personal Gmail. */}
       <Modal isOpen={isAddModalOpen} onOpenChange={setIsAddModalOpen}>
         <Modal.Backdrop isDismissable>
           <Modal.Container scroll="inside" size="lg">

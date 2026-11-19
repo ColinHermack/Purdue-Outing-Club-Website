@@ -14,6 +14,12 @@ import TripDTO from "@/dtos/tripDto";
 import { getMemberByEmail } from "@/miniservices/memberMiniService";
 import { getTripsByMemberId } from "@/miniservices/tripMiniService";
 
+/**
+ * GET /api/protected/user/trips
+ *
+ * @returns 200 with a TripDTO for every trip the signed-in member is on the roster of, 401 with no session, 404 if
+ * the session email has no member row, 500 on a database error.
+ */
 export async function GET(): Promise<Response> {
   try {
     const session = await getServerSession(authOptions);

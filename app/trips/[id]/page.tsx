@@ -1,5 +1,8 @@
 /*
- * This page displays the details of a specific trip, based on the trip ID which is part of the URL.
+ * This page displays the details of a specific trip, based on the trip ID which is part of the URL. Unknown ids
+ * redirect to /404. While sign-ups are open it links to the Microsoft Forms trip sign-up form, pre-filling the
+ * trip id and sport through the form's question ids (r603986e... and r919debb...). Rebuilding that form changes the
+ * ids and breaks the pre-fill; the flow that reads its responses is described in docs/systems/power-automate.md.
  *
  * @Author: Colin Hermack
  */

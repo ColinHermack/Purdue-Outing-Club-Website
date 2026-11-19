@@ -7,8 +7,10 @@
 import { GearHoursDataT } from "@/config/types";
 import { getGearHours } from "@/miniservices/officerMiniService";
 
-export const dynamic = "force-dynamic"; // Stops NextJS from overoptimizing and breaking this endpoint
-export const revalidate = 0; // Stops NextJS from overoptimizing and breaking this endpoint
+// Opt out of build-time caching so every request reads the database. Older Next.js versions cached GET handlers by
+// default, which served stale data; keep these so a framework change can't bring that back.
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 /**
  * GET /api/gear/hours

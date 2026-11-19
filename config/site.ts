@@ -1,5 +1,7 @@
 /**
- * This file contains the site configuration for the Purdue Outing Club website.
+ * This file contains the site configuration for the Purdue Outing Club website: the navbar, footer and social links.
+ * Internal hrefs must point at a page in app/ or a file in public/; tests/unit/config/site.test.ts checks this.
+ * Outside links (forms, store, alumni site) are listed in docs/systems/domain-and-links.md.
  *
  * @author Colin Hermack
  */
@@ -9,6 +11,7 @@ export type SiteConfig = typeof siteConfig;
 export const siteConfig = {
   name: "Purdue Outing Club",
   description: "The official website of the Purdue Outing Club",
+  /** Links in the top navbar (components/navbar.tsx), in order. */
   navItems: [
     {
       label: "Calendar",
@@ -43,6 +46,7 @@ export const siteConfig = {
       href: "/supportus",
     },
   ],
+  /** Links in the footer's quick links row (components/footer.tsx). */
   footerItems: [
     {
       label: "Constitution",
@@ -77,6 +81,10 @@ export const siteConfig = {
       href: "https://docs.google.com/forms/d/e/1FAIpQLSc_w1PuFjQ-N3QhX6uVUwwywuJ8HhHmjLUh40VyisTqj25hiA/viewform",
     },
   ],
+  /**
+   * Social media icons in the footer. The icon comes from `socialMediaIcons` in components/footer.tsx by position, so
+   * keep both lists in the same order.
+   */
   links: [
     {
       label: "instagram",
@@ -104,6 +112,7 @@ export const siteConfig = {
     },
   ],
 
+  /** Grouped link columns in the footer. */
   sitemapLinks: [
     {
       category: "About",

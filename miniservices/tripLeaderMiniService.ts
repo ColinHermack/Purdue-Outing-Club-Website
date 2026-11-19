@@ -3,6 +3,9 @@
 /**
  * Provides database interaction for everything related to trip leaders.
  *
+ * trip_leader.sport is stored as one comma-separated string ("Backpacking, Caving") and split into an array here.
+ * lead_count and process.certified are also maintained by database triggers (see docs/systems/database.md#triggers).
+ *
  * @author Colin Hermack
  */
 
@@ -13,6 +16,10 @@ import MemberDTO from "@/dtos/memberDto";
 import CreateTripLeaderDTO from "@/dtos/createTripLeaderDto";
 import UpdateTripLeaderDTO from "@/dtos/updateTripLeaderDto";
 
+/**
+ * Connection pool for this module, configured from the DB_* environment variables (see docs/systems/vercel.md). The
+ * connection uses SSL but does not verify the server certificate (rejectUnauthorized: false).
+ */
 const pool = new Pool({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,

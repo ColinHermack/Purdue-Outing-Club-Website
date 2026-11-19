@@ -1,5 +1,6 @@
 /**
- * Route definition for Microsoft authentication.
+ * Route definition for Microsoft authentication. NextAuth serves sign-in, callback, session and sign-out under
+ * /api/auth/*. Configuration lives in options.ts.
  *
  * @author Colin Hermack
  */

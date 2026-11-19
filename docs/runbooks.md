@@ -98,8 +98,9 @@ Officer data is edited by hand in the database.
 3. **Link the photo**: set `officer_data` to `{"ImagePath": "first_last.jpg"}` (gear officers also get
    `"GearHours"`).
 4. **Permissions**: if a title changed (for example "Secretary of Sports" renamed), update `config/permissions.ts`.
-   Make sure the `Health & Safety Officer` and `Data Analyst` rows exist with those exact titles: the first aid and
-   driver certification flows email them for approval.
+   Make sure every title in [the flows' officer list](systems/power-automate.md#officer-positions-the-flows-depend-on)
+   (Treasurer, Data Analyst, Health & Safety Officer, Secretary of Sports, head sport officers, and others) has a
+   current officer with that exact spelling: Power Automate flows send approvals to them.
 5. **Deploy**: `/pleadership` and similar pages are built at deploy time, so merge the photo PR (or redeploy) after
    the rows are in.
 6. **Webmaster change**: if the webmaster changes, also work through [handoff.md](handoff.md).

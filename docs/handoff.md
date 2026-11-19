@@ -41,7 +41,14 @@ Things found while writing these docs that a new owner should know about:
 - **Previews use the production database.** Only local development uses staging; anything written on a preview
   deployment changes real data.
 - **Flows write directly to the database.** Schema changes break the connector-based flows; the only signal is a
-  failure email to `poc@purdue.edu`, and failed updates are not retried.
+  failure email to `poc@purdue.edu`, and failed updates are not retried. Five flows have their failure email wired
+  backwards and send none; see [Known problems](systems/power-automate.md#known-problems).
+- **Driver approvals expire together.** _Forms - Driver Approvals_ writes the fixed date 27 July 2027 for every
+  member it approves. Fix the flow before then.
+- **Flows depend on officer titles.** Approvals go to whoever holds specific `officer.position` titles. After each
+  turnover, check the [title list](systems/power-automate.md#officer-positions-the-flows-depend-on).
+- **Member data in Google Sheets.** _Google - All Members_ copies phone, medical and emergency contact data into a
+  Google Sheet every 72 hours. Review who that sheet is shared with.
 - **Automatic database backups only go back one week.** A problem noticed later can only be undone from a manual
   snapshot. Take one before any risky change; see [database.md](systems/database.md#connecting).
 - **Sign-in cannot be tested on previews.** Only production and `localhost` are registered in Azure.

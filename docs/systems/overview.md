@@ -1,6 +1,6 @@
 # Outside systems overview
 
-The repository is only part of the website. This page shows every outside system the site depends on, what each one
+The repository only hosts website source code. This page shows every outside system the site depends on, what each one
 does, and which account owns it. Each system has its own page with details.
 
 ```mermaid
